@@ -14,14 +14,23 @@
   --ink-3: #5c6473;
   --neon: #00d4ff;
   --neon-dim: rgba(0, 212, 255, 0.14);
-  --neon-glow: 0 0 12px rgba(0, 212, 255, 0.45), 0 0 32px rgba(0, 212, 255, 0.18);
+  --neon-glow: 0 0 14px rgba(0, 212, 255, 0.55), 0 0 36px rgba(0, 212, 255, 0.22);
   --win: #3ddc84;
   --warm: #ffb020;
   --lost: #ff5470;
-  --radius: 10px;
-  --font-display: 'Orbitron', 'Segoe UI', sans-serif;
+  --radius: 4px;
+  --font-display: 'JetBrains Mono', 'Cascadia Code', 'SF Mono', Consolas, 'Liberation Mono', monospace;
   --font-ui: 'Rajdhani', 'Segoe UI', sans-serif;
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  /* chanfro HUD: corta os cantos superior-direito e inferior-esquerdo */
+  --chamfer: polygon(
+    0 0,
+    calc(100% - 18px) 0,
+    100% 18px,
+    100% 100%,
+    18px 100%,
+    0 calc(100% - 18px)
+  );
 }
 
 * {
@@ -44,7 +53,7 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-/* Textura da caverna: vinheta + grade técnica quase imperceptível */
+/* Textura da caverna: vinheta + grade técnica viva, deslizando bem devagar */
 body::before {
   content: '';
   position: fixed;
@@ -54,8 +63,75 @@ body::before {
   background:
     radial-gradient(1200px 600px at 70% -10%, rgba(0, 212, 255, 0.06), transparent 60%),
     radial-gradient(900px 500px at 0% 110%, rgba(0, 212, 255, 0.04), transparent 60%),
-    repeating-linear-gradient(0deg, transparent 0 39px, rgba(255, 255, 255, 0.015) 39px 40px),
-    repeating-linear-gradient(90deg, transparent 0 39px, rgba(255, 255, 255, 0.015) 39px 40px);
+    repeating-linear-gradient(0deg, transparent 0 39px, rgba(0, 212, 255, 0.028) 39px 40px),
+    repeating-linear-gradient(90deg, transparent 0 39px, rgba(0, 212, 255, 0.028) 39px 40px);
+  animation: grid-drift 32s linear infinite;
+}
+
+@keyframes grid-drift {
+  from {
+    background-position: 0 0, 0 0, 0 0, 0 0;
+  }
+  to {
+    background-position: 0 0, 0 0, 0 40px, 40px 0;
+  }
+}
+
+/* linha de varredura: banda tênue que percorre a tela em loop */
+body::after {
+  content: '';
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: -160px;
+  height: 140px;
+  pointer-events: none;
+  z-index: 2;
+  background: linear-gradient(
+    180deg,
+    transparent,
+    rgba(0, 212, 255, 0.025) 42%,
+    rgba(0, 212, 255, 0.065) 50%,
+    rgba(0, 212, 255, 0.025) 58%,
+    transparent
+  );
+  animation: scanline 10s linear infinite;
+}
+
+@keyframes scanline {
+  to {
+    transform: translateY(calc(100vh + 320px));
+  }
+}
+
+/* emblema-marca-d'água: atrás de tudo, pulso lento de glow */
+.bat-watermark {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  display: grid;
+  place-items: center;
+  color: var(--neon);
+  opacity: 0.08;
+  pointer-events: none;
+  animation: watermark-pulse 7s ease-in-out infinite;
+}
+
+.bat-watermark svg {
+  width: min(80vw, 920px);
+  height: auto;
+}
+
+@keyframes watermark-pulse {
+  0%,
+  100% {
+    opacity: 0.055;
+    filter: drop-shadow(0 0 30px rgba(0, 212, 255, 0.3));
+  }
+  50% {
+    opacity: 0.1;
+    filter: drop-shadow(0 0 80px rgba(0, 212, 255, 0.6));
+  }
 }
 
 ::selection {
@@ -73,6 +149,8 @@ body::before {
 }
 
 .main {
+  position: relative;
+  z-index: 1;
   flex: 1;
   min-width: 0;
   display: flex;
@@ -188,7 +266,7 @@ body::before {
   gap: 1px;
   padding: 8px 12px;
   border: 1px solid rgba(0, 212, 255, 0.3);
-  border-radius: 8px;
+  border-radius: 3px;
   background: var(--surface);
   white-space: nowrap;
   opacity: 0;
@@ -255,7 +333,7 @@ body::before {
   height: 62px;
   color: var(--neon);
   border: 1px solid rgba(0, 212, 255, 0.35);
-  border-radius: 14px;
+  border-radius: 4px;
   background:
     radial-gradient(circle at 50% 60%, rgba(0, 212, 255, 0.15), transparent 70%),
     var(--surface-2);
@@ -355,24 +433,49 @@ body::before {
 
 .panel {
   position: relative;
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
+  border: none;
+  border-radius: 0;
+  clip-path: var(--chamfer);
   background: linear-gradient(180deg, var(--surface), var(--surface-2));
   padding: 20px 22px 22px;
-  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.45);
+  /* drop-shadow (e não box-shadow) para o glow acompanhar o chanfro */
+  filter: drop-shadow(0 0 10px rgba(0, 212, 255, 0.09)) drop-shadow(0 16px 26px rgba(0, 0, 0, 0.55));
 }
 
-/* recorte angular no canto — assinatura high-tech */
+/* moldura de 1px que segue o chanfro: gradiente mascarado só na borda */
+.panel::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  padding: 1px;
+  pointer-events: none;
+  clip-path: var(--chamfer);
+  background: linear-gradient(
+    160deg,
+    rgba(0, 212, 255, 0.6),
+    rgba(0, 212, 255, 0.14) 35%,
+    rgba(0, 212, 255, 0.14) 65%,
+    rgba(0, 212, 255, 0.45)
+  );
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  mask-composite: exclude;
+}
+
+/* marcadores em L nos cantos opostos ao chanfro — detalhe de console */
 .panel::after {
   content: '';
   position: absolute;
-  top: 0;
-  right: 0;
-  width: 26px;
-  height: 26px;
-  background: linear-gradient(225deg, var(--bg) 0 49%, transparent 50%);
-  border-bottom-left-radius: 6px;
+  inset: 7px;
   pointer-events: none;
+  opacity: 0.55;
+  background:
+    linear-gradient(var(--neon), var(--neon)) left 0 top 0 / 14px 1px,
+    linear-gradient(var(--neon), var(--neon)) left 0 top 0 / 1px 14px,
+    linear-gradient(var(--neon), var(--neon)) right 0 bottom 0 / 14px 1px,
+    linear-gradient(var(--neon), var(--neon)) right 0 bottom 0 / 1px 14px;
+  background-repeat: no-repeat;
 }
 
 .panel-head {
@@ -402,7 +505,7 @@ body::before {
   width: 34px;
   height: 34px;
   border: 1px solid rgba(0, 212, 255, 0.3);
-  border-radius: 8px;
+  border-radius: 3px;
   color: var(--neon);
   background: var(--neon-dim);
 }
@@ -422,6 +525,43 @@ button.icon-btn:active {
   transform: scale(0.96);
 }
 
+/* tipografia técnica: labels e números em mono, texto corrido segue legível */
+.field > span,
+.tier,
+.chip,
+.kcol-pct,
+.goal-count span,
+.calc-row-head strong {
+  font-family: var(--font-display);
+}
+
+.field > span {
+  font-size: 11.5px;
+  letter-spacing: 0.06em;
+}
+
+.tier {
+  font-size: 12px;
+}
+
+.chip {
+  font-size: 11.5px;
+}
+
+.calc-row-head strong {
+  font-size: 13.5px;
+}
+
+.tile-value,
+.goal-count strong,
+.overall-num,
+.kcol-count,
+.calc-total strong,
+.rule-points,
+.radar-rank {
+  font-variant-numeric: tabular-nums;
+}
+
 /* ---------- botões ---------- */
 
 .btn {
@@ -429,7 +569,7 @@ button.icon-btn:active {
   align-items: center;
   gap: 8px;
   padding: 9px 14px;
-  border-radius: 8px;
+  border-radius: 3px;
   border: 1px solid var(--line);
   background: var(--surface-3);
   color: var(--ink);
@@ -486,14 +626,14 @@ button.icon-btn:active {
 .overall-bar {
   width: 180px;
   height: 8px;
-  border-radius: 99px;
+  border-radius: 2px;
   background: var(--surface-3);
   overflow: hidden;
 }
 
 .overall-fill {
   height: 100%;
-  border-radius: 99px;
+  border-radius: 2px;
   background: linear-gradient(90deg, #0077a3, var(--neon));
   box-shadow: 0 0 10px rgba(0, 212, 255, 0.7);
   transition: width 0.7s var(--ease);
@@ -513,7 +653,7 @@ button.icon-btn:active {
   margin-bottom: 16px;
   padding: 12px 16px;
   border: 1px solid rgba(61, 220, 132, 0.4);
-  border-radius: 8px;
+  border-radius: 3px;
   background: rgba(61, 220, 132, 0.08);
   color: var(--win);
   font-family: var(--font-display);
@@ -593,7 +733,7 @@ button.icon-btn:active {
   color: var(--ink-3);
   cursor: pointer;
   padding: 2px;
-  border-radius: 6px;
+  border-radius: 3px;
 }
 
 .goal-remove:hover {
@@ -642,14 +782,14 @@ button.icon-btn:active {
 
 .goal-bar {
   height: 8px;
-  border-radius: 99px;
+  border-radius: 2px;
   background: var(--surface-3);
   overflow: hidden;
 }
 
 .goal-fill {
   height: 100%;
-  border-radius: 99px;
+  border-radius: 2px;
   background: linear-gradient(90deg, #006b8a, var(--neon));
   transition: width 0.6s var(--ease);
 }
@@ -706,7 +846,7 @@ textarea {
   width: 100%;
   padding: 9px 12px;
   border: 1px solid var(--line);
-  border-radius: 8px;
+  border-radius: 3px;
   background: var(--surface-2);
   color: var(--ink);
   font-family: var(--font-ui);
@@ -763,7 +903,7 @@ textarea {
   height: 42px;
   flex-shrink: 0;
   border: 1px solid var(--line);
-  border-radius: 10px;
+  border-radius: 4px;
   color: var(--ink-2);
   background: var(--surface-3);
 }
@@ -851,7 +991,7 @@ textarea {
 .seg-toggle {
   display: flex;
   border: 1px solid var(--line);
-  border-radius: 8px;
+  border-radius: 3px;
   overflow: hidden;
 }
 
@@ -895,7 +1035,7 @@ textarea {
   align-items: center;
   gap: 5px;
   padding: 4px 10px;
-  border-radius: 99px;
+  border-radius: 2px;
   font-size: 13px;
   font-weight: 700;
   letter-spacing: 0.06em;
@@ -959,14 +1099,14 @@ textarea {
 
 .rule-bar {
   height: 6px;
-  border-radius: 99px;
+  border-radius: 2px;
   background: var(--surface-3);
   overflow: hidden;
 }
 
 .rule-fill {
   height: 100%;
-  border-radius: 99px;
+  border-radius: 2px;
   background: linear-gradient(90deg, #006b8a, var(--neon));
 }
 
@@ -1059,7 +1199,7 @@ textarea {
   min-width: 24px;
   height: 24px;
   padding: 0 6px;
-  border-radius: 7px;
+  border-radius: 3px;
   border: 1px solid rgba(0, 212, 255, 0.35);
   background: var(--neon-dim);
   color: var(--neon);
@@ -1075,7 +1215,7 @@ textarea {
 
 .kcol-track {
   height: 3px;
-  border-radius: 99px;
+  border-radius: 2px;
   background: var(--surface-3);
   overflow: hidden;
 }
@@ -1100,7 +1240,7 @@ textarea {
   place-items: center;
   min-height: 70px;
   border: 1px dashed var(--line);
-  border-radius: 8px;
+  border-radius: 3px;
   color: var(--ink-3);
   font-size: 13px;
   letter-spacing: 0.04em;
@@ -1112,7 +1252,7 @@ textarea {
   gap: 7px;
   padding: 12px;
   border: 1px solid var(--line);
-  border-radius: 8px;
+  border-radius: 3px;
   background: linear-gradient(180deg, var(--surface-3), var(--surface-2));
   cursor: grab;
   transition: transform 0.25s var(--ease), border-color 0.25s var(--ease), box-shadow 0.25s var(--ease);
@@ -1200,7 +1340,7 @@ textarea {
   place-items: center;
   width: 30px;
   border: 1px solid var(--line);
-  border-radius: 7px;
+  border-radius: 3px;
   background: var(--surface-2);
   color: var(--ink-3);
   cursor: pointer;
@@ -1288,7 +1428,7 @@ textarea {
 
 .radar-bar {
   height: 7px;
-  border-radius: 99px;
+  border-radius: 2px;
   background: var(--surface-3);
   overflow: hidden;
   max-width: 420px;
@@ -1296,7 +1436,7 @@ textarea {
 
 .radar-fill {
   height: 100%;
-  border-radius: 99px;
+  border-radius: 2px;
   background: linear-gradient(90deg, #006b8a, var(--neon));
   box-shadow: 0 0 8px rgba(0, 212, 255, 0.5);
   transition: width 0.6s var(--ease);
@@ -1310,7 +1450,7 @@ textarea {
 
 .chip {
   padding: 3px 9px;
-  border-radius: 99px;
+  border-radius: 2px;
   border: 1px solid var(--line);
   font-size: 12px;
   color: var(--ink-3);
@@ -1381,7 +1521,7 @@ textarea {
   padding: 14px 16px;
   border: 1px solid var(--line);
   border-left: 2px solid rgba(0, 212, 255, 0.45);
-  border-radius: 8px;
+  border-radius: 3px;
   background: var(--surface-2);
   color: var(--ink);
   font-family: var(--font-ui);
@@ -1442,7 +1582,7 @@ textarea {
   top: -10px;
   right: 14px;
   padding: 3px 10px;
-  border-radius: 99px;
+  border-radius: 2px;
   border: 1px solid rgba(255, 176, 32, 0.5);
   background: #241a09;
   color: var(--warm);
@@ -1593,7 +1733,7 @@ textarea {
   gap: 4px;
   padding: 12px 14px;
   border: 1px solid var(--line);
-  border-radius: 8px;
+  border-radius: 3px;
   background: var(--surface-2);
 }
 
@@ -1640,7 +1780,7 @@ textarea {
   align-items: center;
   gap: 10px;
   padding: 12px 20px;
-  border-radius: 10px;
+  border-radius: 4px;
   border: 1px solid rgba(0, 212, 255, 0.4);
   background: var(--surface);
   color: var(--ink);

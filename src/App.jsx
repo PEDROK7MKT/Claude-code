@@ -123,6 +123,9 @@ export default function App() {
 
   return (
     <div className="shell">
+      <div className="bat-watermark" aria-hidden="true">
+        <BatEmblem size={720} />
+      </div>
       <aside className="sidebar">
         <div className="sidebar-emblem" title="Batcaverna Ops">
           <BatEmblem size={30} />
