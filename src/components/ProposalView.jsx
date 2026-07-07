@@ -91,6 +91,16 @@ export default function ProposalView({ leads }) {
                 />
                 <small>/mês</small>
               </div>
+              <div className="package-meta">
+                <span className="package-setup">setup único: {brl(p.setup)}</span>
+                {p.adBudget ? (
+                  <span className="package-ads">
+                    verba de anúncio: a partir de {brl(p.adBudget)}/mês · paga à parte
+                  </span>
+                ) : (
+                  <span className="package-ads package-ads-none">sem tráfego pago neste plano</span>
+                )}
+              </div>
               <ul>
                 {p.features.map((f) => (
                   <li key={f}>
@@ -106,7 +116,10 @@ export default function ProposalView({ leads }) {
       <section className="panel">
         <header className="panel-head">
           <h2>Gerar proposta</h2>
-          <span className={`tier tier-warm`}>plano {pkg.name} · {brl(prices[pkg.id])}/mês</span>
+          <span className={`tier tier-warm`}>
+            plano {pkg.name} · {brl(prices[pkg.id])}/mês
+            {pkg.adBudget ? ' + verba à parte' : ''}
+          </span>
         </header>
         <div className="proposal-grid">
           <div className="proposal-fields">

@@ -123,32 +123,37 @@ export function renderScript(template, vars) {
   })
 }
 
+// A verba de anúncio (adBudget) é SEMPRE paga à parte pelo cliente, direto
+// às plataformas — nunca embutida no fee de gestão. setup é cobrado uma vez.
 export const PACKAGES = [
   {
     id: 'sinal',
     name: 'SINAL',
     tagline: 'Acender a presença',
-    price: 997,
+    price: 797,
+    setup: 400,
+    adBudget: null,
     highlight: false,
     features: [
-      'Gestão de 1 rede social (12 posts/mês)',
-      'Identidade visual dos posts',
-      'Bio e destaques otimizados',
-      'Relatório mensal de resultados',
-      'Suporte por WhatsApp',
+      'Google Meu Negócio otimizado',
+      'SEO local básico',
+      'Site landing page (1 página)',
+      'Relatório mensal',
     ],
   },
   {
     id: 'vigilante',
     name: 'VIGILANTE',
     tagline: 'Patrulhar e converter',
-    price: 1997,
+    price: 1497,
+    setup: 600,
+    adBudget: 600,
     highlight: true,
     features: [
-      'Gestão de 2 redes sociais (20 posts/mês)',
-      'Tráfego pago (verba de até R$ 2.000 inclusa na gestão)',
-      'Landing page de captação',
-      'Automação de WhatsApp (primeiro contato)',
+      'Tudo do Sinal',
+      'Gestão de tráfego pago (Meta + Google Ads)',
+      'Site completo com WhatsApp integrado',
+      'SEO + GEO reforçado',
       'Relatório quinzenal + reunião mensal',
     ],
   },
@@ -156,14 +161,15 @@ export const PACKAGES = [
     id: 'lenda',
     name: 'LENDA',
     tagline: 'Dominar o território',
-    price: 3497,
+    price: 2897,
+    setup: 1000,
+    adBudget: 1500,
     highlight: false,
     features: [
       'Tudo do Vigilante',
-      'Site completo + SEO local (Google Meu Negócio)',
-      'Gestão de verba de até R$ 8.000',
-      'Captação de vídeo mensal (1 diária)',
-      'CRM de vendas configurado + funil de e-mail',
+      'Campanhas múltiplas',
+      'CRM + automação de WhatsApp',
+      'SEO/GEO agressivo',
       'Reunião estratégica semanal',
     ],
   },
@@ -177,11 +183,17 @@ export function buildProposal({ client, pkg, agencia, seuNome, extras }) {
     `Para: ${client}`,
     ``,
     `Plano ${pkg.name} — ${pkg.tagline}`,
-    `Investimento: ${brl(pkg.price)}/mês`,
     ``,
-    `O que está incluso:`,
-    ...pkg.features.map((f) => `  • ${f}`),
+    `Investimento (fee de gestão): ${brl(pkg.price)}/mês`,
+    `Setup único: ${brl(pkg.setup)} (cobrado uma única vez, na entrada)`,
   ]
+  if (pkg.adBudget) {
+    lines.push(
+      `»» VERBA DE ANÚNCIO: a partir de ${brl(pkg.adBudget)}/mês — paga À PARTE,`,
+      `   direto às plataformas (Meta/Google). Não está inclusa no fee de gestão.`,
+    )
+  }
+  lines.push(``, `O que está incluso:`, ...pkg.features.map((f) => `  • ${f}`))
   if (extras && extras.trim()) {
     lines.push(``, `Condições especiais:`, `  ${extras.trim()}`)
   }
