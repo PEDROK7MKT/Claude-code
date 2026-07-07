@@ -121,6 +121,34 @@ export const IconEye = () => (
   </svg>
 )
 
+export const IconChat = () => (
+  <svg {...base}>
+    <path d="M4 5h16v11H9l-5 4V5Z" />
+    <path d="M8 9h8M8 12h5" />
+  </svg>
+)
+
+export const IconBriefcase = () => (
+  <svg {...base}>
+    <rect x="3" y="8" width="18" height="12" rx="2" />
+    <path d="M9 8V5.5A1.5 1.5 0 0 1 10.5 4h3A1.5 1.5 0 0 1 15 5.5V8M3 13h18" />
+  </svg>
+)
+
+export const IconShip = () => (
+  <svg {...base}>
+    <path d="M3 15l2 5h14l2-5-9-3-9 3Z" />
+    <path d="M6 15V9h12v6M10 9V5h4v4M12 12v3" />
+  </svg>
+)
+
+export const IconCopy = () => (
+  <svg {...base}>
+    <rect x="9" y="9" width="11" height="11" rx="2" />
+    <path d="M5 15H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1" />
+  </svg>
+)
+
 export const IconTrophy = () => (
   <svg {...base}>
     <path d="M7 4h10v5a5 5 0 0 1-10 0V4Z" />

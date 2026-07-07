@@ -8,18 +8,24 @@ import {
   todayKey,
   uid,
 } from './model.js'
-import { BatEmblem, IconFunnel, IconGrid, IconRadar } from './icons.jsx'
+import { BatEmblem, IconBriefcase, IconChat, IconFunnel, IconGrid, IconRadar, IconShip } from './icons.jsx'
 import GoalsBoard from './components/GoalsBoard.jsx'
 import StatTiles from './components/StatTiles.jsx'
 import LeadForm from './components/LeadForm.jsx'
 import ScoreGuide from './components/ScoreGuide.jsx'
 import Kanban from './components/Kanban.jsx'
 import RadarView from './components/RadarView.jsx'
+import ScriptsView from './components/ScriptsView.jsx'
+import ProposalView from './components/ProposalView.jsx'
+import ImportCalc from './components/ImportCalc.jsx'
 
 const NAV = [
   { id: 'central', label: 'Batcomputador', icon: IconGrid, sub: 'Visão geral do dia' },
   { id: 'crm', label: 'Prospecção', icon: IconFunnel, sub: 'CRM & funil kanban' },
   { id: 'radar', label: 'Radar', icon: IconRadar, sub: 'Leads priorizados' },
+  { id: 'scripts', label: 'Scripts', icon: IconChat, sub: 'Abordagens por nicho' },
+  { id: 'proposta', label: 'Proposta', icon: IconBriefcase, sub: 'Pacotes & proposta' },
+  { id: 'importacao', label: 'Importação', icon: IconShip, sub: 'Calculadora de custos' },
 ]
 
 function freshGoals() {
@@ -205,6 +211,12 @@ export default function App() {
           )}
 
           {view === 'radar' && <RadarView leads={leads} onMove={moveLead} />}
+
+          {view === 'scripts' && <ScriptsView leads={leads} />}
+
+          {view === 'proposta' && <ProposalView leads={leads} />}
+
+          {view === 'importacao' && <ImportCalc />}
         </main>
       </div>
 
