@@ -149,6 +149,21 @@ export const IconCopy = () => (
   </svg>
 )
 
+export const IconVault = () => (
+  <svg {...base}>
+    <rect x="3" y="4" width="18" height="15" rx="1.5" />
+    <circle cx="12" cy="11.5" r="3.5" />
+    <path d="M12 9.2v2.3l1.6 1.6M6 19v2M18 19v2" />
+  </svg>
+)
+
+export const IconArchive = () => (
+  <svg {...base}>
+    <rect x="3" y="4" width="18" height="4" rx="1" />
+    <path d="M5 8v11a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V8M10 12h4" />
+  </svg>
+)
+
 export const IconTrophy = () => (
   <svg {...base}>
     <path d="M7 4h10v5a5 5 0 0 1-10 0V4Z" />

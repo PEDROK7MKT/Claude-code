@@ -1803,6 +1803,237 @@ textarea {
   color: var(--win);
 }
 
+/* ---------- cofre (painel financeiro) ---------- */
+
+.finance-tiles {
+  margin-bottom: 18px;
+}
+
+.tile-win .tile-value {
+  color: var(--win);
+  text-shadow: 0 0 10px rgba(61, 220, 132, 0.35);
+}
+
+.tile-lost .tile-value {
+  color: var(--lost);
+  text-shadow: 0 0 10px rgba(255, 84, 112, 0.35);
+}
+
+.month-goal {
+  display: flex;
+  gap: 18px;
+  align-items: flex-end;
+  padding: 14px 16px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface-2);
+  transition: border-color 0.3s var(--ease), box-shadow 0.3s var(--ease);
+}
+
+.month-goal-hit {
+  border-color: rgba(61, 220, 132, 0.45);
+  box-shadow: inset 0 0 24px rgba(61, 220, 132, 0.06), 0 0 16px rgba(61, 220, 132, 0.15);
+}
+
+.month-goal-field {
+  width: 170px;
+  flex-shrink: 0;
+}
+
+.month-goal-track {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.month-goal-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 10px;
+  font-size: 14px;
+  color: var(--ink-2);
+}
+
+.month-goal-head strong {
+  font-family: var(--font-display);
+  font-size: 15px;
+  color: var(--neon);
+  text-shadow: 0 0 8px rgba(0, 212, 255, 0.4);
+  font-variant-numeric: tabular-nums;
+}
+
+.month-goal-hit .month-goal-head strong {
+  color: var(--win);
+  text-shadow: 0 0 8px rgba(61, 220, 132, 0.4);
+}
+
+.month-goal-hit .goal-fill {
+  background: linear-gradient(90deg, #1a7a4a, var(--win));
+  box-shadow: 0 0 12px rgba(61, 220, 132, 0.7);
+}
+
+.finance-form {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+  align-items: end;
+}
+
+.finance-desc {
+  grid-column: 1 / -1;
+}
+
+.finance-submit {
+  grid-column: 1 / -1;
+  justify-content: center;
+  padding: 12px;
+  font-family: var(--font-display);
+  font-size: 13px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.seg-toggle button.seg-lost {
+  background: rgba(255, 84, 112, 0.1);
+  color: var(--lost);
+  box-shadow: inset 0 0 16px rgba(255, 84, 112, 0.1);
+}
+
+.ledger {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.ledger-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 14px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface-2);
+  transition: border-color 0.25s var(--ease), box-shadow 0.25s var(--ease);
+}
+
+.ledger-row:hover {
+  border-color: rgba(0, 212, 255, 0.3);
+  box-shadow: 0 0 12px rgba(0, 212, 255, 0.07);
+}
+
+.ledger-main {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.ledger-main strong {
+  font-size: 15px;
+  letter-spacing: 0.02em;
+}
+
+.ledger-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.ledger-amount {
+  font-family: var(--font-display);
+  font-size: 15px;
+  font-weight: 700;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+.ledger-in {
+  color: var(--win);
+  text-shadow: 0 0 8px rgba(61, 220, 132, 0.3);
+}
+
+.ledger-out {
+  color: var(--lost);
+  text-shadow: 0 0 8px rgba(255, 84, 112, 0.3);
+}
+
+.ledger-row .kcard-remove {
+  width: 32px;
+  height: 32px;
+  flex-shrink: 0;
+}
+
+/* ---------- arquivo (notas) ---------- */
+
+.note-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.note-submit {
+  align-self: flex-start;
+}
+
+.notes-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 22px;
+}
+
+.note-card {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.note-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 10px;
+  padding-right: 18px;
+}
+
+.note-head h3 {
+  font-family: var(--font-display);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  line-height: 1.5;
+}
+
+.note-untitled {
+  color: var(--ink-3);
+}
+
+.note-head .kcard-remove {
+  width: 30px;
+  height: 30px;
+  flex-shrink: 0;
+}
+
+.note-body {
+  flex: 1;
+  font-size: 15px;
+  line-height: 1.55;
+  color: var(--ink);
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.note-date {
+  font-family: var(--font-display);
+  font-size: 11.5px;
+  color: var(--ink-3);
+  letter-spacing: 0.06em;
+}
+
 /* ---------- toast ---------- */
 
 .toast {
@@ -1921,12 +2152,16 @@ textarea {
   }
 
   .sidebar-nav {
-    gap: 6px;
+    gap: 4px;
   }
 
   .nav-item {
-    width: 44px;
-    height: 44px;
+    width: 40px;
+    height: 40px;
+  }
+
+  .sidebar-emblem {
+    display: none;
   }
 
   .proposal-grid,
@@ -1936,6 +2171,19 @@ textarea {
 
   .calc-fields {
     grid-template-columns: 1fr 1fr;
+  }
+
+  .finance-form {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .month-goal {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .month-goal-field {
+    width: 100%;
   }
 }
 

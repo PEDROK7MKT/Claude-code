@@ -8,7 +8,7 @@ import {
   todayKey,
   uid,
 } from './model.js'
-import { BatEmblem, IconBriefcase, IconChat, IconFunnel, IconGrid, IconRadar, IconShip } from './icons.jsx'
+import { BatEmblem, IconArchive, IconBriefcase, IconChat, IconFunnel, IconGrid, IconRadar, IconShip, IconVault } from './icons.jsx'
 import GoalsBoard from './components/GoalsBoard.jsx'
 import StatTiles from './components/StatTiles.jsx'
 import LeadForm from './components/LeadForm.jsx'
@@ -18,6 +18,8 @@ import RadarView from './components/RadarView.jsx'
 import ScriptsView from './components/ScriptsView.jsx'
 import ProposalView from './components/ProposalView.jsx'
 import ImportCalc from './components/ImportCalc.jsx'
+import FinanceView from './components/FinanceView.jsx'
+import NotesView from './components/NotesView.jsx'
 
 const NAV = [
   { id: 'central', label: 'Batcomputador', icon: IconGrid, sub: 'Visão geral do dia' },
@@ -26,6 +28,8 @@ const NAV = [
   { id: 'scripts', label: 'Scripts', icon: IconChat, sub: 'Abordagens por nicho' },
   { id: 'proposta', label: 'Proposta', icon: IconBriefcase, sub: 'Pacotes & proposta' },
   { id: 'importacao', label: 'Importação', icon: IconShip, sub: 'Calculadora de custos' },
+  { id: 'cofre', label: 'Cofre', icon: IconVault, sub: 'Painel financeiro' },
+  { id: 'arquivo', label: 'Arquivo', icon: IconArchive, sub: 'Notas da operação' },
 ]
 
 function freshGoals() {
@@ -220,6 +224,10 @@ export default function App() {
           {view === 'proposta' && <ProposalView leads={leads} />}
 
           {view === 'importacao' && <ImportCalc />}
+
+          {view === 'cofre' && <FinanceView />}
+
+          {view === 'arquivo' && <NotesView />}
         </main>
       </div>
 
