@@ -1,3 +1,4 @@
+import { memo } from 'react'
 import { useEffect, useMemo, useState } from 'react'
 import { kvGet, kvSet } from '../storage.js'
 import { uid } from '../model.js'
@@ -19,7 +20,7 @@ function sameMonth(ts) {
 }
 
 // Cofre: controle financeiro da operação. Persistência via IndexedDB.
-export default function FinanceView() {
+function FinanceView() {
   const [entries, setEntries] = useState([])
   const [goal, setGoal] = useState(5000)
   const [form, setForm] = useState(EMPTY)
@@ -283,3 +284,5 @@ export default function FinanceView() {
     </>
   )
 }
+
+export default memo(FinanceView)

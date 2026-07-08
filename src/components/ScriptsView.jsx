@@ -1,3 +1,4 @@
+import { memo } from 'react'
 import { useMemo, useState } from 'react'
 import { SEGMENTS } from '../model.js'
 import { NICHE_INTEL, SCRIPT_TEMPLATES, renderScript } from '../content.js'
@@ -5,7 +6,7 @@ import { IconChat, IconCopy, IconCheck } from '../icons.jsx'
 
 // Scripts de abordagem por nicho: os templates interpolam a inteligência
 // do segmento (gancho/dor/isca) + os dados que o usuário preenche.
-export default function ScriptsView({ leads }) {
+function ScriptsView({ leads }) {
   const [segment, setSegment] = useState(SEGMENTS[0])
   const [empresa, setEmpresa] = useState('')
   const [cidade, setCidade] = useState('')
@@ -142,3 +143,5 @@ export default function ScriptsView({ leads }) {
     </>
   )
 }
+
+export default memo(ScriptsView)

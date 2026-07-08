@@ -1,3 +1,4 @@
+import { memo } from 'react'
 import { useMemo, useState } from 'react'
 import { IconShip } from '../icons.jsx'
 
@@ -6,7 +7,7 @@ const brl = (n) =>
 
 // Calculadora de importação (regime de remessa, estimativa):
 // II sobre (produto + frete) em R$; ICMS "por dentro" sobre base + II.
-export default function ImportCalc() {
+function ImportCalc() {
   const [form, setForm] = useState({
     productUsd: 100,
     freightUsd: 20,
@@ -123,3 +124,5 @@ export default function ImportCalc() {
     </section>
   )
 }
+
+export default memo(ImportCalc)

@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { Suspense, lazy, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import {
   DEFAULT_GOALS,
   STAGES,
@@ -21,10 +21,14 @@ import ImportCalc from './components/ImportCalc.jsx'
 import FinanceView from './components/FinanceView.jsx'
 import NotesView from './components/NotesView.jsx'
 import { BootScreen, CountUp, HudFrame, LiveClock, MagneticButton, StatusTicker } from './components/Fx.jsx'
-import ParticleCave from './components/ParticleCave.jsx'
 import Cursor from './components/Cursor.jsx'
+
+// three.js só é carregado/executado se o modo total estiver ativo
+const ParticleCave = lazy(() => import('./components/ParticleCave.jsx'))
 import { AnimatePresence, motion } from 'framer-motion'
 import Lenis from 'lenis'
+import { kvGet, kvSet } from './storage.js'
+import { IconBolt } from './icons.jsx'
 
 const NAV = [
   { id: 'central', label: 'Batcomputador', icon: IconGrid, sub: 'Visão geral do dia' },
@@ -52,6 +56,57 @@ export default function App() {
   const [booting, setBooting] = useState(
     () => !window.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches,
   )
+  // 'full' = todos os efeitos; 'lite' = modo eco para máquinas modestas
+  const [fxMode, setFxMode] = useState('full')
+  const fxManual = useRef(false)
+
+  useEffect(() => {
+    kvGet('fx-mode').then((m) => {
+      if (m === 'lite' || m === 'full') {
+        fxManual.current = true
+        setFxMode(m)
+      }
+    })
+  }, [])
+
+  useEffect(() => {
+    document.documentElement.classList.toggle('fx-lite', fxMode === 'lite')
+  }, [fxMode])
+
+  // Watchdog de FPS: mede ~2,5s após o boot; se a máquina não segura
+  // ~45fps, rebaixa sozinho para o modo eco (a menos que o usuário
+  // tenha escolhido manualmente).
+  useEffect(() => {
+    if (booting || fxMode === 'lite' || fxManual.current) return
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+    let frames = 0
+    let raf
+    const t0 = performance.now()
+    const tick = () => {
+      frames++
+      if (performance.now() - t0 < 2500) {
+        raf = requestAnimationFrame(tick)
+      } else if (frames / 2.5 < 45 && !fxManual.current) {
+        setFxMode('lite')
+        showToast('Modo eco ativado para manter a fluidez ⚡', 'info')
+      }
+    }
+    raf = requestAnimationFrame(tick)
+    return () => cancelAnimationFrame(raf)
+  }, [booting, fxMode])
+
+  function toggleFx() {
+    const next = fxMode === 'full' ? 'lite' : 'full'
+    fxManual.current = true
+    setFxMode(next)
+    kvSet('fx-mode', next)
+    showToast(
+      next === 'lite'
+        ? 'Modo eco: efeitos pesados desligados'
+        : 'Modo total: todos os efeitos ligados',
+      'info',
+    )
+  }
 
   // Boot: hidrata do localStorage; se for a primeira visita, semeia leads demo.
   useEffect(() => {
@@ -77,9 +132,10 @@ export default function App() {
     saveState({ leads, goals, goalsDate })
   }, [booted, leads, goals, goalsDate])
 
-  // Scroll amortecido (Lenis) — só desktop com mouse e sem reduced-motion
+  // Scroll amortecido (Lenis) — só desktop com mouse, modo total
   useEffect(() => {
     if (
+      fxMode !== 'full' ||
       window.matchMedia('(pointer: coarse)').matches ||
       window.matchMedia('(prefers-reduced-motion: reduce)').matches
     )
@@ -95,57 +151,68 @@ export default function App() {
       cancelAnimationFrame(raf)
       lenis.destroy()
     }
-  }, [])
+  }, [fxMode])
 
-  function showToast(message, tone = 'info') {
+  // Handlers estáveis (useCallback) para os módulos memoizados não
+  // re-renderizarem quando o App atualiza (toast, relógio, fxMode…).
+  const showToast = useCallback((message, tone = 'info') => {
     clearTimeout(toastTimer.current)
     setToast({ message, tone, key: Date.now() })
     toastTimer.current = setTimeout(() => setToast(null), 2600)
-  }
+  }, [])
 
   // ---- Metas ----
-  function bumpGoal(id, delta) {
-    setGoals((gs) =>
-      gs.map((g) => {
-        if (g.id !== id) return g
-        const done = Math.max(0, Math.min(g.target, g.done + delta))
-        if (delta > 0 && done === g.target && g.done < g.target) {
-          showToast(`Meta batida: ${g.label} 🦇`, 'win')
-        }
-        return { ...g, done }
-      }),
-    )
-  }
+  const bumpGoal = useCallback(
+    (id, delta) => {
+      setGoals((gs) =>
+        gs.map((g) => {
+          if (g.id !== id) return g
+          const done = Math.max(0, Math.min(g.target, g.done + delta))
+          if (delta > 0 && done === g.target && g.done < g.target) {
+            showToast(`Meta batida: ${g.label} 🦇`, 'win')
+          }
+          return { ...g, done }
+        }),
+      )
+    },
+    [showToast],
+  )
 
-  function addGoal(label, target) {
+  const addGoal = useCallback((label, target) => {
     setGoals((gs) => [...gs, { id: uid(), label, target, done: 0 }])
-  }
+  }, [])
 
-  function removeGoal(id) {
+  const removeGoal = useCallback((id) => {
     setGoals((gs) => gs.filter((g) => g.id !== id))
-  }
+  }, [])
 
-  function newDay() {
+  const newDay = useCallback(() => {
     setGoals((gs) => gs.map((g) => ({ ...g, done: 0 })))
     setGoalsDate(todayKey())
     showToast('Novo dia iniciado. Gotham conta com você.', 'info')
-  }
+  }, [showToast])
 
   // ---- CRM ----
-  function addLead(data) {
-    setLeads((ls) => [{ ...data, id: uid(), stage: 'novo', createdAt: Date.now() }, ...ls])
-    showToast(`${data.company} entrou no radar.`, 'info')
-    setView('crm')
-  }
+  const addLead = useCallback(
+    (data) => {
+      setLeads((ls) => [{ ...data, id: uid(), stage: 'novo', createdAt: Date.now() }, ...ls])
+      showToast(`${data.company} entrou no radar.`, 'info')
+      setView('crm')
+    },
+    [showToast],
+  )
 
-  function moveLead(id, stage) {
-    setLeads((ls) => ls.map((l) => (l.id === id ? { ...l, stage } : l)))
-    if (stage === 'fechado') showToast('Contrato fechado. Missão cumprida. 🏆', 'win')
-  }
+  const moveLead = useCallback(
+    (id, stage) => {
+      setLeads((ls) => ls.map((l) => (l.id === id ? { ...l, stage } : l)))
+      if (stage === 'fechado') showToast('Contrato fechado. Missão cumprida. 🏆', 'win')
+    },
+    [showToast],
+  )
 
-  function removeLead(id) {
+  const removeLead = useCallback((id) => {
     setLeads((ls) => ls.filter((l) => l.id !== id))
-  }
+  }, [])
 
   const overall = useMemo(() => {
     const target = goals.reduce((s, g) => s + g.target, 0)
@@ -173,7 +240,11 @@ export default function App() {
       <div className="bat-watermark" aria-hidden="true">
         <BatEmblem size={720} />
       </div>
-      <ParticleCave />
+      {fxMode === 'full' && (
+        <Suspense fallback={null}>
+          <ParticleCave />
+        </Suspense>
+      )}
       <aside className="sidebar">
         <div className="sidebar-emblem" title="Batcaverna Ops">
           <BatEmblem size={30} />
@@ -197,6 +268,20 @@ export default function App() {
           ))}
         </nav>
         <div className="sidebar-foot">
+          <button
+            className={`nav-item fx-toggle ${fxMode === 'lite' ? 'active' : ''}`}
+            onClick={toggleFx}
+            title={fxMode === 'full' ? 'FX: modo total — clique para modo eco' : 'FX: modo eco — clique para modo total'}
+            aria-label="Alternar modo de desempenho"
+          >
+            <span className="nav-icon">
+              <IconBolt />
+            </span>
+            <span className="nav-tip">
+              <strong>Desempenho</strong>
+              <small>{fxMode === 'full' ? 'modo total' : 'modo eco'}</small>
+            </span>
+          </button>
           <span className="status-dot" />
         </div>
       </aside>

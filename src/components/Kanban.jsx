@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { LayoutGroup, motion } from 'framer-motion'
 import { MAX_SCORE, STAGES, scoreLead, scoreTier } from '../model.js'
 import { IconAt, IconFunnel, IconPhone, IconPin, IconTrash } from '../icons.jsx'
@@ -7,7 +7,7 @@ import { IconAt, IconFunnel, IconPhone, IconPin, IconTrash } from '../icons.jsx'
 // framer-motion anima o voo até a nova posição. O drag nativo (HTML5)
 // é ligado via listeners diretos porque onDragStart em <motion.*> é
 // interceptado pelo sistema de drag do próprio framer.
-function KCard({ lead, compact, dragging, onNativeDragStart, onNativeDragEnd, onMove, onRemove }) {
+const KCard = memo(function KCard({ lead, compact, dragging, onNativeDragStart, onNativeDragEnd, onMove, onRemove }) {
   const ref = useRef(null)
   const { score } = scoreLead(lead)
   const tier = scoreTier(score)
@@ -89,9 +89,9 @@ function KCard({ lead, compact, dragging, onNativeDragStart, onNativeDragEnd, on
       </div>
     </motion.article>
   )
-}
+})
 
-export default function Kanban({ leads, onMove, onRemove, compact = false }) {
+function Kanban({ leads, onMove, onRemove, compact = false }) {
   const [dragId, setDragId] = useState(null)
   const [overStage, setOverStage] = useState(null)
 
@@ -116,10 +116,10 @@ export default function Kanban({ leads, onMove, onRemove, compact = false }) {
     setOverStage(null)
   }
 
-  function endDrag() {
+  const endDrag = useCallback(() => {
     setDragId(null)
     setOverStage(null)
-  }
+  }, [])
 
   return (
     <section className={`panel kanban ${compact ? 'kanban-compact' : ''}`}>
@@ -186,3 +186,5 @@ export default function Kanban({ leads, onMove, onRemove, compact = false }) {
     </section>
   )
 }
+
+export default memo(Kanban)

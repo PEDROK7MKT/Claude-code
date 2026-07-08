@@ -1,9 +1,10 @@
+import { memo } from 'react'
 import { useMemo } from 'react'
 import { MAX_SCORE, SCORE_RULES, STAGES, scoreLead, scoreTier } from '../model.js'
 import { IconRadar } from '../icons.jsx'
 
 // Radar: todos os leads ordenados por score, com o raio-X de cada pontuação.
-export default function RadarView({ leads, onMove }) {
+function RadarView({ leads, onMove }) {
   const ranked = useMemo(
     () =>
       leads
@@ -71,3 +72,5 @@ export default function RadarView({ leads, onMove }) {
     </section>
   )
 }
+
+export default memo(RadarView)

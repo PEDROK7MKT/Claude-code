@@ -1,8 +1,9 @@
+import { memo } from 'react'
 import { useEffect, useRef, useState } from 'react'
 import { IconCheck, IconPlus, IconRefresh, IconTarget, IconTrash, IconTrophy } from '../icons.jsx'
 import { Burst, CountUp } from './Fx.jsx'
 
-export default function GoalsBoard({ goals, overall, onBump, onAdd, onRemove, onNewDay }) {
+function GoalsBoard({ goals, overall, onBump, onAdd, onRemove, onNewDay }) {
   const [label, setLabel] = useState('')
   const [target, setTarget] = useState(5)
   const [burstId, setBurstId] = useState(null)
@@ -135,3 +136,5 @@ export default function GoalsBoard({ goals, overall, onBump, onAdd, onRemove, on
     </section>
   )
 }
+
+export default memo(GoalsBoard)

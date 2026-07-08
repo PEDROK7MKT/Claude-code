@@ -1,3 +1,4 @@
+import { memo } from 'react'
 import { useMemo, useState } from 'react'
 import { PACKAGES, buildProposal } from '../content.js'
 import { IconBriefcase, IconCheck, IconCopy } from '../icons.jsx'
@@ -11,7 +12,7 @@ const brl = (n) =>
   })
 
 // Vitrine dos pacotes + gerador de proposta em texto pronto pra enviar.
-export default function ProposalView({ leads }) {
+function ProposalView({ leads }) {
   const [prices, setPrices] = useState(() =>
     Object.fromEntries(PACKAGES.map((p) => [p.id, p.price])),
   )
@@ -167,3 +168,5 @@ export default function ProposalView({ leads }) {
     </>
   )
 }
+
+export default memo(ProposalView)

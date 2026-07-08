@@ -53,8 +53,8 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-/* Textura da caverna: vinheta + grade técnica viva, deslizando bem devagar */
-body::before {
+/* Vinheta estática da caverna (camada separada: nunca repinta) */
+html::before {
   content: '';
   position: fixed;
   inset: 0;
@@ -62,18 +62,33 @@ body::before {
   z-index: 0;
   background:
     radial-gradient(1200px 600px at 70% -10%, rgba(0, 212, 255, 0.06), transparent 60%),
-    radial-gradient(900px 500px at 0% 110%, rgba(0, 212, 255, 0.04), transparent 60%),
+    radial-gradient(900px 500px at 0% 110%, rgba(0, 212, 255, 0.04), transparent 60%);
+}
+
+/* Grade técnica viva: desliza via transform (composição na GPU, sem repaint).
+   O tile é de 40px, então o loop de -40px→0 é perfeitamente contínuo. */
+body::before {
+  content: '';
+  position: fixed;
+  top: -40px;
+  left: -40px;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  z-index: 0;
+  background:
     repeating-linear-gradient(0deg, transparent 0 39px, rgba(0, 212, 255, 0.028) 39px 40px),
     repeating-linear-gradient(90deg, transparent 0 39px, rgba(0, 212, 255, 0.028) 39px 40px);
   animation: grid-drift 32s linear infinite;
+  will-change: transform;
 }
 
 @keyframes grid-drift {
   from {
-    background-position: 0 0, 0 0, 0 0, 0 0;
+    transform: translate3d(0, 0, 0);
   }
   to {
-    background-position: 0 0, 0 0, 0 40px, 40px 0;
+    transform: translate3d(40px, 40px, 0);
   }
 }
 
@@ -96,6 +111,7 @@ body::after {
     transparent
   );
   animation: scanline 10s linear infinite;
+  will-change: transform;
 }
 
 @keyframes scanline {
@@ -114,7 +130,10 @@ body::after {
   color: var(--neon);
   opacity: 0.08;
   pointer-events: none;
+  /* glow fixo + pulso só de opacity: anima na composição, sem repaint */
+  filter: drop-shadow(0 0 55px rgba(0, 212, 255, 0.45));
   animation: watermark-pulse 7s ease-in-out infinite;
+  will-change: opacity;
 }
 
 .bat-watermark svg {
@@ -125,12 +144,10 @@ body::after {
 @keyframes watermark-pulse {
   0%,
   100% {
-    opacity: 0.055;
-    filter: drop-shadow(0 0 30px rgba(0, 212, 255, 0.3));
+    opacity: 0.05;
   }
   50% {
     opacity: 0.1;
-    filter: drop-shadow(0 0 80px rgba(0, 212, 255, 0.6));
   }
 }
 
@@ -317,6 +334,54 @@ body::after {
 
 .sidebar-foot {
   margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+.fx-toggle {
+  width: 40px;
+  height: 40px;
+}
+
+/* ---------- modo eco (fx-lite): desliga o que pesa em GPUs modestas ---------- */
+
+html.fx-lite body::before {
+  animation: none;
+}
+
+html.fx-lite body::after {
+  display: none; /* scanline */
+}
+
+html.fx-lite .bat-watermark {
+  animation: none;
+  opacity: 0.06;
+  filter: none;
+}
+
+html.fx-lite .panel {
+  filter: none;
+}
+
+html.fx-lite .overall-fill::after,
+html.fx-lite .goal-fill::after,
+html.fx-lite .radar-fill::after {
+  display: none; /* lâmina de brilho das barras */
+}
+
+html.fx-lite .brand-emblem,
+html.fx-lite .sidebar-emblem,
+html.fx-lite .boot-emblem,
+html.fx-lite .ticker-dot,
+html.fx-lite .status-dot,
+html.fx-lite .clock-cursor {
+  animation: none;
+}
+
+html.fx-lite .brand-emblem::before {
+  animation: none;
 }
 
 .status-dot {
@@ -475,8 +540,9 @@ body::after {
   clip-path: var(--chamfer);
   background: linear-gradient(180deg, var(--surface), var(--surface-2));
   padding: 20px 22px 22px;
-  /* drop-shadow (e não box-shadow) para o glow acompanhar o chanfro */
-  filter: drop-shadow(0 0 10px rgba(0, 212, 255, 0.09)) drop-shadow(0 16px 26px rgba(0, 0, 0, 0.55));
+  /* um único drop-shadow (glow ciano) — o sombreado preto era invisível
+     sobre o fundo quase preto e dobrava o custo de pintura */
+  filter: drop-shadow(0 0 12px rgba(0, 212, 255, 0.1));
 }
 
 /* moldura de 1px que segue o chanfro: gradiente mascarado só na borda */
@@ -2337,17 +2403,25 @@ html.cursor-fx * {
   cursor: none !important;
 }
 
+/* glow por gradiente (pintado uma vez) — nada de box-shadow em movimento */
 .cursor-dot {
   position: fixed;
-  top: -3px;
-  left: -3px;
-  width: 6px;
-  height: 6px;
+  top: -8px;
+  left: -8px;
+  width: 16px;
+  height: 16px;
   border-radius: 50%;
-  background: var(--neon);
-  box-shadow: 0 0 10px rgba(0, 212, 255, 0.9);
+  background: radial-gradient(
+    circle,
+    #9ff0ff 0%,
+    var(--neon) 30%,
+    rgba(0, 212, 255, 0.35) 55%,
+    rgba(0, 212, 255, 0) 72%
+  );
   z-index: 400;
   pointer-events: none;
+  will-change: transform;
+  transform: translate3d(-100px, -100px, 0);
 }
 
 .cursor-ring {
@@ -2360,11 +2434,13 @@ html.cursor-fx * {
   border: 1px solid rgba(0, 212, 255, 0.55);
   z-index: 400;
   pointer-events: none;
-  transition: scale 0.3s var(--ease), background 0.3s var(--ease), border-color 0.3s var(--ease);
+  will-change: transform;
+  transform: translate3d(-100px, -100px, 0);
+  /* transform é 100% do JS (rAF); aqui só cores, que mudam raramente */
+  transition: background 0.3s var(--ease), border-color 0.3s var(--ease);
 }
 
 .cursor-ring.cursor-hot {
-  scale: 1.7;
   background: rgba(0, 212, 255, 0.07);
   border-color: rgba(0, 212, 255, 0.85);
 }

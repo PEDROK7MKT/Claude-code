@@ -1,3 +1,4 @@
+import { memo } from 'react'
 import { useMemo, useState } from 'react'
 import { MAX_SCORE, SEGMENTS, scoreLead, scoreTier } from '../model.js'
 import { IconAt, IconGlobe, IconPhone, IconPin, IconPlus } from '../icons.jsx'
@@ -12,7 +13,7 @@ const EMPTY = {
   notes: '',
 }
 
-export default function LeadForm({ onAdd }) {
+function LeadForm({ onAdd }) {
   const [form, setForm] = useState(EMPTY)
 
   // Score ao vivo: o usuário vê o lead esquentar enquanto preenche.
@@ -137,3 +138,5 @@ export default function LeadForm({ onAdd }) {
     </section>
   )
 }
+
+export default memo(LeadForm)

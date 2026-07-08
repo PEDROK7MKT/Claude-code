@@ -16,6 +16,7 @@ export default function Tilt({ children, max = 7, className = '' }) {
   if (COARSE) return <div className={`tilt ${className}`}>{children}</div>
 
   function onMove(e) {
+    if (document.documentElement.classList.contains('fx-lite')) return
     const r = e.currentTarget.getBoundingClientRect()
     px.set((e.clientX - r.left) / r.width)
     py.set((e.clientY - r.top) / r.height)

@@ -1,10 +1,11 @@
+import { memo } from 'react'
 import { useMemo } from 'react'
 import { scoreLead, scoreTier } from '../model.js'
 import { IconBolt, IconEye, IconFunnel, IconTrophy } from '../icons.jsx'
 import { CountUp } from './Fx.jsx'
 import Tilt from './Tilt.jsx'
 
-export default function StatTiles({ leads }) {
+function StatTiles({ leads }) {
   const stats = useMemo(() => {
     const total = leads.length
     const hot = leads.filter((l) => scoreTier(scoreLead(l).score).id === 'hot').length
@@ -47,3 +48,5 @@ export default function StatTiles({ leads }) {
     </section>
   )
 }
+
+export default memo(StatTiles)

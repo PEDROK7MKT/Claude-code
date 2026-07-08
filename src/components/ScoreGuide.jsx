@@ -1,8 +1,9 @@
+import { memo } from 'react'
 import { MAX_SCORE, SCORE_RULES } from '../model.js'
 import { IconBolt } from '../icons.jsx'
 
 // Torna a lógica do score transparente: cada regra, seu peso e o porquê.
-export default function ScoreGuide() {
+function ScoreGuide() {
   return (
     <section className="panel score-guide">
       <header className="panel-head">
@@ -38,3 +39,5 @@ export default function ScoreGuide() {
     </section>
   )
 }
+
+export default memo(ScoreGuide)

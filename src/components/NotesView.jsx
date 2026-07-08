@@ -1,10 +1,11 @@
+import { memo } from 'react'
 import { useEffect, useState } from 'react'
 import { kvGet, kvSet } from '../storage.js'
 import { uid } from '../model.js'
 import { IconArchive, IconPlus, IconTrash } from '../icons.jsx'
 
 // Arquivo: notas rápidas da operação. Persistência via IndexedDB.
-export default function NotesView() {
+function NotesView() {
   const [notes, setNotes] = useState([])
   const [title, setTitle] = useState('')
   const [body, setBody] = useState('')
@@ -111,3 +112,5 @@ export default function NotesView() {
     </>
   )
 }
+
+export default memo(NotesView)

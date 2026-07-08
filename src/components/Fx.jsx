@@ -5,14 +5,21 @@ import { BatEmblem } from '../icons.jsx'
 // Efeitos de "vida" do HUD: contadores animados, boot, relógio e ticker.
 // Tudo em transform/opacity ou texto — barato de renderizar no celular.
 
-export function useCountUp(target, duration = 900) {
-  const [value, setValue] = useState(0)
+// Contador animado sem re-render: escreve o texto direto no DOM via rAF.
+export function CountUp({ value, format, duration = 900 }) {
+  const ref = useRef(null)
   const prev = useRef(0)
+  const fmtRef = useRef(format)
+  fmtRef.current = format
+
   useEffect(() => {
+    const el = ref.current
+    if (!el) return
+    const fmt = (x) => (fmtRef.current ? fmtRef.current(x) : Math.round(x).toString())
     const from = prev.current
-    prev.current = target
-    if (from === target) {
-      setValue(target)
+    prev.current = value
+    if (from === value) {
+      el.textContent = fmt(value)
       return
     }
     let raf
@@ -20,19 +27,14 @@ export function useCountUp(target, duration = 900) {
     const tick = (t) => {
       const p = Math.min(1, (t - t0) / duration)
       const eased = 1 - Math.pow(1 - p, 3)
-      setValue(from + (target - from) * eased)
+      el.textContent = fmt(from + (value - from) * eased)
       if (p < 1) raf = requestAnimationFrame(tick)
     }
     raf = requestAnimationFrame(tick)
     return () => cancelAnimationFrame(raf)
-  }, [target, duration])
-  return value
-}
+  }, [value, duration])
 
-export function CountUp({ value, format, duration = 900 }) {
-  const v = useCountUp(value, duration)
-  const fmt = format ?? ((x) => Math.round(x).toString())
-  return <>{fmt(v)}</>
+  return <span ref={ref} />
 }
 
 const BOOT_LINES = [
