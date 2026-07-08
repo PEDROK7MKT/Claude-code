@@ -162,13 +162,33 @@ body::after {
   display: flex;
   flex-direction: column;
   gap: 22px;
-  animation: view-in 0.45s var(--ease);
+}
+
+/* entrada escalonada: cada painel da view sobe em cascata */
+.content > * {
+  animation: view-in 0.5s var(--ease) backwards;
+}
+
+.content > *:nth-child(2) {
+  animation-delay: 0.08s;
+}
+
+.content > *:nth-child(3) {
+  animation-delay: 0.16s;
+}
+
+.content > *:nth-child(4) {
+  animation-delay: 0.24s;
+}
+
+.content > *:nth-child(n + 5) {
+  animation-delay: 0.3s;
 }
 
 @keyframes view-in {
   from {
     opacity: 0;
-    transform: translateY(10px);
+    transform: translateY(12px);
   }
   to {
     opacity: 1;
@@ -325,8 +345,9 @@ body::after {
   gap: 16px;
 }
 
-/* emblema-assinatura: pulso de glow em loop */
+/* emblema-assinatura: pulso de glow em loop + anel orbital girando */
 .brand-emblem {
+  position: relative;
   display: grid;
   place-items: center;
   width: 62px;
@@ -343,6 +364,22 @@ body::after {
 
 .brand-emblem:hover {
   transform: scale(1.06) rotate(-3deg);
+}
+
+.brand-emblem::before {
+  content: '';
+  position: absolute;
+  inset: -8px;
+  border-radius: 50%;
+  border: 1px dashed rgba(0, 212, 255, 0.4);
+  animation: ring-spin 16s linear infinite;
+  pointer-events: none;
+}
+
+@keyframes ring-spin {
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 @keyframes emblem-pulse {
@@ -565,6 +602,8 @@ button.icon-btn:active {
 /* ---------- botões ---------- */
 
 .btn {
+  position: relative;
+  overflow: hidden;
   display: inline-flex;
   align-items: center;
   gap: 8px;
@@ -578,6 +617,24 @@ button.icon-btn:active {
   font-weight: 600;
   letter-spacing: 0.04em;
   cursor: pointer;
+}
+
+/* feixe de luz que varre o botão no hover */
+.btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: -70%;
+  width: 45%;
+  background: linear-gradient(100deg, transparent, rgba(160, 235, 255, 0.16), transparent);
+  transform: skewX(-20deg);
+  transition: left 0.5s var(--ease);
+  pointer-events: none;
+}
+
+.btn:hover::before {
+  left: 120%;
 }
 
 .btn:disabled {
@@ -2034,6 +2091,197 @@ textarea {
   letter-spacing: 0.06em;
 }
 
+/* ---------- FX: boot, moldura HUD, ticker, relógio, brilho nas barras ---------- */
+
+.boot {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 22px;
+  background:
+    radial-gradient(700px 400px at 50% 40%, rgba(0, 212, 255, 0.07), transparent 65%),
+    var(--bg);
+  cursor: pointer;
+  animation: boot-fade 2s var(--ease) forwards;
+}
+
+@keyframes boot-fade {
+  0%,
+  82% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+.boot-emblem {
+  color: var(--neon);
+  animation: emblem-pulse 1.4s ease-in-out infinite;
+}
+
+.boot-lines {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-height: 96px;
+  font-family: var(--font-display);
+  font-size: 12.5px;
+  letter-spacing: 0.14em;
+  color: var(--neon);
+  text-shadow: 0 0 8px rgba(0, 212, 255, 0.5);
+}
+
+.boot-lines span {
+  animation: view-in 0.3s var(--ease) backwards;
+}
+
+.boot-bar {
+  width: min(320px, 70vw);
+  height: 3px;
+  border-radius: 2px;
+  background: var(--surface-3);
+  overflow: hidden;
+}
+
+.boot-fill {
+  height: 100%;
+  background: var(--neon);
+  box-shadow: 0 0 12px rgba(0, 212, 255, 0.8);
+  animation: boot-load 1.7s var(--ease) forwards;
+}
+
+@keyframes boot-load {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+.boot small {
+  font-family: var(--font-display);
+  font-size: 10.5px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+
+/* moldura HUD nas quinas da tela */
+.hud-frame {
+  position: fixed;
+  inset: 10px;
+  z-index: 3;
+  pointer-events: none;
+  opacity: 0.4;
+  background:
+    linear-gradient(var(--neon), var(--neon)) left 0 top 0 / 26px 1px,
+    linear-gradient(var(--neon), var(--neon)) left 0 top 0 / 1px 26px,
+    linear-gradient(var(--neon), var(--neon)) right 0 top 0 / 26px 1px,
+    linear-gradient(var(--neon), var(--neon)) right 0 top 0 / 1px 26px,
+    linear-gradient(var(--neon), var(--neon)) left 0 bottom 0 / 26px 1px,
+    linear-gradient(var(--neon), var(--neon)) left 0 bottom 0 / 1px 26px,
+    linear-gradient(var(--neon), var(--neon)) right 0 bottom 0 / 26px 1px,
+    linear-gradient(var(--neon), var(--neon)) right 0 bottom 0 / 1px 26px;
+  background-repeat: no-repeat;
+}
+
+/* ticker de status no topo */
+.ticker {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 7px 14px;
+  border: 1px solid rgba(0, 212, 255, 0.22);
+  border-radius: 2px;
+  background: rgba(0, 212, 255, 0.05);
+  overflow: hidden;
+  max-width: 420px;
+}
+
+.ticker-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  background: var(--neon);
+  box-shadow: 0 0 8px rgba(0, 212, 255, 0.9);
+  animation: emblem-pulse 1.6s ease-in-out infinite;
+}
+
+.ticker-msg {
+  font-family: var(--font-display);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  color: var(--ink-2);
+  white-space: nowrap;
+  animation: ticker-in 0.45s var(--ease);
+}
+
+@keyframes ticker-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* relógio ao vivo */
+.clock {
+  font-family: var(--font-display);
+  font-size: 13px;
+  color: var(--neon);
+  text-shadow: 0 0 8px rgba(0, 212, 255, 0.45);
+  font-variant-numeric: tabular-nums;
+}
+
+.clock-cursor {
+  font-style: normal;
+  animation: cursor-blink 1.1s steps(1) infinite;
+}
+
+@keyframes cursor-blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+/* lâmina de brilho percorrendo as barras de progresso principais */
+.overall-fill,
+.goal-fill,
+.radar-fill {
+  position: relative;
+  overflow: hidden;
+}
+
+.overall-fill::after,
+.goal-fill::after,
+.radar-fill::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent, rgba(230, 250, 255, 0.35), transparent);
+  background-size: 200% 100%;
+  animation: bar-sheen 2.8s linear infinite;
+}
+
+@keyframes bar-sheen {
+  from {
+    background-position: 200% 0;
+  }
+  to {
+    background-position: -200% 0;
+  }
+}
+
 /* ---------- toast ---------- */
 
 .toast {
@@ -2097,6 +2345,10 @@ textarea {
   .kanban-board {
     grid-template-columns: repeat(6, 230px);
   }
+
+  .ticker {
+    display: none;
+  }
 }
 
 @media (max-width: 760px) {
@@ -2131,7 +2383,8 @@ textarea {
   }
 
   .sidebar-foot,
-  .nav-tip {
+  .nav-tip,
+  .hud-frame {
     display: none;
   }
 

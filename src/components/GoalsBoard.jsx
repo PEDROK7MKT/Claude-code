@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { IconCheck, IconPlus, IconRefresh, IconTarget, IconTrash, IconTrophy } from '../icons.jsx'
+import { CountUp } from './Fx.jsx'
 
 export default function GoalsBoard({ goals, overall, onBump, onAdd, onRemove, onNewDay }) {
   const [label, setLabel] = useState('')
@@ -30,7 +31,9 @@ export default function GoalsBoard({ goals, overall, onBump, onAdd, onRemove, on
             <div className="overall-bar">
               <div className="overall-fill" style={{ width: `${overall}%` }} />
             </div>
-            <span className="overall-num">{overall}%</span>
+            <span className="overall-num">
+              <CountUp value={overall} format={(v) => `${Math.round(v)}%`} />
+            </span>
           </div>
           <button className="btn btn-ghost icon-btn" onClick={onNewDay} title="Iniciar novo dia (zera o progresso)">
             <IconRefresh />

@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react'
 import { kvGet, kvSet } from '../storage.js'
 import { uid } from '../model.js'
 import { IconBolt, IconCheck, IconPlus, IconTrash, IconTrophy, IconVault } from '../icons.jsx'
+import { CountUp } from './Fx.jsx'
 
 const CATEGORIES = ['Recorrência/Cliente', 'Brique/Revenda', 'Importação', 'Serviço avulso', 'Outro']
 
@@ -84,11 +85,11 @@ export default function FinanceView() {
   const goalHit = goal > 0 && stats.monthIncome >= goal
 
   const tiles = [
-    { label: 'Receita recorrente (MRR)', value: brl(stats.mrr), sub: `${stats.recCount} entrada${stats.recCount === 1 ? '' : 's'} recorrente${stats.recCount === 1 ? '' : 's'}`, accent: true },
-    { label: 'Receita total do mês', value: brl(stats.monthIncome), sub: 'recorrentes + pontuais do mês' },
-    { label: 'Despesas totais', value: brl(stats.monthExpense), sub: 'recorrentes + pontuais do mês' },
-    { label: 'Lucro líquido', value: brl(stats.profit), sub: 'receita − despesa', tone: stats.profit >= 0 ? 'win' : 'lost' },
-    { label: 'Ticket médio', value: stats.ticket === null ? '—' : brl(stats.ticket), sub: 'MRR ÷ entradas recorrentes' },
+    { label: 'Receita recorrente (MRR)', value: <CountUp value={stats.mrr} format={brl} />, sub: `${stats.recCount} entrada${stats.recCount === 1 ? '' : 's'} recorrente${stats.recCount === 1 ? '' : 's'}`, accent: true },
+    { label: 'Receita total do mês', value: <CountUp value={stats.monthIncome} format={brl} />, sub: 'recorrentes + pontuais do mês' },
+    { label: 'Despesas totais', value: <CountUp value={stats.monthExpense} format={brl} />, sub: 'recorrentes + pontuais do mês' },
+    { label: 'Lucro líquido', value: <CountUp value={stats.profit} format={brl} />, sub: 'receita − despesa', tone: stats.profit >= 0 ? 'win' : 'lost' },
+    { label: 'Ticket médio', value: stats.ticket === null ? '—' : <CountUp value={stats.ticket} format={brl} />, sub: 'MRR ÷ entradas recorrentes' },
   ]
 
   return (

@@ -1,6 +1,7 @@
 import { useMemo } from 'react'
 import { scoreLead, scoreTier } from '../model.js'
 import { IconBolt, IconEye, IconFunnel, IconTrophy } from '../icons.jsx'
+import { CountUp } from './Fx.jsx'
 
 export default function StatTiles({ leads }) {
   const stats = useMemo(() => {
@@ -14,13 +15,14 @@ export default function StatTiles({ leads }) {
   }, [leads])
 
   const tiles = [
-    { icon: IconEye, label: 'Leads no radar', value: stats.total, sub: 'total cadastrado' },
-    { icon: IconBolt, label: 'Leads quentes', value: stats.hot, sub: 'score ≥ 65', accent: true },
-    { icon: IconFunnel, label: 'Reuniões na mesa', value: stats.meetings, sub: 'estágio reunião' },
+    { icon: IconEye, label: 'Leads no radar', value: <CountUp value={stats.total} />, sub: 'total cadastrado' },
+    { icon: IconBolt, label: 'Leads quentes', value: <CountUp value={stats.hot} />, sub: 'score ≥ 65', accent: true },
+    { icon: IconFunnel, label: 'Reuniões na mesa', value: <CountUp value={stats.meetings} />, sub: 'estágio reunião' },
     {
       icon: IconTrophy,
       label: 'Taxa de fechamento',
-      value: stats.winRate === null ? '—' : `${stats.winRate}%`,
+      value:
+        stats.winRate === null ? '—' : <CountUp value={stats.winRate} format={(v) => `${Math.round(v)}%`} />,
       sub: `${stats.closed} contrato${stats.closed === 1 ? '' : 's'} fechado${stats.closed === 1 ? '' : 's'}`,
     },
   ]

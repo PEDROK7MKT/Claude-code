@@ -20,6 +20,7 @@ import ProposalView from './components/ProposalView.jsx'
 import ImportCalc from './components/ImportCalc.jsx'
 import FinanceView from './components/FinanceView.jsx'
 import NotesView from './components/NotesView.jsx'
+import { BootScreen, CountUp, HudFrame, LiveClock, StatusTicker } from './components/Fx.jsx'
 
 const NAV = [
   { id: 'central', label: 'Batcomputador', icon: IconGrid, sub: 'Visão geral do dia' },
@@ -44,6 +45,9 @@ export default function App() {
   const [goalsDate, setGoalsDate] = useState(todayKey())
   const [toast, setToast] = useState(null)
   const toastTimer = useRef(null)
+  const [booting, setBooting] = useState(
+    () => !window.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches,
+  )
 
   // Boot: hidrata do localStorage; se for a primeira visita, semeia leads demo.
   useEffect(() => {
@@ -125,8 +129,22 @@ export default function App() {
     return target === 0 ? 0 : Math.round((done / target) * 100)
   }, [goals])
 
+  const tickerMessages = useMemo(() => {
+    const emTratativa = leads.filter((l) =>
+      ['abordado', 'respondeu', 'reuniao'].includes(l.stage),
+    ).length
+    return [
+      'SISTEMAS OPERACIONAIS · TODOS OS MÓDULOS ONLINE',
+      `RADAR VARRENDO GOTHAM · ${leads.length} LEAD${leads.length === 1 ? '' : 'S'} MONITORADO${leads.length === 1 ? '' : 'S'}`,
+      `FUNIL ATIVO · ${emTratativa} EM TRATATIVA`,
+      `METAS DO DIA · ${overall}% CONCLUÍDO`,
+    ]
+  }, [leads, overall])
+
   return (
     <div className="shell">
+      {booting && <BootScreen onDone={() => setBooting(false)} />}
+      <HudFrame />
       <div className="bat-watermark" aria-hidden="true">
         <BatEmblem size={720} />
       </div>
@@ -170,6 +188,7 @@ export default function App() {
               <p>Central de operações · agência de marketing digital</p>
             </div>
           </div>
+          <StatusTicker messages={tickerMessages} />
           <div className="topbar-meta">
             <div className="day-progress" role="img" aria-label={`Progresso do dia: ${overall}%`}>
               <svg viewBox="0 0 44 44" width="44" height="44">
@@ -182,11 +201,14 @@ export default function App() {
                   strokeDasharray={`${(overall / 100) * 119.4} 119.4`}
                 />
               </svg>
-              <span>{overall}%</span>
+              <span>
+                <CountUp value={overall} format={(v) => `${Math.round(v)}%`} />
+              </span>
             </div>
             <div className="topbar-date">
               <strong>{new Date().toLocaleDateString('pt-BR', { weekday: 'long' })}</strong>
               <small>{new Date().toLocaleDateString('pt-BR')}</small>
+              <LiveClock />
             </div>
           </div>
         </header>
