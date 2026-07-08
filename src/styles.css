@@ -2347,6 +2347,46 @@ textarea {
   }
 }
 
+/* ---------- backup ---------- */
+
+.backup-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 22px;
+}
+
+.backup-col {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.backup-col h3 {
+  font-family: var(--font-display);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--neon);
+}
+
+.backup-col p {
+  font-size: 14px;
+  color: var(--ink-2);
+}
+
+.backup-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+@media (max-width: 760px) {
+  .backup-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
 /* ---------- toast ---------- */
 
 .toast {

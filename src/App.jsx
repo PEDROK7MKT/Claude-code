@@ -22,6 +22,7 @@ import FinanceView from './components/FinanceView.jsx'
 import NotesView from './components/NotesView.jsx'
 import { BootScreen, CountUp, HudFrame, LiveClock, MagneticButton, StatusTicker } from './components/Fx.jsx'
 import Cursor from './components/Cursor.jsx'
+import BackupPanel from './components/BackupPanel.jsx'
 
 // three.js só é carregado/executado se o modo total estiver ativo
 const ParticleCave = lazy(() => import('./components/ParticleCave.jsx'))
@@ -214,6 +215,22 @@ export default function App() {
     setLeads((ls) => ls.filter((l) => l.id !== id))
   }, [])
 
+  // ---- Backup ----
+  const importBackup = useCallback(
+    async (backup) => {
+      setLeads(Array.isArray(backup?.crm?.leads) ? backup.crm.leads : [])
+      setGoals(Array.isArray(backup?.crm?.goals) ? backup.crm.goals : freshGoals())
+      setGoalsDate(
+        typeof backup?.crm?.goalsDate === 'string' ? backup.crm.goalsDate : todayKey(),
+      )
+      await kvSet('finance-entries', Array.isArray(backup?.cofre?.entries) ? backup.cofre.entries : [])
+      await kvSet('finance-goal', typeof backup?.cofre?.goal === 'number' ? backup.cofre.goal : 0)
+      await kvSet('notes', Array.isArray(backup?.arquivo?.notes) ? backup.arquivo.notes : [])
+      showToast('Backup restaurado com sucesso 🦇', 'win')
+    },
+    [showToast],
+  )
+
   const overall = useMemo(() => {
     const target = goals.reduce((s, g) => s + g.target, 0)
     const done = goals.reduce((s, g) => s + Math.min(g.done, g.target), 0)
@@ -353,6 +370,12 @@ export default function App() {
               />
               <StatTiles leads={leads} />
               <Kanban leads={leads} onMove={moveLead} onRemove={removeLead} compact />
+              <BackupPanel
+                leads={leads}
+                goals={goals}
+                goalsDate={goalsDate}
+                onImport={importBackup}
+              />
             </>
           )}
 

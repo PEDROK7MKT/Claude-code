@@ -164,6 +164,18 @@ export const IconArchive = () => (
   </svg>
 )
 
+export const IconDownload = () => (
+  <svg {...base}>
+    <path d="M12 3v11M7.5 9.5 12 14l4.5-4.5M4 17v3h16v-3" />
+  </svg>
+)
+
+export const IconUpload = () => (
+  <svg {...base}>
+    <path d="M12 14V3M7.5 7.5 12 3l4.5 4.5M4 17v3h16v-3" />
+  </svg>
+)
+
 export const IconTrophy = () => (
   <svg {...base}>
     <path d="M7 4h10v5a5 5 0 0 1-10 0V4Z" />

@@ -22,6 +22,10 @@ e azul neon (`#00D4FF`) com glow.
   pulsando em loop no cabeçalho.
 - Persistência em `localStorage` — sem backend.
 
+- **Backup** — exporte/importe todos os dados (leads, metas, cofre, notas) em JSON
+  pelo painel "Backup dos dados" no Batcomputador. Os dados vivem no navegador
+  (localStorage + IndexedDB); exporte de tempos em tempos.
+
 ## Rodando
 
 ```bash
@@ -30,4 +34,20 @@ npm run dev      # desenvolvimento em http://localhost:5173
 npm run build    # build de produção em dist/
 ```
 
-Stack: React 18 + Vite, CSS puro (sem frameworks de UI).
+Stack: React 18 + Vite, Framer Motion, Three.js (lazy), Lenis, CSS puro.
+
+## Publicando (URL própria, grátis)
+
+**GitHub Pages** (já configurado): o workflow `.github/workflows/deploy.yml`
+builda e publica a cada push. Para ativar, uma única vez:
+
+1. No GitHub, abra **Settings → Pages** do repositório
+2. Em **Build and deployment → Source**, escolha **GitHub Actions**
+3. Rode o workflow (aba **Actions → Deploy no GitHub Pages → Run workflow**)
+   ou faça qualquer push — a URL final aparece no job `deploy`
+
+**Vercel** (alternativa): importe o repositório em vercel.com — ele detecta
+Vite sozinho (build `npm run build`, output `dist`). Nada mais a configurar.
+
+No celular, abra a URL publicada e use "Adicionar à tela de início" para ter
+o app com ícone próprio.
