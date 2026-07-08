@@ -64,6 +64,11 @@ export const NICHE_INTEL = {
     dor: 'captação de aluno sem funil é panfleto digital',
     isca: 'desenho um funil de captação contínua com aula-isca',
   },
+  'Oficina & Automotivo': {
+    gancho: 'quem procura "oficina perto de mim" no Google não encontra vocês',
+    dor: 'carro quebrado é urgência — o cliente liga pra primeira oficina que aparece',
+    isca: 'otimizo o Google Meu Negócio de vocês pra aparecer nessa busca',
+  },
   Outro: {
     gancho: 'o negócio de vocês tem potencial digital claramente mal aproveitado',
     dor: 'concorrente que aparece primeiro leva o cliente',

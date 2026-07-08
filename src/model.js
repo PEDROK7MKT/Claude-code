@@ -22,6 +22,7 @@ export const SEGMENTS = [
   'Academia & Fitness',
   'Pet Shop',
   'Educação & Cursos',
+  'Oficina & Automotivo',
   'Outro',
 ]
 

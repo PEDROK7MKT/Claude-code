@@ -8,7 +8,7 @@ import {
   todayKey,
   uid,
 } from './model.js'
-import { BatEmblem, IconArchive, IconBriefcase, IconChat, IconFunnel, IconGrid, IconRadar, IconShip, IconVault } from './icons.jsx'
+import { BatEmblem, IconArchive, IconBook, IconBriefcase, IconChat, IconFunnel, IconGrid, IconRadar, IconShip, IconVault } from './icons.jsx'
 import GoalsBoard from './components/GoalsBoard.jsx'
 import StatTiles from './components/StatTiles.jsx'
 import LeadForm from './components/LeadForm.jsx'
@@ -23,6 +23,7 @@ import NotesView from './components/NotesView.jsx'
 import { BootScreen, CountUp, HudFrame, LiveClock, MagneticButton, StatusTicker } from './components/Fx.jsx'
 import Cursor from './components/Cursor.jsx'
 import BackupPanel from './components/BackupPanel.jsx'
+import ManualsView from './components/ManualsView.jsx'
 
 // three.js só é carregado/executado se o modo total estiver ativo
 const ParticleCave = lazy(() => import('./components/ParticleCave.jsx'))
@@ -36,6 +37,7 @@ const NAV = [
   { id: 'crm', label: 'Prospecção', icon: IconFunnel, sub: 'CRM & funil kanban' },
   { id: 'radar', label: 'Radar', icon: IconRadar, sub: 'Leads priorizados' },
   { id: 'scripts', label: 'Scripts', icon: IconChat, sub: 'Abordagens por nicho' },
+  { id: 'manuais', label: 'Manuais', icon: IconBook, sub: 'SEO & GEO por nicho' },
   { id: 'proposta', label: 'Proposta', icon: IconBriefcase, sub: 'Pacotes & proposta' },
   { id: 'importacao', label: 'Importação', icon: IconShip, sub: 'Calculadora de custos' },
   { id: 'cofre', label: 'Cofre', icon: IconVault, sub: 'Painel financeiro' },
@@ -392,6 +394,8 @@ export default function App() {
           {view === 'radar' && <RadarView leads={leads} onMove={moveLead} />}
 
           {view === 'scripts' && <ScriptsView leads={leads} />}
+
+          {view === 'manuais' && <ManualsView />}
 
           {view === 'proposta' && <ProposalView leads={leads} />}
 

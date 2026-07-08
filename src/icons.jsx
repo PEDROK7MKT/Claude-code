@@ -176,6 +176,13 @@ export const IconUpload = () => (
   </svg>
 )
 
+export const IconBook = () => (
+  <svg {...base}>
+    <path d="M4 5a2 2 0 0 1 2-2h14v16H6a2 2 0 0 0-2 2V5Z" />
+    <path d="M4 19a2 2 0 0 1 2-2h14M9 7h7M9 10.5h5" />
+  </svg>
+)
+
 export const IconTrophy = () => (
   <svg {...base}>
     <path d="M7 4h10v5a5 5 0 0 1-10 0V4Z" />
