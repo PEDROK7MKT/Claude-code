@@ -20,7 +20,11 @@ import ProposalView from './components/ProposalView.jsx'
 import ImportCalc from './components/ImportCalc.jsx'
 import FinanceView from './components/FinanceView.jsx'
 import NotesView from './components/NotesView.jsx'
-import { BootScreen, CountUp, HudFrame, LiveClock, StatusTicker } from './components/Fx.jsx'
+import { BootScreen, CountUp, HudFrame, LiveClock, MagneticButton, StatusTicker } from './components/Fx.jsx'
+import ParticleCave from './components/ParticleCave.jsx'
+import Cursor from './components/Cursor.jsx'
+import { AnimatePresence, motion } from 'framer-motion'
+import Lenis from 'lenis'
 
 const NAV = [
   { id: 'central', label: 'Batcomputador', icon: IconGrid, sub: 'Visão geral do dia' },
@@ -72,6 +76,26 @@ export default function App() {
     if (!booted) return
     saveState({ leads, goals, goalsDate })
   }, [booted, leads, goals, goalsDate])
+
+  // Scroll amortecido (Lenis) — só desktop com mouse e sem reduced-motion
+  useEffect(() => {
+    if (
+      window.matchMedia('(pointer: coarse)').matches ||
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    )
+      return
+    const lenis = new Lenis({ duration: 1.05 })
+    let raf
+    const loop = (t) => {
+      lenis.raf(t)
+      raf = requestAnimationFrame(loop)
+    }
+    raf = requestAnimationFrame(loop)
+    return () => {
+      cancelAnimationFrame(raf)
+      lenis.destroy()
+    }
+  }, [])
 
   function showToast(message, tone = 'info') {
     clearTimeout(toastTimer.current)
@@ -145,16 +169,18 @@ export default function App() {
     <div className="shell">
       {booting && <BootScreen onDone={() => setBooting(false)} />}
       <HudFrame />
+      <Cursor />
       <div className="bat-watermark" aria-hidden="true">
         <BatEmblem size={720} />
       </div>
+      <ParticleCave />
       <aside className="sidebar">
         <div className="sidebar-emblem" title="Batcaverna Ops">
           <BatEmblem size={30} />
         </div>
         <nav className="sidebar-nav">
           {NAV.map(({ id, label, icon: Icon, sub }) => (
-            <button
+            <MagneticButton
               key={id}
               className={`nav-item ${view === id ? 'active' : ''}`}
               onClick={() => setView(id)}
@@ -167,7 +193,7 @@ export default function App() {
                 <strong>{label}</strong>
                 <small>{sub}</small>
               </span>
-            </button>
+            </MagneticButton>
           ))}
         </nav>
         <div className="sidebar-foot">
@@ -213,7 +239,23 @@ export default function App() {
           </div>
         </header>
 
-        <main className="content" key={view}>
+        <main className="content-wrap">
+          <AnimatePresence mode="wait" initial={false}>
+            <motion.div
+              className="content"
+              key={view}
+              initial={{ clipPath: 'inset(0 0 100% 0)', opacity: 0.4 }}
+              animate={{ clipPath: 'inset(0 0 0% 0)', opacity: 1 }}
+              exit={{ clipPath: 'inset(100% 0 0 0)', opacity: 0 }}
+              transition={{ duration: 0.38, ease: [0.22, 1, 0.36, 1] }}
+            >
+              <motion.span
+                className="view-scanbar"
+                initial={{ top: '0%', opacity: 1 }}
+                animate={{ top: '100%', opacity: 0 }}
+                transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+                aria-hidden="true"
+              />
           {view === 'central' && (
             <>
               <GoalsBoard
@@ -250,15 +292,34 @@ export default function App() {
           {view === 'cofre' && <FinanceView />}
 
           {view === 'arquivo' && <NotesView />}
+            </motion.div>
+          </AnimatePresence>
         </main>
       </div>
 
-      {toast && (
-        <div key={toast.key} className={`toast toast-${toast.tone}`} role="status">
-          <BatEmblem size={20} />
-          {toast.message}
-        </div>
-      )}
+      <AnimatePresence>
+        {toast && (
+          <motion.div
+            key={toast.key}
+            className={`toast toast-${toast.tone}`}
+            role="status"
+            initial={{ y: 46, x: '-50%', opacity: 0, scale: 0.9 }}
+            animate={{ y: 0, x: '-50%', opacity: 1, scale: 1 }}
+            exit={{ y: 24, x: '-50%', opacity: 0, scale: 0.94 }}
+            transition={{ type: 'spring', stiffness: 420, damping: 28 }}
+          >
+            <motion.span
+              className="toast-emblem"
+              initial={{ rotate: -160, scale: 0.4 }}
+              animate={{ rotate: 0, scale: 1 }}
+              transition={{ type: 'spring', stiffness: 260, damping: 16, delay: 0.05 }}
+            >
+              <BatEmblem size={20} />
+            </motion.span>
+            {toast.message}
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   )
 }

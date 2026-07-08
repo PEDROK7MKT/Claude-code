@@ -1,6 +1,7 @@
 import { useMemo, useState } from 'react'
 import { PACKAGES, buildProposal } from '../content.js'
 import { IconBriefcase, IconCheck, IconCopy } from '../icons.jsx'
+import Tilt from './Tilt.jsx'
 
 const brl = (n) =>
   Number(n || 0).toLocaleString('pt-BR', {
@@ -65,8 +66,8 @@ export default function ProposalView({ leads }) {
 
         <div className="packages">
           {PACKAGES.map((p) => (
+            <Tilt key={p.id} max={4}>
             <article
-              key={p.id}
               className={`package ${p.highlight ? 'package-hl' : ''} ${
                 selected === p.id ? 'package-on' : ''
               }`}
@@ -109,6 +110,7 @@ export default function ProposalView({ leads }) {
                 ))}
               </ul>
             </article>
+            </Tilt>
           ))}
         </div>
       </section>

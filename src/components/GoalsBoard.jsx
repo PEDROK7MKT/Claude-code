@@ -1,11 +1,28 @@
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { IconCheck, IconPlus, IconRefresh, IconTarget, IconTrash, IconTrophy } from '../icons.jsx'
-import { CountUp } from './Fx.jsx'
+import { Burst, CountUp } from './Fx.jsx'
 
 export default function GoalsBoard({ goals, overall, onBump, onAdd, onRemove, onNewDay }) {
   const [label, setLabel] = useState('')
   const [target, setTarget] = useState(5)
+  const [burstId, setBurstId] = useState(null)
+  const prevGoals = useRef(goals)
   const allDone = goals.length > 0 && goals.every((g) => g.done >= g.target)
+
+  // dispara a explosão de partículas no card cuja meta acabou de ser batida
+  useEffect(() => {
+    const prev = prevGoals.current
+    prevGoals.current = goals
+    const justHit = goals.find((g) => {
+      const p = prev.find((x) => x.id === g.id)
+      return p && p.done < p.target && g.done >= g.target
+    })
+    if (justHit) {
+      setBurstId(justHit.id)
+      const t = setTimeout(() => setBurstId(null), 950)
+      return () => clearTimeout(t)
+    }
+  }, [goals])
 
   function submit(e) {
     e.preventDefault()
@@ -55,6 +72,7 @@ export default function GoalsBoard({ goals, overall, onBump, onAdd, onRemove, on
           const done = g.done >= g.target
           return (
             <article key={g.id} className={`goal ${done ? 'goal-done' : ''}`}>
+              {burstId === g.id && <Burst />}
               <div className="goal-top">
                 <h3>{g.label}</h3>
                 <button

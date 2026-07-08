@@ -1316,7 +1316,6 @@ textarea {
 }
 
 .kcard:hover {
-  transform: translateY(-2px);
   border-color: rgba(0, 212, 255, 0.4);
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5), 0 0 14px rgba(0, 212, 255, 0.12);
 }
@@ -2300,8 +2299,11 @@ textarea {
   font-weight: 600;
   letter-spacing: 0.03em;
   box-shadow: 0 12px 32px rgba(0, 0, 0, 0.6), 0 0 20px rgba(0, 212, 255, 0.18);
-  animation: toast-in 2.6s var(--ease) forwards;
-  transform: translateX(-50%);
+}
+
+.toast-emblem {
+  display: grid;
+  place-items: center;
 }
 
 .toast svg {
@@ -2319,20 +2321,115 @@ textarea {
   filter: drop-shadow(0 0 6px rgba(61, 220, 132, 0.6));
 }
 
-@keyframes toast-in {
-  0% {
-    opacity: 0;
-    transform: translate(-50%, 14px);
-  }
-  8%,
-  88% {
-    opacity: 1;
-    transform: translate(-50%, 0);
-  }
-  100% {
-    opacity: 0;
-    transform: translate(-50%, 8px);
-  }
+/* ---------- FX premium: partículas, cursor, tilt, burst, scanbar ---------- */
+
+.particle-cave {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+}
+
+html.cursor-fx,
+html.cursor-fx * {
+  cursor: none !important;
+}
+
+.cursor-dot {
+  position: fixed;
+  top: -3px;
+  left: -3px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--neon);
+  box-shadow: 0 0 10px rgba(0, 212, 255, 0.9);
+  z-index: 400;
+  pointer-events: none;
+}
+
+.cursor-ring {
+  position: fixed;
+  top: -17px;
+  left: -17px;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 1px solid rgba(0, 212, 255, 0.55);
+  z-index: 400;
+  pointer-events: none;
+  transition: scale 0.3s var(--ease), background 0.3s var(--ease), border-color 0.3s var(--ease);
+}
+
+.cursor-ring.cursor-hot {
+  scale: 1.7;
+  background: rgba(0, 212, 255, 0.07);
+  border-color: rgba(0, 212, 255, 0.85);
+}
+
+.tilt {
+  position: relative;
+}
+
+.tilt-glare {
+  position: absolute;
+  inset: 0;
+  border-radius: var(--radius);
+  pointer-events: none;
+  background: radial-gradient(
+    240px circle at var(--gx, 50%) var(--gy, 50%),
+    rgba(185, 240, 255, 0.11),
+    transparent 62%
+  );
+}
+
+.goal {
+  position: relative;
+}
+
+.burst {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: 5;
+  pointer-events: none;
+}
+
+.burst i {
+  position: absolute;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--neon);
+  box-shadow: 0 0 8px rgba(0, 212, 255, 0.9);
+}
+
+.burst b {
+  position: absolute;
+  top: -26px;
+  left: -26px;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(0, 212, 255, 0.8);
+  box-shadow: 0 0 18px rgba(0, 212, 255, 0.5);
+}
+
+.content {
+  position: relative;
+}
+
+.view-scanbar {
+  position: absolute;
+  left: -4px;
+  right: -4px;
+  height: 2px;
+  z-index: 6;
+  background: linear-gradient(90deg, transparent, var(--neon), transparent);
+  box-shadow: 0 0 18px rgba(0, 212, 255, 0.8);
+  pointer-events: none;
 }
 
 /* ---------- responsivo ---------- */

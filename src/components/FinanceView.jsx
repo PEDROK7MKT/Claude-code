@@ -3,6 +3,7 @@ import { kvGet, kvSet } from '../storage.js'
 import { uid } from '../model.js'
 import { IconBolt, IconCheck, IconPlus, IconTrash, IconTrophy, IconVault } from '../icons.jsx'
 import { CountUp } from './Fx.jsx'
+import Tilt from './Tilt.jsx'
 
 const CATEGORIES = ['Recorrência/Cliente', 'Brique/Revenda', 'Importação', 'Serviço avulso', 'Outro']
 
@@ -107,13 +108,15 @@ export default function FinanceView() {
 
         <div className="tiles finance-tiles">
           {tiles.map((t) => (
-            <article key={t.label} className={`tile ${t.accent ? 'tile-accent' : ''} ${t.tone ? `tile-${t.tone}` : ''}`}>
-              <div>
-                <span className="tile-value">{t.value}</span>
-                <span className="tile-label">{t.label}</span>
-                <span className="tile-sub">{t.sub}</span>
-              </div>
-            </article>
+            <Tilt key={t.label} max={6}>
+              <article className={`tile ${t.accent ? 'tile-accent' : ''} ${t.tone ? `tile-${t.tone}` : ''}`}>
+                <div>
+                  <span className="tile-value">{t.value}</span>
+                  <span className="tile-label">{t.label}</span>
+                  <span className="tile-sub">{t.sub}</span>
+                </div>
+              </article>
+            </Tilt>
           ))}
         </div>
 

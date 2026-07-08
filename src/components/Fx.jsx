@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
+import { motion, useMotionValue, useSpring } from 'framer-motion'
 import { BatEmblem } from '../icons.jsx'
 
 // Efeitos de "vida" do HUD: contadores animados, boot, relógio e ticker.
@@ -103,4 +104,57 @@ export function StatusTicker({ messages }) {
 /* Moldura HUD fixa nas bordas da tela (decorativa, some no mobile) */
 export function HudFrame() {
   return <div className="hud-frame" aria-hidden="true" />
+}
+
+/* Botão magnético: desliza levemente na direção do ponteiro (mola) */
+export function MagneticButton({ children, strength = 0.32, ...props }) {
+  const x = useMotionValue(0)
+  const y = useMotionValue(0)
+  const sx = useSpring(x, { stiffness: 380, damping: 22, mass: 0.5 })
+  const sy = useSpring(y, { stiffness: 380, damping: 22, mass: 0.5 })
+  function onMove(e) {
+    const r = e.currentTarget.getBoundingClientRect()
+    x.set((e.clientX - r.left - r.width / 2) * strength)
+    y.set((e.clientY - r.top - r.height / 2) * strength)
+  }
+  function reset() {
+    x.set(0)
+    y.set(0)
+  }
+  return (
+    <motion.button style={{ x: sx, y: sy }} onPointerMove={onMove} onPointerLeave={reset} {...props}>
+      {children}
+    </motion.button>
+  )
+}
+
+/* Explosão de partículas ciano — feedback de meta batida */
+export function Burst() {
+  const parts = Array.from({ length: 14 })
+  return (
+    <span className="burst" aria-hidden="true">
+      {parts.map((_, i) => {
+        const angle = (i / parts.length) * Math.PI * 2
+        const dist = 48 + (i % 3) * 18
+        return (
+          <motion.i
+            key={i}
+            initial={{ x: 0, y: 0, opacity: 1, scale: 1 }}
+            animate={{
+              x: Math.cos(angle) * dist,
+              y: Math.sin(angle) * dist,
+              opacity: 0,
+              scale: 0.15,
+            }}
+            transition={{ duration: 0.75, ease: [0.16, 1, 0.3, 1] }}
+          />
+        )
+      })}
+      <motion.b
+        initial={{ scale: 0.25, opacity: 0.9 }}
+        animate={{ scale: 2.4, opacity: 0 }}
+        transition={{ duration: 0.65, ease: 'easeOut' }}
+      />
+    </span>
+  )
 }

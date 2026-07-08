@@ -2,6 +2,7 @@ import { useMemo } from 'react'
 import { scoreLead, scoreTier } from '../model.js'
 import { IconBolt, IconEye, IconFunnel, IconTrophy } from '../icons.jsx'
 import { CountUp } from './Fx.jsx'
+import Tilt from './Tilt.jsx'
 
 export default function StatTiles({ leads }) {
   const stats = useMemo(() => {
@@ -30,16 +31,18 @@ export default function StatTiles({ leads }) {
   return (
     <section className="tiles">
       {tiles.map(({ icon: Icon, label, value, sub, accent }) => (
-        <article key={label} className={`tile ${accent ? 'tile-accent' : ''}`}>
-          <span className="tile-icon icon-btn">
-            <Icon />
-          </span>
-          <div>
-            <span className="tile-value">{value}</span>
-            <span className="tile-label">{label}</span>
-            <span className="tile-sub">{sub}</span>
-          </div>
-        </article>
+        <Tilt key={label} max={6}>
+          <article className={`tile ${accent ? 'tile-accent' : ''}`}>
+            <span className="tile-icon icon-btn">
+              <Icon />
+            </span>
+            <div>
+              <span className="tile-value">{value}</span>
+              <span className="tile-label">{label}</span>
+              <span className="tile-sub">{sub}</span>
+            </div>
+          </article>
+        </Tilt>
       ))}
     </section>
   )
