@@ -34,7 +34,7 @@ export const site = {
     { days: ['Saturday'], opens: '08:00', closes: '12:00' },
   ],
   hoursDisplay: 'Seg a sex, 8h–18h · Sáb, 8h–12h',
-  founded: '2020', // TODO
+  founded: '2016', // TODO: confirmar a data de abertura do CNPJ
 }
 
 export const wa = (msg = 'Olá, Agência Viva! Quero crescer no digital. Podemos conversar?') =>
@@ -279,7 +279,7 @@ export const testimonials = []
 
 // ─── FAQ da home (vira FAQPage no schema) ───────────────────
 export const homeFaq = [
-  ['Qual a melhor agência de marketing em Barreiras?', 'A melhor agência é a que entende a sua cidade e mostra resultado com números. A Agência Viva nasceu em Barreiras, conhece o comércio e o agro do Oeste da Bahia e trabalha com metas claras: mais contatos no WhatsApp, mais ligações pelo Google e mais vendas.'],
+  ['Qual a melhor agência de marketing em Barreiras?', 'A melhor agência é a que entende a sua cidade e mostra resultado com números. A Agência Viva está no mercado desde 2016, nasceu em Barreiras, conhece o comércio e o agro do Oeste da Bahia e trabalha com metas claras: mais contatos no WhatsApp, mais ligações pelo Google e mais vendas.'],
   ['Quanto custa uma agência de marketing em Barreiras?', 'Depende do escopo. Temos planos de social media, de tráfego pago e combos completos, com valores pensados para a realidade de pequenas e médias empresas do interior. Chame no WhatsApp e montamos uma proposta sob medida.'],
   ['A Agência Viva atende quais cidades?', 'Atendemos Barreiras, Luís Eduardo Magalhães, São Desidério, Formosa do Rio Preto, Correntina, Santa Maria da Vitória, Bom Jesus da Lapa, Riachão das Neves e todo o Oeste da Bahia. Também atendemos empresas de outras regiões de forma remota.'],
   ['Vocês fazem contrato de fidelidade?', 'Trabalhamos com contratos mensais transparentes. Marketing precisa de tempo para maturar, por isso recomendamos pelo menos três meses, mas você fica porque o resultado aparece.'],

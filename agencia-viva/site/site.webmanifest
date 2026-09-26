@@ -3,8 +3,8 @@
   "short_name": "Viva",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#f5efe4",
-  "theme_color": "#f5efe4",
+  "background_color": "#f3f2ee",
+  "theme_color": "#0b0b0b",
   "icons": [
     {
       "src": "/favicon.svg",

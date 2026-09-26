@@ -5,20 +5,21 @@
   const doc = document.documentElement
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches
   const fine = matchMedia('(pointer: fine)').matches
-  const G = window.gsap
-  const hasG = !!(G && window.ScrollTrigger)
+  const hasG = !!(window.gsap && window.ScrollTrigger)
   doc.classList.remove('no-js')
   if (!hasG) doc.classList.add('no-gsap')
+  let lenis = null
 
   // ─── menu mobile ───
   const burger = document.querySelector('.burger')
   const setMenu = open => {
     doc.classList.toggle('nav-open', open)
     burger && burger.setAttribute('aria-expanded', open)
+    burger && burger.setAttribute('aria-label', open ? 'Fechar menu' : 'Abrir menu')
     if (lenis) open ? lenis.stop() : lenis.start()
   }
   burger && burger.addEventListener('click', () => setMenu(!doc.classList.contains('nav-open')))
-  addEventListener('keydown', e => { if (e.key === 'Escape' && doc.classList.contains('nav-open')) setMenu(false) })
+  addEventListener('keydown', e => { if (e.key === 'Escape' && doc.classList.contains('nav-open')) { setMenu(false); burger.focus() } })
   document.querySelectorAll('.nav a').forEach(a => a.addEventListener('click', () => setMenu(false)))
 
   // ─── header: some ao descer, volta ao subir ───
@@ -27,166 +28,216 @@
   const onScroll = y => {
     if (!hdr) return
     hdr.classList.toggle('is-scrolled', y > 30)
-    hdr.classList.toggle('is-hidden', y > 400 && y > lastY + 2 && !doc.classList.contains('nav-open'))
-    if (y < lastY - 2 || y < 400) hdr.classList.remove('is-hidden')
+    if (y > 400 && y > lastY + 2 && !doc.classList.contains('nav-open')) hdr.classList.add('is-hidden')
+    else if (y < lastY - 2 || y < 400) hdr.classList.remove('is-hidden')
     lastY = y
   }
 
-  let lenis = null
+  // ─── mapa interativo (funciona com ou sem animação) ───
+  const mapWrap = document.querySelector('[data-map]')
+  const setCity = slug => {
+    if (!mapWrap) return
+    const a = mapWrap.querySelector(`.map a[data-city="${slug}"]`)
+    if (!a) return
+    mapWrap.querySelectorAll('[data-city]').forEach(el => el.classList.toggle('is-on', el.dataset.city === slug))
+    const info = mapWrap.querySelector('.map-info')
+    if (info) {
+      info.querySelector('b').textContent = a.dataset.name
+      info.querySelector('.hand').textContent = a.dataset.dist
+      info.querySelector('span:not(.hand)').textContent = a.dataset.niches
+      const link = info.querySelector('a')
+      link.href = a.getAttribute('href')
+      link.textContent = `Ver marketing em ${a.dataset.name} →`
+    }
+    const route = mapWrap.querySelector('.route')
+    if (route) {
+      const [bx, by] = route.dataset.from.split(',').map(Number)
+      const [cx, cy] = a.dataset.xy.split(',').map(Number)
+      route.setAttribute('d', slug === 'barreiras' ? '' : `M${bx},${by - 20} Q${(bx + cx) / 2 + 60},${Math.min(by, cy) - 80} ${cx},${cy - 20}`)
+      if (window.gsap && slug !== 'barreiras' && !reduce) {
+        const l = route.getTotalLength()
+        gsap.fromTo(route, { strokeDashoffset: l }, { strokeDashoffset: 0, duration: 0.8, ease: 'power2.out' })
+      }
+    }
+  }
+  if (mapWrap) {
+    mapWrap.querySelectorAll('[data-city]').forEach(el => {
+      el.addEventListener('mouseenter', () => setCity(el.dataset.city))
+      el.addEventListener('focus', () => setCity(el.dataset.city))
+    })
+    setCity('barreiras')
+  }
+
   if (reduce || !hasG) {
     addEventListener('scroll', () => onScroll(scrollY), { passive: true })
     onScroll(scrollY)
+    document.querySelectorAll('.ticket').forEach(t => t.classList.add('is-on'))
     return
   }
 
   doc.classList.add('js-anim')
-  const { gsap } = window
   gsap.registerPlugin(ScrollTrigger)
   if (window.SplitText) gsap.registerPlugin(SplitText)
 
   // ─── rolagem suave ───
   if (window.Lenis) {
-    lenis = new Lenis({ lerp: 0.12, wheelMultiplier: 1 })
+    lenis = new Lenis({ lerp: 0.12 })
     lenis.on('scroll', e => { ScrollTrigger.update(); onScroll(e.scroll) })
     gsap.ticker.add(t => lenis.raf(t * 1000))
     gsap.ticker.lagSmoothing(0)
     document.querySelectorAll('a[href^="#"]').forEach(a => a.addEventListener('click', e => {
       const id = a.getAttribute('href').slice(1)
       const t = id && document.getElementById(id)
-      if (t) { e.preventDefault(); lenis.scrollTo(t, { offset: -80 }) }
+      if (t) { e.preventDefault(); lenis.scrollTo(t, { offset: -70 }) }
     }))
-  } else {
-    addEventListener('scroll', () => onScroll(scrollY), { passive: true })
-  }
+  } else addEventListener('scroll', () => onScroll(scrollY), { passive: true })
   onScroll(scrollY)
 
   const mm = gsap.matchMedia()
-  const DESK = '(min-width: 901px)'
+  const DESK = '(min-width: 901px)', MOB = '(max-width: 900px)'
+  const inHero = el => !!el.closest('.hero, .phero')
 
   // ─── títulos: linhas sobem de dentro de uma máscara ───
-  const splitReveal = (el, delay = 0) => {
-    if (!window.SplitText) return
-    SplitText.create(el, {
-      type: 'lines', mask: 'lines', linesClass: 'split-line', autoSplit: true,
-      onSplit: self => gsap.from(self.lines, {
-        yPercent: 110, rotate: 2, duration: 1.05, ease: 'expo.out', stagger: 0.09, delay,
-        scrollTrigger: el.closest('.hero, .phero') ? undefined : { trigger: el, start: 'top 86%', once: true },
-      }),
-    })
-  }
   document.fonts.ready.then(() => {
-    document.querySelectorAll('[data-split]').forEach(el => splitReveal(el, el.closest('.hero, .phero') ? 0.15 : 0))
+    document.querySelectorAll('[data-split]').forEach(el => {
+      if (!window.SplitText) return
+      SplitText.create(el, {
+        type: 'lines', mask: 'lines', linesClass: 'split-line', autoSplit: true,
+        onSplit: self => gsap.from(self.lines, {
+          yPercent: 110, rotate: 2, duration: 1.05, ease: 'expo.out', stagger: 0.09, delay: inHero(el) ? 0.1 : 0,
+          scrollTrigger: inHero(el) ? undefined : { trigger: el, start: 'top 88%', once: true },
+        }),
+      })
+    })
     ScrollTrigger.refresh()
   })
 
-  // blocos que sobem
   gsap.utils.toArray('[data-rise]').forEach(el => {
     gsap.to(el, { opacity: 1, y: 0, duration: 1, ease: 'expo.out', delay: +el.dataset.rise || 0,
-      scrollTrigger: el.closest('.hero, .phero') ? undefined : { trigger: el, start: 'top 90%', once: true } })
+      scrollTrigger: inHero(el) ? undefined : { trigger: el, start: 'top 92%', once: true } })
   })
 
-  // traços feitos à mão se desenham
   gsap.utils.toArray('[data-draw] path').forEach(p => {
-    const len = p.getTotalLength()
-    const host = p.closest('[data-draw]')
-    gsap.fromTo(p, { strokeDasharray: len, strokeDashoffset: len }, {
-      strokeDashoffset: 0, duration: 1.1, ease: 'power2.inOut', delay: +host.dataset.draw || 0.2,
-      scrollTrigger: host.closest('.hero, .phero') ? undefined : { trigger: host, start: 'top 85%', once: true },
-    })
+    const len = p.getTotalLength(), host = p.closest('[data-draw]')
+    gsap.fromTo(p, { strokeDasharray: len, strokeDashoffset: len }, { strokeDashoffset: 0, duration: 1.1, ease: 'power2.inOut', delay: +host.dataset.draw || 0.2,
+      scrollTrigger: inHero(host) ? undefined : { trigger: host, start: 'top 85%', once: true } })
   })
 
-  // ─── hero: conversa no WhatsApp acontecendo ───
-  const heroArt = document.querySelector('.hero-art')
-  if (heroArt) {
-    const msgs = gsap.utils.toArray('.msg[data-seq]')
-    const tl = gsap.timeline({ delay: 0.5 })
+  // ─── hero: conversa acontecendo no WhatsApp ───
+  if (document.querySelector('.hero-art')) {
+    const tl = gsap.timeline({ delay: 0.35 })
     tl.from('.phone', { y: 80, rotate: 12, opacity: 0, duration: 1.2, ease: 'expo.out' })
-      .to('.hero-art .seal', { opacity: 1, duration: 0.6 }, 0.9)
-      .from('.hero-art .seal', { scale: 0.4, rotate: -90, duration: 1, ease: 'back.out(1.8)' }, 0.9)
-    msgs.forEach((m, i) => tl.to(m, { opacity: 1, y: 0, scale: 1, duration: 0.45, ease: 'back.out(2)' }, 1.1 + i * 1.05))
-    tl.to('.chip--maps', { opacity: 1, duration: 0.01 }, 2.2).from('.chip--maps', { y: -30, rotate: 20, scale: 0.7, duration: 0.8, ease: 'back.out(2)' }, 2.2)
-      .to('.chip--ig', { opacity: 1, duration: 0.01 }, 3.3).from('.chip--ig', { y: 30, rotate: -20, scale: 0.7, duration: 0.8, ease: 'back.out(2)' }, 3.3)
-      .to('.hero-art .note', { opacity: 1, duration: 0.6 }, 1.6)
+      .to('.hero-art .seal', { opacity: 1, duration: 0.4 }, 0.8)
+      .from('.hero-art .seal', { scale: 0.3, rotate: -120, duration: 1.1, ease: 'back.out(1.7)' }, 0.8)
+    gsap.utils.toArray('.msg[data-seq]').forEach((m, i) => tl.to(m, { opacity: 1, y: 0, scale: 1, duration: 0.45, ease: 'back.out(2)' }, 1 + i * 1.05))
+    tl.to('.chip--maps', { opacity: 1, duration: 0.01 }, 2.1).from('.chip--maps', { y: -30, rotate: 20, scale: 0.7, duration: 0.8, ease: 'back.out(2)' }, 2.1)
+      .to('.chip--ig', { opacity: 1, duration: 0.01 }, 3.2).from('.chip--ig', { y: 30, rotate: -20, scale: 0.7, duration: 0.8, ease: 'back.out(2)' }, 3.2)
+      .to('.hero-art .note', { opacity: 1, duration: 0.6 }, 1.5)
 
     mm.add(DESK, () => {
-      gsap.to('.phone', { yPercent: -10, rotate: -3, ease: 'none', scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true } })
-      gsap.to('.chip--maps', { y: -120, ease: 'none', scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true } })
-      gsap.to('.chip--ig', { y: -40, x: -30, ease: 'none', scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true } })
-      gsap.to('.hero h1', { filter: 'blur(6px)', opacity: 0.25, y: -60, ease: 'none', scrollTrigger: { trigger: '.hero', start: '30% top', end: 'bottom top', scrub: true } })
+      const st = { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true }
+      gsap.to('.phone', { yPercent: -10, rotate: -3, ease: 'none', scrollTrigger: st })
+      gsap.to('.chip--maps', { y: -120, ease: 'none', scrollTrigger: { ...st } })
+      gsap.to('.chip--ig', { y: -40, x: -30, ease: 'none', scrollTrigger: { ...st } })
+      gsap.fromTo('.hero h1', { filter: 'blur(0px)', opacity: 1, y: 0 }, { filter: 'blur(6px)', opacity: 0.2, y: -60, ease: 'none', immediateRender: false, scrollTrigger: { ...st, start: '30% top' } })
     })
   }
 
-  // ─── faixa: velocidade reage à rolagem ───
-  const band = document.querySelector('.band__track')
-  if (band) {
-    const loop = gsap.to(band, { xPercent: -50, duration: 38, ease: 'none', repeat: -1 })
+  // selo: gira sempre, acelera com a rolagem
+  const ring = document.querySelector('.seal .ring')
+  if (ring) {
+    const spin = gsap.to(ring, { rotate: 360, duration: 16, ease: 'none', repeat: -1, transformOrigin: '50% 50%' })
+    ScrollTrigger.create({ onUpdate: s => { const v = Math.abs(s.getVelocity()); gsap.to(spin, { timeScale: 1 + Math.min(v / 250, 8), duration: 0.2, overwrite: true }); gsap.to(spin, { timeScale: 1, duration: 1.4, delay: 0.2 }) } })
+  }
+
+  // ─── faixas cruzadas: sentidos opostos, aceleram com a rolagem ───
+  const bandLoops = [...document.querySelectorAll('.band__track')].map((t, i) =>
+    gsap.fromTo(t, { xPercent: i ? -50 : 0 }, { xPercent: i ? 0 : -50, duration: i ? 46 : 38, ease: 'none', repeat: -1 }))
+  if (bandLoops.length) {
     let dir = 1
-    ScrollTrigger.create({
-      trigger: '.band', start: 'top bottom', end: 'bottom top',
-      onUpdate: s => {
-        const v = s.getVelocity()
-        if (v) dir = v > 0 ? 1 : -1
-        gsap.to(loop, { timeScale: dir * (1 + Math.min(Math.abs(v) / 400, 5)), duration: 0.25, overwrite: true })
-        gsap.to(loop, { timeScale: dir, duration: 1.2, delay: 0.25 })
-      },
-    })
+    ScrollTrigger.create({ trigger: '.bands', start: 'top bottom', end: 'bottom top', onUpdate: s => {
+      const v = s.getVelocity(); if (v) dir = v > 0 ? 1 : -1
+      bandLoops.forEach(l => { gsap.to(l, { timeScale: dir * (1 + Math.min(Math.abs(v) / 350, 5)), duration: 0.25, overwrite: true }); gsap.to(l, { timeScale: dir, duration: 1.2, delay: 0.25 }) })
+    } })
   }
 
   // ─── manifesto: acende palavra por palavra ───
   const man = document.querySelector('.manifesto p')
-  if (man && window.SplitText) {
-    document.fonts.ready.then(() => {
-      const st = SplitText.create(man, { type: 'words' })
-      gsap.fromTo(st.words, { opacity: 0.14 }, { opacity: 1, stagger: 0.1, ease: 'none', scrollTrigger: { trigger: man, start: 'top 78%', end: 'bottom 45%', scrub: true } })
-    })
-  }
+  if (man && window.SplitText) document.fonts.ready.then(() => {
+    const st = SplitText.create(man, { type: 'words' })
+    gsap.fromTo(st.words, { opacity: 0.14 }, { opacity: 1, stagger: 0.1, ease: 'none', scrollTrigger: { trigger: man, start: 'top 78%', end: 'bottom 45%', scrub: true } })
+  })
 
-  // ─── o rio passando por baixo dos serviços ───
-  const rio = document.querySelector('.rio')
-  if (rio) {
-    const svg = rio.querySelector('.rio__svg')
-    const cards = [...rio.querySelectorAll('.ticket')]
-    const paths = [...svg.querySelectorAll('path')]
-    let tween
-    const draw = () => {
-      const r = rio.getBoundingClientRect()
-      const W = r.width, H = r.height
-      svg.setAttribute('viewBox', `0 0 ${W} ${H}`)
-      const pts = [[-80, 40]]
-      cards.forEach(c => {
-        const b = c.getBoundingClientRect()
-        pts.push([b.left - r.left + b.width / 2, b.top - r.top + b.height / 2])
-      })
-      pts.push([W + 80, H - 30])
-      // Catmull-Rom → Bézier: curva que passa pelos centros dos cartões
-      let d = `M${pts[0][0]},${pts[0][1]}`
-      for (let i = 0; i < pts.length - 1; i++) {
-        const p0 = pts[i - 1] || pts[i], p1 = pts[i], p2 = pts[i + 1], p3 = pts[i + 2] || p2
-        const c1 = [p1[0] + (p2[0] - p0[0]) / 5, p1[1] + (p2[1] - p0[1]) / 5]
-        const c2 = [p2[0] - (p3[0] - p1[0]) / 5, p2[1] - (p3[1] - p1[1]) / 5]
-        d += ` C${c1[0].toFixed(1)},${c1[1].toFixed(1)} ${c2[0].toFixed(1)},${c2[1].toFixed(1)} ${p2[0].toFixed(1)},${p2[1].toFixed(1)}`
-      }
-      paths.forEach(p => p.setAttribute('d', d))
-      const main = paths[0], len = main.getTotalLength()
-      tween && tween.scrollTrigger && tween.scrollTrigger.kill()
-      tween && tween.kill()
-      gsap.set(main, { strokeDasharray: len, strokeDashoffset: len })
-      tween = gsap.to(main, { strokeDashoffset: 0, ease: 'none', scrollTrigger: { trigger: rio, start: 'top 70%', end: 'bottom 80%', scrub: 0.6 } })
-      const shine = paths[1]
-      if (shine) gsap.set(shine, { opacity: 0 })
-      if (shine) tween.eventCallback('onUpdate', () => gsap.set(shine, { opacity: tween.progress() > 0.98 ? 1 : 0 }))
+  // ─── serviços ───
+  const svc = document.querySelector('.svc')
+  if (svc) {
+    const cards = gsap.utils.toArray('.svc .ticket')
+    const n = cards.length
+    const countEl = svc.querySelector('.svc__count b'), dots = [...svc.querySelectorAll('.dots button')]
+    let current = -1
+    const setActive = i => {
+      if (i === current) return
+      current = i
+      cards.forEach((c, k) => c.classList.toggle('is-on', k === i))
+      dots.forEach((d, k) => d.setAttribute('aria-current', k === i))
+      if (countEl) countEl.textContent = String(i + 1).padStart(2, '0')
     }
-    document.fonts.ready.then(draw)
-    let rt
-    addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(() => { draw(); ScrollTrigger.refresh() }, 200) })
 
-    cards.forEach((c, i) => {
-      gsap.from(c, { y: 120, rotate: i % 2 ? 10 : -10, scale: 0.9, opacity: 0, duration: 1.1, ease: 'back.out(1.4)',
-        scrollTrigger: { trigger: c, start: 'top 88%', once: true } })
+    // computador: roda girando em torno de um eixo abaixo dos cartões
+    mm.add(DESK, () => {
+      const STEP = 15
+      const place = p => cards.forEach((c, i) => {
+        const d = i - p, a = Math.abs(d)
+        // os que já passaram somem rápido (não cobrem o texto); os próximos ficam à vista
+        const op = d < 0 ? Math.max(0, 1 - a * 1.1) : a > 2.6 ? 0 : 1 - Math.max(0, a - 1.6) * 0.8
+        gsap.set(c, { rotate: d * STEP, scale: 1 - Math.min(a, 2) * 0.06, opacity: op, zIndex: 100 - Math.round(a * 10), pointerEvents: a > 0.5 ? 'none' : 'auto', filter: a > 0.5 ? 'grayscale(1)' : 'none' })
+      })
+      const obj = { p: 0 }
+      place(0); setActive(0)
+      const st = ScrollTrigger.create({
+        trigger: svc, start: 'top top', end: () => `+=${(n - 1) * innerHeight * 0.55}`, pin: true, scrub: 0.6, anticipatePin: 1,
+        snap: { snapTo: 1 / (n - 1), duration: { min: 0.2, max: 0.6 }, ease: 'power2.inOut', delay: 0.08 },
+        onUpdate: s => { obj.p = s.progress * (n - 1); place(obj.p); setActive(Math.round(obj.p)) },
+      })
+      gsap.from(cards, { y: 160, opacity: 0, duration: 1.1, ease: 'expo.out', stagger: 0.06, scrollTrigger: { trigger: svc, start: 'top 75%', once: true } })
+      dots.forEach((d, i) => d.onclick = () => {
+        const y = st.start + (st.end - st.start) * (i / (n - 1))
+        lenis ? lenis.scrollTo(y, { duration: 1.1 }) : scrollTo({ top: y, behavior: 'smooth' })
+      })
+      return () => { gsap.set(cards, { clearProps: 'all' }); dots.forEach(d => d.onclick = null) }
+    })
+
+    // celular: um atrás do outro, com o rio passando por baixo
+    mm.add(MOB, () => {
+      const wheel = svc.querySelector('.wheel'), svg = svc.querySelector('.rio__svg'), path = svg && svg.querySelector('path')
+      const draw = () => {
+        if (!path) return
+        const r = wheel.getBoundingClientRect()
+        svg.setAttribute('viewBox', `0 0 ${r.width} ${r.height}`)
+        const pts = [[r.width * 0.2, -40], ...cards.map((c, i) => { const b = c.getBoundingClientRect(); return [i % 2 ? r.width * 0.78 : r.width * 0.22, b.top - r.top + b.height / 2] }), [r.width * 0.5, r.height + 40]]
+        let d = `M${pts[0][0]},${pts[0][1]}`
+        for (let i = 0; i < pts.length - 1; i++) {
+          const p0 = pts[i - 1] || pts[i], p1 = pts[i], p2 = pts[i + 1], p3 = pts[i + 2] || p2
+          d += ` C${p1[0] + (p2[0] - p0[0]) / 5},${p1[1] + (p2[1] - p0[1]) / 5} ${p2[0] - (p3[0] - p1[0]) / 5},${p2[1] - (p3[1] - p1[1]) / 5} ${p2[0]},${p2[1]}`
+        }
+        path.setAttribute('d', d)
+        const len = path.getTotalLength()
+        gsap.set(path, { strokeDasharray: len, strokeDashoffset: len })
+        return gsap.to(path, { strokeDashoffset: 0, ease: 'none', scrollTrigger: { trigger: wheel, start: 'top 75%', end: 'bottom 80%', scrub: 0.6 } })
+      }
+      let tw
+      document.fonts.ready.then(() => { tw = draw() })
+      cards.forEach((c, i) => {
+        gsap.from(c, { y: 110, rotate: i % 2 ? 9 : -9, scale: 0.92, opacity: 0, duration: 1.05, ease: 'back.out(1.4)', scrollTrigger: { trigger: c, start: 'top 90%', once: true } })
+        ScrollTrigger.create({ trigger: c, start: 'top 70%', end: 'bottom 30%', onToggle: s => s.isActive && setActive(i) })
+      })
+      return () => { tw && tw.scrollTrigger && tw.scrollTrigger.kill(); tw && tw.kill() }
     })
   }
+  // cartões fora da roda (páginas internas): gráfico sobe quando aparece
+  document.querySelectorAll('.minis .ticket').forEach(t => ScrollTrigger.create({ trigger: t, start: 'top 85%', once: true, onEnter: () => t.classList.add('is-on') }))
 
-  // ─── notificações subindo (a "carta" da Viva) ───
+  // ─── notificações subindo ───
   const notif = document.querySelector('.notif')
   if (notif) {
     const items = gsap.utils.toArray('.notif .n')
@@ -194,24 +245,22 @@
       gsap.set(items, { y: 520, opacity: 0, rotate: i => (i % 2 ? 6 : -6), scale: 0.92 })
       const tl = gsap.timeline({ scrollTrigger: { trigger: notif, start: 'top top', end: `+=${items.length * 55}%`, pin: true, scrub: 0.7, anticipatePin: 1 } })
       tl.from('.lock', { y: 60, rotate: 4, duration: 0.6, ease: 'power2.out' })
-      items.forEach((n, i) => tl.to(n, { y: 0, opacity: 1, rotate: 0, scale: 1, duration: 1, ease: 'back.out(1.3)' }, 0.4 + i * 0.9))
+      items.forEach((it, i) => tl.to(it, { y: 0, opacity: 1, rotate: 0, scale: 1, duration: 1, ease: 'back.out(1.3)' }, 0.4 + i * 0.9))
       tl.to({}, { duration: 0.6 })
     })
-    mm.add('(max-width: 900px)', () => {
-      items.forEach(n => gsap.from(n, { y: 60, opacity: 0, rotate: -4, duration: 0.8, ease: 'back.out(1.6)', scrollTrigger: { trigger: n, start: 'top 92%', once: true } }))
+    mm.add(MOB, () => {
+      items.forEach(it => gsap.from(it, { y: 60, opacity: 0, rotate: -4, duration: 0.8, ease: 'back.out(1.6)', scrollTrigger: { trigger: it, start: 'top 92%', once: true } }))
     })
   }
 
-  // ─── cartas empilhadas: a de baixo encolhe quando a próxima cobre ───
+  // ─── cartas empilhadas ───
   const scards = gsap.utils.toArray('.scard')
   scards.forEach((c, i) => {
     const next = scards[i + 1]
-    if (!next) return
-    gsap.to(c, { scale: 0.93, rotate: i % 2 ? 1.5 : -1.5, ease: 'none',
-      scrollTrigger: { trigger: next, start: 'top bottom', end: 'top 20%', scrub: true } })
+    if (next) gsap.to(c, { scale: 0.93, rotate: i % 2 ? 1.5 : -1.5, ease: 'none', scrollTrigger: { trigger: next, start: 'top bottom', end: 'top 20%', scrub: true } })
   })
 
-  // ─── método: trilho horizontal preso na tela ───
+  // ─── método: trilho horizontal ───
   const track = document.querySelector('.method__track')
   if (track) {
     mm.add(DESK, () => {
@@ -219,40 +268,37 @@
       gsap.to(track, { x: () => -dist(), ease: 'none', scrollTrigger: { trigger: '.method', start: 'top top', end: () => `+=${dist()}`, pin: true, scrub: 0.8, invalidateOnRefresh: true } })
       gsap.to('.method__bar i', { scaleX: 1, ease: 'none', scrollTrigger: { trigger: '.method', start: 'top top', end: () => `+=${dist()}`, scrub: true, invalidateOnRefresh: true } })
     })
-    mm.add('(max-width: 900px)', () => {
+    mm.add(MOB, () => {
       gsap.utils.toArray('.mpanel').forEach(p => gsap.from(p, { y: 70, opacity: 0, duration: 0.9, ease: 'expo.out', scrollTrigger: { trigger: p, start: 'top 90%', once: true } }))
     })
   }
 
-  // ─── mapa: alfinetes caem, rios se desenham ───
+  // ─── mapas: rios se desenham, alfinetes caem ───
   document.querySelectorAll('.map, .minimap').forEach(map => {
-    const pins = map.querySelectorAll('.pin')
-    const rivers = map.querySelectorAll('.river, .trip')
+    const pins = map.querySelectorAll('.pin'), lines = map.querySelectorAll('.river, .trip')
     const tl = gsap.timeline({ scrollTrigger: { trigger: map, start: 'top 80%', once: true } })
-    rivers.forEach(r => { const l = r.getTotalLength(); gsap.set(r, { strokeDasharray: r.classList.contains('trip') ? '3 10' : l, strokeDashoffset: r.classList.contains('trip') ? 200 : l }) })
-    tl.to(rivers, { strokeDashoffset: 0, duration: 1.4, ease: 'power2.inOut', stagger: 0.2 })
-    tl.from(pins, { y: -60, opacity: 0, duration: 0.7, ease: 'bounce.out', stagger: 0.09, transformOrigin: '50% 100%' }, 0.3)
-    tl.from(map.querySelectorAll('text'), { opacity: 0, duration: 0.5, stagger: 0.05 }, 0.7)
+    lines.forEach(r => { const trip = r.classList.contains('trip'), l = r.getTotalLength(); gsap.set(r, { strokeDasharray: trip ? '3 10' : l, strokeDashoffset: trip ? 200 : l }) })
+    tl.to(lines, { strokeDashoffset: 0, duration: 1.4, ease: 'power2.inOut', stagger: 0.2 })
+    tl.from(pins, { y: -60, opacity: 0, duration: 0.7, ease: 'bounce.out', stagger: 0.08 }, 0.3)
+    tl.from(map.querySelectorAll('text'), { opacity: 0, duration: 0.5, stagger: 0.04 }, 0.7)
+    tl.from(map.parentElement.querySelectorAll('.map-info'), { y: 30, opacity: 0, duration: 0.7, ease: 'expo.out' }, 1)
   })
 
   // ─── adereços das páginas internas ───
   document.querySelectorAll('.phero .prop').forEach(p => {
-    gsap.from(p, { y: 70, rotate: 8, opacity: 0, duration: 1.3, ease: 'expo.out', delay: 0.35 })
+    gsap.from(p, { y: 70, rotate: 8, opacity: 0, duration: 1.3, ease: 'expo.out', delay: 0.3 })
     mm.add(DESK, () => gsap.to(p, { yPercent: -12, ease: 'none', scrollTrigger: { trigger: '.phero', start: 'top top', end: 'bottom top', scrub: true } }))
   })
 
-  // ─── CTA: o "!" balança com a rolagem ───
+  // ─── CTA e rodapé ───
   const bang = document.querySelector('.bang')
   if (bang) gsap.fromTo(bang, { rotate: -14, yPercent: -40 }, { rotate: 10, yPercent: -60, ease: 'none', scrollTrigger: { trigger: '.cta', start: 'top bottom', end: 'bottom top', scrub: true } })
-
-  // ─── rodapé: VIVA! sobe letra por letra ───
   const giant = document.querySelectorAll('.giant span')
   if (giant.length) gsap.from(giant, { yPercent: 100, rotate: i => (i % 2 ? 8 : -8), duration: 1.1, ease: 'expo.out', stagger: 0.07, scrollTrigger: { trigger: '.giant', start: 'top 95%', once: true } })
 
-  // ─── botões com leve "ímã" ───
-  if (fine) document.querySelectorAll('.btn--main, .btn--lg').forEach(b => {
+  if (fine) document.querySelectorAll('.btn--lg').forEach(b => {
     const xTo = gsap.quickTo(b, 'x', { duration: 0.5, ease: 'power3' }), yTo = gsap.quickTo(b, 'y', { duration: 0.5, ease: 'power3' })
-    b.addEventListener('pointermove', e => { const r = b.getBoundingClientRect(); xTo((e.clientX - r.left - r.width / 2) * 0.18); yTo((e.clientY - r.top - r.height / 2) * 0.25) })
+    b.addEventListener('pointermove', e => { const r = b.getBoundingClientRect(); xTo((e.clientX - r.left - r.width / 2) * 0.16); yTo((e.clientY - r.top - r.height / 2) * 0.22) })
     b.addEventListener('pointerleave', () => { xTo(0); yTo(0) })
   })
 

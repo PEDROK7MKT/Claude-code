@@ -4,6 +4,7 @@ import { mkdirSync, writeFileSync, cpSync, rmSync } from 'node:fs'
 import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { site, wa, services, cities, testimonials, homeFaq } from './src/data.mjs'
+import BP from './src/brand-paths.mjs'
 
 const root = dirname(fileURLToPath(import.meta.url))
 const out = join(root, 'site')
@@ -35,6 +36,48 @@ const hand = {
   arrow: () => '<svg viewBox="0 0 70 50" aria-hidden="true"><path d="M6 6c20-4 42 8 50 36"/><path d="M45 34l11 9 5-13"/></svg>',
 }
 const pinPath = 'M0 0C-11-17-16-25-16-33a16 16 0 1 1 32 0C16-25 11-17 0 0Z'
+
+// ─── Logos das plataformas (cores originais) ────────────────
+let gid = 0
+const brandSvg = {
+  instagram: () => { const id = `ig${++gid}`; return `<svg viewBox="0 0 24 24"><defs><radialGradient id="${id}" cx="28%" cy="108%" r="140%"><stop offset="0" stop-color="#fdf497"/><stop offset=".08" stop-color="#fdf497"/><stop offset=".45" stop-color="#fd5949"/><stop offset=".62" stop-color="#d6249f"/><stop offset=".92" stop-color="#285aeb"/></radialGradient></defs><rect width="24" height="24" rx="6" fill="url(#${id})"/><path transform="translate(4.6 4.6) scale(.617)" fill="#fff" d="${BP.instagram}"/></svg>` },
+  facebook: () => `<svg viewBox="-1 -1 26 26"><path fill="#0866ff" d="${BP.facebook}"/></svg>`,
+  tiktok: () => `<svg viewBox="0 0 24 24"><rect width="24" height="24" rx="6" fill="#000"/><g transform="translate(5 4.6) scale(.6)"><path fill="#25f4ee" transform="translate(-1 -1)" d="${BP.tiktok}"/><path fill="#fe2c55" transform="translate(1 1)" d="${BP.tiktok}"/><path fill="#fff" d="${BP.tiktok}"/></g></svg>`,
+  meta: () => { const id = `mt${++gid}`; return `<svg viewBox="-1.5 -1.5 27 27"><defs><linearGradient id="${id}" x1="0" x2="1" y1="0" y2="0"><stop offset="0" stop-color="#0064e1"/><stop offset=".6" stop-color="#0082fb"/><stop offset="1" stop-color="#0082fb"/></linearGradient></defs><path fill="url(#${id})" d="${BP.meta}"/></svg>` },
+  googleads: () => '<svg viewBox="0 0 24 24"><path d="M4.4 18.6L11 6" stroke="#fbbc04" stroke-width="6.4" stroke-linecap="round"/><path d="M11 6l7.4 12.6" stroke="#4285f4" stroke-width="6.4" stroke-linecap="round"/><circle cx="4.4" cy="18.6" r="3.3" fill="#34a853"/></svg>',
+  google: () => '<svg viewBox="0 0 24 24"><path fill="#4285f4" d="M21.6 12.2c0-.7-.1-1.4-.2-2H12v3.8h5.4a4.6 4.6 0 0 1-2 3v2.5h3.2c1.9-1.7 3-4.3 3-7.3z"/><path fill="#34a853" d="M12 22c2.7 0 5-.9 6.6-2.4l-3.2-2.5c-.9.6-2 1-3.4 1-2.6 0-4.8-1.8-5.6-4.1H3.1v2.6A10 10 0 0 0 12 22z"/><path fill="#fbbc05" d="M6.4 14a6 6 0 0 1 0-4V7.4H3.1a10 10 0 0 0 0 9.2z"/><path fill="#ea4335" d="M12 6c1.5 0 2.8.5 3.8 1.5l2.9-2.9A10 10 0 0 0 3.1 7.4L6.4 10C7.2 7.7 9.4 6 12 6z"/></svg>',
+  googlemaps: () => {
+    const segs = BP.googlemaps.split(/(?=M)/)
+    const col = ['#34a853', '#fbbc04', '#ea4335', '#4285f4', '#ea4335']
+    return `<svg viewBox="-2 -1 28 26">${segs.map((d, i) => `<path fill="${col[i] || '#4285f4'}" d="${d}"/>`).join('')}</svg>`
+  },
+  whatsapp: () => `<svg viewBox="-1 -1 26 26"><path fill="#25d366" d="${BP.whatsapp}"/></svg>`,
+  youtube: () => `<svg viewBox="-1 -1 26 26"><path fill="#ff0000" d="${BP.youtube}"/></svg>`,
+}
+const brandName = { instagram: 'Instagram', facebook: 'Facebook', tiktok: 'TikTok', meta: 'Meta Ads', googleads: 'Google Ads', google: 'Google', googlemaps: 'Google Maps', whatsapp: 'WhatsApp', youtube: 'YouTube' }
+const pad = new Set(['googleads', 'google', 'googlemaps', 'whatsapp', 'youtube', 'meta', 'facebook'])
+const logoIc = n => `<span class="logo-ic${pad.has(n) ? ' logo-ic--pad' : ''}" title="${brandName[n]}">${brandSvg[n]()}</span>`
+const logos = names => `<span class="logos" aria-label="${names.map(n => brandName[n]).join(', ')}" role="img">${names.map(logoIc).join('')}</span>`
+
+// logos e arte de cada serviço, fiéis ao trabalho
+const svcLogos = {
+  'gestao-de-trafego-pago': ['meta', 'googleads', 'tiktok'],
+  'social-media': ['instagram', 'facebook', 'tiktok'],
+  'google-meu-negocio-seo-local': ['googlemaps', 'google'],
+  'producao-de-conteudo-audiovisual': ['instagram', 'youtube', 'tiktok'],
+}
+const svcArt = {
+  'gestao-de-trafego-pago': () => `<span class="art art--chart" aria-hidden="true"><b>Faturamento ↑</b>${[22, 30, 26, 42, 38, 58, 66, 84].map(h => `<i style="--h:${h}%"></i>`).join('')}</span>`,
+  'social-media': () => `<span class="art art--posts" aria-hidden="true">${['Reels ▶', 'Post', 'Story', 'Promo'].map(t => `<span>${t}</span>`).join('')}</span>`,
+  'criacao-de-sites': () => '<span class="art art--browser" aria-hidden="true"><span class="bar"><i></i><i></i><i></i><span class="url"><span>suaempresa.com.br</span></span></span><span class="body"><span style="flex:1"><i style="width:90%"></i><i style="width:70%"></i><i style="width:80%"></i></span><span class="fb">WhatsApp</span></span></span>',
+  'google-meu-negocio-seo-local': () => `<span class="art art--search" aria-hidden="true"><span class="q"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M20 20l-4.8-4.8"/></svg>marketing perto de mim</span><span class="res">${logoIc('googlemaps')}<span><b>Sua Empresa</b><span class="stars">★★★★★</span> · aberto agora</span></span></span>`,
+  'identidade-visual': () => '<span class="art art--pen" aria-hidden="true"><svg viewBox="0 0 300 92"><path class="handle" d="M40 70L90 12M170 18L230 78"/><path class="curve" d="M40 70C90 12 150 10 170 18S220 88 260 60"/><rect class="anchor" x="34" y="64" width="12" height="12"/><rect class="anchor" x="164" y="12" width="12" height="12"/><circle class="anchor" cx="90" cy="12" r="5"/><circle class="anchor" cx="230" cy="78" r="5"/><rect class="sw" x="268" y="8" width="26" height="26" rx="6" fill="#0b0b0b"/><rect class="sw" x="268" y="40" width="26" height="26" rx="6" fill="#fff"/><path d="M252 70l14-14 6 6-14 14-8 2z" fill="#0b0b0b"/></svg></span>',
+  'producao-de-conteudo-audiovisual': () => '<span class="art art--timeline" aria-hidden="true"><span class="cam"><svg viewBox="0 0 24 24"><rect x="2.5" y="6.5" width="13" height="11" rx="2.5"/><path d="M15.5 10.5l6-3.5v10l-6-3.5z"/></svg></span><span class="tracks"><span class="tr"><i style="flex:3"></i><i style="flex:2"></i><i style="flex:4"></i></span><span class="tr"><i style="flex:2"></i><i style="flex:5"></i><i style="flex:1"></i></span><span class="tr"><i style="flex:6"></i><i style="flex:3"></i></span><span class="head"></span></span></span>',
+}
+const svcStamp = {
+  'criacao-de-sites': '<path d="M4 5h16v14H4z"/><path d="M4 9h16M8 13l-2 2 2 2M16 13l2 2-2 2M13 12l-2 6"/>',
+  'identidade-visual': '<path d="M12 3l7 7-7 11-7-11z"/><circle cx="12" cy="11" r="2"/><path d="M12 3v6"/>',
+}
 
 // ─── Schema.org ──────────────────────────────────────────────
 const bizId = site.url + '/#agencia'
@@ -111,18 +154,21 @@ const labelPos = { 'luis-eduardo-magalhaes': ['middle', 0, -48], correntina: ['e
 const pinSvg = (c, big) => {
   const [x, y] = proj(geoOf(c))
   const [anchor, dx, dy] = labelPos[c.slug] || ['start', 22, -10]
-  return `<a href="${cityPath(c)}"><title>Marketing digital em ${esc(c.name)}</title>
+  return `<a href="${cityPath(c)}" data-city="${c.slug}" data-name="${esc(c.name)}" data-dist="${esc(c.main ? 'nossa base' : c.dist)}" data-niches="${esc(c.niches.slice(0, 3).join(' · '))}" data-xy="${x},${y}"><title>Marketing digital em ${esc(c.name)}</title>
+    ${c.main ? `<circle class="pulse" cx="${x}" cy="${y - 33 * 1.35}" r="12"/>` : ''}
     <g class="pin${c.main ? ' pin--main' : ''}" transform="translate(${x} ${y}) scale(${c.main ? 1.35 : big ? 1 : 0.9})"><path d="${pinPath}"/><circle cy="-33" r="5"/></g>
     <text x="${x + dx}" y="${y + dy}" text-anchor="${anchor}"${c.main ? ' class="main"' : ''}>${esc(c.name)}</text></a>`
 }
 const mapSvg = () => {
   const [bx, by] = proj(geoOf(cities.find(c => c.main)))
   return `<div class="map" data-rise><svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Mapa do Oeste da Bahia com as cidades atendidas pela Agência Viva">
+    <g class="grid">${Array.from({ length: 9 }, (_, i) => `<path d="M${i * 100},0V${H}"/>`).join('')}${Array.from({ length: 7 }, (_, i) => `<path d="M0,${i * 100}H${W}"/>`).join('')}</g>
     ${rivers.map(([cls, pts]) => `<path class="${cls}" d="${curve(pts)}"/>`).join('')}
+    <path class="route" data-from="${bx},${by}" d=""/>
     ${roads.map(pts => `<path class="road" d="${curve(pts)}"/>`).join('')}
     ${cities.filter(c => !c.main).map(c => pinSvg(c, true)).join('')}
     ${pinSvg(cities.find(c => c.main), true)}
-    <text class="hand-t" x="${bx - 34}" y="${by + 58}" text-anchor="end">a gente tá aqui!</text>
+    <text class="hand-t" x="${bx - 34}" y="${by + 58}" text-anchor="end" fill="#f3f2ee">a gente tá aqui!</text>
     <text class="compass" x="${W - 60}" y="46">N ↑</text>
   </svg></div>`
 }
@@ -151,32 +197,32 @@ const miniMap = c => {
 
 // ─── Adereços (um objeto de verdade por serviço) ────────────
 const props = {
-  'gestao-de-trafego-pago': () => `<div class="prop"><div class="ad paper">
+  'gestao-de-trafego-pago': () => `<div class="prop">${logos(['meta', 'googleads', 'tiktok'])}<div class="ad paper">
     <div class="ad__top"><i></i><div><b>Sua empresa</b><small>Patrocinado · Barreiras</small></div></div>
     <div class="ad__img">Sábado tem <span class="s">novidade</span></div>
     <div class="ad__cta"><span>Enviar mensagem</span><span>›</span></div>
-    <svg class="cursor" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 3l14 8-6 1.5L10 19z" fill="#fffcf6" stroke="#1a1410" stroke-width="1.6" stroke-linejoin="round"/></svg>
+    <svg class="cursor" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 3l14 8-6 1.5L10 19z" fill="#fff" stroke="#0b0b0b" stroke-width="1.6" stroke-linejoin="round"/></svg>
   </div></div>`,
-  'social-media': () => `<div class="prop"><div class="feed paper">
+  'social-media': () => `<div class="prop">${logos(['instagram', 'facebook', 'tiktok'])}<div class="feed paper">
     <div class="feed__head"><i></i><div><b>@suaempresa</b><br><small>Barreiras - BA · perfil comercial</small></div></div>
     <div class="feed__grid">${['Chegou <em>novidade</em>', 'Bastidores', 'Reels ▶', 'Antes e depois', 'Dica da <em>semana</em>', 'Equipe', 'Promo', 'Cliente feliz', 'Sábado aberto'].map(t => `<span>${t}</span>`).join('')}</div>
   </div></div>`,
   'criacao-de-sites': () => `<div class="prop"><div class="browser paper">
     <div class="browser__bar"><i></i><i></i><i></i><span>suaempresa.com.br</span></div>
-    <div class="browser__body"><b>A melhor opção de Barreiras, a um clique.</b><div class="ln"></div><div class="ln"></div><span class="fake-btn">Chamar no WhatsApp</span>
+    <div class="browser__body"><b>A melhor opção de Barreiras, a um clique.</b><div class="ln"></div><div class="ln"></div><span class="fake-btn">${waIcon.replace('<svg', '<svg width="16" height="16"')} Chamar no WhatsApp</span>
     <div class="browser__cols"><span></span><span></span><span></span></div></div>
   </div></div>`,
-  'google-meu-negocio-seo-local': () => `<div class="prop"><div class="gmb paper">
-    <div class="gmb__map"><svg viewBox="-18 -52 36 54" aria-hidden="true"><path d="${pinPath}" fill="#ff4d1f" stroke="#1a1410" stroke-width="2.5"/><circle cy="-33" r="5" fill="#1a1410"/></svg></div>
+  'google-meu-negocio-seo-local': () => `<div class="prop">${logos(['google'])}<div class="gmb paper">
+    <div class="gmb__map">${logoIc('googlemaps')}</div>
     <div class="gmb__body"><b>Sua Empresa</b><span class="stars" aria-hidden="true">★★★★★</span><small><em>Aberto agora</em> · Centro, Barreiras - BA</small>
     <div class="gmb__btns"><span>Rotas</span><span>Ligar</span><span>Site</span></div></div>
   </div></div>`,
   'identidade-visual': () => `<div class="prop"><div class="brand paper">
-    <div class="brand__row"><span>Tomate</span><span>Sol</span><span>Cerrado</span><span>Papel</span></div>
+    <div class="brand__row"><span>Preto</span><span>Branco</span><span>Cinza</span><span>Papel</span></div>
     <div class="brand__type"><b>Aa</b><em>Aa</em><small>título forte<br>+ assinatura</small></div>
     <div class="brand__logo"><span>SUA</span><span>MARCA</span></div>
   </div></div>`,
-  'producao-de-conteudo-audiovisual': () => `<div class="prop" style="width:auto"><div class="rec paper">
+  'producao-de-conteudo-audiovisual': () => `<div class="prop" style="width:auto">${logos(['instagram', 'youtube', 'tiktok'])}<div class="rec paper">
     <div class="rec__frame"></div>
     <div class="rec__top"><b>REC</b><span>00:14</span></div>
     <div class="rec__mid"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 4l14 8-14 8z"/></svg></div>
@@ -194,7 +240,7 @@ const faqBlock = (title, faq, note = 'Não achou sua dúvida? Manda no WhatsApp.
     <div>
       <span class="label" data-rise>Perguntas frequentes</span>
       <h2 id="h-faq" class="h2" data-split style="margin-top:18px">${title}</h2>
-      <p class="hand" style="font-size:28px;color:var(--tomato);margin-top:26px;rotate:-2deg" data-rise>${note}</p>
+      <p class="hand" style="font-size:28px;margin-top:26px;rotate:-2deg" data-rise>${note}</p>
     </div>
     <div class="faq">${faq.map(([q, a], i) => `
       <details${i === 0 ? ' open' : ''}><summary>${esc(q)}<i aria-hidden="true"></i></summary><div class="ans"><p>${esc(a)}</p></div></details>`).join('')}
@@ -203,23 +249,24 @@ const faqBlock = (title, faq, note = 'Não achou sua dúvida? Manda no WhatsApp.
 </section>`
 
 const ticket = (s, i, tag = 'h3') => `<a class="ticket" href="${svcPath(s)}">
-    <span class="tape${i % 3 === 1 ? ' tape--pink' : i % 3 === 2 ? ' tape--green' : ''}" aria-hidden="true"></span>
-    <span class="stamp" aria-hidden="true">${icon(s.icon)}</span>
+    <span class="tape" aria-hidden="true"></span>
+    ${svcLogos[s.slug] ? logos(svcLogos[s.slug]) : `<span class="stampic" aria-hidden="true"><svg viewBox="0 0 24 24">${svcStamp[s.slug] || ic[s.icon]}</svg></span>`}
     <span class="n" aria-hidden="true">${['um', 'dois', 'três', 'quatro', 'cinco', 'seis'][i] || i + 1}.</span>
     <${tag}>${esc(s.short)}</${tag}>
     <p>${esc(s.pitch)}</p>
+    ${svcArt[s.slug] ? svcArt[s.slug]() : ''}
     <span class="go">Ver como funciona ${icon('arrow')}</span>
   </a>`
 
 const cta = (title = 'Sua empresa merece ser <span class="s">encontrada.</span>', text = 'Chama no WhatsApp e conta o que você vende. A gente olha seu Instagram, seu Google e seus anúncios e te diz, sem enrolação, por onde começar.') => `
-<section class="cta" aria-labelledby="h-cta">
+<section class="cta dark" aria-labelledby="h-cta">
   <span class="bang" aria-hidden="true">!</span>
   <div class="wrap">
     <h2 id="h-cta" data-split>${title}</h2>
     <p data-rise>${text}</p>
     <div class="hero-cta" data-rise>
-      <a class="btn btn--ink btn--lg" href="${wa()}" target="_blank" rel="noopener">${waIcon} Chamar no WhatsApp</a>
-      <a class="go" href="${site.instagram}" target="_blank" rel="noopener">Espiar o Instagram ${icon('arrow')}</a>
+      <a class="btn btn--main btn--lg" href="${wa()}" target="_blank" rel="noopener">${waIcon} Chamar no WhatsApp</a>
+      <a class="go" href="${site.instagram}" target="_blank" rel="noopener">${logoIc('instagram')} Espiar o Instagram ${icon('arrow')}</a>
     </div>
   </div>
   <span class="hand" aria-hidden="true">a gente responde em horário comercial</span>
@@ -244,7 +291,7 @@ const layout = ({ path, title, desc, body, ld = [], active = '', robots = 'index
 <meta name="description" content="${esc(desc)}">
 <link rel="canonical" href="${abs(path)}">
 <meta name="robots" content="${robots}">
-<meta name="theme-color" content="#f5efe4">
+<meta name="theme-color" content="#f3f2ee">
 <meta name="geo.region" content="BR-BA">
 <meta name="geo.placename" content="Barreiras">
 <meta name="geo.position" content="${site.geo.lat};${site.geo.lng}">
@@ -299,7 +346,7 @@ ${body}
       <div>
         <h2>Fale com a gente</h2>
         <address>
-          <strong style="color:var(--paper)">${esc(site.name)}</strong><br>
+          <strong style="color:var(--black)">${esc(site.name)}</strong><br>
           ${esc(A.street)} - ${esc(A.district)}<br>
           ${esc(A.city)} - ${esc(A.state)}, ${esc(A.zip)}<br><br>
           <a href="${wa()}" target="_blank" rel="noopener">WhatsApp ${esc(site.phoneDisplay)}</a><br>
@@ -341,13 +388,13 @@ page({
 <section class="hero">
   <div class="wrap hero-grid">
     <div>
-      <h1 data-rise><span class="kicker">Agência de marketing em Barreiras&nbsp;-&nbsp;BA</span>Sua empresa <span class="circled"><span class="s">viva</span>${hand.circle(1)}</span> no celular de quem compra.</h1>
-      <p class="lede" data-rise=".15">Instagram que dá vontade de seguir, anúncio que faz o WhatsApp tocar e perfil no Google que aparece primeiro quando alguém de Barreiras procura o que você vende.</p>
-      <div class="hero-cta" data-rise=".25">
+      <h1 class="intro"><span class="kicker">Agência de marketing em Barreiras&nbsp;-&nbsp;BA</span>Sua empresa <span class="circled"><span class="s">viva</span>${hand.circle(1)}</span> no celular de quem compra.</h1>
+      <p class="lede intro" style="animation-delay:.12s">Instagram que dá vontade de seguir, anúncio que faz o WhatsApp tocar e perfil no Google que aparece primeiro quando alguém de Barreiras procura o que você vende.</p>
+      <div class="hero-cta intro" style="animation-delay:.22s">
         <a class="btn btn--main btn--lg" href="${wa()}" target="_blank" rel="noopener">${waIcon} Chamar no WhatsApp</a>
         <a class="go" href="#servicos">Ver o que a gente faz ${icon('arrow')}</a>
       </div>
-      <p class="proof" data-rise=".35"><span class="dots" aria-hidden="true"><span></span><span></span><span></span></span><span>Nascida da rede de uma criadora com <b>300 mil seguidores</b>, com operação de marketing de verdade por trás.</span></p>
+      <p class="proof intro" style="animation-delay:.32s">${logos(['instagram', 'googlemaps', 'whatsapp'])}<span><b>10 anos de mercado</b> no Oeste da Bahia e a força de uma criadora com <b>300 mil seguidores</b>.</span></p>
     </div>
     <div class="hero-art">
       <p class="note note--a" aria-hidden="true">é o seu cliente chegando${hand.arrow()}</p>
@@ -358,16 +405,19 @@ page({
         ['in', '9h! Me manda a localização?', '09:15'],
         ['typing'],
       ], true)}
-      <div class="chip chip--maps" aria-hidden="true"><svg class="pin" viewBox="-18 -52 36 54"><path d="${pinPath}" fill="#ff4d1f" stroke="#1a1410" stroke-width="2.5"/><circle cy="-33" r="5" fill="#1a1410"/></svg><span><b>Apareceu no Maps</b>a 650 m de você</span></div>
-      <div class="chip chip--ig" aria-hidden="true"><svg class="heart" viewBox="0 0 24 24"><path d="M12 21s-8-5.2-8-11a4.6 4.6 0 0 1 8-3 4.6 4.6 0 0 1 8 3c0 5.8-8 11-8 11z" fill="#ff4d1f" stroke="#1a1410" stroke-width="1.6"/></svg><span><b>+128 curtidas</b>no post de hoje</span></div>
-      <div class="seal" aria-hidden="true"><svg viewBox="0 0 120 120"><defs><path id="ring" d="M60 60m-47 0a47 47 0 1 1 94 0a47 47 0 1 1-94 0"/></defs><text><textPath href="#ring">FEITO NO OESTE DA BAHIA · FEITO NO OESTE ·</textPath></text></svg><b>!</b></div>
+      <div class="chip chip--maps" aria-hidden="true">${logoIc('googlemaps')}<span><b>Apareceu no Maps</b>a 650 m de você</span></div>
+      <div class="chip chip--ig" aria-hidden="true">${logoIc('instagram')}<span><b>+128 curtidas</b>no post de hoje</span></div>
+      <div class="seal" aria-hidden="true"><svg viewBox="0 0 120 120"><defs><path id="ring" d="M60 60m-45 0a45 45 0 1 1 90 0a45 45 0 1 1-90 0"/></defs><g class="ring"><text><textPath href="#ring" textLength="279" lengthAdjust="spacing">FEITO NO OESTE DA BAHIA · DESDE ${site.founded} ·</textPath></text></g></svg><img src="/assets/logo-viva.png" alt="" width="934" height="432"></div>
     </div>
   </div>
 </section>
 
-<div class="band" aria-hidden="true"><div class="band__track">${[0, 1].map(() => `<span>${['Tráfego pago', 'Instagram', 'Google Maps', 'Sites', 'Branding', 'Reels', 'Influência'].map(t => `${t} <i>!</i>`).join(' ')}</span>`).join('')}</div></div>
+<div class="bands" aria-hidden="true">
+  <div class="band band--b"><div class="band__track">${[0, 1].map(() => `<span>${cities.map(c => `${esc(c.name)} <i>·</i>`).join(' ')}</span>`).join('')}</div></div>
+  <div class="band band--a"><div class="band__track">${[0, 1].map(() => `<span>${[['Tráfego pago', 'meta'], ['Instagram', 'instagram'], ['Google Maps', 'googlemaps'], ['TikTok', 'tiktok'], ['Google Ads', 'googleads'], ['Reels', 'youtube'], ['WhatsApp', 'whatsapp']].map(([t, l]) => `${t} ${logoIc(l)}`).join(' ')}</span>`).join('')}</div></div>
+</div>
 
-<section class="manifesto" aria-label="Por que a Viva existe">
+<section class="manifesto dark" aria-label="Por que a Viva existe">
   <div class="wrap">
     <span class="label" data-rise>Por que a gente existe</span>
     <p>Tem empresa boa demais em Barreiras que ninguém encontra no Google. Tem loja linda postando foto torta. Tem clínica cheia de indicação sumida do Instagram. A gente existe pra <span class="s">resolver isso.</span></p>
@@ -375,24 +425,29 @@ page({
   </div>
 </section>
 
-<section class="sec" id="servicos" aria-labelledby="h-serv" style="padding-top:0">
+<section class="svc" id="servicos" aria-labelledby="h-serv">
   <div class="wrap">
-    <div class="sec-head">
-      <h2 id="h-serv" class="h2" data-split>O que a gente faz <span class="s">de verdade.</span></h2>
-      <p class="lede" data-rise>Seis frentes que conversam entre si. Dá pra começar por uma e ir crescendo, ou deixar tudo com a gente.</p>
-    </div>
-    <div class="rio">
-      <svg class="rio__svg" aria-hidden="true"><path/><path class="rio__shine"/></svg>
-      <div class="tickets">${services.map((s, i) => ticket(s, i)).join('')}</div>
+    <div class="svc__grid">
+      <div class="svc__intro">
+        <span class="label" data-rise>O que a gente faz</span>
+        <h2 id="h-serv" class="h2" data-split style="margin-top:18px">O que a gente faz <span class="s">de verdade.</span></h2>
+        <p class="lede" data-rise style="margin-top:24px">Seis frentes que conversam entre si. Dá pra começar por uma e ir crescendo, ou deixar tudo com a gente.</p>
+        <div class="svc__count" aria-hidden="true"><b>01</b><span>de ${String(services.length).padStart(2, '0')} · role pra girar</span></div>
+        <div class="dots" role="group" aria-label="Ir para o serviço">${services.map((s, i) => `<button type="button" aria-label="${esc(s.short)}" aria-current="${i === 0}"></button>`).join('')}</div>
+      </div>
+      <div class="wheel">
+        <svg class="rio__svg" aria-hidden="true"><path/></svg>
+        ${services.map((s, i) => ticket(s, i)).join('')}
+      </div>
     </div>
   </div>
 </section>
 
-<section class="notif" aria-labelledby="h-notif">
+<section class="notif dark" aria-labelledby="h-notif">
   <div class="wrap notif-grid">
     <div>
       <span class="label" data-rise>O que muda</span>
-      <h2 id="h-notif" class="h2" data-split style="margin-top:18px">O tipo de notificação que a gente quer ver no <span class="s s--ink">seu</span> celular.</h2>
+      <h2 id="h-notif" class="h2" data-split style="margin-top:18px">O tipo de notificação que a gente quer ver no <span class="s">seu</span> celular.</h2>
       <p class="lede" data-rise>Mensagem de cliente novo no WhatsApp, ligação que veio do Google, gente pedindo rota até a sua porta. É isso que marketing bem feito parece no dia a dia.</p>
       <p class="fine" data-rise>*Ilustração. Os números de verdade são os seus, e a gente te mostra eles todo mês.</p>
     </div>
@@ -400,11 +455,11 @@ page({
       <div class="lock__time">08:12</div>
       <div class="lock__date">terça-feira · Barreiras</div>
       <ul class="lock__list">
-        <li class="n n--wa"><span class="n__ico">${waIcon}</span><span class="n__head"><b>Cliente novo</b>agora</span><span>Oi! Vim pelo anúncio, queria um orçamento 🙏</span></li>
-        <li class="n n--g"><span class="n__ico"><svg viewBox="0 0 24 24"><path fill="#4285f4" d="M21.6 12.2c0-.7-.1-1.4-.2-2H12v3.8h5.4a4.6 4.6 0 0 1-2 3v2.5h3.2c1.9-1.7 3-4.3 3-7.3z"/><path fill="#34a853" d="M12 22c2.7 0 5-.9 6.6-2.4l-3.2-2.5c-.9.6-2 1-3.4 1-2.6 0-4.8-1.8-5.6-4.1H3.1v2.6A10 10 0 0 0 12 22z"/><path fill="#fbbc05" d="M6.4 14a6 6 0 0 1 0-4V7.4H3.1a10 10 0 0 0 0 9.2z"/><path fill="#ea4335" d="M12 6c1.5 0 2.8.5 3.8 1.5l2.9-2.9A10 10 0 0 0 3.1 7.4L6.4 10C7.2 7.7 9.4 6 12 6z"/></svg></span><span class="n__head"><b>Perfil da Empresa</b>2 min</span><span>Alguém ligou pra você pelo Google Maps.</span></li>
-        <li class="n n--ig"><span class="n__ico"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="#fff"/></svg></span><span class="n__head"><b>Instagram</b>9 min</span><span>Seu Reels chegou em 12 mil contas. Tá bombando!</span></li>
-        <li class="n n--maps"><span class="n__ico"><svg viewBox="-18 -52 36 54"><path d="${pinPath}" fill="#ff4d1f" stroke="#1a1410" stroke-width="2.5"/><circle cy="-33" r="5" fill="#1a1410"/></svg></span><span class="n__head"><b>Google Maps</b>1 h</span><span>14 pessoas pediram rota até a sua loja esta semana.</span></li>
-        <li class="n n--wa"><span class="n__ico">${waIcon}</span><span class="n__head"><b>Dona Marta</b>1 h</span><span>Vocês entregam em Luís Eduardo? 😊</span></li>
+        <li class="n">${logoIc('whatsapp')}<span class="n__head"><b>Cliente novo</b>agora</span><span>Oi! Vim pelo anúncio, queria um orçamento 🙏</span></li>
+        <li class="n">${logoIc('google')}<span class="n__head"><b>Perfil da Empresa</b>2 min</span><span>Alguém ligou pra você pelo Google Maps.</span></li>
+        <li class="n">${logoIc('instagram')}<span class="n__head"><b>Instagram</b>9 min</span><span>Seu Reels chegou em 12 mil contas. Tá bombando!</span></li>
+        <li class="n">${logoIc('googlemaps')}<span class="n__head"><b>Google Maps</b>1 h</span><span>14 pessoas pediram rota até a sua loja esta semana.</span></li>
+        <li class="n">${logoIc('whatsapp')}<span class="n__head"><b>Dona Marta</b>1 h</span><span>Vocês entregam em Luís Eduardo? 😊</span></li>
       </ul>
     </div></div>
   </div>
@@ -417,9 +472,10 @@ page({
       <p class="lede" data-rise>Força comercial de quem vive de influência, com uma operação que entrega o que promete.</p>
     </div>
     <div class="stack">
-      <article class="scard scard--sun" style="--i:0"><div><h3>A gente é daqui.</h3><p>Conhece a rua, o bairro, a safra e o calendário da cidade. Post de sábado de manhã em Barreiras não é igual post de terça em São Paulo.</p><span class="hand">sem sotaque de agência de capital</span></div><span class="big" aria-hidden="true">Oeste</span></article>
-      <article class="scard scard--pink" style="--i:1"><div><h3>Influência de verdade.</h3><p>A Viva nasceu da rede de uma criadora de conteúdo que o Oeste já acompanha. Quando a sua marca aparece, aparece pra gente que confia.</p><span class="hand">300 mil pessoas não seguem qualquer um</span></div><span class="big" aria-hidden="true">300 mil</span></article>
-      <article class="scard scard--green" style="--i:2"><div><h3>Operação que não some.</h3><p>Tráfego, site, Google e relatório tocados com processo. Você sabe o que foi feito, quanto custou e o que voltou.</p><span class="hand">nada de sumir depois do contrato</span></div><span class="big" aria-hidden="true">todo mês</span></article>
+      <article class="scard scard--black" style="--i:0"><div><h3>A gente é daqui.</h3><p>Conhece a rua, o bairro, a safra e o calendário da cidade. Post de sábado de manhã em Barreiras não é igual post de terça em São Paulo.</p><span class="hand">sem sotaque de agência de capital</span></div><span class="big" aria-hidden="true">Oeste</span></article>
+      <article class="scard scard--white" style="--i:1"><div><h3>Dez anos de estrada.</h3><p>A Viva está no mercado desde ${site.founded}. Já viu muita moda de rede social ir e vir, e sabe o que continua vendendo pra empresa do interior.</p><span class="hand">experiência não se improvisa</span></div><span class="big" aria-hidden="true">${site.founded}</span></article>
+      <article class="scard scard--black" style="--i:2"><div><h3>Influência de verdade.</h3><p>A Viva nasceu da rede de uma criadora de conteúdo que o Oeste já acompanha. Quando a sua marca aparece, aparece pra gente que confia.</p><span class="hand">300 mil pessoas não seguem qualquer um</span></div><span class="big" aria-hidden="true">300 mil</span></article>
+      <article class="scard scard--gray" style="--i:3"><div><h3>Operação que não some.</h3><p>Tráfego, site, Google e relatório tocados com processo. Você sabe o que foi feito, quanto custou e o que voltou.</p><span class="hand">nada de sumir depois do contrato</span></div><span class="big" aria-hidden="true">todo mês</span></article>
     </div>
   </div>
 </section>
@@ -440,15 +496,18 @@ page({
   <div class="wrap"><div class="method__bar" aria-hidden="true"><i></i></div></div>
 </section>
 
-<section class="sec" id="cidades" aria-labelledby="h-cid">
-  <div class="wrap map-grid">
+<section class="sec dark" id="cidades" aria-labelledby="h-cid">
+  <div class="wrap map-grid" data-map>
     <div>
       <span class="label" data-rise>Onde a gente atua</span>
       <h2 id="h-cid" class="h2" data-split style="margin-top:18px">De Barreiras pra todo o <span class="s">Oeste.</span></h2>
-      <p class="lede" data-rise style="margin-top:26px">Do agro de Luís Eduardo Magalhães e Formosa do Rio Preto ao comércio de Correntina e Santa Maria da Vitória. Escolha a sua cidade:</p>
-      <div class="chips" data-rise>${cities.map(c => `<a href="${cityPath(c)}">${esc(c.name)}</a>`).join('')}</div>
+      <p class="lede" data-rise style="margin-top:26px">Do agro de Luís Eduardo Magalhães e Formosa do Rio Preto ao comércio de Correntina e Santa Maria da Vitória. Passa o dedo (ou o mouse) na sua cidade:</p>
+      <div class="chips" data-rise>${cities.map(c => `<a href="${cityPath(c)}" data-city="${c.slug}">${esc(c.name)}</a>`).join('')}</div>
     </div>
-    ${mapSvg()}
+    <div style="position:relative">
+      ${mapSvg()}
+      <div class="map-info" aria-live="polite"><span class="hand"></span><b></b><span></span><br><a href="#"></a></div>
+    </div>
   </div>
 </section>
 
@@ -630,7 +689,7 @@ page({
   <div class="wrap phero-grid">
     <div>
       ${crumbsHtml([['Início', '/'], ['Sobre', '/sobre/']])}
-      <h1 data-split>Nascemos no Oeste. <span class="s">Pensamos grande.</span></h1>
+      <h1 data-split>Dez anos de Oeste. <span class="s">Pensando grande.</span></h1>
       <p class="lede" data-rise=".1">A Agência Viva é uma agência de marketing de Barreiras - BA criada pra dar às empresas da região a mesma força digital das grandes marcas.</p>
     </div>
     <div class="prop"><div class="polaroid"><div class="polaroid__img"><img src="/assets/logo-viva.png" alt="" width="934" height="432"></div><span class="hand">Barreiras - BA</span><span class="tape" aria-hidden="true"></span></div></div>
@@ -640,7 +699,7 @@ page({
   <div class="wrap two">
     <div class="prose">
       <h2 data-split>Quem <span class="s">somos.</span></h2>
-      <p data-rise>A Viva nasceu da vivência de quem cria conteúdo no Oeste da Bahia e reúne uma comunidade de centenas de milhares de seguidores. A gente sabe, na prática, o que prende a atenção das pessoas daqui, e o que faz elas comprarem.</p>
+      <p data-rise>A Viva está no mercado desde ${site.founded} e nasceu da vivência de quem cria conteúdo no Oeste da Bahia e reúne uma comunidade de centenas de milhares de seguidores. A gente sabe, na prática, o que prende a atenção das pessoas daqui, e o que faz elas comprarem.</p>
       <p data-rise>Pra transformar atenção em venda, juntamos essa força comercial e de influência a uma operação técnica de marketing: gestão de tráfego, sites, SEO local e acompanhamento com metas e relatório.</p>
       <h2 data-split>No que a gente <span class="s">acredita.</span></h2>
       <ul class="checklist paper" data-rise>
@@ -692,7 +751,7 @@ page({
     <div class="prose">
       <h2 data-split>Onde a gente <span class="s">está.</span></h2>
       <address data-rise style="font-style:normal;color:var(--ink-2)">
-        <strong style="color:var(--ink)">${esc(site.name)}</strong><br>${esc(addrLine)}<br><br>
+        <strong style="color:var(--black)">${esc(site.name)}</strong><br>${esc(addrLine)}<br><br>
         ${esc(site.hoursDisplay)}<br>
         <a href="mailto:${esc(site.email)}">${esc(site.email)}</a>
       </address>
@@ -753,7 +812,7 @@ ${homeFaq.map(([q, a]) => `### ${q}\n${a}`).join('\n\n')}
 `)
 
 write('site.webmanifest', JSON.stringify({
-  name: site.name, short_name: 'Viva', start_url: '/', display: 'standalone', background_color: '#f5efe4', theme_color: '#f5efe4',
+  name: site.name, short_name: 'Viva', start_url: '/', display: 'standalone', background_color: '#f3f2ee', theme_color: '#0b0b0b',
   icons: [{ src: '/favicon.svg', sizes: 'any', type: 'image/svg+xml' }],
 }, null, 2))
 
