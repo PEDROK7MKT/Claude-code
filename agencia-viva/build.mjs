@@ -20,6 +20,11 @@ const addrLine = `${A.street} - ${A.district}, ${A.city} - ${A.state}, ${A.zip}`
 // H1 com o final em itálico serifado: 'Agência de marketing em' + 'Barreiras'
 const accentH1 = (h1, accent) => accent && h1.endsWith(accent) ? `${esc(h1.slice(0, -accent.length))}<span class="s">${esc(accent)}</span>` : esc(h1)
 const landingPath = l => `/${l.slug}/`
+// tempo de mercado calculado a partir da abertura do CNPJ: vira "10 anos" sozinho
+// no primeiro build depois de 09/11/2026 (o site é estático, precisa republicar)
+const foundedYear = site.founded.slice(0, 4)
+const years = Math.floor((Date.now() - new Date(site.founded + 'T12:00:00-03:00')) / (365.2425 * 864e5))
+const tenure = years >= 10 ? `${years} anos de mercado` : `No mercado desde ${foundedYear}`
 const listPt = arr => arr.length < 2 ? arr.join('') : `${arr.slice(0, -1).join(', ')} e ${arr[arr.length - 1]}`
 
 // ─── Ícones e traços feitos à mão ───────────────────────────
@@ -90,7 +95,8 @@ const business = {
   '@type': 'ProfessionalService',
   '@id': bizId,
   name: site.name,
-  legalName: site.legalName,
+  ...(site.legalName ? { legalName: site.legalName } : {}),
+  alternateName: site.alternateName,
   description: 'Agência de marketing digital em Barreiras - BA: tráfego pago, social media, criação de sites, SEO local e Google Meu Negócio para empresas do Oeste da Bahia.',
   slogan: site.slogan,
   url: site.url + '/',
@@ -365,7 +371,7 @@ ${body}
     </div>
     <p class="giant" aria-hidden="true"><span>V</span><span>I</span><span>V</span><span>A</span><span>!</span></p>
     <div class="ftr-bottom">
-      <span>© ${new Date().getFullYear()} ${esc(site.legalName || site.name)}${site.cnpj ? ` · CNPJ ${esc(site.cnpj)}` : ''} · Agência de marketing em Barreiras - BA</span>
+      <span>© ${new Date().getFullYear()} ${esc(site.name)}${site.cnpj ? ` · CNPJ ${esc(site.cnpj)}` : ''} · Agência de marketing em Barreiras - BA</span>
       <span>Barreiras · LEM · Oeste da Bahia</span>
     </div>
   </div>
@@ -400,7 +406,7 @@ page({
         <a class="btn btn--main btn--lg" href="${wa()}" target="_blank" rel="noopener">${waIcon} Chamar no WhatsApp</a>
         <a class="go" href="#servicos">Ver o que a gente faz ${icon('arrow')}</a>
       </div>
-      <p class="proof intro" style="animation-delay:.32s">${logos(['instagram', 'googlemaps', 'whatsapp'])}<span><b>10 anos de mercado</b> no Oeste da Bahia e a força de uma criadora com <b>300 mil seguidores</b>.</span></p>
+      <p class="proof intro" style="animation-delay:.32s">${logos(['instagram', 'googlemaps', 'whatsapp'])}<span><b>${tenure}</b> no Oeste da Bahia e a força de uma criadora com <b>300 mil seguidores</b>.</span></p>
     </div>
     <div class="hero-art">
       <p class="note note--a" aria-hidden="true">é o seu cliente chegando${hand.arrow()}</p>
@@ -413,7 +419,7 @@ page({
       ], true)}
       <div class="chip chip--maps" aria-hidden="true">${logoIc('googlemaps')}<span><b>Apareceu no Maps</b>a 650 m de você</span></div>
       <div class="chip chip--ig" aria-hidden="true">${logoIc('instagram')}<span><b>+128 curtidas</b>no post de hoje</span></div>
-      <div class="seal" aria-hidden="true"><svg viewBox="0 0 120 120"><defs><path id="ring" d="M60 60m-45 0a45 45 0 1 1 90 0a45 45 0 1 1-90 0"/></defs><g class="ring"><text><textPath href="#ring" textLength="279" lengthAdjust="spacing">FEITO NO OESTE DA BAHIA · DESDE ${site.founded} ·</textPath></text></g></svg><img src="/assets/logo-viva.png" alt="" width="934" height="432"></div>
+      <div class="seal" aria-hidden="true"><svg viewBox="0 0 120 120"><defs><path id="ring" d="M60 60m-45 0a45 45 0 1 1 90 0a45 45 0 1 1-90 0"/></defs><g class="ring"><text><textPath href="#ring" textLength="279" lengthAdjust="spacing">FEITO NO OESTE DA BAHIA · DESDE ${foundedYear} ·</textPath></text></g></svg><img src="/assets/logo-viva.png" alt="" width="934" height="432"></div>
     </div>
   </div>
 </section>
@@ -479,7 +485,7 @@ page({
     </div>
     <div class="stack">
       <article class="scard scard--black" style="--i:0"><div><h3>A gente é daqui.</h3><p>Conhece a rua, o bairro, a safra e o calendário da cidade. Post de sábado de manhã em Barreiras não é igual post de terça em São Paulo.</p><span class="hand">sem sotaque de agência de capital</span></div><span class="big" aria-hidden="true">Oeste</span></article>
-      <article class="scard scard--white" style="--i:1"><div><h3>Dez anos de estrada.</h3><p>A Viva está no mercado desde ${site.founded}. Já viu muita moda de rede social ir e vir, e sabe o que continua vendendo pra empresa do interior.</p><span class="hand">experiência não se improvisa</span></div><span class="big" aria-hidden="true">${site.founded}</span></article>
+      <article class="scard scard--white" style="--i:1"><div><h3>${years >= 10 ? 'Dez anos de estrada.' : 'Quase dez anos de estrada.'}</h3><p>A Viva está no mercado desde novembro de ${foundedYear}. Já viu muita moda de rede social ir e vir, e sabe o que continua vendendo pra empresa do interior.</p><span class="hand">experiência não se improvisa</span></div><span class="big" aria-hidden="true">${foundedYear}</span></article>
       <article class="scard scard--black" style="--i:2"><div><h3>Influência de verdade.</h3><p>A Viva nasceu da rede de uma criadora de conteúdo que o Oeste já acompanha. Quando a sua marca aparece, aparece pra gente que confia.</p><span class="hand">300 mil pessoas não seguem qualquer um</span></div><span class="big" aria-hidden="true">300 mil</span></article>
       <article class="scard scard--gray" style="--i:3"><div><h3>Operação que não some.</h3><p>Tráfego, site, Google e relatório tocados com processo. Você sabe o que foi feito, quanto custou e o que voltou.</p><span class="hand">nada de sumir depois do contrato</span></div><span class="big" aria-hidden="true">todo mês</span></article>
     </div>
@@ -751,7 +757,7 @@ ${cta()}`,
 page({
   path: '/sobre/',
   active: '/sobre/',
-  title: `Sobre a Agência Viva: Marketing em Barreiras desde ${site.founded}`,
+  title: `Sobre a Agência Viva: Marketing em Barreiras desde ${foundedYear}`,
   desc: 'Conheça a Agência Viva, agência de marketing de Barreiras - BA que une influência, estratégia e operação para fazer empresas do Oeste da Bahia crescerem.',
   ld: [crumbsLd([['Início', '/'], ['Sobre', '/sobre/']])],
   body: `
@@ -759,7 +765,7 @@ page({
   <div class="wrap phero-grid">
     <div>
       ${crumbsHtml([['Início', '/'], ['Sobre', '/sobre/']])}
-      <h1 data-split>Dez anos de Oeste. <span class="s">Pensando grande.</span></h1>
+      <h1 data-split>${years >= 10 ? 'Dez anos' : `Desde ${foundedYear}`} no Oeste. <span class="s">Pensando grande.</span></h1>
       <p class="lede" data-rise=".1">A Agência Viva é uma agência de marketing de Barreiras - BA criada pra dar às empresas da região a mesma força digital das grandes marcas.</p>
     </div>
     <div class="prop"><div class="polaroid"><div class="polaroid__img"><img src="/assets/logo-viva.png" alt="" width="934" height="432"></div><span class="hand">Barreiras - BA</span><span class="tape" aria-hidden="true"></span></div></div>
@@ -769,7 +775,7 @@ page({
   <div class="wrap two">
     <div class="prose">
       <h2 data-split>Quem <span class="s">somos.</span></h2>
-      <p data-rise>A Viva está no mercado desde ${site.founded} e nasceu da vivência de quem cria conteúdo no Oeste da Bahia e reúne uma comunidade de centenas de milhares de seguidores. A gente sabe, na prática, o que prende a atenção das pessoas daqui, e o que faz elas comprarem.</p>
+      <p data-rise>A Viva está no mercado desde ${foundedYear} (CNPJ ${esc(site.cnpj)}) e nasceu da vivência de quem cria conteúdo no Oeste da Bahia e reúne uma comunidade de centenas de milhares de seguidores. A gente sabe, na prática, o que prende a atenção das pessoas daqui, e o que faz elas comprarem.</p>
       <p data-rise>Pra transformar atenção em venda, juntamos essa força comercial e de influência a uma operação técnica de marketing: gestão de tráfego, sites, SEO local e acompanhamento com metas e relatório.</p>
       <h2 data-split>No que a gente <span class="s">acredita.</span></h2>
       <ul class="checklist paper" data-rise>

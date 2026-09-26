@@ -9,7 +9,10 @@ export const site = {
   // TODO: domínio definitivo (sem barra no final)
   url: 'https://agenciaviva.com.br',
   name: 'Agência Viva',
-  legalName: 'Agência Viva Marketing', // TODO: razão social, se houver
+  // A razão social do CNPJ (empresário individual) leva nome e CPF da titular — NÃO publicar.
+  // No schema vai só o nome fantasia registrado.
+  legalName: '',
+  alternateName: 'Viva Agência de Marketing',
   slogan: 'Agência de Marketing em Barreiras - BA',
   // TODO: WhatsApp real no formato 55 + DDD + número (só dígitos)
   whatsapp: '5577999999999',
@@ -34,8 +37,8 @@ export const site = {
     { days: ['Saturday'], opens: '08:00', closes: '12:00' },
   ],
   hoursDisplay: 'Seg a sex, 8h–18h · Sáb, 8h–12h',
-  founded: '2016', // TODO: confirmar a data de abertura do CNPJ
-  cnpj: '', // TODO: CNPJ (aparece no rodapé e no schema quando preenchido)
+  founded: '2016-11-09', // data de abertura do CNPJ (comprovante da Receita)
+  cnpj: '26.513.338/0001-30',
   founder: null, // TODO: { name: 'Nome', url: '/sobre/', sameAs: ['https://www.instagram.com/...'] } — só com consentimento dela
   // perfis oficiais da AGÊNCIA (Instagram, Facebook, LinkedIn, YouTube, TikTok, link do Perfil no Google)
   sameAs: ['https://www.instagram.com/agenciaviva_/'],
