@@ -5,6 +5,7 @@ import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { site, wa, services, cities, testimonials, homeFaq } from './src/data.mjs'
 import BP from './src/brand-paths.mjs'
+import { landings, cityCopy } from './src/pages.mjs'
 
 const root = dirname(fileURLToPath(import.meta.url))
 const out = join(root, 'site')
@@ -16,6 +17,9 @@ const cityPath = c => `/agencia-de-marketing-em-${c.slug}/`
 const svcPath = s => `/servicos/${s.slug}/`
 const A = site.address
 const addrLine = `${A.street} - ${A.district}, ${A.city} - ${A.state}, ${A.zip}`
+// H1 com o final em itálico serifado: 'Agência de marketing em' + 'Barreiras'
+const accentH1 = (h1, accent) => accent && h1.endsWith(accent) ? `${esc(h1.slice(0, -accent.length))}<span class="s">${esc(accent)}</span>` : esc(h1)
+const landingPath = l => `/${l.slug}/`
 const listPt = arr => arr.length < 2 ? arr.join('') : `${arr.slice(0, -1).join(', ')} e ${arr[arr.length - 1]}`
 
 // ─── Ícones e traços feitos à mão ───────────────────────────
@@ -110,7 +114,9 @@ const business = {
     name: 'Serviços de marketing digital',
     itemListElement: services.map(s => ({ '@type': 'Offer', itemOffered: { '@type': 'Service', name: s.name, url: abs(svcPath(s)) } })),
   },
-  sameAs: [site.instagram],
+  sameAs: site.sameAs,
+  ...(site.cnpj ? { taxID: site.cnpj } : {}),
+  ...(site.founder ? { founder: { '@type': 'Person', name: site.founder.name, url: abs(site.founder.url || '/sobre/'), sameAs: site.founder.sameAs || [] } } : {}),
 }
 const website = { '@context': 'https://schema.org', '@type': 'WebSite', '@id': site.url + '/#site', url: site.url + '/', name: site.name, inLanguage: 'pt-BR', publisher: { '@id': bizId } }
 const crumbsLd = items => ({
@@ -341,7 +347,7 @@ ${body}
       </div>
       <div>
         <h2>Cidades</h2>
-        <ul>${cities.map(c => `<li><a href="${cityPath(c)}">Marketing em ${esc(c.name)}</a></li>`).join('')}</ul>
+        <ul>${cities.map(c => `<li><a href="${cityPath(c)}">Marketing em ${esc(c.name)}</a></li>`).join('')}${landings.filter(l => !l.service).map(l => `<li><a href="${landingPath(l)}">${esc(l.nav || l.h1)}</a></li>`).join('')}</ul>
       </div>
       <div>
         <h2>Fale com a gente</h2>
@@ -359,7 +365,7 @@ ${body}
     </div>
     <p class="giant" aria-hidden="true"><span>V</span><span>I</span><span>V</span><span>A</span><span>!</span></p>
     <div class="ftr-bottom">
-      <span>© ${new Date().getFullYear()} ${esc(site.name)} · Agência de marketing em Barreiras - BA</span>
+      <span>© ${new Date().getFullYear()} ${esc(site.legalName || site.name)}${site.cnpj ? ` · CNPJ ${esc(site.cnpj)}` : ''} · Agência de marketing em Barreiras - BA</span>
       <span>Barreiras · LEM · Oeste da Bahia</span>
     </div>
   </div>
@@ -524,7 +530,7 @@ ${cta()}`,
 page({
   path: '/servicos/',
   active: '/servicos/',
-  title: 'Serviços de Marketing Digital em Barreiras - BA | Agência Viva',
+  title: 'Serviços de Marketing em Barreiras - BA | Agência Viva',
   desc: 'Tráfego pago, social media, criação de sites, SEO local, identidade visual e produção de vídeo para empresas de Barreiras e do Oeste da Bahia.',
   ld: [crumbsLd([['Início', '/'], ['Serviços', '/servicos/']])],
   body: `
@@ -562,7 +568,7 @@ for (const s of services) {
       crumbsLd(crumbs),
       faqLd(s.faq),
       {
-        '@context': 'https://schema.org', '@type': 'Service', name: s.name, serviceType: s.name, description: s.desc, url: abs(svcPath(s)),
+        '@context': 'https://schema.org', '@type': 'Service', '@id': abs(svcPath(s)) + '#servico', name: s.name, serviceType: s.name, description: s.desc, url: abs(svcPath(s)),
         provider: { '@id': bizId },
         areaServed: cities.map(c => ({ '@type': 'City', name: `${c.name}, Bahia` })),
       },
@@ -572,7 +578,7 @@ for (const s of services) {
   <div class="wrap phero-grid">
     <div>
       ${crumbsHtml(crumbs)}
-      <h1 data-split>${esc(s.name)} em <span class="s">Barreiras</span></h1>
+      <h1 data-split>${esc(s.h1 || s.name + ' em')} <span class="s">Barreiras</span></h1>
       <p class="lede" data-rise=".1">${esc(s.lead)}</p>
       <a class="btn btn--main btn--lg" data-rise=".2" href="${wa(`Olá, Agência Viva! Quero saber mais sobre ${s.name}.`)}" target="_blank" rel="noopener">${waIcon} Quero saber mais</a>
     </div>
@@ -615,8 +621,9 @@ ${cta()}`,
 
 // Páginas de cidade (SEO local)
 for (const c of cities) {
+  const cc = cityCopy[c.slug] || {}
   const crumbs = [['Início', '/'], [`Marketing em ${c.name}`, cityPath(c)]]
-  const faq = [
+  const faq = cc.faq && cc.faq.length ? cc.faq.map(f => [f.q, f.a]) : [
     [`Vocês atendem empresas em ${c.name}?`, c.main
       ? 'Sim, Barreiras é a nossa base. Atendemos presencialmente e pelo WhatsApp, com reuniões na sua empresa quando precisar.'
       : `Sim. ${c.name} fica ${c.dist}, e atendemos empresas da cidade com gestão remota e visitas presenciais para reuniões e produção de conteúdo.`],
@@ -624,19 +631,25 @@ for (const c of cities) {
     [`Como aparecer no Google Maps em ${c.name}?`, `Com um Perfil da Empresa no Google completo e otimizado para ${c.name}: categoria certa, fotos reais, avaliações de clientes, posts frequentes e dados consistentes em todos os canais. É o nosso serviço de SEO Local.`],
   ]
   const others = cities.filter(o => o !== c)
+  const children = landings.filter(l => l.city === c.slug)
+  // Barreiras: a home disputa "agência de marketing em Barreiras"; a página da cidade fica com "marketing digital e publicidade"
+  const h1 = cc.h1 || (c.main ? 'Marketing digital e publicidade em Barreiras - BA' : `Agência de marketing em ${c.name} - BA`)
+  const h1Accent = cc.h1 ? cc.h1_accent : c.main ? 'Barreiras - BA' : `${c.name} - BA`
   page({
     path: cityPath(c),
-    title: c.main
-      ? 'Agência de Marketing Digital em Barreiras - BA | Agência Viva'
-      : `Agência de Marketing em ${c.name} - BA | Agência Viva`,
-    desc: `Marketing digital em ${c.name} - BA: tráfego pago, Instagram, sites e Google Meu Negócio para empresas${c.main ? ' de Barreiras' : ` de ${c.name}`}. Agência Viva, do Oeste da Bahia.`,
-    ld: [crumbsLd(crumbs), faqLd(faq)],
+    title: cc.title || (c.main ? 'Marketing Digital e Publicidade em Barreiras - BA' : `Agência de Marketing em ${c.name} - BA | Agência Viva`),
+    desc: cc.description || `Marketing digital em ${c.name} - BA: tráfego pago, Instagram, sites e Google Meu Negócio para empresas${c.main ? ' de Barreiras' : ` de ${c.name}`}. Agência Viva, do Oeste da Bahia.`,
+    ld: [crumbsLd(crumbs), faqLd(faq), {
+      '@context': 'https://schema.org', '@type': 'Service', '@id': abs(cityPath(c)) + '#servico', name: `Marketing digital em ${c.name}`, serviceType: 'Marketing digital',
+      provider: { '@id': bizId }, url: abs(cityPath(c)),
+      areaServed: { '@type': 'City', name: `${c.name}, Bahia`, ...(cc.wiki ? { sameAs: cc.wiki } : {}) },
+    }],
     body: `
 <section class="phero">
   <div class="wrap phero-grid">
     <div>
       ${crumbsHtml(crumbs)}
-      <h1 data-split>Agência de marketing em <span class="s">${esc(c.name)}</span></h1>
+      <h1 data-split>${accentH1(h1, h1Accent)}</h1>
       <p class="lede" data-rise=".1">${esc(c.intro)}</p>
       <a class="btn btn--main btn--lg" data-rise=".2" href="${wa(`Olá, Agência Viva! Tenho uma empresa em ${c.name} e quero crescer no digital.`)}" target="_blank" rel="noopener">${waIcon} Falar com a Viva</a>
     </div>
@@ -648,7 +661,9 @@ for (const c of cities) {
     <div class="prose">
       <h2 data-split>Marketing pensado pra <span class="s">${esc(c.name)}.</span></h2>
       <p data-rise>${esc(c.angle)}</p>
-      <p data-rise>A Agência Viva cuida das três frentes que mais trazem cliente pra empresa local: <a href="${svcPath(services[3])}">aparecer no Google Maps</a>, ter um <a href="${svcPath(services[1])}">Instagram profissional</a> e rodar <a href="${svcPath(services[0])}">anúncios que chamam no WhatsApp</a>. Quando faz sentido, completamos com <a href="${svcPath(services[2])}">site próprio</a>, <a href="${svcPath(services[4])}">identidade visual</a> e <a href="${svcPath(services[5])}">produção de vídeo</a>.</p>
+      ${(cc.local || []).map(t => `<p data-rise>${esc(t)}</p>`).join('')}
+      <p data-rise>A Agência Viva cuida das três frentes que mais trazem cliente pra empresa local: <a href="${svcPath(services[3])}">aparecer no Google Maps</a>, ter um <a href="${svcPath(services[1])}">Instagram profissional</a> e rodar <a href="${svcPath(services[0])}">anúncios que chamam no WhatsApp</a>. Quando faz sentido, completamos com <a href="${svcPath(services[2])}">site próprio</a>, <a href="${svcPath(services[4])}">identidade visual</a> e <a href="${svcPath(services[5])}">produção de vídeo</a>.${c.main ? ' Quer entender o trabalho completo? Veja a nossa <a href="/">agência de marketing em Barreiras</a>.' : ''}</p>
+      ${children.length ? `<p data-rise>Em ${esc(c.name)}, a gente tem páginas com mais detalhes: ${listPt(children.map(l => `<a href="${landingPath(l)}">${esc(l.nav || l.h1)}</a>`))}.</p>` : ''}
       <h2 data-split>Quem a gente atende <span class="s">aqui.</span></h2>
       <ul class="tags" data-rise>${c.niches.map(n => `<li>${esc(n)}</li>`).join('')}</ul>
     </div>
@@ -670,10 +685,65 @@ ${faqBlock(`Marketing em <span class="s">${esc(c.name)}.</span>`, faq)}
 <section class="sec" style="padding-top:0" aria-labelledby="h-outras">
   <div class="wrap">
     <h2 id="h-outras" class="h3" data-split>Também atendemos:</h2>
-    <div class="chips" data-rise>${others.map(o => `<a href="${cityPath(o)}">${esc(o.name)}</a>`).join('')}</div>
+    <div class="chips" data-rise>${others.map(o => `<a href="${cityPath(o)}">${esc(o.name)}</a>`).join('')}${landings.filter(l => !l.service).map(l => `<a href="${landingPath(l)}">${esc(l.nav || l.h1)}</a>`).join('')}</div>
   </div>
 </section>
 ${cta(`Sua empresa viva em <span class="s">${esc(c.name)}.</span>`)}`,
+  })
+}
+
+// Páginas novas do plano de SEO (hub do Oeste, serviço × LEM)
+for (const l of landings) {
+  const city = l.city && cities.find(c => c.slug === l.city)
+  const svc = l.service && services.find(s => s.slug === l.service)
+  const crumbs = [['Início', '/'], ...(city ? [[`Marketing em ${city.name}`, cityPath(city)]] : []), [l.nav || l.h1, landingPath(l)]]
+  const faq = (l.faq || []).map(f => [f.q, f.a])
+  const art = l.slug.includes('oeste') ? `<div class="prop" style="width:min(100%,560px)">${mapSvg()}</div>` : svc && props[svc.slug] ? props[svc.slug]() : city ? miniMap(city) : ''
+  page({
+    path: landingPath(l),
+    title: l.title,
+    desc: l.description,
+    ld: [crumbsLd(crumbs), ...(faq.length ? [faqLd(faq)] : []), {
+      '@context': 'https://schema.org', '@type': 'Service', '@id': abs(landingPath(l)) + '#servico', name: l.h1, serviceType: svc ? svc.name : 'Marketing digital',
+      provider: { '@id': bizId }, url: abs(landingPath(l)),
+      areaServed: city ? { '@type': 'City', name: `${city.name}, Bahia`, ...(cityCopy[city.slug] && cityCopy[city.slug].wiki ? { sameAs: cityCopy[city.slug].wiki } : {}) } : cities.map(c => ({ '@type': 'City', name: `${c.name}, Bahia` })),
+    }],
+    body: `
+<section class="phero">
+  <div class="wrap phero-grid">
+    <div>
+      ${crumbsHtml(crumbs)}
+      <h1 data-split>${accentH1(l.h1, l.h1_accent)}</h1>
+      <p class="lede" data-rise=".1">${esc(l.lead)}</p>
+      <a class="btn btn--main btn--lg" data-rise=".2" href="${wa(`Olá, Agência Viva! Vi a página "${l.nav || l.h1}" e quero conversar.`)}" target="_blank" rel="noopener">${waIcon} Chamar no WhatsApp</a>
+    </div>
+    ${art}
+  </div>
+</section>
+<section class="sec" style="padding-top:30px">
+  <div class="wrap two">
+    <div class="prose">
+      ${l.sections.map(sec => `<h2 data-split>${esc(sec.h2)}</h2>
+      ${sec.paragraphs.map(t => `<p data-rise>${esc(t)}</p>`).join('')}
+      ${sec.bullets && sec.bullets.length ? `<ul class="checklist paper" data-rise>${sec.bullets.map(b => `<li>${esc(b)}</li>`).join('')}</ul>` : ''}`).join('')}
+      <p data-rise>${svc ? `Veja também o serviço completo de <a href="${svcPath(svc)}">${esc(svc.name.toLowerCase())} em Barreiras</a>` : 'Veja também os <a href="/servicos/">serviços da Viva</a>'}${city ? ` e a página de <a href="${cityPath(city)}">marketing em ${esc(city.name)}</a>` : ''}.</p>
+    </div>
+    <aside class="aside paper" data-rise>
+      <span class="hand" aria-hidden="true">sem compromisso</span>
+      <h2>Vamos conversar?</h2>
+      <p>Conta rapidinho o que a sua empresa faz${city ? ` em ${esc(city.name)}` : ''}. A gente te mostra por onde começar.</p>
+      <a class="btn btn--main" href="${wa(`Olá! Vi a página "${l.nav || l.h1}" e quero conversar.`)}" target="_blank" rel="noopener">${waIcon} Chamar no WhatsApp</a>
+    </aside>
+  </div>
+</section>
+${faq.length ? faqBlock('Perguntas <span class="s">frequentes.</span>', faq) : ''}
+<section class="sec sec--paper2" aria-labelledby="h-mais">
+  <div class="wrap">
+    <div class="sec-head"><h2 id="h-mais" class="h2" data-split>O que a gente <span class="s">faz.</span></h2></div>
+    <div class="minis">${services.map((s, i) => ticket(s, i, 'h3')).join('')}</div>
+  </div>
+</section>
+${cta()}`,
   })
 }
 
@@ -681,7 +751,7 @@ ${cta(`Sua empresa viva em <span class="s">${esc(c.name)}.</span>`)}`,
 page({
   path: '/sobre/',
   active: '/sobre/',
-  title: 'Sobre a Agência Viva | Agência de Marketing do Oeste da Bahia',
+  title: `Sobre a Agência Viva: Marketing em Barreiras desde ${site.founded}`,
   desc: 'Conheça a Agência Viva, agência de marketing de Barreiras - BA que une influência, estratégia e operação para fazer empresas do Oeste da Bahia crescerem.',
   ld: [crumbsLd([['Início', '/'], ['Sobre', '/sobre/']])],
   body: `
@@ -786,7 +856,7 @@ write('404.html', notFound)
 
 write('sitemap.xml', `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-${pages.map(p => `  <url><loc>${abs(p.path)}</loc><lastmod>${today}</lastmod></url>`).join('\n')}
+${pages.map(p => `  <url><loc>${abs(p.path)}</loc>${p.updated ? `<lastmod>${p.updated}</lastmod>` : ''}</url>`).join('\n')}
 </urlset>
 `)
 write('robots.txt', `User-agent: *\nAllow: /\n\nSitemap: ${abs('/sitemap.xml')}\n`)

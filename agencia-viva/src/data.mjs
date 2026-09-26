@@ -35,6 +35,10 @@ export const site = {
   ],
   hoursDisplay: 'Seg a sex, 8h–18h · Sáb, 8h–12h',
   founded: '2016', // TODO: confirmar a data de abertura do CNPJ
+  cnpj: '', // TODO: CNPJ (aparece no rodapé e no schema quando preenchido)
+  founder: null, // TODO: { name: 'Nome', url: '/sobre/', sameAs: ['https://www.instagram.com/...'] } — só com consentimento dela
+  // perfis oficiais da AGÊNCIA (Instagram, Facebook, LinkedIn, YouTube, TikTok, link do Perfil no Google)
+  sameAs: ['https://www.instagram.com/agenciaviva_/'],
 }
 
 export const wa = (msg = 'Olá, Agência Viva! Quero crescer no digital. Podemos conversar?') =>
@@ -50,7 +54,7 @@ export const services = [
     kw: 'gestão de tráfego pago em Barreiras',
     pitch: "Anúncio no Instagram, no Facebook e no Google que faz o WhatsApp tocar, com gente da sua cidade do outro lado.",
     why: "No Oeste, muita compra começa numa conversa de WhatsApp. Por isso a gente monta campanhas de mensagem com raio bem desenhado: quem está em Barreiras vê o anúncio pensado pra Barreiras, quem está em LEM vê o de LEM. E como a disputa por anúncio no interior costuma ser menor que nas capitais, verba bem cuidada tende a render mais por aqui.",
-    title: 'Gestão de Tráfego Pago em Barreiras - BA | Meta Ads e Google Ads',
+    title: 'Gestão de Tráfego Pago em Barreiras - BA | Agência Viva',
     desc: 'Anúncios no Instagram, Facebook e Google que trazem cliente de verdade para empresas de Barreiras e do Oeste da Bahia. Campanhas com meta, relatório e acompanhamento.',
     lead: 'Anúncio bonito que não vende é gasto. A gente monta campanhas no Meta Ads (Instagram e Facebook) e no Google Ads pensadas para o bolso e para a praça de Barreiras: público certo, raio certo, oferta certa.',
     bullets: [
@@ -75,7 +79,7 @@ export const services = [
     kw: 'social media em Barreiras',
     pitch: "Feed com cara de marca, Reels que prendem e stories que conversam. Seu Instagram tão bom quanto a sua empresa.",
     why: "Em cidade do interior todo mundo se conhece, e o Instagram virou a vitrine que o cliente olha antes de sair de casa. Perfil parado ou com foto torta passa a impressão de empresa parada. Um calendário com a cara da região, com safra, feriados, festas da cidade e datas do comércio local, deixa a sua marca presente o ano inteiro.",
-    title: 'Social Media em Barreiras - BA | Gestão de Instagram para Empresas',
+    title: 'Social Media em Barreiras - BA | Gestão de Instagram',
     desc: 'Gestão de Instagram com estratégia, design e legendas que vendem. Social media para empresas de Barreiras e do Oeste da Bahia com a cara da sua marca.',
     lead: 'Seu Instagram é a vitrine que o cliente vê antes de entrar na loja. A gente cuida do calendário, dos posts, dos stories e da linha editorial para que a sua marca pareça tão boa quanto ela é.',
     bullets: [
@@ -100,7 +104,7 @@ export const services = [
     kw: 'criação de sites em Barreiras',
     pitch: "Site rápido no celular, bonito de verdade e pronto pra aparecer no Google quando alguém da região pesquisa.",
     why: "Quando alguém de Barreiras pesquisa um serviço \"perto de mim\", o Google olha pro seu Perfil da Empresa e também pro seu site. Um site leve, com endereço, serviços e cidades atendidas bem escritos, é o que sustenta o SEO local. E no 4G da estrada, site pesado é cliente que desiste antes de ver o que você vende.",
-    title: 'Criação de Sites em Barreiras - BA | Sites Rápidos e com SEO',
+    title: 'Criação de Sites em Barreiras - BA | Agência Viva',
     desc: 'Criação de sites profissionais e landing pages em Barreiras - BA. Rápidos no celular, otimizados para o Google e prontos para gerar contato no WhatsApp.',
     lead: 'Site lento e genérico espanta cliente. A gente cria sites e landing pages rápidos, bonitos no celular e já estruturados para aparecer no Google quando alguém de Barreiras pesquisa pelo que você vende.',
     bullets: [
@@ -125,7 +129,7 @@ export const services = [
     kw: 'SEO local e Google Meu Negócio em Barreiras',
     pitch: "Seu Perfil no Google caprichado pra você aparecer no mapa quando alguém procura \"perto de mim\".",
     why: "Pra quem tem negócio físico no Oeste, o Google Maps virou a nova lista telefônica. Quem aparece nos primeiros resultados do mapa fica com boa parte das ligações e dos pedidos de rota. A boa notícia: em cidades como Barreiras e Luís Eduardo Magalhães a disputa por essas posições ainda é bem menor do que nas capitais.",
-    title: 'SEO Local e Google Meu Negócio em Barreiras - BA | Apareça no Maps',
+    title: 'Google Meu Negócio e SEO Local em Barreiras - BA',
     desc: 'Coloque sua empresa no topo do Google Maps em Barreiras e no Oeste da Bahia. Otimização do Perfil da Empresa no Google, avaliações e SEO local.',
     lead: 'Quando alguém digita "perto de mim" em Barreiras, as três empresas que aparecem no mapa ficam com a maior parte das ligações. A gente trabalha para que uma delas seja a sua.',
     bullets: [
@@ -139,7 +143,7 @@ export const services = [
     faq: [
       ['O que é o Google Meu Negócio?', 'É o antigo nome do Perfil da Empresa no Google: o cartão com endereço, telefone, fotos e avaliações que aparece no Google Maps e na busca. É gratuito e é a ferramenta de SEO local mais poderosa que existe.'],
       ['Em quanto tempo subo no Google Maps?', 'Perfis bem otimizados costumam ganhar posições em 30 a 90 dias. Em cidades do interior como Barreiras, a concorrência costuma ser menor, então os resultados tendem a vir mais rápido.'],
-      ['Vocês compram avaliações?', 'Não. Avaliações falsas violam as políticas do Google e podem derrubar o perfil. Criamos um processo para pedir avaliações reais aos seus clientes satisfeitos.'],
+      ['Vocês compram avaliações?', 'Não. Avaliações falsas violam as políticas do Google e podem derrubar o perfil. A gente monta uma rotina para pedir avaliação a todos os seus clientes, em momentos naturais do atendimento, e responder cada uma.'],
     ],
   },
   {
@@ -150,7 +154,7 @@ export const services = [
     kw: 'identidade visual em Barreiras',
     pitch: "Logo, cores e jeito de falar que funcionam no feed, na fachada, no uniforme e no adesivo da caminhonete.",
     why: "Muita empresa tradicional do Oeste cresceu no boca a boca e hoje tem uma marca que não acompanha o tamanho que ela já tem. Uma identidade bem feita faz a sua empresa parecer o que ela é: séria, grande e confiável, do cartão de visita ao outdoor na beira da BR.",
-    title: 'Identidade Visual e Criação de Logo em Barreiras - BA | Branding',
+    title: 'Criação de Logo e Identidade Visual em Barreiras - BA',
     desc: 'Criação de logo, identidade visual e manual de marca para empresas de Barreiras e do Oeste da Bahia. Marca forte, memorável e pronta para o digital.',
     lead: 'Marca é a primeira impressão e a última lembrança. Criamos logos e identidades visuais com personalidade, que funcionam no Instagram, na fachada, no uniforme e no caminhão.',
     bullets: [
@@ -175,7 +179,8 @@ export const services = [
     kw: 'produção de vídeo em Barreiras',
     pitch: "A gente vai até você, grava o que acontece de verdade e transforma em Reels e fotos que prendem.",
     why: "Ninguém para de rolar o feed por foto de banco de imagem. O que prende é gente real, lugar real e história real, do balcão da loja à lavoura. E o Oeste tem imagem de sobra: pôr do sol no cerrado, colheita, rio, cidade crescendo. A gente usa isso a favor da sua marca.",
-    title: 'Produção de Vídeo e Fotografia em Barreiras - BA | Reels e Conteúdo',
+    title: 'Produtora de Vídeo em Barreiras - BA | Agência Viva',
+    h1: 'Produtora de vídeo e fotografia em',
     desc: 'Filmagem, fotografia e edição de Reels para empresas em Barreiras e no Oeste da Bahia. Conteúdo de verdade, com gente de verdade, que prende a atenção.',
     lead: 'Ninguém para de rolar o feed por foto de banco de imagem. A gente vai até a sua empresa, grava e fotografa o que acontece de verdade e transforma isso em conteúdo que prende e vende.',
     bullets: [
@@ -283,5 +288,7 @@ export const homeFaq = [
   ['Quanto custa uma agência de marketing em Barreiras?', 'Depende do escopo. Temos planos de social media, de tráfego pago e combos completos, com valores pensados para a realidade de pequenas e médias empresas do interior. Chame no WhatsApp e montamos uma proposta sob medida.'],
   ['A Agência Viva atende quais cidades?', 'Atendemos Barreiras, Luís Eduardo Magalhães, São Desidério, Formosa do Rio Preto, Correntina, Santa Maria da Vitória, Bom Jesus da Lapa, Riachão das Neves e todo o Oeste da Bahia. Também atendemos empresas de outras regiões de forma remota.'],
   ['Vocês fazem contrato de fidelidade?', 'Trabalhamos com contratos mensais transparentes. Marketing precisa de tempo para maturar, por isso recomendamos pelo menos três meses, mas você fica porque o resultado aparece.'],
+  ['A agência precisa ser da minha cidade?', 'Não é obrigatório, mas ajuda muito. Quem é daqui conhece o calendário, os bairros, a linguagem e o jeito de comprar da região, e consegue ir até a sua empresa gravar, fotografar e conversar. A Viva fica em Barreiras e atende o Oeste inteiro a partir daqui.'],
+  ['A verba dos anúncios está inclusa no valor da agência?', 'Normalmente não. O valor da agência paga o trabalho (estratégia, criação, gestão e relatório) e a verba dos anúncios vai direto para a plataforma, Meta ou Google, no seu cartão ou boleto. Assim você vê exatamente quanto foi investido. A gente explica tudo na proposta.'],
   ['Como faço para aparecer no Google Maps em Barreiras?', 'Criando e otimizando o Perfil da Empresa no Google: categorias certas, fotos reais, posts frequentes, avaliações de clientes e dados consistentes. É exatamente isso que fazemos no serviço de SEO Local.'],
 ]

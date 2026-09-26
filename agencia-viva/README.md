@@ -74,7 +74,7 @@ conteúdo da pasta `site/`.
    *Agência de publicidade*. Área de atendimento com as 8 cidades.
    Mesmo nome, endereço e telefone do site. Link do site no perfil.
 2. **Google Search Console**: verificar o domínio e enviar `/sitemap.xml`.
-3. **Avaliações**: pedir a cada cliente satisfeito, com link direto de
+3. **Avaliações**: pedir a todos os clientes (não só aos satisfeitos, o que é proibido pelo Google), com link direto de
    avaliação, e responder todas.
 4. **Fotos reais** no Perfil (fachada, equipe, bastidores): 1 a 2 por semana.
 5. **Postagens no Perfil** semanais, com link para a página de serviço.
