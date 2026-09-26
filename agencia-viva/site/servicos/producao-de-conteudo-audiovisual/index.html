@@ -7,7 +7,7 @@
 <meta name="description" content="Filmagem, fotografia e edição de Reels para empresas em Barreiras e no Oeste da Bahia. Conteúdo de verdade, com gente de verdade, que prende a atenção.">
 <link rel="canonical" href="https://agenciaviva.com.br/servicos/producao-de-conteudo-audiovisual/">
 <meta name="robots" content="index, follow, max-image-preview:large">
-<meta name="theme-color" content="#0d0a12">
+<meta name="theme-color" content="#f5efe4">
 <meta name="geo.region" content="BR-BA">
 <meta name="geo.placename" content="Barreiras">
 <meta name="geo.position" content="-12.1528;-44.99">
@@ -19,13 +19,13 @@
 <meta property="og:description" content="Filmagem, fotografia e edição de Reels para empresas em Barreiras e no Oeste da Bahia. Conteúdo de verdade, com gente de verdade, que prende a atenção.">
 <meta property="og:url" content="https://agenciaviva.com.br/servicos/producao-de-conteudo-audiovisual/">
 <meta property="og:image" content="https://agenciaviva.com.br/assets/og-viva.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="/assets/logo-viva.png">
 <link rel="manifest" href="/site.webmanifest">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=Inter:wght@400;500;600;700&display=swap">
+<link rel="preload" href="/assets/fonts/archivo.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/assets/viva.css">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"ProfessionalService","@id":"https://agenciaviva.com.br/#agencia","name":"Agência Viva","legalName":"Agência Viva Marketing","description":"Agência de marketing digital em Barreiras - BA: tráfego pago, social media, criação de sites, SEO local e Google Meu Negócio para empresas do Oeste da Bahia.","slogan":"Agência de Marketing em Barreiras - BA","url":"https://agenciaviva.com.br/","logo":"https://agenciaviva.com.br/assets/logo-viva.png","image":"https://agenciaviva.com.br/assets/og-viva.png","telephone":"+5577999999999","email":"contato@agenciaviva.com.br","foundingDate":"2020","priceRange":"$$","address":{"@type":"PostalAddress","streetAddress":"Rua TODO, 000","addressLocality":"Barreiras","addressRegion":"BA","postalCode":"47800-000","addressCountry":"BR"},"geo":{"@type":"GeoCoordinates","latitude":-12.1528,"longitude":-44.99},"hasMap":"https://www.google.com/maps/search/?api=1&query=Ag%C3%AAncia+Viva+Barreiras+BA","openingHoursSpecification":[{"@type":"OpeningHoursSpecification","dayOfWeek":["Monday","Tuesday","Wednesday","Thursday","Friday"],"opens":"08:00","closes":"18:00"},{"@type":"OpeningHoursSpecification","dayOfWeek":["Saturday"],"opens":"08:00","closes":"12:00"}],"areaServed":[{"@type":"City","name":"Barreiras, Bahia"},{"@type":"City","name":"Luís Eduardo Magalhães, Bahia"},{"@type":"City","name":"São Desidério, Bahia"},{"@type":"City","name":"Formosa do Rio Preto, Bahia"},{"@type":"City","name":"Correntina, Bahia"},{"@type":"City","name":"Santa Maria da Vitória, Bahia"},{"@type":"City","name":"Bom Jesus da Lapa, Bahia"},{"@type":"City","name":"Riachão das Neves, Bahia"},{"@type":"AdministrativeArea","name":"Oeste da Bahia"}],"knowsAbout":["Marketing digital","Gestão de tráfego pago","Meta Ads","Google Ads","Social media","SEO local","Google Meu Negócio","Criação de sites","Identidade visual","Marketing para o agronegócio"],"hasOfferCatalog":{"@type":"OfferCatalog","name":"Serviços de marketing digital","itemListElement":[{"@type":"Offer","itemOffered":{"@type":"Service","name":"Gestão de Tráfego Pago","url":"https://agenciaviva.com.br/servicos/gestao-de-trafego-pago/"}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"Social Media e Gestão de Instagram","url":"https://agenciaviva.com.br/servicos/social-media/"}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"Criação de Sites e Landing Pages","url":"https://agenciaviva.com.br/servicos/criacao-de-sites/"}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"Google Meu Negócio e SEO Local","url":"https://agenciaviva.com.br/servicos/google-meu-negocio-seo-local/"}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"Branding e Identidade Visual","url":"https://agenciaviva.com.br/servicos/identidade-visual/"}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"Produção de Conteúdo e Audiovisual","url":"https://agenciaviva.com.br/servicos/producao-de-conteudo-audiovisual/"}}]},"sameAs":["https://www.instagram.com/agenciaviva_/"]}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","@id":"https://agenciaviva.com.br/#site","url":"https://agenciaviva.com.br/","name":"Agência Viva","inLanguage":"pt-BR","publisher":{"@id":"https://agenciaviva.com.br/#agencia"}}</script>
@@ -37,133 +37,152 @@
 <a class="skip" href="#conteudo">Pular para o conteúdo</a>
 <header class="hdr">
   <div class="wrap">
-    <a class="logo" href="/" aria-label="Agência Viva — página inicial"><img src="/assets/logo-viva.png" alt="Agência Viva — Agência de Marketing em Barreiras" width="934" height="432"></a>
-    <button class="burger" aria-label="Abrir menu" aria-expanded="false" aria-controls="menu"><span></span><span></span><span></span></button>
+    <a class="logo" href="/" aria-label="Agência Viva, página inicial"><img src="/assets/logo-viva.png" alt="Agência Viva, agência de marketing em Barreiras" width="934" height="432"></a>
+    <button class="burger" type="button" aria-label="Abrir menu" aria-expanded="false" aria-controls="menu"><span></span><span></span><span></span></button>
     <nav class="nav" id="menu" aria-label="Principal">
       <a href="/servicos/" aria-current="page">Serviços</a><a href="/#cidades">Cidades</a><a href="/sobre/">Sobre</a><a href="/contato/">Contato</a>
-      <a class="btn" href="https://wa.me/5577999999999?text=Ol%C3%A1%2C%20Ag%C3%AAncia%20Viva!%20Quero%20crescer%20no%20digital.%20Podemos%20conversar%3F" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.5 14.4c-.3-.1-1.8-.9-2-1-.3-.1-.5-.1-.7.1-.2.3-.8 1-.9 1.2-.2.2-.3.2-.6.1-.3-.1-1.3-.5-2.4-1.5-.9-.8-1.5-1.8-1.7-2.1-.2-.3 0-.5.1-.6l.4-.5c.2-.2.2-.3.3-.5.1-.2 0-.4 0-.5l-.9-2.2c-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5s1.1 2.9 1.2 3.1c.1.2 2.1 3.2 5.1 4.5.7.3 1.3.5 1.7.6.7.2 1.4.2 1.9.1.6-.1 1.8-.7 2-1.4.2-.7.2-1.3.2-1.4-.1-.1-.3-.2-.6-.3zM12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.5 0-3-.4-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2z"/></svg> Orçamento</a>
+      <a class="btn btn--main" href="https://wa.me/5577999999999?text=Ol%C3%A1%2C%20Ag%C3%AAncia%20Viva!%20Quero%20crescer%20no%20digital.%20Podemos%20conversar%3F" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.5 14.4c-.3-.1-1.8-.9-2-1-.3-.1-.5-.1-.7.1-.2.3-.8 1-.9 1.2-.2.2-.3.2-.6.1-.3-.1-1.3-.5-2.4-1.5-.9-.8-1.5-1.8-1.7-2.1-.2-.3 0-.5.1-.6l.4-.5c.2-.2.2-.3.3-.5.1-.2 0-.4 0-.5l-.9-2.2c-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5s1.1 2.9 1.2 3.1c.1.2 2.1 3.2 5.1 4.5.7.3 1.3.5 1.7.6.7.2 1.4.2 1.9.1.6-.1 1.8-.7 2-1.4.2-.7.2-1.3.2-1.4-.1-.1-.3-.2-.6-.3zM12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.5 0-3-.4-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2z"/></svg> Chamar no WhatsApp</a>
     </nav>
   </div>
 </header>
 <main id="conteudo">
 
-<section class="hero hero--inner">
-  <div class="blobs" aria-hidden="true"><span class="blob blob--1"></span><span class="blob blob--2"></span></div>
-  <div class="wrap">
-    <nav aria-label="Você está em"><ol class="crumbs"><li><a href="/">Início</a></li><li><a href="/servicos/">Serviços</a></li><li aria-current="page">Audiovisual</li></ol></nav>
-    <h1 class="rv">Produção de Conteúdo e Audiovisual em <span class="grad">Barreiras - BA</span></h1>
-    <p class="sub rv" style="--d:.1s">Ninguém para de rolar o feed por foto de banco de imagem. A gente vai até a sua empresa, grava e fotografa o que acontece de verdade e transforma isso em conteúdo que prende e vende.</p>
-    <div class="cta-row rv" style="--d:.2s"><a class="btn btn--lg" href="https://wa.me/5577999999999?text=Ol%C3%A1%2C%20Ag%C3%AAncia%20Viva!%20Quero%20saber%20mais%20sobre%20Produ%C3%A7%C3%A3o%20de%20Conte%C3%BAdo%20e%20Audiovisual." target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.5 14.4c-.3-.1-1.8-.9-2-1-.3-.1-.5-.1-.7.1-.2.3-.8 1-.9 1.2-.2.2-.3.2-.6.1-.3-.1-1.3-.5-2.4-1.5-.9-.8-1.5-1.8-1.7-2.1-.2-.3 0-.5.1-.6l.4-.5c.2-.2.2-.3.3-.5.1-.2 0-.4 0-.5l-.9-2.2c-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5s1.1 2.9 1.2 3.1c.1.2 2.1 3.2 5.1 4.5.7.3 1.3.5 1.7.6.7.2 1.4.2 1.9.1.6-.1 1.8-.7 2-1.4.2-.7.2-1.3.2-1.4-.1-.1-.3-.2-.6-.3zM12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.5 0-3-.4-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2z"/></svg> Pedir orçamento</a></div>
+<section class="phero">
+  <div class="wrap phero-grid">
+    <div>
+      <nav aria-label="Você está em"><ol class="crumbs"><li><a href="/">Início</a></li><li><a href="/servicos/">Serviços</a></li><li aria-current="page">Audiovisual</li></ol></nav>
+      <h1 data-split>Produção de Conteúdo e Audiovisual em <span class="s">Barreiras</span></h1>
+      <p class="lede" data-rise=".1">Ninguém para de rolar o feed por foto de banco de imagem. A gente vai até a sua empresa, grava e fotografa o que acontece de verdade e transforma isso em conteúdo que prende e vende.</p>
+      <a class="btn btn--main btn--lg" data-rise=".2" href="https://wa.me/5577999999999?text=Ol%C3%A1%2C%20Ag%C3%AAncia%20Viva!%20Quero%20saber%20mais%20sobre%20Produ%C3%A7%C3%A3o%20de%20Conte%C3%BAdo%20e%20Audiovisual." target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.5 14.4c-.3-.1-1.8-.9-2-1-.3-.1-.5-.1-.7.1-.2.3-.8 1-.9 1.2-.2.2-.3.2-.6.1-.3-.1-1.3-.5-2.4-1.5-.9-.8-1.5-1.8-1.7-2.1-.2-.3 0-.5.1-.6l.4-.5c.2-.2.2-.3.3-.5.1-.2 0-.4 0-.5l-.9-2.2c-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5s1.1 2.9 1.2 3.1c.1.2 2.1 3.2 5.1 4.5.7.3 1.3.5 1.7.6.7.2 1.4.2 1.9.1.6-.1 1.8-.7 2-1.4.2-.7.2-1.3.2-1.4-.1-.1-.3-.2-.6-.3zM12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.5 0-3-.4-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2z"/></svg> Quero saber mais</a>
+    </div>
+    <div class="prop" style="width:auto"><div class="rec paper">
+    <div class="rec__frame"></div>
+    <div class="rec__top"><b>REC</b><span>00:14</span></div>
+    <div class="rec__mid"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 4l14 8-14 8z"/></svg></div>
+    <div class="rec__cap">Bastidores da <span class="s">sua</span> loja</div>
+  </div></div>
   </div>
 </section>
-<section class="sec" style="padding-top:0">
+<section class="sec" style="padding-top:30px">
   <div class="wrap two">
     <div class="prose">
-      <h2 class="rv" style="margin-top:0">O que está incluso</h2>
-      <ul class="ticks rv"><li>Diárias de gravação em Barreiras e região</li><li>Roteiro e direção de Reels</li><li>Fotografia de produto, equipe e ambiente</li><li>Edição com ritmo, legenda e trilha</li><li>Conteúdo com influenciadores da região</li></ul>
-      <h2 class="rv">Por que investir em audiovisual no Oeste da Bahia</h2>
-      <p class="rv">Barreiras, Luís Eduardo Magalhães e as cidades vizinhas vivem um crescimento puxado pelo agronegócio, e o comércio e os serviços crescem junto. Com mais concorrência, quem se posiciona primeiro no digital fica com a atenção do cliente. É por isso que o trabalho de produção de vídeo em Barreiras precisa conhecer a região: o horário em que as pessoas compram, os bairros, a linguagem e o calendário local — da safra às festas da cidade.</p>
-      <p class="rv">A Agência Viva atende empresas de Barreiras, Luís Eduardo Magalhães, São Desidério, Formosa do Rio Preto, Correntina, Santa Maria da Vitória, Bom Jesus da Lapa e Riachão das Neves, com a mesma dedicação.</p>
+      <h2 data-split>O que está <span class="s">incluso.</span></h2>
+      <ul class="checklist paper" data-rise><li>Diárias de gravação em Barreiras e região</li><li>Roteiro e direção de Reels</li><li>Fotografia de produto, equipe e ambiente</li><li>Edição com ritmo, legenda e trilha</li><li>Conteúdo com influenciadores da região</li></ul>
+      <h2 data-split>Por que isso importa no <span class="s">Oeste.</span></h2>
+      <p data-rise>Ninguém para de rolar o feed por foto de banco de imagem. O que prende é gente real, lugar real e história real, do balcão da loja à lavoura. E o Oeste tem imagem de sobra: pôr do sol no cerrado, colheita, rio, cidade crescendo. A gente usa isso a favor da sua marca.</p>
+      <p data-rise>Atendemos empresas de <a href="/agencia-de-marketing-em-barreiras/">Barreiras</a>, <a href="/agencia-de-marketing-em-luis-eduardo-magalhaes/">Luís Eduardo Magalhães</a>, <a href="/agencia-de-marketing-em-sao-desiderio/">São Desidério</a>, <a href="/agencia-de-marketing-em-formosa-do-rio-preto/">Formosa do Rio Preto</a>, <a href="/agencia-de-marketing-em-correntina/">Correntina</a>, <a href="/agencia-de-marketing-em-santa-maria-da-vitoria/">Santa Maria da Vitória</a>, <a href="/agencia-de-marketing-em-bom-jesus-da-lapa/">Bom Jesus da Lapa</a> e <a href="/agencia-de-marketing-em-riachao-das-neves/">Riachão das Neves</a>.</p>
     </div>
-    <aside class="aside rv">
-      <h3>Vamos conversar?</h3>
-      <p>Diagnóstico gratuito do seu digital em até 24 horas úteis.</p>
-      <a class="btn" href="https://wa.me/5577999999999?text=Ol%C3%A1%2C%20Ag%C3%AAncia%20Viva!%20Quero%20um%20diagn%C3%B3stico%20de%20Audiovisual." target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.5 14.4c-.3-.1-1.8-.9-2-1-.3-.1-.5-.1-.7.1-.2.3-.8 1-.9 1.2-.2.2-.3.2-.6.1-.3-.1-1.3-.5-2.4-1.5-.9-.8-1.5-1.8-1.7-2.1-.2-.3 0-.5.1-.6l.4-.5c.2-.2.2-.3.3-.5.1-.2 0-.4 0-.5l-.9-2.2c-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5s1.1 2.9 1.2 3.1c.1.2 2.1 3.2 5.1 4.5.7.3 1.3.5 1.7.6.7.2 1.4.2 1.9.1.6-.1 1.8-.7 2-1.4.2-.7.2-1.3.2-1.4-.1-.1-.3-.2-.6-.3zM12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.5 0-3-.4-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2z"/></svg> Falar no WhatsApp</a>
+    <aside class="aside paper" data-rise>
+      <span class="hand" aria-hidden="true">sem compromisso!</span>
+      <h2>Vamos conversar?</h2>
+      <p>Conta rapidinho como está a sua empresa hoje. A gente te diz se audiovisual faz sentido agora, ou o que vem antes.</p>
+      <a class="btn btn--main" href="https://wa.me/5577999999999?text=Ol%C3%A1%2C%20Ag%C3%AAncia%20Viva!%20Quero%20conversar%20sobre%20Audiovisual." target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.5 14.4c-.3-.1-1.8-.9-2-1-.3-.1-.5-.1-.7.1-.2.3-.8 1-.9 1.2-.2.2-.3.2-.6.1-.3-.1-1.3-.5-2.4-1.5-.9-.8-1.5-1.8-1.7-2.1-.2-.3 0-.5.1-.6l.4-.5c.2-.2.2-.3.3-.5.1-.2 0-.4 0-.5l-.9-2.2c-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5s1.1 2.9 1.2 3.1c.1.2 2.1 3.2 5.1 4.5.7.3 1.3.5 1.7.6.7.2 1.4.2 1.9.1.6-.1 1.8-.7 2-1.4.2-.7.2-1.3.2-1.4-.1-.1-.3-.2-.6-.3zM12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.5 0-3-.4-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2z"/></svg> Chamar no WhatsApp</a>
     </aside>
   </div>
 </section>
-<section class="sec" style="padding-top:0" aria-labelledby="h-etapas">
+<section class="sec sec--paper2" aria-labelledby="h-etapas">
   <div class="wrap">
-    <div class="sec-head"><div><span class="eyebrow rv">Etapas</span><h2 id="h-etapas" class="rv">Como funciona</h2></div></div>
-    <div class="steps"><div class="step rv" style="--d:0s"><h3>Pauta e roteiro</h3></div><div class="step rv" style="--d:0.08s"><h3>Diária de captação</h3></div><div class="step rv" style="--d:0.16s"><h3>Edição e aprovação</h3></div><div class="step rv" style="--d:0.24s"><h3>Publicação e impulsionamento</h3></div></div>
+    <div class="sec-head"><h2 id="h-etapas" class="h2" data-split>Como <span class="s">funciona.</span></h2></div>
+    <div class="steps"><div class="step paper" data-rise><h3>Pauta e roteiro</h3></div><div class="step paper" data-rise><h3>Diária de captação</h3></div><div class="step paper" data-rise><h3>Edição e aprovação</h3></div><div class="step paper" data-rise><h3>Publicação e impulsionamento</h3></div></div>
   </div>
 </section>
-<section class="sec" style="padding-top:0" aria-labelledby="h-faq">
-  <div class="wrap">
-    <div class="sec-head"><div><span class="eyebrow rv">Perguntas frequentes</span><h2 id="h-faq" class="rv">Dúvidas sobre audiovisual</h2></div></div>
+
+<section class="sec" aria-labelledby="h-faq">
+  <div class="wrap faq-grid">
+    <div>
+      <span class="label" data-rise>Perguntas frequentes</span>
+      <h2 id="h-faq" class="h2" data-split style="margin-top:18px">Dúvidas sobre <span class="s">audiovisual.</span></h2>
+      <p class="hand" style="font-size:28px;color:var(--tomato);margin-top:26px;rotate:-2deg" data-rise>Não achou sua dúvida? Manda no WhatsApp.</p>
+    </div>
     <div class="faq">
-  <details class="rv" style="--d:0s" open><summary>Vocês trabalham com influenciadores?</summary><div class="ans"><p>Sim. Temos proximidade com criadores de conteúdo do Oeste baiano e montamos ações de influência com público da própria região.</p></div></details>
-  <details class="rv" style="--d:0.05s"><summary>Quantos vídeos saem de uma diária?</summary><div class="ans"><p>Uma diária bem planejada rende de 6 a 12 Reels editados, além de fotos para o feed e para o site.</p></div></details>
-  <details class="rv" style="--d:0.1s"><summary>Vocês gravam em fazenda e no agro?</summary><div class="ans"><p>Gravamos. O agronegócio é a força do Oeste da Bahia e tem muita história boa para contar em vídeo.</p></div></details>
-</div>
+      <details open><summary>Vocês trabalham com influenciadores?<i aria-hidden="true"></i></summary><div class="ans"><p>Sim. Temos proximidade com criadores de conteúdo do Oeste baiano e montamos ações de influência com público da própria região.</p></div></details>
+      <details><summary>Quantos vídeos saem de uma diária?<i aria-hidden="true"></i></summary><div class="ans"><p>Uma diária bem planejada rende de 6 a 12 Reels editados, além de fotos para o feed e para o site.</p></div></details>
+      <details><summary>Vocês gravam em fazenda e no agro?<i aria-hidden="true"></i></summary><div class="ans"><p>Gravamos. O agronegócio é a força do Oeste da Bahia e tem muita história boa para contar em vídeo.</p></div></details>
+    </div>
   </div>
 </section>
 <section class="sec" style="padding-top:0" aria-labelledby="h-mais">
   <div class="wrap">
-    <div class="sec-head"><div><span class="eyebrow rv">Combine com</span><h2 id="h-mais" class="rv">Outros serviços</h2></div></div>
-    <div class="cards">
-  <a class="card rv" style="--d:0s" href="/servicos/gestao-de-trafego-pago/">
-    <span class="ico"><svg class="" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.5"/></svg></span>
+    <div class="sec-head"><h2 id="h-mais" class="h2" data-split>Combina <span class="s">com:</span></h2></div>
+    <div class="minis"><a class="ticket" href="/servicos/gestao-de-trafego-pago/">
+    <span class="tape" aria-hidden="true"></span>
+    <span class="stamp" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.5"/></svg></span>
+    <span class="n" aria-hidden="true">um.</span>
     <h3>Tráfego Pago</h3>
-    <p>Anúncios no Instagram, Facebook e Google que trazem cliente de verdade para empresas de Barreiras e do Oeste da Bahia.</p>
-    <span class="more">Saiba mais <svg class="" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
-  </a>
-  <a class="card rv" style="--d:0.08s" href="/servicos/social-media/">
-    <span class="ico"><svg class="" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v4M12 17v4M3 12h4M17 12h4M6 6l2.5 2.5M15.5 15.5L18 18M6 18l2.5-2.5M15.5 8.5L18 6"/></svg></span>
+    <p>Anúncio no Instagram, no Facebook e no Google que faz o WhatsApp tocar, com gente da sua cidade do outro lado.</p>
+    <span class="go">Ver como funciona <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+  </a><a class="ticket" href="/servicos/social-media/">
+    <span class="tape tape--pink" aria-hidden="true"></span>
+    <span class="stamp" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v4M12 17v4M3 12h4M17 12h4M6 6l2.5 2.5M15.5 15.5L18 18M6 18l2.5-2.5M15.5 8.5L18 6"/></svg></span>
+    <span class="n" aria-hidden="true">dois.</span>
     <h3>Social Media</h3>
-    <p>Gestão de Instagram com estratégia, design e legendas que vendem.</p>
-    <span class="more">Saiba mais <svg class="" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
-  </a>
-  <a class="card rv" style="--d:0.16s" href="/servicos/criacao-de-sites/">
-    <span class="ico"><svg class="" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="3"/><path d="M3 9h18M7 6.5h.01M10 6.5h.01"/></svg></span>
+    <p>Feed com cara de marca, Reels que prendem e stories que conversam. Seu Instagram tão bom quanto a sua empresa.</p>
+    <span class="go">Ver como funciona <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+  </a><a class="ticket" href="/servicos/criacao-de-sites/">
+    <span class="tape tape--green" aria-hidden="true"></span>
+    <span class="stamp" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="3"/><path d="M3 9h18M7 6.5h.01M10 6.5h.01"/></svg></span>
+    <span class="n" aria-hidden="true">três.</span>
     <h3>Sites</h3>
-    <p>Criação de sites profissionais e landing pages em Barreiras - BA.</p>
-    <span class="more">Saiba mais <svg class="" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
-  </a>
-</div>
+    <p>Site rápido no celular, bonito de verdade e pronto pra aparecer no Google quando alguém da região pesquisa.</p>
+    <span class="go">Ver como funciona <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+  </a></div>
   </div>
 </section>
 
-<section class="sec" aria-labelledby="cta-final">
+<section class="cta" aria-labelledby="h-cta">
+  <span class="bang" aria-hidden="true">!</span>
   <div class="wrap">
-    <div class="final rv">
-      <h2 id="cta-final">Bora deixar a sua marca viva?</h2>
-      <p>Conte pra gente sobre a sua empresa. Em poucos minutos a gente mostra onde está o dinheiro que você está deixando na mesa.</p>
-      <div class="cta-row">
-        <a class="btn btn--lg" href="https://wa.me/5577999999999?text=Ol%C3%A1%2C%20Ag%C3%AAncia%20Viva!%20Quero%20crescer%20no%20digital.%20Podemos%20conversar%3F" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.5 14.4c-.3-.1-1.8-.9-2-1-.3-.1-.5-.1-.7.1-.2.3-.8 1-.9 1.2-.2.2-.3.2-.6.1-.3-.1-1.3-.5-2.4-1.5-.9-.8-1.5-1.8-1.7-2.1-.2-.3 0-.5.1-.6l.4-.5c.2-.2.2-.3.3-.5.1-.2 0-.4 0-.5l-.9-2.2c-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5s1.1 2.9 1.2 3.1c.1.2 2.1 3.2 5.1 4.5.7.3 1.3.5 1.7.6.7.2 1.4.2 1.9.1.6-.1 1.8-.7 2-1.4.2-.7.2-1.3.2-1.4-.1-.1-.3-.2-.6-.3zM12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.5 0-3-.4-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2z"/></svg> Chamar no WhatsApp</a>
-        <a class="btn btn--ghost btn--lg" href="https://www.instagram.com/agenciaviva_/" target="_blank" rel="noopener">Ver o Instagram</a>
-      </div>
+    <h2 id="h-cta" data-split>Sua empresa merece ser <span class="s">encontrada.</span></h2>
+    <p data-rise>Chama no WhatsApp e conta o que você vende. A gente olha seu Instagram, seu Google e seus anúncios e te diz, sem enrolação, por onde começar.</p>
+    <div class="hero-cta" data-rise>
+      <a class="btn btn--ink btn--lg" href="https://wa.me/5577999999999?text=Ol%C3%A1%2C%20Ag%C3%AAncia%20Viva!%20Quero%20crescer%20no%20digital.%20Podemos%20conversar%3F" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.5 14.4c-.3-.1-1.8-.9-2-1-.3-.1-.5-.1-.7.1-.2.3-.8 1-.9 1.2-.2.2-.3.2-.6.1-.3-.1-1.3-.5-2.4-1.5-.9-.8-1.5-1.8-1.7-2.1-.2-.3 0-.5.1-.6l.4-.5c.2-.2.2-.3.3-.5.1-.2 0-.4 0-.5l-.9-2.2c-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5s1.1 2.9 1.2 3.1c.1.2 2.1 3.2 5.1 4.5.7.3 1.3.5 1.7.6.7.2 1.4.2 1.9.1.6-.1 1.8-.7 2-1.4.2-.7.2-1.3.2-1.4-.1-.1-.3-.2-.6-.3zM12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.5 0-3-.4-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2z"/></svg> Chamar no WhatsApp</a>
+      <a class="go" href="https://www.instagram.com/agenciaviva_/" target="_blank" rel="noopener">Espiar o Instagram <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
     </div>
   </div>
+  <span class="hand" aria-hidden="true">a gente responde em horário comercial</span>
 </section>
 </main>
 <footer class="ftr">
   <div class="wrap">
     <div class="ftr-grid">
       <div>
-        <img src="/assets/logo-viva.png" alt="Agência Viva" width="934" height="432" loading="lazy">
-        <p style="color:var(--muted);max-width:34ch">Agência de marketing digital em Barreiras - BA, atendendo todo o Oeste da Bahia.</p>
+        <a class="logo" href="/"><img src="/assets/logo-viva.png" alt="Agência Viva" width="934" height="432" loading="lazy"></a>
+        <p style="max-width:30ch">Agência de marketing digital em Barreiras - BA, feita por gente do Oeste da Bahia.</p>
       </div>
       <div>
-        <h4>Serviços</h4>
+        <h2>Serviços</h2>
         <ul><li><a href="/servicos/gestao-de-trafego-pago/">Tráfego Pago</a></li><li><a href="/servicos/social-media/">Social Media</a></li><li><a href="/servicos/criacao-de-sites/">Sites</a></li><li><a href="/servicos/google-meu-negocio-seo-local/">SEO Local</a></li><li><a href="/servicos/identidade-visual/">Branding</a></li><li><a href="/servicos/producao-de-conteudo-audiovisual/">Audiovisual</a></li></ul>
       </div>
       <div>
-        <h4>Cidades</h4>
-        <ul><li><a href="/agencia-de-marketing-em-barreiras/">Barreiras</a></li><li><a href="/agencia-de-marketing-em-luis-eduardo-magalhaes/">Luís Eduardo Magalhães</a></li><li><a href="/agencia-de-marketing-em-sao-desiderio/">São Desidério</a></li><li><a href="/agencia-de-marketing-em-formosa-do-rio-preto/">Formosa do Rio Preto</a></li><li><a href="/agencia-de-marketing-em-correntina/">Correntina</a></li><li><a href="/agencia-de-marketing-em-santa-maria-da-vitoria/">Santa Maria da Vitória</a></li><li><a href="/agencia-de-marketing-em-bom-jesus-da-lapa/">Bom Jesus da Lapa</a></li><li><a href="/agencia-de-marketing-em-riachao-das-neves/">Riachão das Neves</a></li></ul>
+        <h2>Cidades</h2>
+        <ul><li><a href="/agencia-de-marketing-em-barreiras/">Marketing em Barreiras</a></li><li><a href="/agencia-de-marketing-em-luis-eduardo-magalhaes/">Marketing em Luís Eduardo Magalhães</a></li><li><a href="/agencia-de-marketing-em-sao-desiderio/">Marketing em São Desidério</a></li><li><a href="/agencia-de-marketing-em-formosa-do-rio-preto/">Marketing em Formosa do Rio Preto</a></li><li><a href="/agencia-de-marketing-em-correntina/">Marketing em Correntina</a></li><li><a href="/agencia-de-marketing-em-santa-maria-da-vitoria/">Marketing em Santa Maria da Vitória</a></li><li><a href="/agencia-de-marketing-em-bom-jesus-da-lapa/">Marketing em Bom Jesus da Lapa</a></li><li><a href="/agencia-de-marketing-em-riachao-das-neves/">Marketing em Riachão das Neves</a></li></ul>
       </div>
       <div>
-        <h4>Fale com a gente</h4>
+        <h2>Fale com a gente</h2>
         <address>
-          <strong style="color:var(--text)">Agência Viva</strong><br>
+          <strong style="color:var(--paper)">Agência Viva</strong><br>
           Rua TODO, 000 - Centro<br>
           Barreiras - BA, 47800-000<br><br>
-          <a href="https://wa.me/5577999999999?text=Ol%C3%A1%2C%20Ag%C3%AAncia%20Viva!%20Quero%20crescer%20no%20digital.%20Podemos%20conversar%3F" target="_blank" rel="noopener">(77) 99999-9999</a><br>
+          <a href="https://wa.me/5577999999999?text=Ol%C3%A1%2C%20Ag%C3%AAncia%20Viva!%20Quero%20crescer%20no%20digital.%20Podemos%20conversar%3F" target="_blank" rel="noopener">WhatsApp (77) 99999-9999</a><br>
           <a href="mailto:contato@agenciaviva.com.br">contato@agenciaviva.com.br</a><br>
-          <a href="https://www.instagram.com/agenciaviva_/" target="_blank" rel="noopener">@agenciaviva_</a><br>
+          <a href="https://www.instagram.com/agenciaviva_/" target="_blank" rel="noopener">Instagram @agenciaviva_</a><br>
           Seg a sex, 8h–18h · Sáb, 8h–12h<br>
-          <a href="https://www.google.com/maps/search/?api=1&query=Ag%C3%AAncia+Viva+Barreiras+BA" target="_blank" rel="noopener">Ver no Google Maps →</a>
+          <a href="https://www.google.com/maps/search/?api=1&query=Ag%C3%AAncia+Viva+Barreiras+BA" target="_blank" rel="noopener">Ver no Google Maps</a>
         </address>
       </div>
     </div>
-    <p class="giant" aria-hidden="true">VIVA!</p>
+    <p class="giant" aria-hidden="true"><span>V</span><span>I</span><span>V</span><span>A</span><span>!</span></p>
     <div class="ftr-bottom">
-      <span>© 2026 Agência Viva · Agência de Marketing em Barreiras - BA</span>
-      <span>Feito com energia no Oeste da Bahia</span>
+      <span>© 2026 Agência Viva · Agência de marketing em Barreiras - BA</span>
+      <span>Barreiras · LEM · Oeste da Bahia</span>
     </div>
   </div>
 </footer>
 <a class="wa-float" href="https://wa.me/5577999999999?text=Ol%C3%A1%2C%20Ag%C3%AAncia%20Viva!%20Quero%20crescer%20no%20digital.%20Podemos%20conversar%3F" target="_blank" rel="noopener" aria-label="Falar com a Agência Viva no WhatsApp"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.5 14.4c-.3-.1-1.8-.9-2-1-.3-.1-.5-.1-.7.1-.2.3-.8 1-.9 1.2-.2.2-.3.2-.6.1-.3-.1-1.3-.5-2.4-1.5-.9-.8-1.5-1.8-1.7-2.1-.2-.3 0-.5.1-.6l.4-.5c.2-.2.2-.3.3-.5.1-.2 0-.4 0-.5l-.9-2.2c-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5s1.1 2.9 1.2 3.1c.1.2 2.1 3.2 5.1 4.5.7.3 1.3.5 1.7.6.7.2 1.4.2 1.9.1.6-.1 1.8-.7 2-1.4.2-.7.2-1.3.2-1.4-.1-.1-.3-.2-.6-.3zM12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.5 0-3-.4-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2z"/></svg></a>
+<script src="/assets/vendor/gsap.min.js" defer></script>
+<script src="/assets/vendor/ScrollTrigger.min.js" defer></script>
+<script src="/assets/vendor/SplitText.min.js" defer></script>
+<script src="/assets/vendor/lenis.min.js" defer></script>
 <script src="/assets/viva.js" defer></script>
 </body>
 </html>

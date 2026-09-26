@@ -11,8 +11,9 @@ const outFile = join(root, 'preview', 'previa-agencia-viva.html')
 
 const read = p => readFileSync(join(siteDir, p), 'utf8')
 const b64 = p => readFileSync(join(siteDir, p)).toString('base64')
-const css = read('assets/viva.css')
-const js = read('assets/viva.js')
+// fontes viram data URI dentro do CSS; scripts entram inline
+const css = read('assets/viva.css').replace(/url\(\/assets\/fonts\/([\w-]+\.woff2)\)/g, (_, f) => `url(data:font/woff2;base64,${b64('assets/fonts/' + f)})`)
+const files = {}
 const logo = 'data:image/png;base64,' + b64('assets/logo-viva.png')
 const favicon = 'data:image/svg+xml;base64,' + b64('favicon.svg')
 
@@ -21,6 +22,7 @@ const router = `<script>
 document.addEventListener('click', function (e) {
   var a = e.target.closest && e.target.closest('a'); if (!a) return
   var h = a.getAttribute('href') || ''
+  if (e.defaultPrevented) return
   if (h.charAt(0) === '#') { e.preventDefault(); var t = document.getElementById(h.slice(1)); if (t) t.scrollIntoView({ behavior: 'smooth' }); return }
   if (h.charAt(0) === '/') { e.preventDefault(); parent.postMessage({ vivaGo: h }, '*') }
 })
@@ -37,7 +39,9 @@ const walk = d => {
       const path = rel.endsWith('/index.html') ? rel.slice(0, -'index.html'.length) : rel
       pages[path] = readFileSync(p, 'utf8')
         .replace('<link rel="stylesheet" href="/assets/viva.css">', '<style>%%CSS%%</style>')
-        .replace('<script src="/assets/viva.js" defer></script>', router + '<script>%%JS%%</script>')
+        .replace(/<script src="\/assets\/([\w./-]+\.js)" defer><\/script>/g, (_, f) => { files[f] = files[f] || read('assets/' + f); return `<script>%%F:${f}%%</script>` })
+        .replace('</body>', router + '</body>')
+        .replace(/<link rel="preload"[^>]*>\n?/, '')
         .replace(/src="\/assets\/logo-viva\.png"/g, 'src="%%LOGO%%"')
         .replace('href="/favicon.svg"', `href="${favicon}"`)
         .replace(/<link rel="manifest"[^>]*>\n?/, '')
@@ -63,7 +67,7 @@ const groups = [
 const options = groups.map(([g, ps]) => `<optgroup label="${g}">${ps.map(p => `<option value="${p}">${label(p).replace(/&/g, '&amp;').replace(/</g, '&lt;')}</option>`).join('')}</optgroup>`).join('')
 
 // JSON dentro de <script>: escapar "</" para não fechar a tag
-const data = JSON.stringify({ pages, css, js, logo }).replace(/<\//g, '<\\/')
+const data = JSON.stringify({ pages, css, files, logo }).replace(/<\//g, '<\\/')
 
 const shell = `<!doctype html>
 <html lang="pt-BR">
@@ -106,7 +110,7 @@ const shell = `<!doctype html>
 <script>
 var D = ${data}
 var f = document.getElementById('f'), sel = document.getElementById('page'), hist = []
-function fill(html) { return html.split('%%CSS%%').join(D.css).split('%%JS%%').join(D.js).split('%%LOGO%%').join(D.logo) }
+function fill(html) { html = html.split('%%CSS%%').join(D.css).split('%%LOGO%%').join(D.logo); return html.replace(/%%F:([\\w.\\/-]+)%%/g, function (_, f) { return D.files[f] || '' }) }
 function go(target, push) {
   var parts = target.split('#'), p = parts[0] || '/', hash = parts[1]
   if (!D.pages[p]) p = '/404.html'

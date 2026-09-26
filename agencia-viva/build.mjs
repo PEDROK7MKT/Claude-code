@@ -15,8 +15,9 @@ const cityPath = c => `/agencia-de-marketing-em-${c.slug}/`
 const svcPath = s => `/servicos/${s.slug}/`
 const A = site.address
 const addrLine = `${A.street} - ${A.district}, ${A.city} - ${A.state}, ${A.zip}`
+const listPt = arr => arr.length < 2 ? arr.join('') : `${arr.slice(0, -1).join(', ')} e ${arr[arr.length - 1]}`
 
-// ─── Ícones ──────────────────────────────────────────────────
+// ─── Ícones e traços feitos à mão ───────────────────────────
 const ic = {
   target: '<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.5"/>',
   spark: '<path d="M12 3v4M12 17v4M3 12h4M17 12h4M6 6l2.5 2.5M15.5 15.5L18 18M6 18l2.5-2.5M15.5 8.5L18 6"/>',
@@ -26,9 +27,14 @@ const ic = {
   play: '<rect x="3" y="5" width="18" height="14" rx="3"/><path d="M10 9.5v5l4.5-2.5z"/>',
   arrow: '<path d="M5 12h14M13 6l6 6-6 6"/>',
 }
-const icon = (n, cls = '') =>
-  `<svg class="${cls}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ic[n]}</svg>`
+const icon = n => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ic[n]}</svg>`
 const waIcon = '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.5 14.4c-.3-.1-1.8-.9-2-1-.3-.1-.5-.1-.7.1-.2.3-.8 1-.9 1.2-.2.2-.3.2-.6.1-.3-.1-1.3-.5-2.4-1.5-.9-.8-1.5-1.8-1.7-2.1-.2-.3 0-.5.1-.6l.4-.5c.2-.2.2-.3.3-.5.1-.2 0-.4 0-.5l-.9-2.2c-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5s1.1 2.9 1.2 3.1c.1.2 2.1 3.2 5.1 4.5.7.3 1.3.5 1.7.6.7.2 1.4.2 1.9.1.6-.1 1.8-.7 2-1.4.2-.7.2-1.3.2-1.4-.1-.1-.3-.2-.6-.3zM12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.5 0-3-.4-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2z"/></svg>'
+const hand = {
+  circle: (delay = 0.3) => `<svg data-draw="${delay}" viewBox="0 0 200 80" preserveAspectRatio="none" aria-hidden="true"><path d="M152 11C112 1 42 3 17 25-3 45 30 75 100 74c70-1 99-22 91-43-7-18-50-26-94-22"/></svg>`,
+  under: (delay = 0.3) => `<svg data-draw="${delay}" viewBox="0 0 200 20" preserveAspectRatio="none" aria-hidden="true"><path d="M4 14C50 5 120 4 196 11"/></svg>`,
+  arrow: () => '<svg viewBox="0 0 70 50" aria-hidden="true"><path d="M6 6c20-4 42 8 50 36"/><path d="M45 34l11 9 5-13"/></svg>',
+}
+const pinPath = 'M0 0C-11-17-16-25-16-33a16 16 0 1 1 32 0C16-25 11-17 0 0Z'
 
 // ─── Schema.org ──────────────────────────────────────────────
 const bizId = site.url + '/#agencia'
@@ -73,68 +79,163 @@ const faqLd = faq => ({
   mainEntity: faq.map(([q, a]) => ({ '@type': 'Question', name: q, acceptedAnswer: { '@type': 'Answer', text: a } })),
 })
 
+// ─── Mapa do Oeste (projeção simples lat/lng → SVG) ─────────
+const W = 800, H = 640
+const bounds = { w: -46.1, e: -43.1, n: -10.85, s: -13.75 }
+const proj = ([lat, lng]) => [
+  +(((lng - bounds.w) / (bounds.e - bounds.w)) * (W - 100) + 50).toFixed(1),
+  +(((bounds.n - lat) / (bounds.n - bounds.s)) * (H - 80) + 50).toFixed(1),
+]
+const geoOf = c => [c.geo.lat, c.geo.lng]
+const curve = pts => {
+  const p = pts.map(proj)
+  let d = `M${p[0][0]},${p[0][1]}`
+  for (let i = 0; i < p.length - 1; i++) {
+    const p0 = p[i - 1] || p[i], p1 = p[i], p2 = p[i + 1], p3 = p[i + 2] || p2
+    d += ` C${(p1[0] + (p2[0] - p0[0]) / 6).toFixed(1)},${(p1[1] + (p2[1] - p0[1]) / 6).toFixed(1)} ${(p2[0] - (p3[0] - p1[0]) / 6).toFixed(1)},${(p2[1] - (p3[1] - p1[1]) / 6).toFixed(1)} ${p2[0]},${p2[1]}`
+  }
+  return d
+}
+// traçado aproximado, só para dar leitura de lugar
+const rivers = [
+  ['river', [[-12.3, -46.2], [-12.22, -45.6], [-12.15, -44.99], [-11.95, -44.5], [-11.6, -43.9], [-11.15, -43.2]]], // Rio Grande
+  ['river', [[-13.9, -43.3], [-13.26, -43.4], [-12.6, -43.3], [-11.9, -43.25], [-11.1, -43.15], [-10.7, -43.3]]], // São Francisco
+  ['river river--thin', [[-13.55, -45.5], [-13.34, -44.64], [-13.4, -44.19], [-13.22, -43.55]]], // Rio Corrente
+]
+const roads = [
+  [[-12.1, -45.79], [-12.15, -44.99], [-12.35, -44.3], [-12.55, -43.6]], // BR-242
+  [[-12.15, -44.99], [-11.75, -44.91], [-11.05, -45.19]], // rumo a Riachão e Formosa
+  [[-12.15, -44.99], [-12.36, -44.97], [-13.34, -44.64], [-13.4, -44.19]], // rumo ao sul
+]
+const labelPos = { 'luis-eduardo-magalhaes': ['middle', 0, -48], correntina: ['end', -22, 2], 'bom-jesus-da-lapa': ['end', -22, -10], 'sao-desiderio': ['start', 22, 18] }
+const pinSvg = (c, big) => {
+  const [x, y] = proj(geoOf(c))
+  const [anchor, dx, dy] = labelPos[c.slug] || ['start', 22, -10]
+  return `<a href="${cityPath(c)}"><title>Marketing digital em ${esc(c.name)}</title>
+    <g class="pin${c.main ? ' pin--main' : ''}" transform="translate(${x} ${y}) scale(${c.main ? 1.35 : big ? 1 : 0.9})"><path d="${pinPath}"/><circle cy="-33" r="5"/></g>
+    <text x="${x + dx}" y="${y + dy}" text-anchor="${anchor}"${c.main ? ' class="main"' : ''}>${esc(c.name)}</text></a>`
+}
+const mapSvg = () => {
+  const [bx, by] = proj(geoOf(cities.find(c => c.main)))
+  return `<div class="map" data-rise><svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Mapa do Oeste da Bahia com as cidades atendidas pela Agência Viva">
+    ${rivers.map(([cls, pts]) => `<path class="${cls}" d="${curve(pts)}"/>`).join('')}
+    ${roads.map(pts => `<path class="road" d="${curve(pts)}"/>`).join('')}
+    ${cities.filter(c => !c.main).map(c => pinSvg(c, true)).join('')}
+    ${pinSvg(cities.find(c => c.main), true)}
+    <text class="hand-t" x="${bx - 34}" y="${by + 58}" text-anchor="end">a gente tá aqui!</text>
+    <text class="compass" x="${W - 60}" y="46">N ↑</text>
+  </svg></div>`
+}
+// mapinho recortado entre Barreiras e a cidade da página
+const miniMap = c => {
+  const main = cities.find(x => x.main)
+  const pts = c.main ? cities.filter(x => ['barreiras', 'sao-desiderio', 'riachao-das-neves', 'luis-eduardo-magalhaes'].includes(x.slug)) : [main, c]
+  const xy = pts.map(p => proj(geoOf(p)))
+  const xs = xy.map(p => p[0]), ys = xy.map(p => p[1])
+  const pad = 130
+  let x0 = Math.min(...xs) - pad, x1 = Math.max(...xs) + pad, y0 = Math.min(...ys) - pad - 30, y1 = Math.max(...ys) + pad
+  const w = Math.max(x1 - x0, 420), h = Math.max(y1 - y0, 320)
+  x0 -= (w - (x1 - x0)) / 2; y0 -= (h - (y1 - y0)) / 2
+  const [bx, by] = proj(geoOf(main)), [cx, cy] = proj(geoOf(c))
+  const trip = c.main ? '' : `<path class="trip" d="M${bx},${by - 20} Q${(bx + cx) / 2 + 40},${Math.min(by, cy) - 70} ${cx},${cy - 20}"/>
+    <text class="dist" x="${(bx + cx) / 2 + 40}" y="${Math.min(by, cy) - 58}" text-anchor="middle">${esc(c.dist.replace('a cerca de ', '~'))}</text>`
+  const pinsHtml = pts.map(p => {
+    const [x, y] = proj(geoOf(p))
+    const here = p === c
+    return `<g class="pin${here ? ' pin--here' : ''}" transform="translate(${x} ${y}) scale(${here ? 1.3 : 1})"><path d="${pinPath}"/></g><text x="${x}" y="${y + 30}" text-anchor="middle">${esc(p.name)}</text>`
+  }).join('')
+  return `<figure class="minimap paper prop"><svg viewBox="${x0.toFixed(0)} ${y0.toFixed(0)} ${w.toFixed(0)} ${h.toFixed(0)}" role="img" aria-label="Mapa de ${esc(c.name)}${c.main ? '' : ' em relação a Barreiras'}">
+    ${rivers.map(([cls, p]) => `<path class="${cls}" d="${curve(p)}"/>`).join('')}${trip}${pinsHtml}</svg>
+    <figcaption>${c.main ? 'Nossa base, no coração do Oeste baiano.' : `${esc(c.name)} fica ${esc(c.dist)}.`}</figcaption></figure>`
+}
+
+// ─── Adereços (um objeto de verdade por serviço) ────────────
+const props = {
+  'gestao-de-trafego-pago': () => `<div class="prop"><div class="ad paper">
+    <div class="ad__top"><i></i><div><b>Sua empresa</b><small>Patrocinado · Barreiras</small></div></div>
+    <div class="ad__img">Sábado tem <span class="s">novidade</span></div>
+    <div class="ad__cta"><span>Enviar mensagem</span><span>›</span></div>
+    <svg class="cursor" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 3l14 8-6 1.5L10 19z" fill="#fffcf6" stroke="#1a1410" stroke-width="1.6" stroke-linejoin="round"/></svg>
+  </div></div>`,
+  'social-media': () => `<div class="prop"><div class="feed paper">
+    <div class="feed__head"><i></i><div><b>@suaempresa</b><br><small>Barreiras - BA · perfil comercial</small></div></div>
+    <div class="feed__grid">${['Chegou <em>novidade</em>', 'Bastidores', 'Reels ▶', 'Antes e depois', 'Dica da <em>semana</em>', 'Equipe', 'Promo', 'Cliente feliz', 'Sábado aberto'].map(t => `<span>${t}</span>`).join('')}</div>
+  </div></div>`,
+  'criacao-de-sites': () => `<div class="prop"><div class="browser paper">
+    <div class="browser__bar"><i></i><i></i><i></i><span>suaempresa.com.br</span></div>
+    <div class="browser__body"><b>A melhor opção de Barreiras, a um clique.</b><div class="ln"></div><div class="ln"></div><span class="fake-btn">Chamar no WhatsApp</span>
+    <div class="browser__cols"><span></span><span></span><span></span></div></div>
+  </div></div>`,
+  'google-meu-negocio-seo-local': () => `<div class="prop"><div class="gmb paper">
+    <div class="gmb__map"><svg viewBox="-18 -52 36 54" aria-hidden="true"><path d="${pinPath}" fill="#ff4d1f" stroke="#1a1410" stroke-width="2.5"/><circle cy="-33" r="5" fill="#1a1410"/></svg></div>
+    <div class="gmb__body"><b>Sua Empresa</b><span class="stars" aria-hidden="true">★★★★★</span><small><em>Aberto agora</em> · Centro, Barreiras - BA</small>
+    <div class="gmb__btns"><span>Rotas</span><span>Ligar</span><span>Site</span></div></div>
+  </div></div>`,
+  'identidade-visual': () => `<div class="prop"><div class="brand paper">
+    <div class="brand__row"><span>Tomate</span><span>Sol</span><span>Cerrado</span><span>Papel</span></div>
+    <div class="brand__type"><b>Aa</b><em>Aa</em><small>título forte<br>+ assinatura</small></div>
+    <div class="brand__logo"><span>SUA</span><span>MARCA</span></div>
+  </div></div>`,
+  'producao-de-conteudo-audiovisual': () => `<div class="prop" style="width:auto"><div class="rec paper">
+    <div class="rec__frame"></div>
+    <div class="rec__top"><b>REC</b><span>00:14</span></div>
+    <div class="rec__mid"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 4l14 8-14 8z"/></svg></div>
+    <div class="rec__cap">Bastidores da <span class="s">sua</span> loja</div>
+  </div></div>`,
+}
+
 // ─── Blocos reutilizáveis ────────────────────────────────────
 const crumbsHtml = items => `<nav aria-label="Você está em"><ol class="crumbs">${items
   .map(([n, p], i) => (i === items.length - 1 ? `<li aria-current="page">${esc(n)}</li>` : `<li><a href="${p}">${esc(n)}</a></li>`)).join('')}</ol></nav>`
 
-const faqHtml = faq => `<div class="faq">${faq.map(([q, a], i) => `
-  <details class="rv" style="--d:${i * 0.05}s"${i === 0 ? ' open' : ''}><summary>${esc(q)}</summary><div class="ans"><p>${esc(a)}</p></div></details>`).join('')}
-</div>`
-
-const serviceCards = (list = services) => `<div class="cards">${list.map((s, i) => `
-  <a class="card rv" style="--d:${(i % 3) * 0.08}s" href="${svcPath(s)}">
-    <span class="ico">${icon(s.icon)}</span>
-    <h3>${esc(s.short)}</h3>
-    <p>${esc(s.desc.split('. ')[0])}.</p>
-    <span class="more">Saiba mais ${icon('arrow')}</span>
-  </a>`).join('')}
-</div>`
-
-const finalCta = (title = 'Bora deixar a sua marca viva?', text = 'Conte pra gente sobre a sua empresa. Em poucos minutos a gente mostra onde está o dinheiro que você está deixando na mesa.') => `
-<section class="sec" aria-labelledby="cta-final">
-  <div class="wrap">
-    <div class="final rv">
-      <h2 id="cta-final">${title}</h2>
-      <p>${text}</p>
-      <div class="cta-row">
-        <a class="btn btn--lg" href="${wa()}" target="_blank" rel="noopener">${waIcon} Chamar no WhatsApp</a>
-        <a class="btn btn--ghost btn--lg" href="${site.instagram}" target="_blank" rel="noopener">Ver o Instagram</a>
-      </div>
+const faqBlock = (title, faq, note = 'Não achou sua dúvida? Manda no WhatsApp.') => `
+<section class="sec" aria-labelledby="h-faq">
+  <div class="wrap faq-grid">
+    <div>
+      <span class="label" data-rise>Perguntas frequentes</span>
+      <h2 id="h-faq" class="h2" data-split style="margin-top:18px">${title}</h2>
+      <p class="hand" style="font-size:28px;color:var(--tomato);margin-top:26px;rotate:-2deg" data-rise>${note}</p>
+    </div>
+    <div class="faq">${faq.map(([q, a], i) => `
+      <details${i === 0 ? ' open' : ''}><summary>${esc(q)}<i aria-hidden="true"></i></summary><div class="ans"><p>${esc(a)}</p></div></details>`).join('')}
     </div>
   </div>
 </section>`
 
-// Mapa estilizado do Oeste baiano com as cidades atendidas
-const bounds = { w: -46.0, e: -43.2, n: -10.9, s: -13.5 }
-// posição do rótulo de cada cidade no mapa, para não encavalar
-const labelPos = { 'luis-eduardo-magalhaes': ['middle', 0, -20], correntina: ['end', -14, 6], 'bom-jesus-da-lapa': ['end', 8, -18] }
-const W = 800, H = 640
-const proj = ({ lat, lng }) => [
-  Math.round(((lng - bounds.w) / (bounds.e - bounds.w)) * (W - 120) + 60),
-  Math.round(((bounds.n - lat) / (bounds.n - bounds.s)) * (H - 100) + 50),
-]
-const mapSvg = () => {
-  const main = cities.find(c => c.main)
-  const [mx, my] = proj(main.geo)
-  const links = cities.filter(c => !c.main).map(c => { const [x, y] = proj(c.geo); return `<line class="link" x1="${mx}" y1="${my}" x2="${x}" y2="${y}"/>` }).join('')
-  const dots = cities.map(c => {
-    const [x, y] = proj(c.geo)
-    const [anchor, dx, dy] = labelPos[c.slug] || ['start', 14, 6]
-    return `<a href="${cityPath(c)}" aria-label="Marketing digital em ${esc(c.name)}">
-      ${c.main ? `<circle class="pulse" cx="${x}" cy="${y}" r="10"/>` : ''}
-      <circle class="dot${c.main ? ' dot--main' : ''}" cx="${x}" cy="${y}" r="${c.main ? 11 : 7}"/>
-      <text x="${x + dx}" y="${y + dy}" text-anchor="${anchor}"${c.main ? ' class="main"' : ''}>${esc(c.name)}</text></a>`
-  }).join('')
-  return `<div class="map-wrap rv"><svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Mapa do Oeste da Bahia com as cidades atendidas pela Agência Viva">
-    <path class="river" d="M30 ${my + 14} C 150 ${my - 30}, 230 ${my + 20}, ${mx} ${my} S 520 ${my - 110}, 700 ${my - 150}"/>
-    <path class="river" d="M740 20 C 700 180, 730 360, 690 ${H - 90} S 700 ${H - 20}, 710 ${H}"/>
-    ${links}${dots}
-  </svg></div>`
-}
+const ticket = (s, i, tag = 'h3') => `<a class="ticket" href="${svcPath(s)}">
+    <span class="tape${i % 3 === 1 ? ' tape--pink' : i % 3 === 2 ? ' tape--green' : ''}" aria-hidden="true"></span>
+    <span class="stamp" aria-hidden="true">${icon(s.icon)}</span>
+    <span class="n" aria-hidden="true">${['um', 'dois', 'três', 'quatro', 'cinco', 'seis'][i] || i + 1}.</span>
+    <${tag}>${esc(s.short)}</${tag}>
+    <p>${esc(s.pitch)}</p>
+    <span class="go">Ver como funciona ${icon('arrow')}</span>
+  </a>`
+
+const cta = (title = 'Sua empresa merece ser <span class="s">encontrada.</span>', text = 'Chama no WhatsApp e conta o que você vende. A gente olha seu Instagram, seu Google e seus anúncios e te diz, sem enrolação, por onde começar.') => `
+<section class="cta" aria-labelledby="h-cta">
+  <span class="bang" aria-hidden="true">!</span>
+  <div class="wrap">
+    <h2 id="h-cta" data-split>${title}</h2>
+    <p data-rise>${text}</p>
+    <div class="hero-cta" data-rise>
+      <a class="btn btn--ink btn--lg" href="${wa()}" target="_blank" rel="noopener">${waIcon} Chamar no WhatsApp</a>
+      <a class="go" href="${site.instagram}" target="_blank" rel="noopener">Espiar o Instagram ${icon('arrow')}</a>
+    </div>
+  </div>
+  <span class="hand" aria-hidden="true">a gente responde em horário comercial</span>
+</section>`
+
+const phoneChat = (msgs, seq = false, who = ['C', 'Cliente novo', 'via anúncio · online']) => `<div class="phone" aria-hidden="true"><div class="phone__screen">
+  <div class="wa-top"><span class="av">${who[0]}</span><div><b>${who[1]}</b><small>${who[2]}</small></div></div>
+  <div class="wa-body">${msgs.map(([dir, text, time]) => dir === 'typing'
+    ? `<div class="msg msg--in msg--typing"${seq ? ' data-seq' : ''}><i></i><i></i><i></i></div>`
+    : `<div class="msg msg--${dir}"${seq ? ' data-seq' : ''}>${text}<small>${time}${dir === 'out' ? ' ✓✓' : ''}</small></div>`).join('')}</div>
+  <div class="wa-input"><span>Mensagem</span><i></i></div>
+</div></div>`
 
 // ─── Layout ──────────────────────────────────────────────────
 const nav = [['Serviços', '/servicos/'], ['Cidades', '/#cidades'], ['Sobre', '/sobre/'], ['Contato', '/contato/']]
-const layout = ({ path, title, desc, body, ld = [], active = '' }) => `<!doctype html>
+const layout = ({ path, title, desc, body, ld = [], active = '', robots = 'index, follow, max-image-preview:large' }) => `<!doctype html>
 <html lang="pt-BR" class="no-js">
 <head>
 <meta charset="utf-8">
@@ -142,8 +243,8 @@ const layout = ({ path, title, desc, body, ld = [], active = '' }) => `<!doctype
 <title>${esc(title)}</title>
 <meta name="description" content="${esc(desc)}">
 <link rel="canonical" href="${abs(path)}">
-<meta name="robots" content="index, follow, max-image-preview:large">
-<meta name="theme-color" content="#0d0a12">
+<meta name="robots" content="${robots}">
+<meta name="theme-color" content="#f5efe4">
 <meta name="geo.region" content="BR-BA">
 <meta name="geo.placename" content="Barreiras">
 <meta name="geo.position" content="${site.geo.lat};${site.geo.lng}">
@@ -155,13 +256,13 @@ const layout = ({ path, title, desc, body, ld = [], active = '' }) => `<!doctype
 <meta property="og:description" content="${esc(desc)}">
 <meta property="og:url" content="${abs(path)}">
 <meta property="og:image" content="${abs('/assets/og-viva.png')}">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="/assets/logo-viva.png">
 <link rel="manifest" href="/site.webmanifest">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=Inter:wght@400;500;600;700&display=swap">
+<link rel="preload" href="/assets/fonts/archivo.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/assets/viva.css">
 ${[business, website, ...ld].map(o => `<script type="application/ld+json">${JSON.stringify(o)}</script>`).join('\n')}
 </head>
@@ -169,11 +270,11 @@ ${[business, website, ...ld].map(o => `<script type="application/ld+json">${JSON
 <a class="skip" href="#conteudo">Pular para o conteúdo</a>
 <header class="hdr">
   <div class="wrap">
-    <a class="logo" href="/" aria-label="${esc(site.name)} — página inicial"><img src="/assets/logo-viva.png" alt="Agência Viva — Agência de Marketing em Barreiras" width="934" height="432"></a>
-    <button class="burger" aria-label="Abrir menu" aria-expanded="false" aria-controls="menu"><span></span><span></span><span></span></button>
+    <a class="logo" href="/" aria-label="${esc(site.name)}, página inicial"><img src="/assets/logo-viva.png" alt="Agência Viva, agência de marketing em Barreiras" width="934" height="432"></a>
+    <button class="burger" type="button" aria-label="Abrir menu" aria-expanded="false" aria-controls="menu"><span></span><span></span><span></span></button>
     <nav class="nav" id="menu" aria-label="Principal">
       ${nav.map(([n, p]) => `<a href="${p}"${active === p ? ' aria-current="page"' : ''}>${n}</a>`).join('')}
-      <a class="btn" href="${wa()}" target="_blank" rel="noopener">${waIcon} Orçamento</a>
+      <a class="btn btn--main" href="${wa()}" target="_blank" rel="noopener">${waIcon} Chamar no WhatsApp</a>
     </nav>
   </div>
 </header>
@@ -184,39 +285,43 @@ ${body}
   <div class="wrap">
     <div class="ftr-grid">
       <div>
-        <img src="/assets/logo-viva.png" alt="Agência Viva" width="934" height="432" loading="lazy">
-        <p style="color:var(--muted);max-width:34ch">Agência de marketing digital em Barreiras - BA, atendendo todo o Oeste da Bahia.</p>
+        <a class="logo" href="/"><img src="/assets/logo-viva.png" alt="Agência Viva" width="934" height="432" loading="lazy"></a>
+        <p style="max-width:30ch">Agência de marketing digital em Barreiras - BA, feita por gente do Oeste da Bahia.</p>
       </div>
       <div>
-        <h4>Serviços</h4>
+        <h2>Serviços</h2>
         <ul>${services.map(s => `<li><a href="${svcPath(s)}">${esc(s.short)}</a></li>`).join('')}</ul>
       </div>
       <div>
-        <h4>Cidades</h4>
-        <ul>${cities.map(c => `<li><a href="${cityPath(c)}">${esc(c.name)}</a></li>`).join('')}</ul>
+        <h2>Cidades</h2>
+        <ul>${cities.map(c => `<li><a href="${cityPath(c)}">Marketing em ${esc(c.name)}</a></li>`).join('')}</ul>
       </div>
       <div>
-        <h4>Fale com a gente</h4>
+        <h2>Fale com a gente</h2>
         <address>
-          <strong style="color:var(--text)">${esc(site.name)}</strong><br>
+          <strong style="color:var(--paper)">${esc(site.name)}</strong><br>
           ${esc(A.street)} - ${esc(A.district)}<br>
           ${esc(A.city)} - ${esc(A.state)}, ${esc(A.zip)}<br><br>
-          <a href="${wa()}" target="_blank" rel="noopener">${esc(site.phoneDisplay)}</a><br>
+          <a href="${wa()}" target="_blank" rel="noopener">WhatsApp ${esc(site.phoneDisplay)}</a><br>
           <a href="mailto:${esc(site.email)}">${esc(site.email)}</a><br>
-          <a href="${site.instagram}" target="_blank" rel="noopener">${esc(site.instagramHandle)}</a><br>
+          <a href="${site.instagram}" target="_blank" rel="noopener">Instagram ${esc(site.instagramHandle)}</a><br>
           ${esc(site.hoursDisplay)}<br>
-          <a href="${site.mapsUrl}" target="_blank" rel="noopener">Ver no Google Maps →</a>
+          <a href="${site.mapsUrl}" target="_blank" rel="noopener">Ver no Google Maps</a>
         </address>
       </div>
     </div>
-    <p class="giant" aria-hidden="true">VIVA!</p>
+    <p class="giant" aria-hidden="true"><span>V</span><span>I</span><span>V</span><span>A</span><span>!</span></p>
     <div class="ftr-bottom">
-      <span>© ${new Date().getFullYear()} ${esc(site.name)} · Agência de Marketing em Barreiras - BA</span>
-      <span>Feito com energia no Oeste da Bahia</span>
+      <span>© ${new Date().getFullYear()} ${esc(site.name)} · Agência de marketing em Barreiras - BA</span>
+      <span>Barreiras · LEM · Oeste da Bahia</span>
     </div>
   </div>
 </footer>
 <a class="wa-float" href="${wa()}" target="_blank" rel="noopener" aria-label="Falar com a Agência Viva no WhatsApp">${waIcon}</a>
+<script src="/assets/vendor/gsap.min.js" defer></script>
+<script src="/assets/vendor/ScrollTrigger.min.js" defer></script>
+<script src="/assets/vendor/SplitText.min.js" defer></script>
+<script src="/assets/vendor/lenis.min.js" defer></script>
 <script src="/assets/viva.js" defer></script>
 </body>
 </html>
@@ -229,113 +334,131 @@ const page = p => pages.push(p)
 // Home
 page({
   path: '/',
-  title: 'Agência de Marketing em Barreiras - BA | Agência Viva — Oeste da Bahia',
-  desc: 'Agência Viva: agência de marketing digital em Barreiras - BA. Tráfego pago, social media, sites e Google Meu Negócio para empresas de Barreiras, LEM e todo o Oeste da Bahia.',
+  title: 'Agência de Marketing em Barreiras - BA | Agência Viva',
+  desc: 'Agência Viva: agência de marketing digital em Barreiras - BA. Tráfego pago, Instagram, sites e Google Meu Negócio para empresas de Barreiras, LEM e todo o Oeste da Bahia.',
   ld: [faqLd(homeFaq)],
   body: `
 <section class="hero">
-  <div class="blobs" aria-hidden="true"><span class="blob blob--1"></span><span class="blob blob--2"></span><span class="blob blob--3"></span></div>
-  <div class="wrap">
-    <span class="eyebrow rv">Agência de marketing · Barreiras - BA</span>
-    <h1 class="rv" style="--d:.08s">Agência de marketing em Barreiras que deixa sua marca <em class="grad">viva.</em></h1>
-    <p class="sub rv" style="--d:.16s">Sua empresa aparecendo e vendendo
-      <span class="rotator" aria-hidden="true"><span class="on">no Google.</span><span>no Instagram.</span><span>no WhatsApp.</span><span>no Maps.</span></span>
-      <span class="sr" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">no Google, no Instagram, no WhatsApp e no Maps.</span>
-      <strong>Estratégia, conteúdo e anúncios</strong> para quem empreende no Oeste da Bahia.</p>
-    <div class="cta-row rv" style="--d:.24s">
-      <a class="btn btn--lg" href="${wa()}" target="_blank" rel="noopener">${waIcon} Quero crescer agora</a>
-      <a class="btn btn--ghost btn--lg" href="/servicos/">Ver serviços</a>
+  <div class="wrap hero-grid">
+    <div>
+      <h1 data-rise><span class="kicker">Agência de marketing em Barreiras&nbsp;-&nbsp;BA</span>Sua empresa <span class="circled"><span class="s">viva</span>${hand.circle(1)}</span> no celular de quem compra.</h1>
+      <p class="lede" data-rise=".15">Instagram que dá vontade de seguir, anúncio que faz o WhatsApp tocar e perfil no Google que aparece primeiro quando alguém de Barreiras procura o que você vende.</p>
+      <div class="hero-cta" data-rise=".25">
+        <a class="btn btn--main btn--lg" href="${wa()}" target="_blank" rel="noopener">${waIcon} Chamar no WhatsApp</a>
+        <a class="go" href="#servicos">Ver o que a gente faz ${icon('arrow')}</a>
+      </div>
+      <p class="proof" data-rise=".35"><span class="dots" aria-hidden="true"><span></span><span></span><span></span></span><span>Nascida da rede de uma criadora com <b>300 mil seguidores</b>, com operação de marketing de verdade por trás.</span></p>
     </div>
-    <div class="hero-meta rv" style="--d:.32s">
-      <div><b data-count="${cities.length}">${cities.length}</b><span>cidades do Oeste atendidas</span></div>
-      <div><b data-count="300" data-suf="mil+">300mil+</b><span>seguidores na rede da nossa fundadora</span></div>
-      <div><b data-count="${services.length}">${services.length}</b><span>frentes de serviço integradas</span></div>
+    <div class="hero-art">
+      <p class="note note--a" aria-hidden="true">é o seu cliente chegando${hand.arrow()}</p>
+      ${phoneChat([
+        ['in', 'Oi! Vi o anúncio de vocês no Instagram 😍', '09:12'],
+        ['in', 'Ainda tem horário pra sábado de manhã?', '09:12'],
+        ['out', 'Tem sim! Fica melhor 9h ou 10h30?', '09:14'],
+        ['in', '9h! Me manda a localização?', '09:15'],
+        ['typing'],
+      ], true)}
+      <div class="chip chip--maps" aria-hidden="true"><svg class="pin" viewBox="-18 -52 36 54"><path d="${pinPath}" fill="#ff4d1f" stroke="#1a1410" stroke-width="2.5"/><circle cy="-33" r="5" fill="#1a1410"/></svg><span><b>Apareceu no Maps</b>a 650 m de você</span></div>
+      <div class="chip chip--ig" aria-hidden="true"><svg class="heart" viewBox="0 0 24 24"><path d="M12 21s-8-5.2-8-11a4.6 4.6 0 0 1 8-3 4.6 4.6 0 0 1 8 3c0 5.8-8 11-8 11z" fill="#ff4d1f" stroke="#1a1410" stroke-width="1.6"/></svg><span><b>+128 curtidas</b>no post de hoje</span></div>
+      <div class="seal" aria-hidden="true"><svg viewBox="0 0 120 120"><defs><path id="ring" d="M60 60m-47 0a47 47 0 1 1 94 0a47 47 0 1 1-94 0"/></defs><text><textPath href="#ring">FEITO NO OESTE DA BAHIA · FEITO NO OESTE ·</textPath></text></svg><b>!</b></div>
     </div>
   </div>
-  <span class="scroll-cue" aria-hidden="true"></span>
 </section>
 
-<div class="marquee" aria-hidden="true"><div class="marquee__track">${[0, 1].map(() => `<span>${['Tráfego Pago', 'Social Media', 'Google Maps', 'Sites', 'Branding', 'Reels', 'Influência'].map(t => `${t} <i>✦</i>`).join(' ')}</span>`).join('')}</div></div>
+<div class="band" aria-hidden="true"><div class="band__track">${[0, 1].map(() => `<span>${['Tráfego pago', 'Instagram', 'Google Maps', 'Sites', 'Branding', 'Reels', 'Influência'].map(t => `${t} <i>!</i>`).join(' ')}</span>`).join('')}</div></div>
 
-<section class="sec" aria-label="Manifesto">
+<section class="manifesto" aria-label="Por que a Viva existe">
   <div class="wrap">
-    <span class="eyebrow rv">Por que existimos</span>
-    <p class="manifesto" style="margin-top:28px">Tem empresa boa demais em Barreiras que o cliente simplesmente não encontra. A gente existe para mudar isso: marca viva, perfil vivo, telefone tocando.</p>
+    <span class="label" data-rise>Por que a gente existe</span>
+    <p>Tem empresa boa demais em Barreiras que ninguém encontra no Google. Tem loja linda postando foto torta. Tem clínica cheia de indicação sumida do Instagram. A gente existe pra <span class="s">resolver isso.</span></p>
+    <span class="sign" data-rise>— equipe Viva</span>
   </div>
 </section>
 
 <section class="sec" id="servicos" aria-labelledby="h-serv" style="padding-top:0">
   <div class="wrap">
     <div class="sec-head">
-      <div><span class="eyebrow rv">O que fazemos</span><h2 id="h-serv" class="rv">Marketing completo, <span class="grad">do post à venda.</span></h2></div>
-      <p class="rv">Tudo que uma empresa do Oeste baiano precisa para ser encontrada, lembrada e escolhida — num só lugar, com uma equipe que conhece a cidade.</p>
+      <h2 id="h-serv" class="h2" data-split>O que a gente faz <span class="s">de verdade.</span></h2>
+      <p class="lede" data-rise>Seis frentes que conversam entre si. Dá pra começar por uma e ir crescendo, ou deixar tudo com a gente.</p>
     </div>
-    ${serviceCards()}
+    <div class="rio">
+      <svg class="rio__svg" aria-hidden="true"><path/><path class="rio__shine"/></svg>
+      <div class="tickets">${services.map((s, i) => ticket(s, i)).join('')}</div>
+    </div>
   </div>
 </section>
 
-<section class="sec" aria-labelledby="h-met" style="padding-top:0">
+<section class="notif" aria-labelledby="h-notif">
+  <div class="wrap notif-grid">
+    <div>
+      <span class="label" data-rise>O que muda</span>
+      <h2 id="h-notif" class="h2" data-split style="margin-top:18px">O tipo de notificação que a gente quer ver no <span class="s s--ink">seu</span> celular.</h2>
+      <p class="lede" data-rise>Mensagem de cliente novo no WhatsApp, ligação que veio do Google, gente pedindo rota até a sua porta. É isso que marketing bem feito parece no dia a dia.</p>
+      <p class="fine" data-rise>*Ilustração. Os números de verdade são os seus, e a gente te mostra eles todo mês.</p>
+    </div>
+    <div class="lock" aria-hidden="true"><div class="lock__screen">
+      <div class="lock__time">08:12</div>
+      <div class="lock__date">terça-feira · Barreiras</div>
+      <ul class="lock__list">
+        <li class="n n--wa"><span class="n__ico">${waIcon}</span><span class="n__head"><b>Cliente novo</b>agora</span><span>Oi! Vim pelo anúncio, queria um orçamento 🙏</span></li>
+        <li class="n n--g"><span class="n__ico"><svg viewBox="0 0 24 24"><path fill="#4285f4" d="M21.6 12.2c0-.7-.1-1.4-.2-2H12v3.8h5.4a4.6 4.6 0 0 1-2 3v2.5h3.2c1.9-1.7 3-4.3 3-7.3z"/><path fill="#34a853" d="M12 22c2.7 0 5-.9 6.6-2.4l-3.2-2.5c-.9.6-2 1-3.4 1-2.6 0-4.8-1.8-5.6-4.1H3.1v2.6A10 10 0 0 0 12 22z"/><path fill="#fbbc05" d="M6.4 14a6 6 0 0 1 0-4V7.4H3.1a10 10 0 0 0 0 9.2z"/><path fill="#ea4335" d="M12 6c1.5 0 2.8.5 3.8 1.5l2.9-2.9A10 10 0 0 0 3.1 7.4L6.4 10C7.2 7.7 9.4 6 12 6z"/></svg></span><span class="n__head"><b>Perfil da Empresa</b>2 min</span><span>Alguém ligou pra você pelo Google Maps.</span></li>
+        <li class="n n--ig"><span class="n__ico"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="#fff"/></svg></span><span class="n__head"><b>Instagram</b>9 min</span><span>Seu Reels chegou em 12 mil contas. Tá bombando!</span></li>
+        <li class="n n--maps"><span class="n__ico"><svg viewBox="-18 -52 36 54"><path d="${pinPath}" fill="#ff4d1f" stroke="#1a1410" stroke-width="2.5"/><circle cy="-33" r="5" fill="#1a1410"/></svg></span><span class="n__head"><b>Google Maps</b>1 h</span><span>14 pessoas pediram rota até a sua loja esta semana.</span></li>
+        <li class="n n--wa"><span class="n__ico">${waIcon}</span><span class="n__head"><b>Dona Marta</b>1 h</span><span>Vocês entregam em Luís Eduardo? 😊</span></li>
+      </ul>
+    </div></div>
+  </div>
+</section>
+
+<section class="sec" aria-labelledby="h-why">
   <div class="wrap">
     <div class="sec-head">
-      <div><span class="eyebrow rv">Como trabalhamos</span><h2 id="h-met" class="rv">Um método simples. <span class="grad">Resultado medido.</span></h2></div>
-      <p class="rv">Nada de "postar por postar". Cada ação tem objetivo, número e dono.</p>
-    </div>
-    <div class="steps">
-      ${[
-        ['Diagnóstico', 'Olhamos o seu negócio, o seu Instagram, o seu Google e os seus concorrentes em Barreiras.'],
-        ['Estratégia', 'Definimos metas, público, oferta e os canais que dão mais retorno para você.'],
-        ['Execução', 'Conteúdo, anúncios, site e Google Maps rodando no ritmo certo, todo mês.'],
-        ['Resultado', 'Relatório claro de contatos, vendas e custo. Ajustamos o que precisa.'],
-      ].map(([t, d], i) => `<div class="step rv" style="--d:${i * 0.08}s"><h3>${t}</h3><p>${d}</p></div>`).join('')}
-    </div>
-  </div>
-</section>
-
-<section class="sec" aria-labelledby="h-why" style="padding-top:0">
-  <div class="wrap split">
-    <div>
-      <span class="eyebrow rv">Por que a Viva</span>
-      <h2 id="h-why" class="rv">Força comercial <span class="grad">+</span> operação afiada.</h2>
-      <p class="lede rv">A Agência Viva une quem entende de gente e influência no Oeste da Bahia com uma operação de marketing técnica, organizada e obcecada por resultado.</p>
-      <ul class="ticks rv">
-        <li>Equipe local: conhecemos Barreiras, o comércio e o agro da região</li>
-        <li>Rede de influência com centenas de milhares de seguidores</li>
-        <li>Operação de tráfego, sites e SEO com processo e relatório</li>
-        <li>Atendimento direto no WhatsApp, sem burocracia</li>
-      </ul>
+      <h2 id="h-why" class="h2" data-split>Por que <span class="s">a Viva.</span></h2>
+      <p class="lede" data-rise>Força comercial de quem vive de influência, com uma operação que entrega o que promete.</p>
     </div>
     <div class="stack">
-      <div class="pill-card rv"><b>01</b><span><strong style="color:var(--text)">Local de verdade.</strong> Sabemos o que o cliente de Barreiras pesquisa, onde ele está e como ele compra.</span></div>
-      <div class="pill-card rv" style="--d:.08s"><b>02</b><span><strong style="color:var(--text)">Influência que vende.</strong> Conteúdo com rosto e voz de quem o Oeste já acompanha.</span></div>
-      <div class="pill-card rv" style="--d:.16s"><b>03</b><span><strong style="color:var(--text)">Dados no centro.</strong> Cada real investido tem retorno acompanhado.</span></div>
+      <article class="scard scard--sun" style="--i:0"><div><h3>A gente é daqui.</h3><p>Conhece a rua, o bairro, a safra e o calendário da cidade. Post de sábado de manhã em Barreiras não é igual post de terça em São Paulo.</p><span class="hand">sem sotaque de agência de capital</span></div><span class="big" aria-hidden="true">Oeste</span></article>
+      <article class="scard scard--pink" style="--i:1"><div><h3>Influência de verdade.</h3><p>A Viva nasceu da rede de uma criadora de conteúdo que o Oeste já acompanha. Quando a sua marca aparece, aparece pra gente que confia.</p><span class="hand">300 mil pessoas não seguem qualquer um</span></div><span class="big" aria-hidden="true">300 mil</span></article>
+      <article class="scard scard--green" style="--i:2"><div><h3>Operação que não some.</h3><p>Tráfego, site, Google e relatório tocados com processo. Você sabe o que foi feito, quanto custou e o que voltou.</p><span class="hand">nada de sumir depois do contrato</span></div><span class="big" aria-hidden="true">todo mês</span></article>
     </div>
   </div>
 </section>
 
-<section class="sec" id="cidades" aria-labelledby="h-cid" style="padding-top:0">
-  <div class="wrap split">
+<section class="method sec sec--paper2" aria-labelledby="h-met">
+  <div class="wrap sec-head" style="margin-bottom:50px">
+    <h2 id="h-met" class="h2" data-split>Como a gente <span class="s">trabalha.</span></h2>
+    <p class="lede" data-rise>Quatro passos, sem mistério. Você acompanha tudo.</p>
+  </div>
+  <div class="method__track">
+    ${[
+      ['A gente escuta.', 'Uma conversa sem pressa pra entender o que você vende, pra quem, e o que já tentou.', 'pode ser no zap ou pessoalmente'],
+      ['Raio-x.', 'Olhamos seu Instagram, seu Google, seu site e os concorrentes da sua cidade. Sem jargão.', 'você recebe tudo por escrito'],
+      ['Mão na massa.', 'Conteúdo, anúncios, site e Google Maps rodando no ritmo certo, todo mês.', 'e você aprova antes de ir pro ar'],
+      ['Número na mesa.', 'Relatório claro: quantos contatos vieram, quanto custou cada um e o que ajustar.', 'o que não funciona, a gente troca'],
+    ].map(([t, d, h], i) => `<article class="mpanel"><span class="num" aria-hidden="true">${i + 1}.</span><h3>${t}</h3><p>${d}</p><span class="hand">${h}</span></article>`).join('')}
+  </div>
+  <div class="wrap"><div class="method__bar" aria-hidden="true"><i></i></div></div>
+</section>
+
+<section class="sec" id="cidades" aria-labelledby="h-cid">
+  <div class="wrap map-grid">
     <div>
-      <span class="eyebrow rv">Onde atuamos</span>
-      <h2 id="h-cid" class="rv">De Barreiras para <span class="grad">todo o Oeste baiano.</span></h2>
-      <p class="lede rv">Nossa base é Barreiras, e a nossa área é o Oeste da Bahia inteiro: do agro de Luís Eduardo Magalhães e Formosa do Rio Preto ao comércio de Correntina e Santa Maria da Vitória.</p>
-      <div class="city-list rv">${cities.map(c => `<a href="${cityPath(c)}">${esc(c.name)}</a>`).join('')}</div>
+      <span class="label" data-rise>Onde a gente atua</span>
+      <h2 id="h-cid" class="h2" data-split style="margin-top:18px">De Barreiras pra todo o <span class="s">Oeste.</span></h2>
+      <p class="lede" data-rise style="margin-top:26px">Do agro de Luís Eduardo Magalhães e Formosa do Rio Preto ao comércio de Correntina e Santa Maria da Vitória. Escolha a sua cidade:</p>
+      <div class="chips" data-rise>${cities.map(c => `<a href="${cityPath(c)}">${esc(c.name)}</a>`).join('')}</div>
     </div>
     ${mapSvg()}
   </div>
 </section>
 
-${testimonials.length ? `<section class="sec" aria-labelledby="h-dep" style="padding-top:0"><div class="wrap">
-  <div class="sec-head"><div><span class="eyebrow rv">Quem já está vivo</span><h2 id="h-dep" class="rv">O que dizem nossos clientes</h2></div></div>
-  <div class="quotes">${testimonials.map(t => `<figure class="quote rv"><blockquote><p>“${esc(t.text)}”</p></blockquote><figcaption><cite>${esc(t.name)} — ${esc(t.company)}</cite></figcaption></figure>`).join('')}</div>
+${testimonials.length ? `<section class="sec" aria-labelledby="h-dep"><div class="wrap">
+  <h2 id="h-dep" class="h2" data-split>Quem já está <span class="s">vivo.</span></h2>
+  <div class="minis" style="margin-top:60px">${testimonials.map(t => `<figure class="paper" style="padding:30px;margin:0"><blockquote style="margin:0"><p>“${esc(t.text)}”</p></blockquote><figcaption>${esc(t.name)}, ${esc(t.company)}</figcaption></figure>`).join('')}</div>
 </div></section>` : ''}
 
-<section class="sec" aria-labelledby="h-faq" style="padding-top:0">
-  <div class="wrap">
-    <div class="sec-head"><div><span class="eyebrow rv">Perguntas frequentes</span><h2 id="h-faq" class="rv">Dúvidas sobre marketing em Barreiras</h2></div></div>
-    ${faqHtml(homeFaq)}
-  </div>
-</section>
-${finalCta()}`,
+${faqBlock('Dúvidas de quem está <span class="s">chegando.</span>', homeFaq)}
+${cta()}`,
 })
 
 // Índice de serviços
@@ -346,21 +469,30 @@ page({
   desc: 'Tráfego pago, social media, criação de sites, SEO local, identidade visual e produção de vídeo para empresas de Barreiras e do Oeste da Bahia.',
   ld: [crumbsLd([['Início', '/'], ['Serviços', '/servicos/']])],
   body: `
-<section class="hero hero--inner">
-  <div class="blobs" aria-hidden="true"><span class="blob blob--1"></span><span class="blob blob--3"></span></div>
-  <div class="wrap">
-    ${crumbsHtml([['Início', '/'], ['Serviços', '/servicos/']])}
-    <h1 class="rv">Serviços de marketing digital em <span class="grad">Barreiras - BA</span></h1>
-    <p class="sub rv" style="--d:.1s">Escolha uma frente ou deixe a gente cuidar de tudo. Os serviços conversam entre si — e é aí que o resultado aparece.</p>
+<section class="phero">
+  <div class="wrap phero-grid">
+    <div>
+      ${crumbsHtml([['Início', '/'], ['Serviços', '/servicos/']])}
+      <h1 data-split>Serviços de marketing em <span class="s">Barreiras.</span></h1>
+      <p class="lede" data-rise=".1">Escolha uma frente ou deixe a gente cuidar de tudo. Os serviços conversam entre si, e é aí que o resultado aparece.</p>
+      <a class="btn btn--main btn--lg" data-rise=".2" href="${wa('Olá, Agência Viva! Quero entender qual serviço faz sentido pra minha empresa.')}" target="_blank" rel="noopener">${waIcon} Me ajuda a escolher</a>
+    </div>
+    ${props['social-media']()}
   </div>
 </section>
-<section class="sec" style="padding-top:0"><div class="wrap">${serviceCards()}</div></section>
-${finalCta()}`,
+<section class="sec" style="padding-top:20px" aria-label="Lista de serviços">
+  <div class="wrap rio">
+    <svg class="rio__svg" aria-hidden="true"><path/><path class="rio__shine"/></svg>
+    <div class="tickets">${services.map((s, i) => ticket(s, i, 'h2')).join('')}</div>
+  </div>
+</section>
+${cta()}`,
 })
 
 // Páginas de serviço
 for (const s of services) {
-  const others = services.filter(o => o !== s).slice(0, 3)
+  const idx = services.indexOf(s)
+  const others = [1, 2, 3].map(k => services[(idx + k) % services.length])
   const crumbs = [['Início', '/'], ['Serviços', '/servicos/'], [s.short, svcPath(s)]]
   page({
     path: svcPath(s),
@@ -377,50 +509,48 @@ for (const s of services) {
       },
     ],
     body: `
-<section class="hero hero--inner">
-  <div class="blobs" aria-hidden="true"><span class="blob blob--1"></span><span class="blob blob--2"></span></div>
-  <div class="wrap">
-    ${crumbsHtml(crumbs)}
-    <h1 class="rv">${esc(s.name)} em <span class="grad">Barreiras - BA</span></h1>
-    <p class="sub rv" style="--d:.1s">${esc(s.lead)}</p>
-    <div class="cta-row rv" style="--d:.2s"><a class="btn btn--lg" href="${wa(`Olá, Agência Viva! Quero saber mais sobre ${s.name}.`)}" target="_blank" rel="noopener">${waIcon} Pedir orçamento</a></div>
+<section class="phero">
+  <div class="wrap phero-grid">
+    <div>
+      ${crumbsHtml(crumbs)}
+      <h1 data-split>${esc(s.name)} em <span class="s">Barreiras</span></h1>
+      <p class="lede" data-rise=".1">${esc(s.lead)}</p>
+      <a class="btn btn--main btn--lg" data-rise=".2" href="${wa(`Olá, Agência Viva! Quero saber mais sobre ${s.name}.`)}" target="_blank" rel="noopener">${waIcon} Quero saber mais</a>
+    </div>
+    ${props[s.slug]()}
   </div>
 </section>
-<section class="sec" style="padding-top:0">
+<section class="sec" style="padding-top:30px">
   <div class="wrap two">
     <div class="prose">
-      <h2 class="rv" style="margin-top:0">O que está incluso</h2>
-      <ul class="ticks rv">${s.bullets.map(b => `<li>${esc(b)}</li>`).join('')}</ul>
-      <h2 class="rv">Por que investir em ${esc(s.short.toLowerCase())} no Oeste da Bahia</h2>
-      <p class="rv">Barreiras, Luís Eduardo Magalhães e as cidades vizinhas vivem um crescimento puxado pelo agronegócio, e o comércio e os serviços crescem junto. Com mais concorrência, quem se posiciona primeiro no digital fica com a atenção do cliente. É por isso que o trabalho de ${esc(s.kw)} precisa conhecer a região: o horário em que as pessoas compram, os bairros, a linguagem e o calendário local — da safra às festas da cidade.</p>
-      <p class="rv">A Agência Viva atende empresas de ${cities.map(c => esc(c.name)).join(', ').replace(/, ([^,]*)$/, ' e $1')}, com a mesma dedicação.</p>
+      <h2 data-split>O que está <span class="s">incluso.</span></h2>
+      <ul class="checklist paper" data-rise>${s.bullets.map(b => `<li>${esc(b)}</li>`).join('')}</ul>
+      <h2 data-split>Por que isso importa no <span class="s">Oeste.</span></h2>
+      <p data-rise>${esc(s.why)}</p>
+      <p data-rise>Atendemos empresas de ${listPt(cities.map(c => `<a href="${cityPath(c)}">${esc(c.name)}</a>`))}.</p>
     </div>
-    <aside class="aside rv">
-      <h3>Vamos conversar?</h3>
-      <p>Diagnóstico gratuito do seu ${s.slug.includes('site') ? 'site' : 'digital'} em até 24 horas úteis.</p>
-      <a class="btn" href="${wa(`Olá, Agência Viva! Quero um diagnóstico de ${s.short}.`)}" target="_blank" rel="noopener">${waIcon} Falar no WhatsApp</a>
+    <aside class="aside paper" data-rise>
+      <span class="hand" aria-hidden="true">sem compromisso!</span>
+      <h2>Vamos conversar?</h2>
+      <p>Conta rapidinho como está a sua empresa hoje. A gente te diz se ${esc(s.short.toLowerCase())} faz sentido agora, ou o que vem antes.</p>
+      <a class="btn btn--main" href="${wa(`Olá, Agência Viva! Quero conversar sobre ${s.short}.`)}" target="_blank" rel="noopener">${waIcon} Chamar no WhatsApp</a>
     </aside>
   </div>
 </section>
-<section class="sec" style="padding-top:0" aria-labelledby="h-etapas">
+<section class="sec sec--paper2" aria-labelledby="h-etapas">
   <div class="wrap">
-    <div class="sec-head"><div><span class="eyebrow rv">Etapas</span><h2 id="h-etapas" class="rv">Como funciona</h2></div></div>
-    <div class="steps">${s.steps.map((t, i) => `<div class="step rv" style="--d:${i * 0.08}s"><h3>${esc(t)}</h3></div>`).join('')}</div>
+    <div class="sec-head"><h2 id="h-etapas" class="h2" data-split>Como <span class="s">funciona.</span></h2></div>
+    <div class="steps">${s.steps.map(t => `<div class="step paper" data-rise><h3>${esc(t)}</h3></div>`).join('')}</div>
   </div>
 </section>
-<section class="sec" style="padding-top:0" aria-labelledby="h-faq">
-  <div class="wrap">
-    <div class="sec-head"><div><span class="eyebrow rv">Perguntas frequentes</span><h2 id="h-faq" class="rv">Dúvidas sobre ${esc(s.short.toLowerCase())}</h2></div></div>
-    ${faqHtml(s.faq)}
-  </div>
-</section>
+${faqBlock(`Dúvidas sobre <span class="s">${esc(s.short.toLowerCase())}.</span>`, s.faq)}
 <section class="sec" style="padding-top:0" aria-labelledby="h-mais">
   <div class="wrap">
-    <div class="sec-head"><div><span class="eyebrow rv">Combine com</span><h2 id="h-mais" class="rv">Outros serviços</h2></div></div>
-    ${serviceCards(others)}
+    <div class="sec-head"><h2 id="h-mais" class="h2" data-split>Combina <span class="s">com:</span></h2></div>
+    <div class="minis">${others.map(o => ticket(o, services.indexOf(o), 'h3')).join('')}</div>
   </div>
 </section>
-${finalCta()}`,
+${cta()}`,
   })
 }
 
@@ -431,7 +561,7 @@ for (const c of cities) {
     [`Vocês atendem empresas em ${c.name}?`, c.main
       ? 'Sim, Barreiras é a nossa base. Atendemos presencialmente e pelo WhatsApp, com reuniões na sua empresa quando precisar.'
       : `Sim. ${c.name} fica ${c.dist}, e atendemos empresas da cidade com gestão remota e visitas presenciais para reuniões e produção de conteúdo.`],
-    [`Quanto custa marketing digital em ${c.name}?`, 'Os planos variam conforme o escopo: social media, tráfego pago, site ou um pacote completo. Montamos uma proposta que cabe na realidade da sua empresa. Chame no WhatsApp para um diagnóstico gratuito.'],
+    [`Quanto custa marketing digital em ${c.name}?`, 'Os planos variam conforme o escopo: social media, tráfego pago, site ou um pacote completo. Montamos uma proposta que cabe na realidade da sua empresa. Chame no WhatsApp para conversar.'],
     [`Como aparecer no Google Maps em ${c.name}?`, `Com um Perfil da Empresa no Google completo e otimizado para ${c.name}: categoria certa, fotos reais, avaliações de clientes, posts frequentes e dados consistentes em todos os canais. É o nosso serviço de SEO Local.`],
   ]
   const others = cities.filter(o => o !== c)
@@ -443,47 +573,48 @@ for (const c of cities) {
     desc: `Marketing digital em ${c.name} - BA: tráfego pago, Instagram, sites e Google Meu Negócio para empresas${c.main ? ' de Barreiras' : ` de ${c.name}`}. Agência Viva, do Oeste da Bahia.`,
     ld: [crumbsLd(crumbs), faqLd(faq)],
     body: `
-<section class="hero hero--inner">
-  <div class="blobs" aria-hidden="true"><span class="blob blob--1"></span><span class="blob blob--2"></span><span class="blob blob--3"></span></div>
-  <div class="wrap">
-    ${crumbsHtml(crumbs)}
-    <span class="eyebrow rv">${c.main ? 'Nossa casa' : `Oeste da Bahia · ${esc(c.dist)}`}</span>
-    <h1 class="rv" style="--d:.05s">Agência de marketing em <span class="grad">${esc(c.name)}</span></h1>
-    <p class="sub rv" style="--d:.1s">${esc(c.intro)}</p>
-    <div class="cta-row rv" style="--d:.2s"><a class="btn btn--lg" href="${wa(`Olá, Agência Viva! Tenho uma empresa em ${c.name} e quero crescer no digital.`)}" target="_blank" rel="noopener">${waIcon} Falar com a Viva</a></div>
+<section class="phero">
+  <div class="wrap phero-grid">
+    <div>
+      ${crumbsHtml(crumbs)}
+      <h1 data-split>Agência de marketing em <span class="s">${esc(c.name)}</span></h1>
+      <p class="lede" data-rise=".1">${esc(c.intro)}</p>
+      <a class="btn btn--main btn--lg" data-rise=".2" href="${wa(`Olá, Agência Viva! Tenho uma empresa em ${c.name} e quero crescer no digital.`)}" target="_blank" rel="noopener">${waIcon} Falar com a Viva</a>
+    </div>
+    ${miniMap(c)}
   </div>
 </section>
-<section class="sec" style="padding-top:0">
+<section class="sec" style="padding-top:30px">
   <div class="wrap two">
     <div class="prose">
-      <h2 class="rv" style="margin-top:0">Marketing digital pensado para ${esc(c.name)}</h2>
-      <p class="rv">${esc(c.angle)}</p>
-      <p class="rv">A Agência Viva cuida das três frentes que mais trazem cliente para empresas locais: <a href="${svcPath(services[3])}">aparecer no Google Maps</a>, ter um <a href="${svcPath(services[1])}">Instagram profissional</a> e rodar <a href="${svcPath(services[0])}">anúncios que chamam no WhatsApp</a>. Quando faz sentido, completamos com <a href="${svcPath(services[2])}">site próprio</a>, <a href="${svcPath(services[4])}">identidade visual</a> e <a href="${svcPath(services[5])}">produção de vídeo</a>.</p>
-      <h2 class="rv">Segmentos que atendemos em ${esc(c.name)}</h2>
-      <ul class="tags rv">${c.niches.map(n => `<li>${esc(n)}</li>`).join('')}</ul>
+      <h2 data-split>Marketing pensado pra <span class="s">${esc(c.name)}.</span></h2>
+      <p data-rise>${esc(c.angle)}</p>
+      <p data-rise>A Agência Viva cuida das três frentes que mais trazem cliente pra empresa local: <a href="${svcPath(services[3])}">aparecer no Google Maps</a>, ter um <a href="${svcPath(services[1])}">Instagram profissional</a> e rodar <a href="${svcPath(services[0])}">anúncios que chamam no WhatsApp</a>. Quando faz sentido, completamos com <a href="${svcPath(services[2])}">site próprio</a>, <a href="${svcPath(services[4])}">identidade visual</a> e <a href="${svcPath(services[5])}">produção de vídeo</a>.</p>
+      <h2 data-split>Quem a gente atende <span class="s">aqui.</span></h2>
+      <ul class="tags" data-rise>${c.niches.map(n => `<li>${esc(n)}</li>`).join('')}</ul>
     </div>
-    <aside class="aside rv">
-      <h3>Diagnóstico gratuito</h3>
-      <p>Analisamos o Google, o Instagram e os concorrentes da sua empresa em ${esc(c.name)} e mostramos onde estão as oportunidades.</p>
-      <a class="btn" href="${wa(`Olá! Quero o diagnóstico gratuito para minha empresa em ${c.name}.`)}" target="_blank" rel="noopener">${waIcon} Quero meu diagnóstico</a>
+    <aside class="aside paper" data-rise>
+      <span class="hand" aria-hidden="true">${c.main ? 'pertinho de você' : 'a gente vai até aí'}</span>
+      <h2>Bora conversar?</h2>
+      <p>Conta o que a sua empresa faz em ${esc(c.name)}. A gente olha seu Google, seu Instagram e seus concorrentes e te mostra por onde começar.</p>
+      <a class="btn btn--main" href="${wa(`Olá! Tenho uma empresa em ${c.name} e quero conversar.`)}" target="_blank" rel="noopener">${waIcon} Chamar no WhatsApp</a>
     </aside>
   </div>
 </section>
-<section class="sec" style="padding-top:0" aria-labelledby="h-serv">
+<section class="sec sec--paper2" aria-labelledby="h-serv">
   <div class="wrap">
-    <div class="sec-head"><div><span class="eyebrow rv">Serviços</span><h2 id="h-serv" class="rv">O que fazemos em ${esc(c.name)}</h2></div></div>
-    ${serviceCards()}
+    <div class="sec-head"><h2 id="h-serv" class="h2" data-split>O que a gente faz em <span class="s">${esc(c.name)}.</span></h2></div>
+    <div class="minis">${services.map((s, i) => ticket(s, i, 'h3')).join('')}</div>
   </div>
 </section>
-<section class="sec" style="padding-top:0" aria-labelledby="h-faq">
+${faqBlock(`Marketing em <span class="s">${esc(c.name)}.</span>`, faq)}
+<section class="sec" style="padding-top:0" aria-labelledby="h-outras">
   <div class="wrap">
-    <div class="sec-head"><div><span class="eyebrow rv">Perguntas frequentes</span><h2 id="h-faq" class="rv">Marketing em ${esc(c.name)}: dúvidas</h2></div></div>
-    ${faqHtml(faq)}
-    <h2 class="rv" style="font-size:28px;margin:70px 0 0">Também atendemos</h2>
-    <div class="city-list rv">${others.map(o => `<a href="${cityPath(o)}">${esc(o.name)}</a>`).join('')}</div>
+    <h2 id="h-outras" class="h3" data-split>Também atendemos:</h2>
+    <div class="chips" data-rise>${others.map(o => `<a href="${cityPath(o)}">${esc(o.name)}</a>`).join('')}</div>
   </div>
 </section>
-${finalCta(`Sua empresa viva em ${esc(c.name)}.`)}`,
+${cta(`Sua empresa viva em <span class="s">${esc(c.name)}.</span>`)}`,
   })
 }
 
@@ -495,68 +626,77 @@ page({
   desc: 'Conheça a Agência Viva, agência de marketing de Barreiras - BA que une influência, estratégia e operação para fazer empresas do Oeste da Bahia crescerem.',
   ld: [crumbsLd([['Início', '/'], ['Sobre', '/sobre/']])],
   body: `
-<section class="hero hero--inner">
-  <div class="blobs" aria-hidden="true"><span class="blob blob--1"></span><span class="blob blob--3"></span></div>
-  <div class="wrap">
-    ${crumbsHtml([['Início', '/'], ['Sobre', '/sobre/']])}
-    <h1 class="rv">Nascemos no Oeste. <span class="grad">Pensamos grande.</span></h1>
-    <p class="sub rv" style="--d:.1s">A Agência Viva é uma agência de marketing de Barreiras - BA criada para dar às empresas da região a mesma força digital das grandes marcas.</p>
+<section class="phero">
+  <div class="wrap phero-grid">
+    <div>
+      ${crumbsHtml([['Início', '/'], ['Sobre', '/sobre/']])}
+      <h1 data-split>Nascemos no Oeste. <span class="s">Pensamos grande.</span></h1>
+      <p class="lede" data-rise=".1">A Agência Viva é uma agência de marketing de Barreiras - BA criada pra dar às empresas da região a mesma força digital das grandes marcas.</p>
+    </div>
+    <div class="prop"><div class="polaroid"><div class="polaroid__img"><img src="/assets/logo-viva.png" alt="" width="934" height="432"></div><span class="hand">Barreiras - BA</span><span class="tape" aria-hidden="true"></span></div></div>
   </div>
 </section>
-<section class="sec" style="padding-top:0">
+<section class="sec" style="padding-top:30px">
   <div class="wrap two">
     <div class="prose">
-      <h2 class="rv" style="margin-top:0">Quem somos</h2>
-      <p class="rv">A Viva nasceu da vivência de quem cria conteúdo no Oeste da Bahia e reúne uma comunidade de centenas de milhares de seguidores. Sabemos, na prática, o que prende a atenção das pessoas da região — e o que faz elas comprarem.</p>
-      <p class="rv">Para transformar atenção em venda, juntamos essa força comercial e de influência a uma operação técnica de marketing: gestão de tráfego, sites, SEO local e processos de acompanhamento com metas e relatórios.</p>
-      <h2 class="rv">No que acreditamos</h2>
-      <ul class="ticks rv">
-        <li>Marketing bom é o que aparece no caixa, não só nas curtidas</li>
-        <li>Empresa do interior merece estratégia de capital</li>
-        <li>Transparência: você sabe o que foi feito e quanto rendeu</li>
-        <li>Proximidade: atendimento humano, direto e rápido</li>
+      <h2 data-split>Quem <span class="s">somos.</span></h2>
+      <p data-rise>A Viva nasceu da vivência de quem cria conteúdo no Oeste da Bahia e reúne uma comunidade de centenas de milhares de seguidores. A gente sabe, na prática, o que prende a atenção das pessoas daqui, e o que faz elas comprarem.</p>
+      <p data-rise>Pra transformar atenção em venda, juntamos essa força comercial e de influência a uma operação técnica de marketing: gestão de tráfego, sites, SEO local e acompanhamento com metas e relatório.</p>
+      <h2 data-split>No que a gente <span class="s">acredita.</span></h2>
+      <ul class="checklist paper" data-rise>
+        <li>Marketing bom é o que aparece no caixa, não só nas curtidas.</li>
+        <li>Empresa do interior merece estratégia de capital.</li>
+        <li>Transparência: você sabe o que foi feito e quanto rendeu.</li>
+        <li>Atendimento de gente pra gente, direto e rápido.</li>
       </ul>
     </div>
-    <aside class="aside rv">
-      <h3>Base em Barreiras</h3>
+    <aside class="aside paper" data-rise>
+      <span class="hand" aria-hidden="true">passa aqui!</span>
+      <h2>Base em Barreiras</h2>
       <p>${esc(addrLine)}<br>${esc(site.hoursDisplay)}</p>
-      <a class="btn" href="${wa()}" target="_blank" rel="noopener">${waIcon} Falar com a gente</a>
+      <a class="btn btn--main" href="${wa()}" target="_blank" rel="noopener">${waIcon} Falar com a gente</a>
     </aside>
   </div>
 </section>
-${finalCta()}`,
+${cta()}`,
 })
 
 // Contato
 page({
   path: '/contato/',
   active: '/contato/',
-  title: 'Contato | Agência Viva — Marketing em Barreiras - BA',
+  title: 'Contato | Agência Viva, Marketing em Barreiras - BA',
   desc: `Fale com a Agência Viva pelo WhatsApp ${site.phoneDisplay}. Agência de marketing em Barreiras - BA atendendo todo o Oeste da Bahia.`,
   ld: [crumbsLd([['Início', '/'], ['Contato', '/contato/']])],
   body: `
-<section class="hero hero--inner">
-  <div class="blobs" aria-hidden="true"><span class="blob blob--1"></span><span class="blob blob--2"></span></div>
-  <div class="wrap">
-    ${crumbsHtml([['Início', '/'], ['Contato', '/contato/']])}
-    <h1 class="rv">Bora <span class="grad">conversar?</span></h1>
-    <p class="sub rv" style="--d:.1s">O caminho mais rápido é o WhatsApp. Respondemos em horário comercial, normalmente em poucos minutos.</p>
-    <div class="cta-row rv" style="--d:.2s">
-      <a class="btn btn--lg" href="${wa()}" target="_blank" rel="noopener">${waIcon} ${esc(site.phoneDisplay)}</a>
-      <a class="btn btn--ghost btn--lg" href="${site.instagram}" target="_blank" rel="noopener">${esc(site.instagramHandle)}</a>
+<section class="phero">
+  <div class="wrap phero-grid">
+    <div>
+      ${crumbsHtml([['Início', '/'], ['Contato', '/contato/']])}
+      <h1 data-split>Bora <span class="s">conversar?</span></h1>
+      <p class="lede" data-rise=".1">O caminho mais rápido é o WhatsApp. É só mandar um oi contando o que a sua empresa faz.</p>
+      <div class="hero-cta" data-rise=".2">
+        <a class="btn btn--main btn--lg" href="${wa()}" target="_blank" rel="noopener">${waIcon} ${esc(site.phoneDisplay)}</a>
+        <a class="go" href="${site.instagram}" target="_blank" rel="noopener">${esc(site.instagramHandle)} ${icon('arrow')}</a>
+      </div>
     </div>
+    <div class="prop" style="display:flex;justify-content:center">${phoneChat([
+      ['out', 'Oi, Agência Viva! Tenho uma loja em Barreiras e quero crescer no Instagram.', '10:02'],
+      ['in', 'Oi! Que bom te ver por aqui 😊 Me conta: o que você vende e há quanto tempo?', '10:05'],
+      ['typing'],
+    ], false, ['V', 'Agência Viva', 'online'])}</div>
   </div>
 </section>
-<section class="sec" style="padding-top:0">
-  <div class="wrap split">
+<section class="sec" style="padding-top:30px">
+  <div class="wrap map-grid">
     <div class="prose">
-      <h2 class="rv" style="margin-top:0">Onde estamos</h2>
-      <address class="rv" style="font-style:normal;color:#d9d0dd">
-        <strong>${esc(site.name)}</strong><br>${esc(addrLine)}<br><br>
+      <h2 data-split>Onde a gente <span class="s">está.</span></h2>
+      <address data-rise style="font-style:normal;color:var(--ink-2)">
+        <strong style="color:var(--ink)">${esc(site.name)}</strong><br>${esc(addrLine)}<br><br>
         ${esc(site.hoursDisplay)}<br>
         <a href="mailto:${esc(site.email)}">${esc(site.email)}</a>
       </address>
-      <p class="rv" style="margin-top:24px"><a class="btn btn--ghost" href="${site.mapsUrl}" target="_blank" rel="noopener">Abrir no Google Maps</a></p>
+      <p data-rise style="margin-top:28px"><a class="btn btn--ghost" href="${site.mapsUrl}" target="_blank" rel="noopener">Abrir no Google Maps</a></p>
     </div>
     ${mapSvg()}
   </div>
@@ -568,11 +708,14 @@ const notFound = layout({
   path: '/404.html',
   title: 'Página não encontrada | Agência Viva',
   desc: 'Esta página não existe.',
-  body: `<section class="hero"><div class="blobs" aria-hidden="true"><span class="blob blob--1"></span><span class="blob blob--2"></span></div>
-  <div class="wrap"><span class="eyebrow">Erro 404</span><h1>Essa página <span class="grad">sumiu do mapa.</span></h1>
-  <p class="sub">Mas a sua empresa não precisa sumir. Volte para o início ou chame a gente.</p>
-  <div class="cta-row"><a class="btn btn--lg" href="/">Voltar ao início</a><a class="btn btn--ghost btn--lg" href="${wa()}" target="_blank" rel="noopener">WhatsApp</a></div></div></section>`,
-}).replace('index, follow, max-image-preview:large', 'noindex')
+  robots: 'noindex',
+  body: `<section class="phero" style="min-height:80svh;display:flex;align-items:center"><div class="wrap">
+  <span class="label">Erro 404</span>
+  <h1 style="margin-top:20px" data-split>Essa página <span class="s">sumiu do mapa.</span></h1>
+  <p class="lede" data-rise=".1">Mas a sua empresa não precisa sumir. Volta pro início ou chama a gente.</p>
+  <div class="hero-cta" data-rise=".2"><a class="btn btn--main btn--lg" href="/">Voltar ao início</a><a class="go" href="${wa()}" target="_blank" rel="noopener">Chamar no WhatsApp ${icon('arrow')}</a></div>
+</div></section>`,
+})
 
 // ─── Escrita ─────────────────────────────────────────────────
 rmSync(out, { recursive: true, force: true })
@@ -584,7 +727,7 @@ write('404.html', notFound)
 
 write('sitemap.xml', `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-${pages.map(p => `  <url><loc>${abs(p.path)}</loc><lastmod>${today}</lastmod><priority>${p.path === '/' ? '1.0' : p.path.includes('barreiras') ? '0.9' : '0.7'}</priority></url>`).join('\n')}
+${pages.map(p => `  <url><loc>${abs(p.path)}</loc><lastmod>${today}</lastmod></url>`).join('\n')}
 </urlset>
 `)
 write('robots.txt', `User-agent: *\nAllow: /\n\nSitemap: ${abs('/sitemap.xml')}\n`)
@@ -610,7 +753,7 @@ ${homeFaq.map(([q, a]) => `### ${q}\n${a}`).join('\n\n')}
 `)
 
 write('site.webmanifest', JSON.stringify({
-  name: site.name, short_name: 'Viva', start_url: '/', display: 'standalone', background_color: '#0d0a12', theme_color: '#0d0a12',
+  name: site.name, short_name: 'Viva', start_url: '/', display: 'standalone', background_color: '#f5efe4', theme_color: '#f5efe4',
   icons: [{ src: '/favicon.svg', sizes: 'any', type: 'image/svg+xml' }],
 }, null, 2))
 
