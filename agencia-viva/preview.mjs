@@ -52,6 +52,22 @@ const walk = d => {
 }
 walk(siteDir)
 
+// Enxuga a prévia (painéis de visualização costumam travar acima de ~1 MB):
+// 1) tira o JSON-LD (só serve pro Google); 2) guarda cada SVG/caminho repetido uma vez só.
+const svgs = [], paths = []
+const idx = (arr, v) => { let i = arr.indexOf(v); if (i < 0) { arr.push(v); i = arr.length - 1 } return i }
+const counts = {}
+for (const k in pages) {
+  pages[k] = pages[k].replace(/<script type="application\/ld\+json">[\s\S]*?<\/script>\n?/g, '')
+  for (const m of pages[k].match(/<svg[\s\S]*?<\/svg>/g) || []) if (m.length > 300) counts[m] = (counts[m] || 0) + 1
+}
+for (const k in pages) {
+  pages[k] = pages[k]
+    .replace(/<svg[\s\S]*?<\/svg>/g, m => (counts[m] > 1 ? `%%S${idx(svgs, m)}%%` : m))
+    .replace(/ d="([^"]{160,})"/g, (_, d) => ` d="%%P${idx(paths, d)}%%"`)
+}
+for (let i = 0; i < svgs.length; i++) svgs[i] = svgs[i].replace(/ d="([^"]{160,})"/g, (_, d) => ` d="%%P${idx(paths, d)}%%"`)
+
 const label = p => {
   if (p === '/') return 'Início'
   if (p === '/404.html') return 'Página 404'
@@ -67,7 +83,7 @@ const groups = [
 const options = groups.map(([g, ps]) => `<optgroup label="${g}">${ps.map(p => `<option value="${p}">${label(p).replace(/&/g, '&amp;').replace(/</g, '&lt;')}</option>`).join('')}</optgroup>`).join('')
 
 // JSON dentro de <script>: escapar "</" para não fechar a tag
-const data = JSON.stringify({ pages, css, files, logo }).replace(/<\//g, '<\\/')
+const data = JSON.stringify({ pages, css, files, logo, svgs, paths }).replace(/<\//g, '<\\/')
 
 const shell = `<!doctype html>
 <html lang="pt-BR">
@@ -110,7 +126,7 @@ const shell = `<!doctype html>
 <script>
 var D = ${data}
 var f = document.getElementById('f'), sel = document.getElementById('page'), hist = []
-function fill(html) { html = html.split('%%CSS%%').join(D.css).split('%%LOGO%%').join(D.logo); return html.replace(/%%F:([\\w.\\/-]+)%%/g, function (_, f) { return D.files[f] || '' }) }
+function fill(html) { html = html.replace(/%%S(\\d+)%%/g, function (_, i) { return D.svgs[i] }).replace(/%%P(\\d+)%%/g, function (_, i) { return D.paths[i] }); html = html.split('%%CSS%%').join(D.css).split('%%LOGO%%').join(D.logo); return html.replace(/%%F:([\\w.\\/-]+)%%/g, function (_, f) { return D.files[f] || '' }) }
 function go(target, push) {
   var parts = target.split('#'), p = parts[0] || '/', hash = parts[1]
   if (!D.pages[p]) p = '/404.html'
