@@ -81,3 +81,21 @@ conteúdo da pasta `site/`.
 6. **Citações**: mesmo NAP no Instagram, Facebook, Apple Maps, Bing Places,
    listas locais de Barreiras e na bio da fundadora.
 7. **Instagram**: link do site na bio e "Barreiras - BA" no nome do perfil.
+
+## CRM da equipe (`/crm/`)
+
+App React em `crm/` com banco no Supabase (projeto `viva-crm`, região São Paulo).
+Funil (kanban), leads, clientes, tarefas da operação, histórico de atividades,
+cobranças (só admin) e gestão de equipe.
+
+- **Acesso:** qualquer pessoa pode criar conta em `/crm/`, mas só entra depois
+  que um admin aprovar em **Equipe**. O e-mail do dono entra como admin automaticamente.
+- **Segurança:** regras RLS no banco. Equipe não vê cobranças, não aprova
+  pessoas e não apaga leads/clientes. A chave no front é a publicável (segura no navegador).
+- **Leads do site:** a função `lead_do_site` (RPC pública, com validação) cria
+  lead com origem "site" — pronta para ligar um formulário.
+- **Build:** `cd crm && npm install && npm run build`, depois `node build.mjs`
+  (copia para `site/crm`). Na Vercel o `vercel.json` já faz tudo.
+- **No painel do Supabase (uma vez):** Authentication → URL Configuration →
+  *Site URL* = `https://agenciaviva.com.br/crm/` e adicionar o mesmo em
+  *Redirect URLs* (links de confirmação e de nova senha).

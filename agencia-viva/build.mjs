@@ -1,6 +1,6 @@
 // Gera o site estático da Agência Viva em ./site
 // Uso: node build.mjs   (sem dependências)
-import { mkdirSync, writeFileSync, cpSync, rmSync } from 'node:fs'
+import { mkdirSync, writeFileSync, cpSync, rmSync, existsSync } from 'node:fs'
 import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { site, wa, services, cities, testimonials, homeFaq } from './src/data.mjs'
@@ -372,7 +372,7 @@ ${body}
     <p class="giant" aria-hidden="true"><span>V</span><span>I</span><span>V</span><span>A</span><span>!</span></p>
     <div class="ftr-bottom">
       <span>© ${new Date().getFullYear()} ${esc(site.name)}${site.cnpj ? ` · CNPJ ${esc(site.cnpj)}` : ''} · Agência de marketing em Barreiras - BA</span>
-      <span>Barreiras · LEM · Oeste da Bahia</span>
+      <span>Barreiras · LEM · Oeste da Bahia · <a href="/crm/" rel="nofollow">Área da equipe</a></span>
     </div>
   </div>
 </footer>
@@ -865,7 +865,11 @@ write('sitemap.xml', `<?xml version="1.0" encoding="UTF-8"?>
 ${pages.map(p => `  <url><loc>${abs(p.path)}</loc>${p.updated ? `<lastmod>${p.updated}</lastmod>` : ''}</url>`).join('\n')}
 </urlset>
 `)
-write('robots.txt', `User-agent: *\nAllow: /\n\nSitemap: ${abs('/sitemap.xml')}\n`)
+write('robots.txt', `User-agent: *\nAllow: /\nDisallow: /crm/\n\nSitemap: ${abs('/sitemap.xml')}\n`)
+
+// CRM (app React em ./crm, build próprio) servido em /crm/
+if (existsSync(join(root, 'crm', 'dist', 'index.html'))) cpSync(join(root, 'crm', 'dist'), join(out, 'crm'), { recursive: true })
+else console.warn('! CRM não compilado (rode: cd crm && npm install && npm run build)')
 
 // llms.txt — resumo para buscadores de IA (GEO)
 write('llms.txt', `# ${site.name}

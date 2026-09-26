@@ -1,9 +1,10 @@
 {
-  "buildCommand": "node build.mjs",
+  "buildCommand": "cd crm && npm ci && npm run build && cd .. && node build.mjs",
   "outputDirectory": "site",
   "cleanUrls": true,
   "trailingSlash": true,
   "headers": [
-    { "source": "/assets/(.*)", "headers": [{ "key": "Cache-Control", "value": "public, max-age=604800" }] }
+    { "source": "/assets/(.*)", "headers": [{ "key": "Cache-Control", "value": "public, max-age=604800" }] },
+    { "source": "/crm/(.*)", "headers": [{ "key": "X-Robots-Tag", "value": "noindex, nofollow" }, { "key": "X-Frame-Options", "value": "DENY" }] }
   ]
 }
