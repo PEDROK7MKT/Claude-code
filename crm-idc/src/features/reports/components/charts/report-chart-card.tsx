@@ -31,13 +31,10 @@ export function ReportChartCard({
   children,
   ...props
 }: ReportChartCardProps) {
-  const titleId = React.useId();
   return (
-    <Card className={cn("min-w-0 gap-4 break-inside-avoid", className)} aria-labelledby={titleId} {...props}>
+    <Card className={cn("min-w-0 gap-4 break-inside-avoid", className)} {...props}>
       <CardHeader>
-        <CardTitle id={titleId} className="text-base">
-          {spec.title}
-        </CardTitle>
+        <CardTitle className="text-base">{spec.title}</CardTitle>
         <CardDescription>{spec.description}</CardDescription>
         {spec.available && headline !== undefined ? (
           <CardAction className="text-right">
