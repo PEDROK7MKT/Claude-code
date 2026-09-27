@@ -9,7 +9,7 @@ export default function Equipe() {
   const pendentes = equipe.filter(p => !p.ativo)
   return (
     <>
-      <div className="head"><div><h1><span className="s">Equipe</span></h1><p>Quem cria conta em <b>{location.origin}/crm</b> aparece aqui e só entra depois de aprovado.</p></div></div>
+      <div className="head"><div><h1><span className="s">Equipe</span></h1><p>Quem cria conta em <b>{location.protocol.startsWith('http') ? location.host : 'agenciaviva.com.br'}/crm</b> aparece aqui e só entra depois de aprovado.</p></div></div>
       {pendentes.length > 0 && <div className="ok" style={{ marginBottom: 16 }}>{pendentes.length} {pendentes.length > 1 ? 'pessoas esperando' : 'pessoa esperando'} aprovação.</div>}
       {!equipe.length ? <div className="card"><Empty title="Ninguém ainda" /></div> : (
         <div className="tablewrap"><table className="t">

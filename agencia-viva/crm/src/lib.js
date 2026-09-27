@@ -1,7 +1,5 @@
-import { createClient } from '@supabase/supabase-js'
-import { SUPABASE_URL, SUPABASE_KEY } from './config.js'
-
-export const sb = createClient(SUPABASE_URL, SUPABASE_KEY, { auth: { persistSession: true, autoRefreshToken: true } })
+// cliente do Supabase (na prévia de demonstração, vira um banco de mentira em memória: vite --mode demo)
+export { sb } from './cliente.js'
 
 export const brl = v => v == null || v === '' ? '—' : Number(v).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL', maximumFractionDigits: 0 })
 export const dataBR = d => d ? new Date(d.length === 10 ? d + 'T12:00:00' : d).toLocaleDateString('pt-BR') : '—'
