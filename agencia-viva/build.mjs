@@ -76,7 +76,7 @@ const svcLogos = {
   'producao-de-conteudo-audiovisual': ['instagram', 'youtube', 'tiktok'],
 }
 const svcArt = {
-  'gestao-de-trafego-pago': () => `<span class="art art--chart" aria-hidden="true"><b>Faturamento ↑</b>${[22, 30, 26, 42, 38, 58, 66, 84].map(h => `<i style="--h:${h}%"></i>`).join('')}</span>`,
+  'gestao-de-trafego-pago': () => `<span class="art art--chart" aria-hidden="true"><b>Contatos ↑</b>${[22, 30, 26, 42, 38, 58, 66, 84].map(h => `<i style="--h:${h}%"></i>`).join('')}</span>`,
   'social-media': () => `<span class="art art--posts" aria-hidden="true">${['Reels ▶', 'Post', 'Story', 'Promo'].map(t => `<span>${t}</span>`).join('')}</span>`,
   'criacao-de-sites': () => '<span class="art art--browser" aria-hidden="true"><span class="bar"><i></i><i></i><i></i><span class="url"><span>suaempresa.com.br</span></span></span><span class="body"><span style="flex:1"><i style="width:90%"></i><i style="width:70%"></i><i style="width:80%"></i></span><span class="fb">WhatsApp</span></span></span>',
   'google-meu-negocio-seo-local': () => `<span class="art art--search" aria-hidden="true"><span class="q"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M20 20l-4.8-4.8"/></svg>dentista perto de mim</span><span class="res">${logoIc('googlemaps')}<span><b>Sua Clínica</b><span class="stars">★★★★★</span> · aberto agora</span></span></span>`,
@@ -294,7 +294,7 @@ const leadForm = ({ servico = '', cidade = '' } = {}) => `<form class="lead-form
   <div class="lf-status" role="status" aria-live="polite"></div>
 </form>`
 
-const cta = (title = 'Sua empresa merece ser <span class="s">encontrada.</span>', text = 'Chama no WhatsApp e conta o que você vende. A gente olha seu Instagram, seu Google e seus anúncios e te diz, sem enrolação, por onde começar.', form = {}) => `
+const cta = (title = 'Sua empresa merece ser <span class="s">encontrada.</span>', text = 'Chama no WhatsApp e conta o que você vende. A gente olha seu Instagram, seu Google e seus anúncios e te diz por onde começar.', form = {}) => `
 <section class="cta dark" id="orcamento" aria-labelledby="h-cta">
   <span class="bang" aria-hidden="true">!</span>
   <div class="wrap cta-grid">
@@ -420,14 +420,14 @@ const page = p => pages.push(p)
 page({
   path: '/',
   title: 'Agência de Marketing em Barreiras - BA | Agência Viva',
-  desc: 'Agência Viva: agência de marketing digital em Barreiras - BA. Tráfego pago, Instagram, sites e Google Meu Negócio para empresas de Barreiras, LEM e todo o Oeste da Bahia.',
+  desc: 'Agência de marketing em Barreiras - BA: tráfego pago, Instagram, sites e Google Maps pra empresas de Barreiras, Luís Eduardo Magalhães (LEM) e do Oeste.',
   ld: [faqLd(homeFaq)],
   body: `
 <section class="hero">
   <div class="wrap hero-grid">
     <div>
       <h1 class="intro"><span class="kicker">Agência de marketing em Barreiras&nbsp;-&nbsp;BA</span>Sua empresa <span class="circled"><span class="s">viva</span>${hand.circle(1)}</span> no celular de quem compra.</h1>
-      <p class="lede intro" style="animation-delay:.12s">Instagram que dá vontade de seguir, anúncio que faz o WhatsApp tocar e perfil no Google que aparece primeiro quando alguém de Barreiras procura o que você vende.</p>
+      <p class="lede intro" style="animation-delay:.12s">Instagram que dá vontade de seguir, anúncio que faz o WhatsApp tocar e perfil no Google em dia pra quando alguém de Barreiras procurar o que você vende.</p>
       <div class="hero-cta intro" style="animation-delay:.22s">
         <a class="btn btn--main btn--lg" href="${wa()}" target="_blank" rel="noopener">${waIcon} Chamar no WhatsApp</a>
         <a class="go" href="#servicos">Ver o que a gente faz ${icon('arrow')}</a>
@@ -473,8 +473,8 @@ page({
     <div class="svc__grid">
       <div class="svc__intro">
         <span class="label" data-rise>O que a gente faz</span>
-        <h2 id="h-serv" class="h2" data-split style="margin-top:18px">O que a gente faz <span class="s">de verdade.</span></h2>
-        <p class="lede" data-rise style="margin-top:24px">Seis frentes que conversam entre si. Dá pra começar por uma e ir crescendo, ou deixar tudo com a gente.</p>
+        <h2 id="h-serv" class="h2" data-split style="margin-top:18px">Do anúncio ao <span class="s">vídeo.</span></h2>
+        <p class="lede" data-rise style="margin-top:24px">São seis serviços. Dá pra começar por um e ir somando os outros, ou deixar tudo com a gente.</p>
         <div class="svc__count" aria-hidden="true"><b>01</b><span>de ${String(services.length).padStart(2, '0')} · role pra girar</span></div>
         <div class="dots" role="group" aria-label="Ir para o serviço">${services.map((s, i) => `<button type="button" aria-label="${esc(s.short)}" aria-current="${i === 0}"></button>`).join('')}</div>
       </div>
@@ -491,8 +491,8 @@ page({
     <div>
       <span class="label" data-rise>O que muda</span>
       <h2 id="h-notif" class="h2" data-split style="margin-top:18px">O tipo de notificação que a gente quer ver no <span class="s">seu</span> celular.</h2>
-      <p class="lede" data-rise>Mensagem de cliente novo no WhatsApp, ligação que veio do Google, gente pedindo rota até a sua porta. É isso que marketing bem feito parece no dia a dia.</p>
-      <p class="fine" data-rise>*Ilustração. Os números de verdade são os seus, e a gente te mostra eles todo mês.</p>
+      <p class="lede" data-rise>Mensagem de cliente novo no WhatsApp, ligação que veio do Google, gente pedindo rota até a sua porta. Marketing bem feito, no dia a dia, tem essa cara.</p>
+      <p class="fine" data-rise>*Ilustração. Os números reais são os da sua empresa, e eles vão no relatório de cada mês.</p>
     </div>
     <div class="lock" aria-hidden="true"><div class="lock__screen">
       <div class="lock__time">08:12</div>
@@ -512,13 +512,13 @@ page({
   <div class="wrap">
     <div class="sec-head">
       <h2 id="h-why" class="h2" data-split>Por que <span class="s">a Viva.</span></h2>
-      <p class="lede" data-rise>Força comercial de quem vive de influência, com uma operação que entrega o que promete.</p>
+      <p class="lede" data-rise>Conteúdo com a cara do Oeste e a parte técnica bem feita: anúncio, site, Google e relatório.</p>
     </div>
     <div class="stack">
-      <article class="scard scard--black" style="--i:0"><div><h3>A gente é daqui.</h3><p>Conhece a rua, o bairro, a safra e o calendário da cidade. Post de sábado de manhã em Barreiras não é igual post de terça em São Paulo.</p><span class="hand">sem sotaque de agência de capital</span></div><span class="big" aria-hidden="true">Oeste</span></article>
+      <article class="scard scard--black" style="--i:0"><div><h3>A gente é daqui.</h3><p>Conhece a rua, o bairro, a safra e o calendário da cidade. Post de sábado de manhã em Barreiras não é igual a post de terça em São Paulo.</p><span class="hand">sem sotaque de agência de capital</span></div><span class="big" aria-hidden="true">Oeste</span></article>
       <article class="scard scard--white" style="--i:1"><div><h3>${years >= 10 ? 'Dez anos de estrada.' : 'Quase dez anos de estrada.'}</h3><p>A Viva está no mercado desde novembro de ${foundedYear}. Já viu muita moda de rede social ir e vir, e sabe o que continua vendendo pra empresa do interior.</p><span class="hand">experiência não se improvisa</span></div><span class="big" aria-hidden="true">${foundedYear}</span></article>
-      <article class="scard scard--black" style="--i:2"><div><h3>Influência de verdade.</h3><p>A Viva nasceu da rede de uma criadora de conteúdo que o Oeste já acompanha. Quando a sua marca aparece, aparece pra gente que confia.</p><span class="hand">300 mil pessoas não seguem qualquer um</span></div><span class="big" aria-hidden="true">300 mil</span></article>
-      <article class="scard scard--gray" style="--i:3"><div><h3>Operação que não some.</h3><p>Tráfego, site, Google e relatório tocados com processo. Você sabe o que foi feito, quanto custou e o que voltou.</p><span class="hand">nada de sumir depois do contrato</span></div><span class="big" aria-hidden="true">todo mês</span></article>
+      <article class="scard scard--black" style="--i:2"><div><h3>Feita por quem cria.</h3><p>A Viva nasceu da rede de uma criadora de conteúdo que o Oeste já acompanha. Foi ali que a gente aprendeu o que o público daqui assiste até o fim.</p><span class="hand">300 mil pessoas não seguem qualquer um</span></div><span class="big" aria-hidden="true">300 mil</span></article>
+      <article class="scard scard--gray" style="--i:3"><div><h3>Operação que não some.</h3><p>Tráfego, site e Google numa rotina que você acompanha: dá pra ver o que foi feito e quanto custou.</p><span class="hand">nada de sumir depois do contrato</span></div><span class="big" aria-hidden="true">todo mês</span></article>
     </div>
   </div>
 </section>
@@ -530,8 +530,8 @@ page({
   </div>
   <div class="method__track">
     ${[
-      ['A gente escuta.', 'Uma conversa sem pressa pra entender o que você vende, pra quem, e o que já tentou.', 'pode ser no zap ou pessoalmente'],
-      ['Raio-x.', 'Olhamos seu Instagram, seu Google, seu site e os concorrentes da sua cidade. Sem jargão.', 'você recebe tudo por escrito'],
+      ['A gente escuta.', 'Uma conversa sem pressa pra entender o que você vende, pra quem e o que já tentou.', 'pode ser no zap ou pessoalmente'],
+      ['Raio-x.', 'Um pente-fino no seu Instagram, no seu Google, no seu site e nos concorrentes da sua cidade.', 'tudo explicado sem jargão'],
       ['Mão na massa.', 'Conteúdo, anúncios, site e Google Maps rodando no ritmo certo, todo mês.', 'e você aprova antes de ir pro ar'],
       ['Número na mesa.', 'Relatório claro: quantos contatos vieram, quanto custou cada um e o que ajustar.', 'o que não funciona, a gente troca'],
     ].map(([t, d, h], i) => `<article class="mpanel"><span class="num" aria-hidden="true">${i + 1}.</span><h3>${t}</h3><p>${d}</p><span class="hand">${h}</span></article>`).join('')}
@@ -544,7 +544,7 @@ page({
     <div>
       <span class="label" data-rise>Onde a gente atua</span>
       <h2 id="h-cid" class="h2" data-split style="margin-top:18px">De Barreiras pra todo o <span class="s">Oeste.</span></h2>
-      <p class="lede" data-rise style="margin-top:26px">Do agro de Luís Eduardo Magalhães e Formosa do Rio Preto ao comércio de Correntina e Santa Maria da Vitória. Passa o dedo (ou o mouse) na sua cidade:</p>
+      <p class="lede" data-rise style="margin-top:26px">Do agro de Luís Eduardo Magalhães e Formosa do Rio Preto ao comércio de Correntina e Santa Maria da Vitória. Passa o mouse no mapa ou toca na sua cidade:</p>
       <div class="chips" data-rise>${cities.map(c => `<a href="${cityPath(c)}" data-city="${c.slug}">${esc(c.name)}</a>`).join('')}</div>
     </div>
     <div style="position:relative">
@@ -576,7 +576,7 @@ page({
     <div>
       ${crumbsHtml([['Início', '/'], ['Serviços', '/servicos/']])}
       <h1 data-split>Serviços de marketing em <span class="s">Barreiras.</span></h1>
-      <p class="lede" data-rise=".1">Escolha uma frente ou deixe a gente cuidar de tudo. Os serviços conversam entre si, e é aí que o resultado aparece.</p>
+      <p class="lede" data-rise=".1">Escolhe um serviço ou deixa tudo com a gente. Um puxa o outro: quem vê o anúncio confere o Instagram antes de chamar no WhatsApp, e o Google traz quem já está procurando.</p>
       <a class="btn btn--main btn--lg" data-rise=".2" href="${wa('Olá, Agência Viva! Quero entender qual serviço faz sentido pra minha empresa.')}" target="_blank" rel="noopener">${waIcon} Me ajuda a escolher</a>
     </div>
     ${props['social-media']()}
@@ -628,12 +628,12 @@ for (const s of services) {
       <ul class="checklist paper" data-rise>${s.bullets.map(b => `<li>${esc(b)}</li>`).join('')}</ul>
       <h2 data-split>Por que isso importa no <span class="s">Oeste.</span></h2>
       <p data-rise>${esc(s.why)}</p>
-      <p data-rise>Atendemos empresas de ${listPt(cities.map(c => `<a href="${cityPath(c)}">${esc(c.name)}</a>`))}.</p>
+      <p data-rise>A gente atende empresas de ${listPt(cities.map(c => `<a href="${cityPath(c)}">${esc(c.name)}</a>`))}.</p>
     </div>
     <aside class="aside paper" data-rise>
-      <span class="hand" aria-hidden="true">sem compromisso!</span>
+      <span class="hand" aria-hidden="true">manda um oi!</span>
       <h2>Vamos conversar?</h2>
-      <p>Conta rapidinho como está a sua empresa hoje. A gente te diz se ${esc(s.short)} faz sentido agora ou se tem algo que vem antes.</p>
+      <p>Conta rapidinho como está a sua empresa hoje. A gente te diz se esse serviço é o melhor começo ou se tem algo que vem antes.</p>
       <a class="btn btn--main" href="${wa(`Olá, Agência Viva! Quero conversar sobre ${s.short}.`)}" target="_blank" rel="noopener">${waIcon} Chamar no WhatsApp</a>
     </aside>
   </div>
@@ -661,10 +661,10 @@ for (const c of cities) {
   const crumbs = [['Início', '/'], [`Marketing em ${c.name}`, cityPath(c)]]
   const faq = cc.faq && cc.faq.length ? cc.faq.map(f => [f.q, f.a]) : [
     [`Vocês atendem empresas em ${c.name}?`, c.main
-      ? 'Sim, Barreiras é a nossa base. Atendemos presencialmente e pelo WhatsApp, com reuniões na sua empresa quando precisar.'
-      : `Sim. ${c.name} fica ${c.dist}, e atendemos empresas da cidade com gestão remota e visitas presenciais para reuniões e produção de conteúdo.`],
-    [`Quanto custa marketing digital em ${c.name}?`, 'Os planos variam conforme o escopo: social media, tráfego pago, site ou um pacote completo. Montamos uma proposta que cabe na realidade da sua empresa. Chame no WhatsApp para conversar.'],
-    [`Como aparecer no Google Maps em ${c.name}?`, `Com um Perfil da Empresa no Google completo e otimizado para ${c.name}: categoria certa, fotos reais, avaliações de clientes, posts frequentes e dados consistentes em todos os canais. É o nosso serviço de SEO Local.`],
+      ? 'Sim, Barreiras é a nossa base. Dá pra conversar pelo WhatsApp ou marcar uma reunião aqui na cidade.'
+      : `Sim. ${c.name} fica ${c.dist}. O trabalho do dia a dia é feito a distância, pelo WhatsApp, e visita pra reunião ou gravação a gente combina com você quando faz sentido.`],
+    [`Quanto custa marketing digital em ${c.name}?`, 'Os planos variam conforme o escopo: social media, tráfego pago, site ou um pacote completo. A gente monta uma proposta do tamanho da sua empresa. Chama no WhatsApp pra conversar.'],
+    [`Como aparecer no Google Maps em ${c.name}?`, `Com um Perfil da Empresa no Google completo e otimizado para ${c.name}: categoria certa, fotos reais, avaliações de clientes, posts frequentes e dados consistentes em todos os canais. É o que a gente faz no serviço de SEO local.`],
   ]
   const others = cities.filter(o => o !== c)
   const children = landings.filter(l => l.city === c.slug)
@@ -698,15 +698,15 @@ for (const c of cities) {
       <h2 data-split>Marketing pensado pra <span class="s">${esc(c.name)}.</span></h2>
       <p data-rise>${esc(c.angle)}</p>
       ${(cc.local || []).map(t => `<p data-rise>${esc(t)}</p>`).join('')}
-      <p data-rise>A Agência Viva cuida das três frentes que mais trazem cliente pra empresa local: <a href="${svcPath(services[3])}">aparecer no Google Maps</a>, ter um <a href="${svcPath(services[1])}">Instagram profissional</a> e rodar <a href="${svcPath(services[0])}">anúncios que chamam no WhatsApp</a>. Quando faz sentido, completamos com <a href="${svcPath(services[2])}">site próprio</a>, <a href="${svcPath(services[4])}">identidade visual</a> e <a href="${svcPath(services[5])}">produção de vídeo</a>.${c.main ? ' Quer entender o trabalho completo? Veja a nossa <a href="/">agência de marketing em Barreiras</a>.' : ''}</p>
+      <p data-rise>A Agência Viva cuida das três frentes que mais trazem cliente pra empresa local: <a href="${svcPath(services[3])}">aparecer no Google Maps</a>, ter um <a href="${svcPath(services[1])}">Instagram profissional</a> e rodar <a href="${svcPath(services[0])}">anúncios que chamam no WhatsApp</a>. Quando faz sentido, a gente completa com <a href="${svcPath(services[2])}">site próprio</a>, <a href="${svcPath(services[4])}">identidade visual</a> e <a href="${svcPath(services[5])}">produção de vídeo</a>.${c.main ? ' Quer entender o trabalho completo? Veja a nossa <a href="/">agência de marketing em Barreiras</a>.' : ''}</p>
       ${children.length ? `<p data-rise>Em ${esc(c.name)}, a gente tem páginas com mais detalhes: ${listPt(children.map(l => `<a href="${landingPath(l)}">${esc(l.nav || l.h1)}</a>`))}.</p>` : ''}
       <h2 data-split>Quem a gente atende <span class="s">aqui.</span></h2>
       <ul class="tags" data-rise>${c.niches.map(n => `<li>${esc(n)}</li>`).join('')}</ul>
     </div>
     <aside class="aside paper" data-rise>
-      <span class="hand" aria-hidden="true">${c.main ? 'pertinho de você' : 'a gente vai até aí'}</span>
+      <span class="hand" aria-hidden="true">${c.main ? 'pertinho de você' : 'direto de Barreiras'}</span>
       <h2>Bora conversar?</h2>
-      <p>Conta o que a sua empresa faz em ${esc(c.name)}. A gente olha seu Google, seu Instagram e seus concorrentes e te mostra por onde começar.</p>
+      <p>Conta o que a sua empresa faz em ${esc(c.name)}. A gente sugere o primeiro passo.</p>
       <a class="btn btn--main" href="${wa(`Olá! Tenho uma empresa em ${c.name} e quero conversar.`)}" target="_blank" rel="noopener">${waIcon} Chamar no WhatsApp</a>
     </aside>
   </div>
@@ -720,7 +720,7 @@ for (const c of cities) {
 ${faqBlock(`Marketing em <span class="s">${esc(c.name)}.</span>`, faq)}
 <section class="sec" style="padding-top:0" aria-labelledby="h-outras">
   <div class="wrap">
-    <h2 id="h-outras" class="h3" data-split>Também atendemos:</h2>
+    <h2 id="h-outras" class="h3" data-split>A gente também atende:</h2>
     <div class="chips" data-rise>${others.map(o => `<a href="${cityPath(o)}">${esc(o.name)}</a>`).join('')}${landings.filter(l => !l.service).map(l => `<a href="${landingPath(l)}">${esc(l.nav || l.h1)}</a>`).join('')}</div>
   </div>
 </section>
@@ -765,9 +765,9 @@ for (const l of landings) {
       <p data-rise>${svc ? `Veja também o serviço completo de <a href="${svcPath(svc)}">${esc(svc.name)} em Barreiras</a>` : 'Veja também os <a href="/servicos/">serviços da Viva</a>'}${city ? ` e a página de <a href="${cityPath(city)}">marketing em ${esc(city.name)}</a>` : ''}.</p>
     </div>
     <aside class="aside paper" data-rise>
-      <span class="hand" aria-hidden="true">sem compromisso</span>
+      <span class="hand" aria-hidden="true">manda um oi</span>
       <h2>Vamos conversar?</h2>
-      <p>Conta rapidinho o que a sua empresa faz${city ? ` em ${esc(city.name)}` : ''}. A gente te mostra por onde começar.</p>
+      <p>Conta rapidinho o que a sua empresa faz${city ? ` em ${esc(city.name)}` : ''}. A gente sugere o primeiro passo.</p>
       <a class="btn btn--main" href="${wa(`Olá! Vi a página "${l.nav || l.h1}" e quero conversar.`)}" target="_blank" rel="noopener">${waIcon} Chamar no WhatsApp</a>
     </aside>
   </div>
@@ -806,17 +806,17 @@ page({
     <div class="prose">
       <h2 data-split>Quem <span class="s">somos.</span></h2>
       <p data-rise>A Viva está no mercado desde ${foundedYear} (CNPJ ${esc(site.cnpj)}) e nasceu da vivência de quem cria conteúdo no Oeste da Bahia e reúne uma comunidade de centenas de milhares de seguidores. A gente sabe, na prática, o que prende a atenção das pessoas daqui, e o que faz elas comprarem.</p>
-      <p data-rise>Pra transformar atenção em venda, juntamos essa força comercial e de influência a uma operação técnica de marketing: gestão de tráfego, sites, SEO local e acompanhamento com metas e relatório.</p>
+      <p data-rise>Pra transformar atenção em venda, a gente juntou essa força comercial e de influência a uma operação técnica de marketing: gestão de tráfego, sites, SEO local e acompanhamento com metas e relatório.</p>
       <h2 data-split>No que a gente <span class="s">acredita.</span></h2>
       <ul class="checklist paper" data-rise>
         <li>Marketing bom é o que aparece no caixa, não só nas curtidas.</li>
-        <li>Empresa do interior merece estratégia de capital.</li>
-        <li>Transparência: você sabe o que foi feito e quanto rendeu.</li>
-        <li>Atendimento de gente pra gente, direto e rápido.</li>
+        <li>Marketing do interior tem que falar do jeito daqui.</li>
+        <li>Transparência: você sabe o que foi feito e quanto custou cada contato.</li>
+        <li>Atendimento de gente pra gente, com conversa direta.</li>
       </ul>
     </div>
     <aside class="aside paper" data-rise>
-      <span class="hand" aria-hidden="true">passa aqui!</span>
+      <span class="hand" aria-hidden="true">daqui pro Oeste todo</span>
       <h2>Base em Barreiras</h2>
       <p>${esc(addrLine)}<br>${esc(site.hoursDisplay)}</p>
       <a class="btn btn--main" href="${wa()}" target="_blank" rel="noopener">${waIcon} Falar com a gente</a>
