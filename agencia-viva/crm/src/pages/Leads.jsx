@@ -21,9 +21,13 @@ export default function Leads({ params }) {
     (!f.busca || `${l.nome} ${l.empresa || ''} ${l.telefone || ''} ${l.instagram || ''}`.toLowerCase().includes(f.busca.toLowerCase()))), [leads, f])
 
   const exportar = () => {
-    const cols = ['nome', 'empresa', 'telefone', 'email', 'instagram', 'cidade', 'segmento', 'origem', 'valor_estimado', 'criado_em']
-    const csv = [['etapa', ...cols].join(';'), ...lista.map(l => [etapas.find(e => e.id === l.etapa_id)?.nome, ...cols.map(c => l[c] ?? '')].map(v => `"${String(v).replace(/"/g, '""')}"`).join(';'))].join('\n')
-    const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob(['﻿' + csv], { type: 'text/csv' })); a.download = `leads-viva-${hojeISO()}.csv`; a.click()
+    const cols = ['nome', 'empresa', 'telefone', 'email', 'instagram', 'cidade', 'segmento', 'origem', 'valor_estimado']
+    // valor que começa com = + - @ vira fórmula no Excel: o apóstrofo força texto (lead do site é texto de qualquer pessoa)
+    const cel = v => { let t = String(v ?? ''); if (/^[=+\-@\t\r]/.test(t)) t = "'" + t; return `"${t.replace(/"/g, '""')}"` }
+    const linhas = lista.map(l => [etapas.find(e => e.id === l.etapa_id)?.nome, ...cols.map(c => c === 'origem' ? ORIGENS[l.origem] : c === 'telefone' ? String(l.telefone ?? '').replace(/^\s*\+/, '') : l[c]), dataBR(l.criado_em)].map(cel).join(';'))
+    const csv = [['etapa', ...cols, 'criado_em'].join(';'), ...linhas].join('\r\n')
+    const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob(['\ufeff' + csv], { type: 'text/csv;charset=utf-8' })); a.download = `leads-viva-${hojeISO()}.csv`; a.click()
+    setTimeout(() => URL.revokeObjectURL(a.href), 1000)
   }
 
   if (!leads) return <Spinner />

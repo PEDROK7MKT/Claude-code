@@ -18,11 +18,18 @@ export async function q(promise) {
   if (error) throw new Error(traduz(error.message))
   return data
 }
-function traduz(m) {
+export function traduz(m = '') {
   if (/Invalid login credentials/i.test(m)) return 'E-mail ou senha incorretos.'
   if (/Email not confirmed/i.test(m)) return 'Confirme seu e-mail antes de entrar (veja sua caixa de entrada).'
   if (/User already registered/i.test(m)) return 'Esse e-mail já tem conta. Tente entrar.'
-  if (/Password should be/i.test(m)) return 'A senha precisa ter pelo menos 6 caracteres.'
-  if (/row-level security/i.test(m)) return 'Você não tem permissão para isso.'
+  if (/different from the old password/i.test(m)) return 'A nova senha precisa ser diferente da atual.'
+  if (/Password should be at least/i.test(m)) return 'A senha precisa ter pelo menos 6 caracteres.'
+  if (/rate limit|too many requests/i.test(m)) return 'Muitas tentativas seguidas. Espere alguns minutos e tente de novo.'
+  if (/row-level security|permission denied/i.test(m)) return 'Você não tem permissão para isso.'
+  if (/multiple \(or no\) rows|PGRST116/i.test(m)) return 'Registro não encontrado. Pode ter sido apagado.'
+  if (/null value in column "nome"/i.test(m)) return 'Preencha o nome.'
+  if (/dia_vencimento/i.test(m)) return 'O dia de vencimento vai de 1 a 31.'
+  if (/violates check constraint/i.test(m)) return 'Algum campo está com um valor fora do permitido.'
+  if (/Failed to fetch|NetworkError|Load failed/i.test(m)) return 'Sem conexão com o servidor. Confira a internet e tente de novo.'
   return m
 }

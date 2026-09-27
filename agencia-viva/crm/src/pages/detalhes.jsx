@@ -6,7 +6,9 @@ import { useApp, useRun, Drawer, Modal, Field, Input, Text, Select, Chips, Equip
 const vazioLead = { nome: '', empresa: '', telefone: '', email: '', instagram: '', cidade: 'Barreiras', segmento: '', origem: 'whatsapp', servicos: [], valor_estimado: null, etapa_id: 1, responsavel_id: null, proximo_contato: null, observacoes: '', motivo_perda: '' }
 const limpa = o => { const r = {}; for (const [k, v] of Object.entries(o)) r[k] = v === '' ? null : v; return r }
 const CAMPOS_LEAD = Object.keys(vazioLead)
-const CAMPOS_CLIENTE = ['nome', 'empresa', 'documento', 'telefone', 'email', 'instagram', 'cidade', 'segmento', 'servicos', 'valor_mensal', 'dia_vencimento', 'inicio_contrato', 'status', 'responsavel_id', 'observacoes']
+const CAMPOS_CLIENTE = ['nome', 'empresa', 'documento', 'telefone', 'email', 'instagram', 'cidade', 'segmento', 'servicos', 'inicio_contrato', 'status', 'responsavel_id', 'observacoes']
+// valor e vencimento ficam em clientes_financeiro, que só o admin lê e grava
+const CAMPOS_FIN = ['valor_mensal', 'dia_vencimento']
 const pick = (o, ks) => Object.fromEntries(ks.map(k => [k, o[k]]))
 
 // ─── campos do lead ───
@@ -53,51 +55,82 @@ export function LeadDrawer({ id, onClose, onChanged }) {
   const { etapas, admin } = useApp()
   const run = useRun()
   const [f, setF] = useState(null)
+  const [naoAchou, setNaoAchou] = useState(false)
   const [sujo, setSujo] = useState(false)
-  const carregar = useCallback(async () => { const l = await run(() => q(sb.from('leads').select('*').eq('id', id).single())); if (l) { setF(l); setSujo(false) } }, [id, run])
+  const [convertendo, setConvertendo] = useState(false)
+  const [hv, setHv] = useState(0) // muda → histórico recarrega
+  const carregar = useCallback(async () => {
+    const l = await run(() => q(sb.from('leads').select('*').eq('id', id).maybeSingle()))
+    if (l === null) setNaoAchou(true)
+    else if (l) { setF(l); setSujo(false) }
+  }, [id, run])
   useEffect(() => { carregar() }, [carregar])
   const set = k => v => { setF(o => ({ ...o, [k]: v })); setSujo(true) }
+  const fechar = () => { if (!sujo || confirmar('Descartar as alterações que não foram salvas?')) onClose() }
 
+  if (naoAchou) return <Drawer title="Lead" onClose={onClose}><Empty title="Lead não encontrado">Pode ter sido apagado.</Empty></Drawer>
   if (!f) return <Drawer title="Lead" onClose={onClose}><Spinner /></Drawer>
-  const salvar = async () => { if (await run(() => q(sb.from('leads').update(limpa(pick(f, CAMPOS_LEAD))).eq('id', id)), 'Salvo!') !== undefined) { setSujo(false); onChanged && onChanged() } }
+  const salvar = async e => {
+    e && e.preventDefault()
+    const ok = await run(() => q(sb.from('leads').update(limpa(pick(f, CAMPOS_LEAD))).eq('id', id)), 'Salvo!') !== undefined
+    if (ok) { setSujo(false); setHv(v => v + 1); onChanged && onChanged() }
+    return ok
+  }
+  // etapa salva na hora, sem marcar o formulário como alterado; volta atrás se falhar
+  const mudarEtapa = async e => {
+    if (e.id === f.etapa_id) return
+    const antes = f.etapa_id
+    setF(o => ({ ...o, etapa_id: e.id }))
+    if (await run(() => q(sb.from('leads').update({ etapa_id: e.id }).eq('id', id))) === undefined) setF(o => ({ ...o, etapa_id: antes }))
+    else { setHv(v => v + 1); onChanged && onChanged() }
+  }
+  // uma transação só no banco (converter_lead): sem cliente duplicado se algo falhar no meio
   const converter = async () => {
-    if (!confirmar(`Transformar ${f.nome} em cliente?`)) return
-    const c = await run(async () => {
-      const cli = await q(sb.from('clientes').insert(limpa({ nome: f.nome, empresa: f.empresa, telefone: f.telefone, email: f.email, instagram: f.instagram, cidade: f.cidade, segmento: f.segmento, servicos: f.servicos, valor_mensal: f.valor_estimado, responsavel_id: f.responsavel_id, inicio_contrato: hojeISO(), observacoes: f.observacoes })).select().single())
-      const ganho = etapas.find(e => e.tipo === 'ganho')
-      await q(sb.from('leads').update({ cliente_id: cli.id, etapa_id: ganho ? ganho.id : f.etapa_id }).eq('id', id))
-      await q(sb.from('atividades').insert({ lead_id: id, cliente_id: cli.id, tipo: 'sistema', texto: 'Lead convertido em cliente 🎉' }))
-      return cli
-    }, 'Virou cliente!')
-    if (c) { onChanged && onChanged(); location.hash = `/clientes?id=${c.id}` }
+    if (convertendo || !confirmar(`Transformar ${f.nome} em cliente?`)) return
+    setConvertendo(true)
+    try {
+      if (sujo && !(await salvar())) return
+      const cid = await run(() => q(sb.rpc('converter_lead', { p_lead: id })), 'Virou cliente!')
+      if (cid) { onChanged && onChanged(); location.hash = `/clientes?id=${cid}` } else carregar()
+    } finally { setConvertendo(false) }
   }
   const apagar = async () => { if (confirmar('Apagar este lead e todo o histórico dele?') && await run(() => q(sb.from('leads').delete().eq('id', id)), 'Lead apagado.') !== undefined) { onChanged && onChanged(); onClose() } }
   const wa = linkWhats(f.telefone)
   return (
-    <Drawer title={f.nome} onClose={onClose} actions={wa && <a className="btn btn--wa btn--sm" href={wa} target="_blank" rel="noreferrer">WhatsApp</a>}>
-      <div className="chips">{etapas.map(e => <button key={e.id} type="button" className={`chip${f.etapa_id === e.id ? ' on' : ''}`} onClick={async () => { set('etapa_id')(e.id); await run(() => q(sb.from('leads').update({ etapa_id: e.id }).eq('id', id))); onChanged && onChanged() }}>{e.nome}</button>)}</div>
+    <Drawer title={f.nome} onClose={fechar} actions={wa && <a className="btn btn--wa btn--sm" href={wa} target="_blank" rel="noreferrer">WhatsApp</a>}>
+      <div className="chips">{etapas.map(e => <button key={e.id} type="button" className={`chip${f.etapa_id === e.id ? ' on' : ''}`} onClick={() => mudarEtapa(e)}>{e.nome}</button>)}</div>
       {f.cliente_id && <div className="ok">Já é cliente. <a href={`#/clientes?id=${f.cliente_id}`}>Abrir cliente →</a></div>}
-      <LeadCampos f={f} set={set} />
-      <div className="actions">
-        {admin && <button className="btn btn--danger btn--sm" onClick={apagar}>Apagar</button>}
-        {!f.cliente_id && <button className="btn btn--ghost" onClick={converter}>Converter em cliente</button>}
-        <button className="btn" onClick={salvar} disabled={!sujo}>Salvar alterações</button>
-      </div>
-      <TarefasDe filtro={{ lead_id: id }} />
-      <Historico filtro={{ lead_id: id }} />
+      <form onSubmit={salvar} style={{ display: 'grid', gap: 14 }}>
+        <LeadCampos f={f} set={set} />
+        <div className="actions">
+          {admin && <button type="button" className="btn btn--danger btn--sm" onClick={apagar}>Apagar</button>}
+          {!f.cliente_id && <button type="button" className="btn btn--ghost" onClick={converter} disabled={convertendo}>{convertendo ? 'Convertendo…' : 'Converter em cliente'}</button>}
+          <button className="btn" disabled={!sujo}>Salvar alterações</button>
+        </div>
+      </form>
+      <TarefasDe filtro={{ lead_id: id }} onChanged={onChanged} />
+      <Historico key={hv} filtro={{ lead_id: id }} />
     </Drawer>
   )
 }
 
 // ─── cliente ───
 export function NovoCliente({ onClose, onSaved }) {
+  const { admin } = useApp()
   const run = useRun()
   const [f, setF] = useState({ nome: '', status: 'ativo', servicos: [], cidade: 'Barreiras', inicio_contrato: hojeISO() })
   const set = k => v => setF(o => ({ ...o, [k]: v }))
-  const salvar = async e => { e.preventDefault(); const r = await run(() => q(sb.from('clientes').insert(limpa(f)).select().single()), 'Cliente criado!'); if (r) { onSaved && onSaved(r); onClose() } }
+  const salvar = async e => {
+    e.preventDefault()
+    const c = await run(() => q(sb.from('clientes').insert(limpa(pick(f, CAMPOS_CLIENTE))).select().single()), 'Cliente criado!')
+    if (!c) return
+    if (admin && (f.valor_mensal != null || f.dia_vencimento != null)) await run(() => q(sb.from('clientes_financeiro').insert(limpa({ cliente_id: c.id, ...pick(f, CAMPOS_FIN) }))))
+    onSaved && onSaved(c); onClose()
+  }
   return <Modal title="Novo cliente" onClose={onClose}><form onSubmit={salvar} style={{ display: 'grid', gap: 14 }}><ClienteCampos f={f} set={set} /><div className="actions"><button type="button" className="btn btn--ghost" onClick={onClose}>Cancelar</button><button className="btn">Salvar cliente</button></div></form></Modal>
 }
 function ClienteCampos({ f, set }) {
+  const { admin } = useApp()
   return (
     <>
       <div className="grid2">
@@ -109,8 +142,8 @@ function ClienteCampos({ f, set }) {
         <Field label="Instagram"><Input value={f.instagram} onChange={set('instagram')} /></Field>
         <Field label="Cidade"><Input value={f.cidade} onChange={set('cidade')} list="cidades" /></Field>
         <Field label="Segmento"><Input value={f.segmento} onChange={set('segmento')} /></Field>
-        <Field label="Valor mensal"><Input type="number" min="0" step="50" value={f.valor_mensal} onChange={v => set('valor_mensal')(v === '' ? null : +v)} /></Field>
-        <Field label="Dia de vencimento"><Input type="number" min="1" max="31" value={f.dia_vencimento} onChange={v => set('dia_vencimento')(v === '' ? null : +v)} /></Field>
+        {admin && <Field label="Valor mensal"><Input type="number" min="0" step="50" value={f.valor_mensal} onChange={v => set('valor_mensal')(v === '' ? null : +v)} /></Field>}
+        {admin && <Field label="Dia de vencimento"><Input type="number" min="1" max="31" step="1" value={f.dia_vencimento} onChange={v => set('dia_vencimento')(v === '' ? null : +v)} /></Field>}
         <Field label="Início do contrato"><Input type="date" value={f.inicio_contrato} onChange={set('inicio_contrato')} /></Field>
         <Field label="Status"><Select value={f.status} onChange={set('status')} options={STATUS_CLIENTE} /></Field>
         <Field label="Responsável"><EquipeSelect value={f.responsavel_id} onChange={set('responsavel_id')} /></Field>
@@ -126,22 +159,46 @@ export function ClienteDrawer({ id, onClose, onChanged }) {
   const { admin } = useApp()
   const run = useRun()
   const [f, setF] = useState(null)
+  const [naoAchou, setNaoAchou] = useState(false)
   const [sujo, setSujo] = useState(false)
-  const carregar = useCallback(async () => { const c = await run(() => q(sb.from('clientes').select('*').eq('id', id).single())); if (c) { setF(c); setSujo(false) } }, [id, run])
+  const carregar = useCallback(async () => {
+    const r = await run(async () => {
+      const [c, fin] = await Promise.all([
+        q(sb.from('clientes').select('*').eq('id', id).maybeSingle()),
+        admin ? q(sb.from('clientes_financeiro').select('valor_mensal,dia_vencimento').eq('cliente_id', id).maybeSingle()) : null,
+      ])
+      return { c, fin }
+    })
+    if (!r) return
+    if (!r.c) return setNaoAchou(true)
+    setF({ ...r.c, ...(r.fin || {}) }); setSujo(false)
+  }, [id, run, admin])
   useEffect(() => { carregar() }, [carregar])
   const set = k => v => { setF(o => ({ ...o, [k]: v })); setSujo(true) }
+  const fechar = () => { if (!sujo || confirmar('Descartar as alterações que não foram salvas?')) onClose() }
+  if (naoAchou) return <Drawer title="Cliente" onClose={onClose}><Empty title="Cliente não encontrado">Pode ter sido apagado.</Empty></Drawer>
   if (!f) return <Drawer title="Cliente" onClose={onClose}><Spinner /></Drawer>
-  const salvar = async () => { if (await run(() => q(sb.from('clientes').update(limpa(pick(f, CAMPOS_CLIENTE))).eq('id', id)), 'Salvo!') !== undefined) { setSujo(false); onChanged && onChanged() } }
+  const salvar = async e => {
+    e.preventDefault()
+    const ok = await run(async () => {
+      await q(sb.from('clientes').update(limpa(pick(f, CAMPOS_CLIENTE))).eq('id', id))
+      if (admin) await q(sb.from('clientes_financeiro').upsert(limpa({ cliente_id: id, ...pick(f, CAMPOS_FIN), atualizado_em: new Date().toISOString() })))
+      return true
+    }, 'Salvo!')
+    if (ok) { setSujo(false); onChanged && onChanged() }
+  }
   const apagar = async () => { if (confirmar('Apagar este cliente, as tarefas, o histórico e as cobranças dele?') && await run(() => q(sb.from('clientes').delete().eq('id', id)), 'Cliente apagado.') !== undefined) { onChanged && onChanged(); onClose() } }
   const wa = linkWhats(f.telefone)
   return (
-    <Drawer title={f.empresa || f.nome} onClose={onClose} actions={wa && <a className="btn btn--wa btn--sm" href={wa} target="_blank" rel="noreferrer">WhatsApp</a>}>
-      <ClienteCampos f={f} set={set} />
-      <div className="actions">
-        {admin && <button className="btn btn--danger btn--sm" onClick={apagar}>Apagar</button>}
-        <button className="btn" onClick={salvar} disabled={!sujo}>Salvar alterações</button>
-      </div>
-      <TarefasDe filtro={{ cliente_id: id }} />
+    <Drawer title={f.empresa || f.nome} onClose={fechar} actions={wa && <a className="btn btn--wa btn--sm" href={wa} target="_blank" rel="noreferrer">WhatsApp</a>}>
+      <form onSubmit={salvar} style={{ display: 'grid', gap: 14 }}>
+        <ClienteCampos f={f} set={set} />
+        <div className="actions">
+          {admin && <button type="button" className="btn btn--danger btn--sm" onClick={apagar}>Apagar</button>}
+          <button className="btn" disabled={!sujo}>Salvar alterações</button>
+        </div>
+      </form>
+      <TarefasDe filtro={{ cliente_id: id }} onChanged={onChanged} />
       {admin && <CobrancasDe cliente={f} />}
       <Historico filtro={{ cliente_id: id }} />
     </Drawer>
@@ -190,7 +247,7 @@ function Historico({ filtro }) {
 }
 
 // ─── tarefas ligadas a um lead/cliente ───
-function TarefasDe({ filtro }) {
+function TarefasDe({ filtro, onChanged }) {
   const { nomeDe } = useApp()
   const run = useRun()
   const [itens, setItens] = useState(null)
@@ -202,7 +259,8 @@ function TarefasDe({ filtro }) {
     setItens(await run(() => q(r)) || [])
   }, [chave, run]) // eslint-disable-line
   useEffect(() => { carregar() }, [carregar])
-  const alternar = async t => { await run(() => q(sb.from('tarefas').update({ status: t.status === 'feito' ? 'a_fazer' : 'feito' }).eq('id', t.id))); carregar() }
+  const mudou = () => { carregar(); onChanged && onChanged() } // avisa a lista de fora (contagem de tarefas do cliente)
+  const alternar = async t => { await run(() => q(sb.from('tarefas').update({ status: t.status === 'feito' ? 'a_fazer' : 'feito' }).eq('id', t.id))); mudou() }
   return (
     <section>
       <div className="section-title" style={{ marginBottom: 6 }}>Tarefas <button className="btn btn--sm btn--ghost" onClick={() => setAberta({ ...filtro })}>+ Tarefa</button></div>
@@ -218,7 +276,7 @@ function TarefasDe({ filtro }) {
           ))}
         </div>
       )}
-      {aberta && <TarefaModal tarefa={aberta} onClose={() => setAberta(null)} onSaved={carregar} />}
+      {aberta && <TarefaModal tarefa={aberta} onClose={() => setAberta(null)} onSaved={mudou} />}
     </section>
   )
 }
@@ -268,17 +326,20 @@ function CobrancasDe({ cliente }) {
   const [itens, setItens] = useState(null)
   const carregar = useCallback(async () => setItens(await run(() => q(sb.from('cobrancas').select('*').eq('cliente_id', cliente.id).order('competencia', { ascending: false }).limit(24))) || []), [cliente.id, run])
   useEffect(() => { carregar() }, [carregar])
-  const pagar = async c => { await run(() => q(sb.from('cobrancas').update(c.status === 'pago' ? { status: 'pendente', pago_em: null } : { status: 'pago', pago_em: hojeISO() }).eq('id', c.id))); carregar() }
+  const pagar = async c => {
+    if (c.status === 'cancelado') return // cancelada só muda pelo Financeiro, de propósito
+    await run(() => q(sb.from('cobrancas').update(c.status === 'pago' ? { status: 'pendente', pago_em: null } : { status: 'pago', pago_em: hojeISO() }).eq('id', c.id))); carregar()
+  }
   return (
     <section>
       <div className="section-title" style={{ marginBottom: 6 }}>Cobranças</div>
       {!itens ? <Spinner /> : !itens.length ? <p className="muted" style={{ margin: 0 }}>Nenhuma cobrança. Gere as do mês em <a href="#/financeiro">Financeiro</a>.</p> : (
         <div className="list card" style={{ padding: '4px 12px' }}>
           {itens.map(c => (
-            <div key={c.id} className="row" onClick={() => pagar(c)} title="Clique para marcar como pago/pendente">
+            <div key={c.id} className="row" onClick={() => pagar(c)} title={c.status === 'cancelado' ? 'Cancelada' : 'Clique para marcar como pago/pendente'}>
               <div className="grow"><b>{new Date(c.competencia + 'T12:00:00').toLocaleDateString('pt-BR', { month: 'long', year: 'numeric' })}</b><small>vence {dataBR(c.vencimento)}{c.pago_em ? ` · pago em ${dataBR(c.pago_em)}` : ''}</small></div>
               <b>{brl(c.valor)}</b>
-              <span className={`badge ${c.status === 'pago' ? 'green' : c.status === 'pendente' && c.vencimento && c.vencimento < hojeISO() ? 'red' : 'amber'}`}>{c.status === 'pendente' && c.vencimento && c.vencimento < hojeISO() ? 'Atrasado' : STATUS_COBRANCA[c.status]}</span>
+              <span className={`badge ${c.status === 'pago' ? 'green' : c.status === 'cancelado' ? '' : c.status === 'pendente' && c.vencimento && c.vencimento < hojeISO() ? 'red' : 'amber'}`}>{c.status === 'pendente' && c.vencimento && c.vencimento < hojeISO() ? 'Atrasado' : STATUS_COBRANCA[c.status]}</span>
             </div>
           ))}
         </div>

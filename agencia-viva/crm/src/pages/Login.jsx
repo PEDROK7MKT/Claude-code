@@ -4,10 +4,10 @@ import { Field, Input } from '../ui.jsx'
 
 const voltarPara = () => `${location.origin}/crm/`
 
-export default function Login() {
+export default function Login({ erroLink }) {
   const [aba, setAba] = useState('entrar')
   const [f, setF] = useState({ nome: '', email: '', senha: '' })
-  const [msg, setMsg] = useState(null)
+  const [msg, setMsg] = useState(erroLink ? { ok: false, t: erroLink } : null)
   const [busy, setBusy] = useState(false)
   const set = k => v => setF(o => ({ ...o, [k]: v }))
 
@@ -56,7 +56,7 @@ export default function Login() {
   )
 }
 
-export function NovaSenha({ onDone }) {
+export function NovaSenha({ onDone, onCancel }) {
   const [s, setS] = useState('')
   const [msg, setMsg] = useState(null)
   const salvar = async e => {
@@ -72,6 +72,7 @@ export function NovaSenha({ onDone }) {
           <Field label="Nova senha"><Input type="password" value={s} onChange={setS} minLength={6} autoComplete="new-password" required /></Field>
           {msg && <div className="err">{msg}</div>}
           <button className="btn">Salvar senha</button>
+          {onCancel && <button type="button" className="link" onClick={onCancel}>Agora não</button>}
         </form>
       </div>
     </div>

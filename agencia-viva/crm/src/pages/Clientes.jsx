@@ -16,11 +16,16 @@ export default function Clientes({ params }) {
 
   const carregar = useCallback(async () => {
     const r = await run(async () => {
-      const [c, t] = await Promise.all([q(sb.from('clientes').select('*').order('empresa')), q(sb.from('tarefas').select('cliente_id').neq('status', 'feito').not('cliente_id', 'is', null))])
-      return { c, t: t.reduce((a, x) => ({ ...a, [x.cliente_id]: (a[x.cliente_id] || 0) + 1 }), {}) }
+      const [c, t, fin] = await Promise.all([
+        q(sb.from('clientes').select('*').order('empresa')),
+        q(sb.from('tarefas').select('cliente_id').neq('status', 'feito').not('cliente_id', 'is', null)),
+        admin ? q(sb.from('clientes_financeiro').select('cliente_id,valor_mensal')) : [],
+      ])
+      const valor = Object.fromEntries(fin.map(x => [x.cliente_id, x.valor_mensal]))
+      return { c: c.map(x => ({ ...x, valor_mensal: valor[x.id] })), t: t.reduce((a, x) => ({ ...a, [x.cliente_id]: (a[x.cliente_id] || 0) + 1 }), {}) }
     })
     if (r) { setClientes(r.c); setAbertas(r.t) }
-  }, [run])
+  }, [run, admin])
   useEffect(() => { carregar() }, [carregar])
   const lista = useMemo(() => (clientes || []).filter(c => (!f.status || c.status === f.status) && (!f.resp || c.responsavel_id === f.resp) &&
     (!f.busca || `${c.nome} ${c.empresa || ''} ${c.cidade || ''} ${c.segmento || ''}`.toLowerCase().includes(f.busca.toLowerCase()))), [clientes, f])

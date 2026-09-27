@@ -12,12 +12,13 @@ export default function Painel() {
 
   const carregar = async () => {
     const r = await run(async () => {
-      const [leads, clientes, tarefas] = await Promise.all([
-        q(sb.from('leads').select('id,nome,empresa,etapa_id,valor_estimado,origem,proximo_contato,responsavel_id,criado_em,atualizado_em')),
-        q(sb.from('clientes').select('id,status,valor_mensal')),
+      const [leads, clientes, tarefas, fin] = await Promise.all([
+        q(sb.from('leads').select('id,nome,empresa,etapa_id,etapa_em,valor_estimado,origem,proximo_contato,responsavel_id,criado_em')),
+        q(sb.from('clientes').select('id,status')),
         q(sb.from('tarefas').select('*').neq('status', 'feito').order('prazo', { nullsFirst: false })),
+        admin ? q(sb.from('clientes_financeiro').select('cliente_id,valor_mensal')) : [],
       ])
-      return { leads, clientes, tarefas }
+      return { leads, clientes, tarefas, valor: Object.fromEntries(fin.map(x => [x.cliente_id, +x.valor_mensal || 0])) }
     })
     if (r) setD(r)
   }
@@ -26,19 +27,22 @@ export default function Painel() {
 
   const tipo = id => etapas.find(e => e.id === id)?.tipo
   const abertos = d.leads.filter(l => tipo(l.etapa_id) === 'aberto')
-  const inicioMes = hojeISO().slice(0, 8) + '01'
-  const ganhosMes = d.leads.filter(l => tipo(l.etapa_id) === 'ganho' && l.atualizado_em >= inicioMes).length
-  const perdidosMes = d.leads.filter(l => tipo(l.etapa_id) === 'perdido' && l.atualizado_em >= inicioMes).length
-  const novosMes = d.leads.filter(l => l.criado_em >= inicioMes).length
+  // início do mês no fuso de quem está usando (compara instantes, não texto de data)
+  const ini = new Date(); ini.setHours(0, 0, 0, 0); ini.setDate(1)
+  const noMes = t => t && new Date(t) >= ini
+  // fechado/perdido no mês = entrou nessa etapa neste mês (etapa_em), não "foi editado neste mês"
+  const ganhosMes = d.leads.filter(l => tipo(l.etapa_id) === 'ganho' && noMes(l.etapa_em)).length
+  const perdidosMes = d.leads.filter(l => tipo(l.etapa_id) === 'perdido' && noMes(l.etapa_em)).length
+  const novosMes = d.leads.filter(l => noMes(l.criado_em)).length
   const ativos = d.clientes.filter(c => c.status === 'ativo')
-  const mrr = ativos.reduce((s, c) => s + (+c.valor_mensal || 0), 0)
+  const mrr = ativos.reduce((s, c) => s + (d.valor[c.id] || 0), 0)
   const minhas = d.tarefas.filter(t => t.responsavel_id === sessao.user.id)
   const atrasadas = d.tarefas.filter(atrasada)
   const hoje = hojeISO()
   const contatos = abertos.filter(l => l.proximo_contato && l.proximo_contato <= hoje).sort((a, b) => a.proximo_contato.localeCompare(b.proximo_contato))
   const porEtapa = etapas.filter(e => e.tipo === 'aberto').map(e => ({ e, n: abertos.filter(l => l.etapa_id === e.id).length }))
   const maxEt = Math.max(1, ...porEtapa.map(x => x.n))
-  const porOrigem = Object.entries(d.leads.filter(l => l.criado_em >= inicioMes).reduce((a, l) => ({ ...a, [l.origem]: (a[l.origem] || 0) + 1 }), {})).sort((a, b) => b[1] - a[1])
+  const porOrigem = Object.entries(d.leads.filter(l => noMes(l.criado_em)).reduce((a, l) => ({ ...a, [l.origem]: (a[l.origem] || 0) + 1 }), {})).sort((a, b) => b[1] - a[1])
 
   return (
     <>

@@ -21,7 +21,7 @@ node build.mjs                          # gera ./site
 python3 -m http.server 8080 -d site     # preview em http://localhost:8080
 ```
 
-## Páginas geradas (19)
+## Páginas geradas (23)
 
 - `/`: home ("agência de marketing em Barreiras")
 - `/servicos/` e 6 páginas de serviço (tráfego pago, social media, sites,
@@ -29,7 +29,9 @@ python3 -m http.server 8080 -d site     # preview em http://localhost:8080
 - 8 landing pages de cidade: `/agencia-de-marketing-em-<cidade>/`
   (Barreiras, LEM, São Desidério, Formosa do Rio Preto, Correntina,
   Santa Maria da Vitória, Bom Jesus da Lapa, Riachão das Neves)
-- `/sobre/`, `/contato/`, `404.html`
+- 3 páginas locais: `/agencia-de-marketing-oeste-da-bahia/` (hub do Oeste),
+  `/gestao-de-trafego-pago-em-luis-eduardo-magalhaes/` e `/social-media-em-luis-eduardo-magalhaes/`
+- `/sobre/`, `/contato/` (com formulário), `/privacidade/`, `404.html`
 - `sitemap.xml`, `robots.txt`, `llms.txt` (para buscadores de IA), `site.webmanifest`
 
 ## SEO já incluído
@@ -89,13 +91,32 @@ Funil (kanban), leads, clientes, tarefas da operação, histórico de atividades
 cobranças (só admin) e gestão de equipe.
 
 - **Acesso:** qualquer pessoa pode criar conta em `/crm/`, mas só entra depois
-  que um admin aprovar em **Equipe**. O e-mail do dono entra como admin automaticamente.
-- **Segurança:** regras RLS no banco. Equipe não vê cobranças, não aprova
-  pessoas e não apaga leads/clientes. A chave no front é a publicável (segura no navegador).
-- **Leads do site:** a função `lead_do_site` (RPC pública, com validação) cria
-  lead com origem "site" — pronta para ligar um formulário.
+  que um admin aprovar em **Equipe**. Ninguém vira admin sozinho no cadastro.
+- **Primeiro admin (uma vez só):** o dono cria a conta em `/crm/`, confirma o
+  e-mail e entra com a própria senha (vai cair em "Aguardando aprovação"). Aí,
+  no SQL Editor do Supabase:
+  ```sql
+  update public.perfis p set papel = 'admin', ativo = true
+  from auth.users u
+  where u.id = p.id and lower(u.email) = 'EMAIL-DO-DONO' and u.email_confirmed_at is not null;
+  ```
+  Se o login com a sua senha falhar, alguém pode ter cadastrado seu e-mail antes:
+  apague esse usuário em Authentication → Users e cadastre de novo.
+- **Segurança (banco):** regras RLS em todas as tabelas. Equipe não vê cobranças
+  nem o valor mensal dos clientes (ficam em `clientes_financeiro`, só admin),
+  não aprova pessoas e não apaga leads/clientes. Sempre sobra pelo menos um admin
+  ativo. Converter lead em cliente é uma transação só (`converter_lead`).
+  Migrações em `crm/supabase/migrations/`.
+- **Leads do site:** o formulário "Quero um orçamento" chama `lead_do_site` (RPC
+  pública), que valida os campos, aceita só cidades e serviços conhecidos e limita
+  envios (geral, por IP e por telefone).
 - **Build:** `cd crm && npm install && npm run build`, depois `node build.mjs`
-  (copia para `site/crm`). Na Vercel o `vercel.json` já faz tudo.
-- **No painel do Supabase (uma vez):** Authentication → URL Configuration →
-  *Site URL* = `https://agenciaviva.com.br/crm/` e adicionar o mesmo em
-  *Redirect URLs* (links de confirmação e de nova senha).
+  (copia para `site/crm`). Na Vercel o `vercel.json` já faz tudo, inclusive os
+  cabeçalhos de segurança (CSP) do `/crm/`.
+- **No painel do Supabase (uma vez):**
+  - Authentication → URL Configuration: *Site URL* = `https://agenciaviva.com.br/crm/`
+    e o mesmo em *Redirect URLs* (links de confirmação e de nova senha).
+  - Authentication → Sign In / Providers → Email: manter *Confirm email* e
+    *Secure email change* ligados.
+  - Opcional, mais seguro: desligar *Allow new users to sign up* e convidar a
+    equipe por Authentication → Users → Invite.

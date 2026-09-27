@@ -1,7 +1,7 @@
-import React, { useEffect, useState, useCallback } from 'react'
+import React, { useEffect, useState, useCallback, useRef } from 'react'
 import { sb, q, brl, dataBR, hojeISO } from '../lib.js'
 import { STATUS_COBRANCA } from '../config.js'
-import { useRun, Spinner, Empty, Select } from '../ui.jsx'
+import { useRun, Spinner, Empty, Select, confirmar } from '../ui.jsx'
 
 const mesISO = d => d.slice(0, 7) + '-01'
 const nomeMes = m => new Date(m + 'T12:00:00').toLocaleDateString('pt-BR', { month: 'long', year: 'numeric' })
@@ -10,34 +10,46 @@ export default function Financeiro() {
   const run = useRun()
   const [mes, setMes] = useState(mesISO(hojeISO()))
   const [dados, setDados] = useState(null)
+  const pedido = useRef(0) // só a resposta do último mês pedido entra na tela
 
   const carregar = useCallback(async () => {
+    const n = ++pedido.current
     const r = await run(async () => {
-      const [cob, cli] = await Promise.all([
+      const [cob, cli, fin] = await Promise.all([
         q(sb.from('cobrancas').select('*').eq('competencia', mes)),
-        q(sb.from('clientes').select('id,nome,empresa,valor_mensal,dia_vencimento,status')),
+        q(sb.from('clientes').select('id,nome,empresa,status,inicio_contrato')),
+        q(sb.from('clientes_financeiro').select('cliente_id,valor_mensal,dia_vencimento')),
       ])
-      return { cob, cli }
+      const f = Object.fromEntries(fin.map(x => [x.cliente_id, x]))
+      return { mes, cob, cli: cli.map(c => ({ ...c, valor_mensal: f[c.id]?.valor_mensal, dia_vencimento: f[c.id]?.dia_vencimento })) }
     })
-    if (r) setDados(r)
+    if (r && n === pedido.current) setDados(r)
   }, [mes, run])
   useEffect(() => { carregar() }, [carregar])
 
   const gerar = async () => {
     const [y, m] = mes.split('-').map(Number)
     const ultimo = new Date(y, m, 0).getDate()
-    const linhas = dados.cli.filter(c => c.status === 'ativo' && +c.valor_mensal > 0).map(c => ({
-      cliente_id: c.id, competencia: mes, valor: c.valor_mensal,
-      vencimento: `${mes.slice(0, 8)}${String(Math.min(c.dia_vencimento || 10, ultimo)).padStart(2, '0')}`,
-    }))
-    if (!linhas.length) return run(async () => { throw new Error('Nenhum cliente ativo com valor mensal preenchido.') })
+    const fim = `${mes.slice(0, 8)}${String(ultimo).padStart(2, '0')}`
+    // só quem já tinha contrato naquele mês
+    const linhas = dados.cli.filter(c => c.status === 'ativo' && +c.valor_mensal > 0 && (!c.inicio_contrato || c.inicio_contrato <= fim)).map(c => {
+      const venc = `${mes.slice(0, 8)}${String(Math.min(c.dia_vencimento || 10, ultimo)).padStart(2, '0')}`
+      // no 1º mês, não vence antes de o contrato começar
+      return { cliente_id: c.id, competencia: mes, valor: c.valor_mensal, vencimento: c.inicio_contrato && c.inicio_contrato > venc ? c.inicio_contrato : venc }
+    })
+    if (!linhas.length) return run(async () => { throw new Error('Nenhum cliente ativo com valor mensal e contrato vigente nesse mês.') })
+    if (mes < mesISO(hojeISO()) && !confirmar(`Gerar cobranças de ${nomeMes(mes)}, que já passou?`)) return
     await run(() => q(sb.from('cobrancas').upsert(linhas, { onConflict: 'cliente_id,competencia', ignoreDuplicates: true })), 'Cobranças do mês geradas!')
     carregar()
   }
-  const alternar = async c => { await run(() => q(sb.from('cobrancas').update(c.status === 'pago' ? { status: 'pendente', pago_em: null } : { status: 'pago', pago_em: hojeISO() }).eq('id', c.id))); carregar() }
+  const alternar = async c => {
+    if (c.status === 'cancelado') return // cancelada só muda pelo seletor de status
+    await run(() => q(sb.from('cobrancas').update(c.status === 'pago' ? { status: 'pendente', pago_em: null } : { status: 'pago', pago_em: hojeISO() }).eq('id', c.id))); carregar()
+  }
   const mudar = async (c, status) => { await run(() => q(sb.from('cobrancas').update({ status, pago_em: status === 'pago' ? hojeISO() : null }).eq('id', c.id))); carregar() }
 
   if (!dados) return <Spinner />
+  const pronto = dados.mes === mes // trocou de mês e ainda está carregando: não mostra números do mês anterior
   const hoje = hojeISO()
   const nome = id => { const c = dados.cli.find(x => x.id === id); return c ? c.empresa || c.nome : '—' }
   const validas = dados.cob.filter(c => c.status !== 'cancelado')
@@ -54,6 +66,7 @@ export default function Financeiro() {
         <div><h1><span className="s">Financeiro</span></h1><p>Mensalidades dos clientes. Só administradores veem esta área.</p></div>
         <div style={{ display: 'flex', gap: 8 }}><div style={{ width: 200 }}><Select value={mes} onChange={setMes} options={meses.map(m => ({ v: m, l: nomeMes(m) }))} /></div><button className="btn" onClick={gerar}>Gerar cobranças do mês</button></div>
       </div>
+      {!pronto ? <Spinner /> : <>
       <div className="kpis">
         <div className="kpi dark"><span>Receita mensal (ativos)</span><b>{brl(mrr)}</b><small>{ativos.length} clientes · ticket médio {brl(ativos.length ? mrr / ativos.length : 0)}</small></div>
         <div className="kpi"><span>Previsto em {nomeMes(mes).split(' ')[0]}</span><b>{brl(soma(validas))}</b><small>{validas.length} cobranças</small></div>
@@ -63,10 +76,10 @@ export default function Financeiro() {
       {!dados.cob.length ? <div className="card"><Empty title={`Sem cobranças em ${nomeMes(mes)}`}>Clique em "Gerar cobranças do mês" para criar as mensalidades dos clientes ativos (usa o valor mensal e o dia de vencimento de cada um).</Empty></div> : (
         <div className="tablewrap"><table className="t">
           <thead><tr><th>Cliente</th><th>Valor</th><th>Vencimento</th><th>Status</th><th>Pago em</th><th></th></tr></thead>
-          <tbody>{dados.cob.sort((a, b) => (a.vencimento || '').localeCompare(b.vencimento || '')).map(c => {
+          <tbody>{[...dados.cob].sort((a, b) => (a.vencimento || '').localeCompare(b.vencimento || '')).map(c => {
             const late = c.status !== 'pago' && c.status !== 'cancelado' && c.vencimento && c.vencimento < hoje
             return (
-              <tr key={c.id} onClick={() => alternar(c)} title="Clique para marcar como pago / pendente">
+              <tr key={c.id} onClick={() => alternar(c)} title={c.status === 'cancelado' ? 'Cancelada: mude pelo status' : 'Clique para marcar como pago / pendente'}>
                 <td><b>{nome(c.cliente_id)}</b></td>
                 <td>{brl(c.valor)}</td>
                 <td>{dataBR(c.vencimento)}</td>
@@ -77,6 +90,7 @@ export default function Financeiro() {
           })}</tbody>
         </table></div>
       )}
+      </>}
     </>
   )
 }

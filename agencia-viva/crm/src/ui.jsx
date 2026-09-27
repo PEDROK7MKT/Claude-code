@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useEffect, useState, useCallback } from 'react'
+import React, { createContext, useContext, useEffect, useState, useCallback, useRef } from 'react'
 import { iniciais } from './lib.js'
 
 // ─── contexto global: sessão, perfil, equipe, etapas, avisos ───
@@ -86,8 +86,18 @@ export function Modal({ title, onClose, children }) {
     </>
   )
 }
+// Esc fecha só a janela de cima (modal aberto dentro de uma gaveta não fecha as duas)
+const pilha = []
 function useEsc(fn) {
-  useEffect(() => { const h = e => e.key === 'Escape' && fn(); addEventListener('keydown', h); return () => removeEventListener('keydown', h) }, [fn])
+  const ref = useRef(fn)
+  ref.current = fn
+  useEffect(() => {
+    const tok = {}
+    pilha.push(tok)
+    const h = e => { if (e.key === 'Escape' && pilha[pilha.length - 1] === tok) { e.stopImmediatePropagation(); ref.current() } }
+    addEventListener('keydown', h)
+    return () => { removeEventListener('keydown', h); pilha.splice(pilha.indexOf(tok), 1) }
+  }, [])
 }
 
 export function Empty({ title, children }) {
