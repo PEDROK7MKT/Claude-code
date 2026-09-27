@@ -72,11 +72,15 @@ toque     (ou arrastar para cima, rolar, teclado; automático em 4,5 s)
 ```
 
 - É o **único** momento coreografado da página.
-- Quem volta em até 7 dias vê uma versão curta automática. Link com `#lista` ou `?intro=0` pula.
+- Quem volta em até 7 dias vê uma versão curta automática. Link com `#lista`, `?intro=0` ou o
+  botão "voltar" do navegador pulam a abertura.
+- A geometria do envelope é calculada por um script inline logo após o HTML da abertura: a aba,
+  o lacre e as dobras já saem certos no primeiro quadro, antes do JS principal.
 - "Reduzir movimento": o envelope só esmaece.
-- Robustez: o envelope só existe se o JS assumir (script inline + rede de segurança de 2,5 s);
-  uma trava de 12 s libera a página em qualquer cenário; o conteúdo por trás fica `inert` só
-  enquanto o envelope está fechado.
+- Robustez: se o JS principal não assumir em 2,5 s (rede ruim, erro no `config.js`), a página
+  volta ao modo sem JS, com a foto da pedra seguindo o botão escolhido e um caminho alternativo
+  para a lista. Uma trava de 12 s libera a página em qualquer cenário, e o conteúdo por trás fica
+  `inert` só enquanto o envelope está fechado.
 - A **confirmação da lista** fecha a história com o mesmo objeto: o lacre é carimbado no convite.
 
 ## 5. Seções (nesta ordem)
@@ -171,3 +175,35 @@ e conversão, técnica/acessibilidade/performance, copy/marca/LGPD). O que mudou
   arraste. Qualquer arraste abre, mas a aba não segue o dedo. Isso deixa o comportamento mais
   previsível dentro do navegador do Instagram.
 - **Acento circunflexo alto**: é o desenho original da Cormorant Garamond ("Zircônia"), não um erro.
+
+## 9. Revisão da página pronta (QA)
+
+Depois de construída, a página passou por cinco revisores que a testaram no navegador (Playwright,
+toques reais, 10 tamanhos de tela, axe-core, rede lenta, sem JS, sem localStorage), com
+verificação adversarial. Principais correções:
+
+- **Arrastar a foto da pedra com o dedo não funcionava.** A captura implícita do toque encerrava
+  o gesto. Corrigido e testado com eventos de toque reais.
+- **Lista:**
+  - a fila de reenvio agora é limpa depois do envio confirmado, e um reenvio que dá certo leva ao
+    estado "na lista";
+  - os erros são anunciados ao leitor de tela, e o foco volta ao campo;
+  - a máscara de telefone não apaga mais "+55" nem "0";
+  - um e-mail longo quebra dentro do convite.
+- **Sem o JS principal**, a página cai no modo sem JS, com o caminho alternativo para a lista.
+- **Abertura:**
+  - "Abrir o convite" entrou no fluxo do texto, então nunca se sobrepõe à frase, mesmo com texto
+    ampliado;
+  - com "reduzir movimento", o envelope não pisca mais;
+  - o lacre só é baixado quando o envelope vai aparecer.
+- **Contagem:** no último dia some o "0 dias", os segundos não piscam, e o texto para leitor de
+  tela usa singular ou plural e conta os segundos.
+- **Layout:** celular deitado com hero em duas colunas; H1 sempre em 2 linhas no desktop; uma
+  margem esquerda comum a todas as seções; galeria escalonada de verdade.
+- **Copy e LGPD:**
+  - o consentimento agora bate com a política ("não vendemos nem compartilhamos para
+    publicidade"), está no `config.js` e pede confirmação;
+  - a pedra só vai no cadastro se a pessoa escolheu uma;
+  - "No dia 10 de outubro, avisamos você no WhatsApp…".
+- **Foto do anel:** sem a lasca verde do envelope no recorte e com o papel levado para o Marfim
+  (a pedra protegida).

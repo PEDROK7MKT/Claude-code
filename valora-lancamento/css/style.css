@@ -76,9 +76,6 @@ body {
   -webkit-tap-highlight-color: transparent;
   overflow-x: hidden;
 }
-@media (prefers-reduced-motion: no-preference) {
-  html { scroll-behavior: smooth; }
-}
 img { display: block; max-width: 100%; height: auto; }
 picture { display: block; }
 h1, h2, h3, p, figure, fieldset { margin: 0; }
@@ -155,8 +152,11 @@ h1, h2, h3 {
   text-decoration: none;
   color: var(--verde);
   line-height: 1;
+  transition: transform .16s var(--ease-soft), opacity .16s;
 }
-.brand-star { width: 13px; height: 13px; margin-bottom: 7px; color: #A57C38; }
+.brand:active { transform: scale(.97); opacity: .75; }
+.brand--hero:active { transform: translateX(-50%) scale(.97); }
+.brand-star { width: 13px; height: 13px; margin-bottom: 7px; color: var(--ouro); }
 .brand-name {
   font-family: var(--serif);
   font-weight: 500;
@@ -283,12 +283,7 @@ h1, h2, h3 {
   opacity: 0;
 }
 .seal-label {
-  position: absolute;
-  left: 50%;
-  top: calc(100% + 64px);
-  padding: 14px 20px;
-  transform: translateX(-50%);
-  white-space: nowrap;
+  margin-top: 26px;
   font-family: var(--sans);
   font-size: 12.5px;
   font-weight: 500;
@@ -410,7 +405,8 @@ h1, h2, h3 {
   line-height: 1.25;
   color: var(--verde);
 }
-.cd-open a { display: inline-flex; min-height: 44px; align-items: center; margin-left: .3em; font-family: var(--sans); font-style: normal; font-size: 14px; font-weight: 600; }
+.cd-open a { display: inline-flex; min-height: 44px; align-items: center; font-family: var(--sans); font-style: normal; font-size: 15px; font-weight: 600; transition: transform .16s var(--ease-soft); }
+.cd-open a:active { transform: scale(.97); }
 
 /* =====================================================================
    ESCOLHA SUA PEDRA
@@ -480,7 +476,7 @@ h1, h2, h3 {
   color: var(--grafite);
   text-wrap: pretty;
 }
-.stone-fact { margin-top: 10px; font-size: 13px; color: var(--musgo); }
+.stone-fact { margin-top: 10px; font-size: 13px; color: var(--musgo); text-wrap: pretty; }
 
 .stone-stage {
   position: relative;
@@ -523,7 +519,7 @@ h1, h2, h3 {
 .no-js .stones:has(input[value="moissanite"]:checked) .stone-text[data-stone="moissanite"] { opacity: 1; visibility: visible; }
 
 .stone-caption { margin-top: 12px; font-size: 12.5px; color: var(--musgo); }
-.stone-note { margin-top: 20px; max-width: 30em; font-size: 14px; line-height: 1.55; }
+.stone-note { margin-top: 20px; max-width: 30em; font-size: 14px; line-height: 1.55; text-wrap: pretty; }
 .stones-cta { width: 100%; margin-top: 24px; }
 
 /* =====================================================================
@@ -567,15 +563,19 @@ h1, h2, h3 {
   appearance: none;
   transition: border-color .25s, box-shadow .25s;
 }
-.field-input::placeholder { color: rgba(32, 31, 29, .38); }
+.field-input::placeholder { color: var(--musgo-claro); opacity: 1; }
 .field-input:focus { outline: none; border-bottom-color: var(--verde); box-shadow: 0 1px 0 0 var(--verde); }
 .field-input[aria-invalid="true"] { border-bottom-color: var(--erro); box-shadow: 0 1px 0 0 var(--erro); }
+.field-input[aria-invalid="true"]:focus { box-shadow: 0 2px 0 0 var(--erro); outline: 2px solid var(--erro); outline-offset: 4px; }
 .field-error { margin-top: 8px; font-size: 13.5px; font-weight: 500; color: var(--erro); }
 .field-error a { color: inherit; }
 .wl-switch { margin-top: 4px; }
 .hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
 .consent { margin-top: 10px; font-size: 13px; line-height: 1.55; color: var(--grafite); }
-.consent a { color: var(--verde); text-underline-offset: 3px; }
+.consent a { display: inline-block; margin: -12px 0; padding: 12px 0; color: var(--verde); text-underline-offset: 3px; }
+.consent a:active, .field-error a:active { opacity: .7; }
+.wl-nojs { margin-top: 12px; }
+.js .wl-nojs { display: none; }
 #wl-submit { margin-top: 18px; }
 .btn.is-loading { pointer-events: none; opacity: .88; }
 .btn.is-loading .btn-label::after {
@@ -626,7 +626,8 @@ h1, h2, h3 {
 @keyframes rise { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
 .invite-done h3 { font-size: clamp(32px, 8.6vw, 46px); line-height: 1.05; }
 .done-text { margin: 12px auto 0; max-width: 24em; }
-.done-text strong { font-weight: 600; white-space: nowrap; }
+.done-text strong { font-weight: 600; overflow-wrap: anywhere; }
+.done-text strong.is-phone { white-space: nowrap; }
 .done-actions { display: grid; justify-items: center; gap: 10px; margin-top: 18px; }
 .done-actions .btn { width: 100%; }
 .done-bye {
@@ -692,15 +693,20 @@ h1, h2, h3 {
   color: var(--ouro);
   text-decoration: none;
 }
+.ig { transition: transform .16s var(--ease-soft), opacity .16s; }
+.ig:active { transform: scale(.97); opacity: .75; }
 .ig svg { width: 20px; height: 20px; }
 .footer :focus-visible { outline-color: var(--ouro); }
 .legal { margin-top: 18px; font-size: 12px; color: var(--marfim-72); }
-.legal a { display: inline-block; padding: 12px 0; color: inherit; text-underline-offset: 3px; }
+.legal a { display: inline-block; padding: 13px 0; color: inherit; text-underline-offset: 3px; }
+.legal a:active { opacity: .7; }
 
 /* =====================================================================
    DESKTOP
    ===================================================================== */
 @media (min-width: 900px) {
+  /* margem esquerda comum a todas as seções (conteúdo com no máximo 1240px) */
+  :root { --edge: max(var(--gutter), calc(50vw - 620px + var(--gutter))); }
   body { font-size: 16px; }
   .brand-name { font-size: 28px; }
 
@@ -712,9 +718,11 @@ h1, h2, h3 {
   }
   .hero-media { grid-column: 2; grid-row: 1; height: auto; max-height: none; }
   .hero-media img { object-position: 42% 46%; }
-  .brand--hero { left: var(--gutter); top: 40px; transform: none; justify-items: start; }
+  .brand--hero { left: var(--edge); top: 40px; transform: none; justify-items: start; }
+  .brand--hero:active { transform: scale(.97); }
   .brand--hero .brand-name, .brand--hero .brand-sub { padding-left: 0; }
-  .hero-copy { grid-column: 1; grid-row: 1; align-self: center; max-width: 640px; padding: 150px var(--gutter) 80px; }
+  .hero-copy { grid-column: 1; grid-row: 1; align-self: center; padding: 150px var(--gutter) 80px var(--edge); }
+  .hero h1 { font-size: clamp(56px, 6.8vw, 84px); }
   .hero-cta { width: auto; min-width: 260px; }
 
   .countdown { max-width: 1240px; margin: 0 auto; padding: 44px var(--gutter) 8px; border-top: 0; }
@@ -748,13 +756,32 @@ h1, h2, h3 {
     grid-template-columns: 34fr 28fr 22fr;
     column-gap: 5vw;
     align-items: start;
-    max-width: 1320px;
+    max-width: 1240px;
     margin: 0 auto;
     padding-top: 80px;
   }
   .piece, .piece + .piece { width: auto; margin: 0; }
-  .piece--2 { margin-top: 140px; }
-  .piece--3 { margin-top: 60px; }
+  .gallery .piece--2 { margin-top: 140px; }
+  .gallery .piece--3 { margin-top: 60px; }
+}
+
+/* =====================================================================
+   CELULAR DEITADO (pouca altura, largura de celular)
+   ===================================================================== */
+@media (orientation: landscape) and (max-height: 500px) and (max-width: 899px) {
+  .hero { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+  .hero-media { grid-column: 2; grid-row: 1; height: 100vh; height: 100svh; max-height: none; min-height: 0; }
+  .hero-media img { object-position: 42% 46%; }
+  .brand--hero { left: var(--gutter); top: 16px; transform: none; justify-items: start; }
+  .brand--hero:active { transform: scale(.97); }
+  .brand--hero .brand-name, .brand--hero .brand-sub { padding-left: 0; }
+  .hero-copy { grid-column: 1; grid-row: 1; align-self: end; padding: 96px var(--gutter) 22px; }
+  .hero h1 { font-size: 38px; }
+  .hero-sub { font-size: 21px; }
+  .stone-stage { max-width: 70svh; margin-left: auto; margin-right: auto; }
+  .piece--1 { max-width: 88svh; }
+  .piece--2 { max-width: 70svh; }
+  .piece--3 { max-width: 52svh; }
 }
 
 /* =====================================================================
@@ -768,4 +795,6 @@ h1, h2, h3 {
     transition-duration: .01ms !important;
     transition-delay: 0s !important;
   }
+  /* a rede de segurança do envelope continua esperando os 9 s (só não anima) */
+  .js.intro-on .intro:not(.is-live) { animation-delay: 9s !important; }
 }

@@ -25,28 +25,38 @@
   <link rel="preload" href="assets/fonts/cormorant-garamond-italic-latin.woff2" as="font" type="font/woff2" crossorigin />
   <link rel="preload" href="assets/fonts/cormorant-garamond-latin.woff2" as="font" type="font/woff2" crossorigin />
   <link rel="preload" href="assets/fonts/montserrat-latin.woff2" as="font" type="font/woff2" crossorigin />
-  <link rel="preload" href="assets/lacre.webp" as="image" type="image/webp" />
   <link rel="stylesheet" href="css/style.css" />
 
   <script>
     // Roda antes da primeira pintura (menos de 1 KB). Decide se o envelope aparece:
     //  1ª visita → abertura completa · volta em até 7 dias → versão curta
-    //  link com #âncora ou ?intro=0 → sem abertura · ?intro=1 → força a completa
+    //  link com #âncora, ?intro=0 ou botão "voltar" do navegador → sem abertura
+    //  ?intro=1 → força a completa
     (function () {
-      var d = document.documentElement, q = location.search, mode = 'full', seen = 0;
+      var d = document.documentElement, q = location.search, mode = 'full', seen = 0, nav;
       d.className = d.className.replace('no-js', 'js');
       document.addEventListener('touchstart', function () {}, { passive: true }); // :active no iOS
+      // rede de segurança: se o JS principal não assumir em 2,5 s (rede ruim, erro no
+      // config.js…), a página volta ao modo sem JS — com formulário alternativo e tudo
+      setTimeout(function () {
+        if (!window.__mainOk) { d.classList.remove('intro-on'); d.classList.replace('js', 'no-js'); }
+      }, 2500);
       try { seen = +localStorage.getItem('valora:intro') || 0; } catch (e) {}
       if (seen && Date.now() - seen < 6048e5) mode = 'short';
       if (/[?&]intro=1/.test(q)) mode = 'full';
-      if (/[?&]intro=0/.test(q) || location.hash.length > 1) mode = 'off';
+      try { nav = performance.getEntriesByType('navigation')[0]; } catch (e) {}
+      if (/[?&]intro=0/.test(q) || location.hash.length > 1 || (nav && nav.type === 'back_forward')) mode = 'off';
       if (mode === 'off') return;
       d.classList.add('intro-on');
       d.setAttribute('data-intro', mode);
-      // rede de segurança: se o JS principal não assumir em 2,5 s, a página aparece
-      setTimeout(function () { if (!window.__introOk) d.classList.remove('intro-on'); }, 2500);
+      // o lacre só é baixado quando o envelope vai mesmo aparecer
+      var l = document.createElement('link');
+      l.rel = 'preload'; l.as = 'image'; l.type = 'image/webp'; l.href = 'assets/lacre.webp';
+      l.setAttribute('fetchpriority', 'high');
+      document.head.appendChild(l);
     })();
   </script>
+  <link rel="modulepreload" href="js/config.js" />
   <script type="module" src="js/main.js"></script>
 </head>
 <body>
@@ -85,9 +95,10 @@
         <!-- sombra que a aba projeta no corpo -->
         <path class="env-flap-shadow" id="env-flap-shadow" filter="url(#f-sombra-aba)" />
       </svg>
-      <img class="seal-piece seal-base" src="assets/lacre-base.webp" alt="" width="680" height="680" decoding="async" />
+      <img class="seal-piece seal-base" src="assets/lacre-base.webp" alt="" width="680" height="680" loading="lazy" decoding="async" />
       <div class="intro-copy">
         <p class="intro-line">Um convite da Valora Suisse</p>
+        <p class="seal-label" aria-hidden="true">Abrir o convite</p>
       </div>
     </div>
 
@@ -95,6 +106,7 @@
       <svg class="flap-art" id="flap-art" preserveAspectRatio="none">
         <defs>
           <pattern id="p-aba" width="160" height="160" patternUnits="userSpaceOnUse">
+            <rect width="160" height="160" fill="#063826" />
             <image href="assets/papel-aba.webp" width="160" height="160" />
           </pattern>
         </defs>
@@ -102,18 +114,57 @@
         <path class="flap-edge" id="flap-edge" />
         <path class="flap-dark" id="flap-dark" />
       </svg>
-      <img class="seal-piece seal-top" src="assets/lacre-topo.webp" alt="" width="680" height="680" decoding="async" />
+      <img class="seal-piece seal-top" src="assets/lacre-topo.webp" alt="" width="680" height="680" loading="lazy" decoding="async" />
     </div>
   </div>
 
-  <button class="seal" id="seal" type="button">
-    <img class="seal-whole" src="assets/lacre.webp" alt="" width="680" height="680" decoding="async" fetchpriority="high" />
+  <button class="seal" id="seal" type="button" aria-label="Abrir o convite">
+    <img class="seal-whole" src="assets/lacre.webp" alt="" width="680" height="680" loading="lazy" decoding="async" fetchpriority="high" />
     <svg class="seal-crack" viewBox="0 0 200 200" aria-hidden="true">
       <path d="M12 43.46 L16 44.47 L20 47.97 L24 50.24 L28 54.09 L32 57.24 L36 58.57 L40 61.42 L44 62.67 L48 66.09 L52 69.72 L56 72.07 L60 75.48 L64 76.33 L68 78.79 L72 81.67 L76 84.27 L80 88.61 L84 90.23 L88 92.64 L92 94.60 L96 96.33 L100 100.58 L104 97.78 L108 95.97 L112 92.92 L116 88.78 L120 86.84 L124 83.64 L128 82.43 L132 80.34 L136 76.74 L140 74.35 L144 70.14 L148 68.31 L152 66.49 L156 63.89 L160 62.23 L164 57.86 L168 55.16 L172 52.46 L176 49.88 L180 49.06 L184 45.60 L188 43.09" />
     </svg>
-    <span class="seal-label">Abrir o convite</span>
   </button>
 </div>
+<script>
+  // Desenha o envelope antes da primeira pintura (a aba desce a 33° em qualquer tela).
+  // O js/main.js chama esta mesma função quando a tela muda de tamanho.
+  window.__valoraLayout = function (intro) {
+    var W = intro.clientWidth, H = intro.clientHeight;
+    if (!W || !H) return;
+    var K = Math.tan(33 * Math.PI / 180);
+    var tip = Math.round(H * (W > H ? 0.48 : 0.44));
+    var seal = Math.round(Math.min(W * 0.46, 210, H * 0.3));
+    intro.style.setProperty('--tip', tip + 'px');
+    intro.style.setProperty('--seal', seal + 'px');
+    var cx = W / 2, side = tip - K * cx, flap, edge, f = function (n) { return n.toFixed(1); };
+    if (side >= 0) {
+      flap = 'M0 0H' + W + 'V' + f(side) + 'L' + cx + ' ' + tip + 'L0 ' + f(side) + 'Z';
+      edge = 'M0 ' + f(side) + 'L' + cx + ' ' + tip + 'L' + W + ' ' + f(side);
+    } else { // tela larga: a aba vira um triângulo que começa no topo
+      var dx = tip / K;
+      flap = 'M' + f(cx - dx) + ' 0H' + f(cx + dx) + 'L' + cx + ' ' + tip + 'Z';
+      edge = 'M' + f(cx - dx) + ' 0L' + cx + ' ' + tip + 'L' + f(cx + dx) + ' 0';
+    }
+    var q = function (id) { return document.getElementById(id); };
+    q('flap-art').setAttribute('viewBox', '0 0 ' + W + ' ' + tip);
+    q('flap-face').setAttribute('d', flap);
+    q('flap-dark').setAttribute('d', flap);
+    q('flap-edge').setAttribute('d', edge);
+    q('env-art').setAttribute('viewBox', '0 0 ' + W + ' ' + H);
+    q('env-lining').setAttribute('d', flap);
+    q('env-flap-shadow').setAttribute('d', flap);
+    q('env-flap-shadow').setAttribute('transform', 'translate(0 7)');
+    // as dobras da aba de baixo passam sempre abaixo do texto do convite
+    var copy = intro.querySelector('.intro-copy');
+    var below = copy ? copy.getBoundingClientRect().bottom - intro.getBoundingClientRect().top + 22 : 0;
+    var foldY = Math.min(H - 8, Math.max(tip + (H - tip) * 0.46, below));
+    q('env-folds').setAttribute('d', 'M0 ' + H + 'L' + cx + ' ' + f(foldY) + 'L' + W + ' ' + H);
+  };
+  (function () {
+    var intro = document.getElementById('intro');
+    if (intro && getComputedStyle(intro).display !== 'none') window.__valoraLayout(intro);
+  })();
+</script>
 
 <!-- =================== PÁGINA =================== -->
 <main id="main">
@@ -154,7 +205,7 @@
       <div class="cd-unit"><span class="cd-num" data-u="m">—</span><span class="cd-label" data-l="m">minutos</span></div>
       <div class="cd-unit cd-unit--s" hidden><span class="cd-num" data-u="s">—</span><span class="cd-label" data-l="s">segundos</span></div>
     </div>
-    <p class="cd-open" id="cd-open" hidden>A coleção está aberta. <a href="#" id="cd-shop">Conhecer as peças</a></p>
+    <p class="cd-open" id="cd-open" hidden><a href="#" id="cd-shop">Conhecer as peças</a></p>
   </section>
 
   <!-- ESCOLHA SUA PEDRA -->
@@ -170,11 +221,11 @@
     <div class="stone-texts">
       <div class="stone-text" data-stone="zirconia">
         <p class="stone-desc">Uma pedra criada, com brilho delicado e aparência cristalina.</p>
-        <p class="stone-fact">Zircônia cúbica · dureza 8 a 8,5 na escala Mohs</p>
+        <p class="stone-fact">Zircônia cúbica · dureza 8 a 8,5 na escala&nbsp;Mohs</p>
       </div>
       <div class="stone-text" data-stone="moissanite">
         <p class="stone-desc">Uma pedra de brilho intenso, que ganha vida a cada movimento.</p>
-        <p class="stone-fact">Moissanite · dureza 9,25 na escala Mohs</p>
+        <p class="stone-fact">Moissanite · dureza 9,25 na escala&nbsp;Mohs</p>
       </div>
     </div>
 
@@ -210,7 +261,7 @@
         <h2 id="wl-title">Lista de convidados</h2>
         <p class="wl-text" id="wl-text">Deixe seu WhatsApp e avisamos você no dia da abertura.</p>
 
-        <noscript><p class="wl-text">Para entrar na lista, fale com a Valora Suisse pelo Instagram <a href="https://www.instagram.com/valorasuisse/">@valorasuisse</a>.</p></noscript>
+        <p class="wl-text wl-nojs">Para entrar na lista, fale com a Valora Suisse pelo Instagram <a href="https://www.instagram.com/valorasuisse/">@valorasuisse</a>.</p>
 
         <form id="wl-form" novalidate hidden>
           <div class="field" id="field-whatsapp">
@@ -296,7 +347,7 @@
     <span class="brand-name">Valora</span>
     <span class="brand-sub">Suisse</span>
   </a>
-  <p class="tagline"><span class="tagline-fr" lang="fr">Ce qui a de la valeur demeure.</span><span class="tagline-pt">O que tem valor, permanece.</span></p>
+  <p class="tagline"><span class="tagline-fr" lang="fr">Ce qui a de la valeur demeure.</span><span class="tagline-pt">O que tem valor permanece.</span></p>
   <a class="ig" id="ig-link" href="https://www.instagram.com/valorasuisse/" target="_blank" rel="noopener">
     <svg aria-hidden="true"><use href="#i-instagram" /></svg><span id="ig-handle">@valorasuisse</span>
   </a>

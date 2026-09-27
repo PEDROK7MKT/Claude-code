@@ -3,8 +3,10 @@
 Página de pré-lançamento da nova coleção (zircônia e moissanite), feita para o
 tráfego do Instagram: mobile primeiro, leve e sem dependências.
 
-- **HTML + CSS + JS puro**, sem etapa de build. Módulos ES nativos.
-- Primeira visita: ~250 KB (fontes, lacre, foto do hero). Sem bibliotecas externas.
+- **HTML + CSS + JS puro**, sem etapa de build. Módulos ES nativos. Sem bibliotecas externas.
+- Primeira tela (envelope, fontes, foto do hero, CSS e JS, com gzip): **~235 KB**. A página
+  inteira, com todas as fotos em AVIF num celular de tela 3x: ~550 KB. Quem entra por `#lista`
+  não baixa o lacre.
 - Fontes (Cormorant Garamond e Montserrat) hospedadas na própria página.
 
 ## Rodar localmente
@@ -22,6 +24,7 @@ Parâmetros úteis na URL:
 | `?intro=1` | força a abertura completa (mesmo para quem já viu) |
 | `?intro=0` | pula a abertura |
 | `#lista` | pula a abertura e vai direto ao formulário (use nos stories "entre na lista") |
+| botão "voltar" | quem volta de outra página (ex.: política de privacidade) não vê a abertura de novo |
 | `?slow=5` | deixa as animações 5× mais lentas, para conferir a coreografia |
 
 A abertura completa aparece na 1ª visita; quem volta em até 7 dias vê uma versão curta automática.
@@ -37,8 +40,10 @@ Tudo que é editável está em **`js/config.js`** (itens marcados com `⚠ CONFI
 3. **WhatsApp da marca** (`whatsappBrand`) — habilita o botão "Confirmar pelo WhatsApp".
 4. **Backend da lista** (`waitlistEndpoint`) — sem ele, o envio é simulado.
 5. **Instagram** e **link da loja** para depois da abertura.
-6. **Política de privacidade** (`privacidade.html`) — preencher razão social, CNPJ, contato,
-   fornecedores e prazo de guarda (trechos destacados entre colchetes).
+6. **Texto de consentimento** (`consent` no config) e **política de privacidade**
+   (`privacidade.html`) — preencher razão social, CNPJ, contato, fornecedores e prazo de guarda
+   (trechos destacados entre colchetes) e confirmar que "responder SAIR" / "link no fim do e-mail"
+   existem de fato. Mudou o texto? Mude também `consentVersion`.
 7. **Logo oficial em SVG** — o lockup atual é tipográfico (Cormorant + Montserrat) e não reproduz
    a cauda do "R" do logo gravado nos estojos. Com o SVG, basta trocar os três `.brand` do HTML.
 
@@ -49,6 +54,7 @@ de CORS) com: `channel`, `contact` (E.164 ou e-mail), `stone`, `consent`, `conse
 `consent_version`, `page`, `referrer`, `created_at` e `utm_*`.
 
 - **n8n**: nó *Webhook* (POST) → *Google Sheets*/CRM. Em *Options → Allowed Origins (CORS)* use `*`.
+  O campo `stone` vem vazio quando a pessoa não mexeu no seletor de pedra.
 - **Zapier**: *Webhooks by Zapier → Catch Hook*.
 - **Make**: *Custom webhook*.
 

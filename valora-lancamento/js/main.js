@@ -5,6 +5,10 @@
    ===================================================================== */
 import { CONFIG } from './config.js';
 
+// o JS principal assumiu: desliga a rede de segurança do index.html
+window.__mainOk = true;
+document.documentElement.classList.replace('no-js', 'js');
+
 const $ = (s, r = document) => r.querySelector(s);
 const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
 const root = document.documentElement;
@@ -98,43 +102,11 @@ function applyConfig() {
    de cima sobe com a aba, a de baixo sai com o corpo do envelope.
    --------------------------------------------------------------------- */
 const AUTO_OPEN_MS = 4500;
-const SLOPE = Math.tan((33 * Math.PI) / 180);
 
-function layoutEnvelope(intro) {
-  const W = intro.clientWidth;
-  const H = intro.clientHeight;
-  const tip = Math.round(H * (W > H ? 0.48 : 0.44));
-  const seal = Math.round(Math.min(W * 0.46, 210, H * 0.3));
-  intro.style.setProperty('--tip', `${tip}px`);
-  intro.style.setProperty('--seal', `${seal}px`);
-
-  const cx = W / 2;
-  const side = tip - SLOPE * cx;
-  let flap;
-  let edge;
-  if (side >= 0) {
-    flap = `M0 0H${W}V${side.toFixed(1)}L${cx} ${tip}L0 ${side.toFixed(1)}Z`;
-    edge = `M0 ${side.toFixed(1)}L${cx} ${tip}L${W} ${side.toFixed(1)}`;
-  } else {
-    const dx = tip / SLOPE; // tela larga: a aba vira um triângulo que começa no topo
-    flap = `M${(cx - dx).toFixed(1)} 0H${(cx + dx).toFixed(1)}L${cx} ${tip}Z`;
-    edge = `M${(cx - dx).toFixed(1)} 0L${cx} ${tip}L${(cx + dx).toFixed(1)} 0`;
-  }
-  const flapArt = $('#flap-art', intro);
-  flapArt.setAttribute('viewBox', `0 0 ${W} ${tip}`);
-  $('#flap-face', intro).setAttribute('d', flap);
-  $('#flap-dark', intro).setAttribute('d', flap);
-  $('#flap-edge', intro).setAttribute('d', edge);
-
-  const envArt = $('#env-art', intro);
-  envArt.setAttribute('viewBox', `0 0 ${W} ${H}`);
-  $('#env-lining', intro).setAttribute('d', flap);
-  const shadow = $('#env-flap-shadow', intro);
-  shadow.setAttribute('d', flap);
-  shadow.setAttribute('transform', 'translate(0 7)');
-  const foldY = tip + (H - tip) * 0.46;
-  $('#env-folds', intro).setAttribute('d', `M0 ${H}L${cx} ${foldY.toFixed(1)}L${W} ${H}`);
-}
+// O desenho do envelope (aba a 33°, lacre, dobras) é calculado por um script
+// inline no index.html, logo depois do HTML da abertura, para já sair certo no
+// primeiro quadro. Aqui ele só é chamado de novo quando a tela muda de tamanho.
+const layoutEnvelope = (intro) => { if (typeof window.__valoraLayout === 'function') window.__valoraLayout(intro); };
 
 async function runIntro() {
   const intro = $('#intro');
@@ -144,7 +116,6 @@ async function runIntro() {
     intro.remove();
     return;
   }
-  window.__introOk = true;
   intro.classList.add('is-live'); // desliga a rede de segurança do CSS
   const locks = [$('#main'), $('.footer')].filter(Boolean);
   locks.forEach((el) => { el.inert = true; });
@@ -164,6 +135,7 @@ async function runIntro() {
     store.set('valora:intro', String(Date.now()));
     const hadFocus = intro.contains(document.activeElement);
     root.classList.remove('intro-on', 'intro-free');
+    if ('scrollRestoration' in history) history.scrollRestoration = 'auto';
     locks.forEach((el) => { el.inert = false; });
     intro.remove();
     if (hadFocus) { const h1 = $('#hero-title'); if (h1) h1.focus({ preventScroll: true }); }
@@ -175,6 +147,7 @@ async function runIntro() {
   // o texto do convite espera a Cormorant itálica (no máximo 0,7 s)
   try { await Promise.race([document.fonts ? document.fonts.load('italic 400 25px "Cormorant Garamond"') : null, wait(700)]); } catch (e) { /* segue */ }
   intro.classList.add('is-ready');
+  relayout(); // a altura do texto do convite pode mudar com a fonte certa
   track('intro_view', { mode });
 
   const t0 = performance.now();
@@ -322,13 +295,15 @@ function countdown() {
     if (ms <= 0) { launched(); return; }
     const total = Math.floor(ms / 1000);
     const v = { d: Math.floor(total / 86400), h: Math.floor((total % 86400) / 3600), m: Math.floor((total % 3600) / 60), s: total % 60 };
+    // no último dia: some o "0 dias" e entram os segundos (sem piscar a cada segundo)
     const withSeconds = v.d === 0;
     secUnit.hidden = !withSeconds;
+    nums.d.parentElement.hidden = withSeconds;
     for (const key of Object.keys(v)) {
       if (v[key] === last[key]) continue;
       nums[key].textContent = key === 'd' ? String(v[key]) : pad(v[key]);
       labels[key].textContent = plural(key, v[key]);
-      if (last[key] !== undefined && !RM.matches && (key !== 's' || withSeconds)) {
+      if (last[key] !== undefined && !RM.matches && key !== 's') {
         nums[key].classList.remove('tick');
         void nums[key].offsetWidth; // reinicia só no número que mudou
         nums[key].classList.add('tick');
@@ -338,8 +313,10 @@ function countdown() {
     const parts = [];
     if (v.d) parts.push(`${v.d} ${plural('d', v.d)}`);
     if (v.h || v.d) parts.push(`${v.h} ${plural('h', v.h)}`);
-    parts.push(`${v.m} ${plural('m', v.m)}`);
-    const text = `Faltam ${parts.join(', ').replace(/, ([^,]*)$/, ' e $1')} para a abertura.`;
+    if (v.d || v.h || v.m) parts.push(`${v.m} ${plural('m', v.m)}`);
+    else parts.push(`${v.s} ${plural('s', v.s)}`); // último minuto
+    const verb = parts.length === 1 && /^1 /.test(parts[0]) ? 'Falta' : 'Faltam';
+    const text = `${verb} ${parts.join(', ').replace(/, ([^,]*)$/, ' e $1')} para a abertura.`;
     if (text !== lastSr) { sr.textContent = text; lastSr = text; }
     const now = Date.now();
     timer = setTimeout(render, withSeconds ? 1000 - (now % 1000) + 20 : 60000 - (now % 60000) + 20);
@@ -356,7 +333,9 @@ function launched() {
   const grid = $('#cd');
   if (grid) grid.hidden = true;
   const title = $('#cd-title');
-  if (title) title.textContent = 'A coleção';
+  if (title) title.textContent = 'A coleção está aberta.';
+  const sr = $('#cd-sr');
+  if (sr) sr.textContent = '';
   const open = $('#cd-open');
   if (open) open.hidden = false;
   const date = $('#hero-date');
@@ -377,6 +356,7 @@ function launched() {
    Tudo em transform: roda no compositor, sem repintar a cada quadro.
    --------------------------------------------------------------------- */
 let currentStone = 'zirconia';
+let stoneChosen = false; // só vira interesse de verdade se a pessoa mexer no seletor
 
 function stones() {
   const section = $('#pedras');
@@ -465,6 +445,7 @@ function stones() {
     if (key === current) { commitText(key); return; }
     const dir = keys.indexOf(key) > keys.indexOf(current) ? 1 : -1;
     commitText(key);
+    stoneChosen = true;
     haptic();
     track('stone_select', { pedra: key, via });
     if (RM.matches) {
@@ -536,6 +517,7 @@ function stones() {
     const commit = e.type !== 'pointercancel' && (trans.p > 0.3 || flick);
     if (commit) {
       commitText(g.to);
+      stoneChosen = true;
       haptic();
       track('stone_select', { pedra: g.to, via: 'swipe' });
       animateTo(1, T(Math.max(260, 700 * (1 - trans.p))));
@@ -545,18 +527,23 @@ function stones() {
   };
   stage.addEventListener('pointerup', end);
   stage.addEventListener('pointercancel', end);
-  stage.addEventListener('lostpointercapture', (e) => { if (drag && drag.id === e.pointerId) end(e); });
+  // no toque, o navegador já "captura" o dedo no <picture>; ao passarmos a captura
+  // para o palco, o <picture> perde a dele — esse evento não é o fim do gesto
+  stage.addEventListener('lostpointercapture', (e) => { if (e.target === stage && drag && drag.id === e.pointerId) end(e); });
 
   commitText(current);
 
-  // pré-carrega a outra foto quando a seção se aproxima
+  // pré-carrega a outra foto quando a seção se aproxima — mas só depois da
+  // abertura, para não disputar banda com o lacre e a foto do hero
   if ('IntersectionObserver' in window) {
     const io = new IntersectionObserver((entries) => {
       if (!entries.some((en) => en.isIntersecting)) return;
       keys.forEach((key) => { $('img', layers[key]).loading = 'eager'; });
       io.disconnect();
     }, { rootMargin: '700px 0px' });
-    io.observe(stage);
+    const watch = () => io.observe(stage);
+    if (root.classList.contains('intro-on')) document.addEventListener('valora:opened', watch, { once: true });
+    else watch();
   }
 }
 
@@ -571,10 +558,7 @@ const DDD = new Set([11, 12, 13, 14, 15, 16, 17, 18, 19, 21, 22, 24, 27, 28, 31,
   41, 42, 43, 44, 45, 46, 47, 48, 49, 51, 53, 54, 55, 61, 62, 63, 64, 65, 66, 67, 68, 69, 71, 73, 74, 75,
   77, 79, 81, 82, 83, 84, 85, 86, 87, 88, 89, 91, 92, 93, 94, 95, 96, 97, 98, 99]);
 
-const CONSENT = {
-  whatsapp: 'Ao tocar em Entrar na lista, você autoriza a Valora Suisse a enviar pelo WhatsApp mensagens sobre o lançamento desta coleção. Não compartilhamos seu número com outras empresas. Para sair, é só responder SAIR. ',
-  email: 'Ao tocar em Entrar na lista, você autoriza a Valora Suisse a enviar por e-mail mensagens sobre o lançamento desta coleção. Não compartilhamos seu e-mail com outras empresas. Para sair, use o link no fim de cada e-mail. ',
-};
+const CONSENT = CONFIG.consent;
 
 // Telefone: separa DDI internacional, tira 55 / 0 / código de operadora
 function phoneDigits(raw) {
@@ -646,13 +630,16 @@ async function submitLead(payload) {
 }
 
 // cadastro que falhou fica guardado e é reenviado na próxima visita
-async function flushOutbox() {
+async function flushOutbox(onSent) {
   const raw = store.get(OUTBOX_KEY);
   if (!raw || !CONFIG.waitlistEndpoint) return;
+  let payload;
+  try { payload = JSON.parse(raw); } catch (e) { store.del(OUTBOX_KEY); return; }
   try {
-    await submitLead(JSON.parse(raw));
+    await submitLead(payload);
     store.del(OUTBOX_KEY);
-  } catch (e) { /* tenta de novo depois */ }
+    if (onSent) onSent(payload);
+  } catch (e) { /* tenta de novo na próxima visita */ }
 }
 
 function waLink(text) {
@@ -742,10 +729,11 @@ function waitlist() {
   sw.addEventListener('click', () => setChannel(channel === 'email' ? 'whatsapp' : 'email', true));
 
   // máscara que preserva a posição do cursor (conta os dígitos antes dele)
-  phone.addEventListener('input', () => {
+  phone.addEventListener('input', (ev) => {
     const raw = phone.value;
     const { intl, d } = phoneDigits(raw);
-    if (!intl) {
+    const deleting = ev.inputType && ev.inputType.startsWith('delete');
+    if (!intl && !deleting && !/^\s*[+0]/.test(raw)) {
       const caret = phone.selectionStart == null ? raw.length : phone.selectionStart;
       const rawDigits = raw.replace(/\D/g, '');
       const stripped = Math.max(0, rawDigits.length - d.length); // DDI 55, zero inicial ou excesso
@@ -773,17 +761,18 @@ function waitlist() {
     $('#done-title').textContent = isNew ? 'Você está na lista.' : 'Você continua na lista.';
     const strong = document.createElement('strong');
     strong.textContent = display;
+    strong.classList.toggle('is-phone', ch !== 'email'); // telefone numa linha só; e-mail quebra se precisar
     $('#done-text').replaceChildren(
-      ch === 'email' ? 'Vamos avisar em ' : 'Vamos avisar no ',
+      `${t ? `No dia ${t.day}` : 'No dia da abertura'}, avisamos você ${ch === 'email' ? 'no e-mail' : 'no WhatsApp'} `,
       strong,
-      t ? ` no dia ${t.day}.` : ' no dia da abertura.',
+      '.',
     );
     $('#done-fix').textContent = ch === 'email' ? 'Corrigir e-mail' : 'Corrigir número';
 
     const wa = $('#done-wa');
     if (CONFIG.whatsappBrand && ch !== 'email') {
-      const s = CONFIG.stones[currentStone];
-      wa.href = waLink(`Olá, Valora Suisse! Entrei na lista da nova coleção e quero receber o aviso da abertura. Pedra de interesse: ${s ? s.name : ''}.`);
+      const s = stoneChosen ? CONFIG.stones[currentStone] : null;
+      wa.href = waLink(`Olá, Valora Suisse! Entrei na lista da nova coleção e quero receber o aviso da abertura.${s ? ` Pedra de interesse: ${s.name}.` : ''}`);
       wa.hidden = false;
     } else {
       wa.hidden = true;
@@ -801,7 +790,7 @@ function waitlist() {
       void invite.offsetWidth;
       if (!RM.matches) invite.classList.add('is-stamped');
       setTimeout(haptic, 380);
-      status.textContent = `Você está na lista. Vamos avisar ${ch === 'email' ? 'em' : 'no'} ${display}.`;
+      status.textContent = `Você está na lista. Avisamos você ${ch === 'email' ? 'no e-mail' : 'no WhatsApp'} ${display}.`;
       $('#done-title').focus({ preventScroll: true });
     }
     document.dispatchEvent(new CustomEvent('valora:joined'));
@@ -812,7 +801,12 @@ function waitlist() {
     touched = true;
     const msg = validate();
     setError(msg);
-    if (msg) { input().focus(); return; }
+    if (msg) {
+      status.textContent = '';
+      requestAnimationFrame(() => { status.textContent = msg; });
+      input().focus();
+      return;
+    }
 
     const ch = channel;
     let contact;
@@ -831,7 +825,7 @@ function waitlist() {
     const payload = {
       channel: ch,
       contact,
-      stone: currentStone,
+      stone: stoneChosen ? currentStone : '',
       consent: 'sim',
       consent_text: consent.textContent.trim(),
       consent_version: CONFIG.consentVersion,
@@ -846,13 +840,17 @@ function waitlist() {
     btnLabel.textContent = 'Enviando';
     try {
       await submitLead(payload);
-      store.set(JOIN_KEY, JSON.stringify({ channel: ch, display, stone: currentStone, ts: Date.now() }));
-      track('lead_submit', { canal: ch, pedra: currentStone });
+      store.del(OUTBOX_KEY); // o que foi confirmado não pode ser reenviado depois
+      store.set(JOIN_KEY, JSON.stringify({ channel: ch, display, stone: payload.stone, ts: Date.now() }));
+      track('lead_submit', { canal: ch, pedra: payload.stone });
       showDone({ channel: ch, display, isNew: true });
     } catch (error) {
       store.set(OUTBOX_KEY, JSON.stringify(payload));
       track('lead_error', { canal: ch });
-      setError('Não conseguimos registrar agora. Tente de novo em instantes.', true);
+      const fail = 'Não conseguimos registrar agora. Tente de novo em instantes.';
+      setError(fail, true);
+      status.textContent = fail;
+      input().focus(); // o botão desabilitado derrubou o foco; volta para o campo
     } finally {
       btn.classList.remove('is-loading');
       btn.removeAttribute('aria-busy');
@@ -892,9 +890,14 @@ function waitlist() {
     track('cta_click', { origem: a.dataset.cta });
     if (root.classList.contains('is-launched')) return;
     e.preventDefault();
-    const target = joined ? done : input();
-    if (!joined) target.focus({ preventScroll: true });
-    (joined ? invite : target).scrollIntoView({ behavior: RM.matches ? 'auto' : 'smooth', block: 'center' });
+    if (joined) {
+      $('#done-title').focus({ preventScroll: true });
+      invite.scrollIntoView({ behavior: RM.matches ? 'auto' : 'smooth', block: 'center' });
+      return;
+    }
+    const target = input();
+    target.focus({ preventScroll: true });
+    target.scrollIntoView({ behavior: RM.matches ? 'auto' : 'smooth', block: 'center' });
   }));
 
   setChannel('whatsapp', false);
@@ -905,7 +908,13 @@ function waitlist() {
     if (saved && saved.display) showDone({ channel: saved.channel, display: saved.display, isNew: false });
   } catch (e) { store.del(JOIN_KEY); }
 
-  flushOutbox();
+  // cadastro que ficou na fila e foi reenviado agora: a pessoa passa a "estar na lista"
+  flushOutbox((p) => {
+    if (joined) return;
+    const disp = p.channel === 'email' ? p.contact : (String(p.contact).startsWith('+55') ? formatBR(String(p.contact).slice(3)) : p.contact);
+    store.set(JOIN_KEY, JSON.stringify({ channel: p.channel, display: disp, stone: p.stone, ts: Date.now() }));
+    showDone({ channel: p.channel, display: disp, isNew: false });
+  });
 }
 
 /* ---------------------------------------------------------------------

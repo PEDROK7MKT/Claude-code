@@ -41,8 +41,16 @@ export const CONFIG = {
   // quando existir (Google Tag Manager).
   analyticsEndpoint: '',
 
-  // Versão do texto de consentimento: vai junto com cada cadastro (prova do aceite).
-  consentVersion: '2026-09-27',
+  // ⚠ CONFIRMAR · texto de consentimento mostrado acima do botão (LGPD).
+  // Precisa bater com a política de privacidade (privacidade.html) e com o que a
+  // marca realmente faz: o "responder SAIR" e o "link no fim de cada e-mail" só
+  // podem ficar se existir mesmo esse jeito de sair da lista.
+  // Mudou o texto? Mude também a versão (vai junto com cada cadastro, como prova).
+  consentVersion: '2026-09-27b',
+  consent: {
+    whatsapp: 'Ao entrar na lista, você autoriza a Valora Suisse a enviar pelo WhatsApp mensagens sobre o lançamento desta coleção. Não vendemos nem compartilhamos seu número para publicidade. Para sair, é só responder SAIR. ',
+    email: 'Ao entrar na lista, você autoriza a Valora Suisse a enviar por e-mail mensagens sobre o lançamento desta coleção. Não vendemos nem compartilhamos seu e-mail para publicidade. Para sair, use o link no fim de cada e-mail. ',
+  },
 
   // Pedras · textos exatos do brief. `piece` e `pieceConfirmed`:
   // ⚠ CONFIRMAR qual pedra está em cada foto. Enquanto `pieceConfirmed` for
