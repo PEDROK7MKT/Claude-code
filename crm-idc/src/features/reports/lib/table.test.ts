@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest";
 import {
   DEFAULT_REPORT_SORT,
   isStaleAppointment,
+  pageWindow,
   paginate,
   reportTableTotals,
   sortReportLeads,
@@ -87,5 +88,18 @@ describe("isStaleAppointment", () => {
     expect(isStaleAppointment(carla)).toBe(true);
     expect(isStaleAppointment(bruno)).toBe(false);
     expect(isStaleAppointment(alvaro)).toBe(false);
+  });
+});
+
+describe("pageWindow", () => {
+  it("mostra todas as páginas até 7", () => {
+    expect(pageWindow(1, 1)).toEqual([1]);
+    expect(pageWindow(3, 7)).toEqual([1, 2, 3, 4, 5, 6, 7]);
+  });
+
+  it("resume com reticências quando há muitas páginas", () => {
+    expect(pageWindow(1, 12)).toEqual([1, 2, 3, 4, "ellipsis", 12]);
+    expect(pageWindow(6, 12)).toEqual([1, "ellipsis", 5, 6, 7, "ellipsis", 12]);
+    expect(pageWindow(12, 12)).toEqual([1, "ellipsis", 9, 10, 11, 12]);
   });
 });

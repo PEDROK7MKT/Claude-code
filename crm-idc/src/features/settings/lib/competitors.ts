@@ -38,14 +38,24 @@ export function isSelfName(name: string): boolean {
   return SELF_NAMES.has(normalizeCompetitorName(name));
 }
 
-/** Lista salva → linhas editáveis ("4,9", "304"). */
+/** Lista salva → linhas editáveis ("4,9", "1.062"). */
 export function competitorsToDrafts(list: readonly Competitor[], makeId: (index: number) => string): CompetitorDraft[] {
   return list.map((c, i) => ({
     id: makeId(i),
     name: c.name,
     rating: formatDecimal(c.rating),
-    reviews: String(c.reviews),
+    reviews: formatNumber(c.reviews),
   }));
+}
+
+/** Texto digitado no formato de exibição (ao sair do campo); inválido fica como está. */
+export function formatDraftField(field: Exclude<CompetitorField, "name">, text: string): string {
+  if (field === "rating") {
+    const rating = parseRatingText(text);
+    return rating.ok ? formatDecimal(rating.value) : text;
+  }
+  const reviews = parseReviewsText(text);
+  return reviews.ok ? formatNumber(reviews.value) : text;
 }
 
 export function emptyCompetitorDraft(id: string): CompetitorDraft {

@@ -4,6 +4,9 @@
  */
 import { formatMonthYear, getMonthRange } from "@/lib/dates";
 
+/** Parâmetro da URL com o mês do relatório: /relatorios?mes=2026-03 */
+export const MONTH_PARAM = "mes";
+
 /** Quantidade de meses oferecidos no seletor (mês atual + 23 anteriores). */
 export const MONTH_OPTIONS_COUNT = 24;
 

@@ -172,3 +172,21 @@ export function reportTableTotals(
 export function isStaleAppointment(lead: Pick<Lead, "status" | "scheduled_at">): boolean {
   return Boolean(lead.scheduled_at) && !APPOINTMENT.has(lead.status);
 }
+
+/**
+ * Números de página a exibir: todas até 7; acima disso, primeira, vizinhas da
+ * atual e última, com "ellipsis" nos saltos.
+ */
+export function pageWindow(page: number, pageCount: number): Array<number | "ellipsis"> {
+  if (pageCount <= 7) return Array.from({ length: pageCount }, (_, i) => i + 1);
+  const pages = new Set([1, pageCount, page - 1, page, page + 1].filter((p) => p >= 1 && p <= pageCount));
+  if (page <= 3) [2, 3, 4].forEach((p) => pages.add(p));
+  if (page >= pageCount - 2) [pageCount - 3, pageCount - 2, pageCount - 1].forEach((p) => pages.add(p));
+  const sorted = [...pages].sort((a, b) => a - b);
+  const out: Array<number | "ellipsis"> = [];
+  sorted.forEach((p, i) => {
+    if (i > 0 && p - sorted[i - 1] > 1) out.push("ellipsis");
+    out.push(p);
+  });
+  return out;
+}

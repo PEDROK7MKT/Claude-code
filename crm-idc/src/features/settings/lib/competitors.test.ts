@@ -6,6 +6,7 @@ import {
   describeCompetitorSummary,
   draftsDiffer,
   emptyCompetitorDraft,
+  formatDraftField,
   isSelfName,
   moveItem,
   parseRatingText,
@@ -97,6 +98,15 @@ describe("competitorsToDrafts / validateCompetitorDrafts", () => {
     const result = validateCompetitorDrafts(many);
     expect(result.competitors).toBeNull();
     expect(result.formError).toMatch(/no máximo/);
+  });
+
+  it("formatDraftField padroniza ao sair do campo", () => {
+    expect(formatDraftField("rating", "4.9")).toBe("4,9");
+    expect(formatDraftField("rating", "5")).toBe("5,0");
+    expect(formatDraftField("rating", "abc")).toBe("abc");
+    expect(formatDraftField("reviews", "1062")).toBe("1.062");
+    expect(formatDraftField("reviews", "-1")).toBe("-1");
+    expect(competitorsToDrafts([{ name: "X", rating: 4, reviews: 1062 }], ids)[0].reviews).toBe("1.062");
   });
 
   it("emptyCompetitorDraft", () => {

@@ -34,23 +34,19 @@ export interface CreateUserDialogProps {
   defaultRole: UserRole;
 }
 
-/** "Novo usuário": cria a conta e mostra os dados de acesso para repassar (spec §11). */
+/**
+ * "Novo usuário": cria a conta e mostra os dados de acesso para repassar (spec §11).
+ * O pai remonta o diálogo (key) a cada abertura, então ele sempre começa limpo.
+ */
 export function CreateUserDialog({ open, onOpenChange, defaultRole }: CreateUserDialogProps) {
   const create = useCreateUser();
   const [created, setCreated] = React.useState<CreateUserValues | null>(null);
-  // remonta o formulário limpo a cada "Criar outro usuário"
+  // remonta o formulário limpo a cada "Criar outro"
   const [formKey, setFormKey] = React.useState(0);
 
   const handleOpenChange = (next: boolean) => {
     if (!next && create.isPending) return;
     onOpenChange(next);
-    if (!next) {
-      // limpa só depois da animação de saída
-      window.setTimeout(() => {
-        setCreated(null);
-        setFormKey((k) => k + 1);
-      }, 200);
-    }
   };
 
   const submit = async (values: CreateUserValues) => {
