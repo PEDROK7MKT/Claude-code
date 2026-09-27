@@ -1,3 +1,4 @@
+import path from "node:path";
 import type { NextConfig } from "next";
 
 /** Cabeçalhos de segurança de todas as respostas (app privado; não pode ser embutido em iframes). */
@@ -22,6 +23,9 @@ const TRACKER_HEADERS = [{ key: "Cache-Control", value: "public, max-age=3600, s
 
 const nextConfig: NextConfig = {
   poweredByHeader: false,
+  // O repositório tem outro package-lock na raiz (app Batcaverna); o CRM é um projeto à parte
+  turbopack: { root: path.join(__dirname) },
+  outputFileTracingRoot: path.join(__dirname),
   async headers() {
     return [
       { source: "/:path*", headers: SECURITY_HEADERS },
