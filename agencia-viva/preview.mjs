@@ -33,7 +33,7 @@ const pages = {}
 const walk = d => {
   for (const f of readdirSync(d)) {
     const p = join(d, f)
-    if (statSync(p).isDirectory()) walk(p)
+    if (statSync(p).isDirectory()) { if (f !== 'crm') walk(p) }
     else if (f.endsWith('.html')) {
       const rel = '/' + relative(siteDir, p).split(sep).join('/')
       const path = rel.endsWith('/index.html') ? rel.slice(0, -'index.html'.length) : rel
@@ -54,6 +54,18 @@ walk(siteDir)
 
 // Enxuga a prévia (painéis de visualização costumam travar acima de ~1 MB):
 // 1) tira o JSON-LD (só serve pro Google); 2) guarda cada SVG/caminho repetido uma vez só.
+// rodapé é igual em todas as páginas: guarda uma vez
+let footer = ''
+for (const k in pages) {
+  const m = pages[k].match(/<footer class="ftr">[\s\S]*?<\/footer>/)
+  if (!m) continue
+  if (!footer) footer = m[0]
+  if (m[0] === footer) pages[k] = pages[k].replace(m[0], '%%FOOTER%%')
+}
+// blocos de cartões de serviço repetidos entre páginas: guarda uma vez
+const blocks = [], bcount = {}
+for (const k in pages) for (const m of pages[k].match(/<div class="minis">[\s\S]*?<\/a>\s*<\/div>/g) || []) bcount[m] = (bcount[m] || 0) + 1
+for (const k in pages) pages[k] = pages[k].replace(/<div class="minis">[\s\S]*?<\/a>\s*<\/div>/g, m => { if (bcount[m] < 2) return m; let i = blocks.indexOf(m); if (i < 0) { blocks.push(m); i = blocks.length - 1 } return `%%B${i}%%` })
 const svgs = [], paths = []
 const idx = (arr, v) => { let i = arr.indexOf(v); if (i < 0) { arr.push(v); i = arr.length - 1 } return i }
 const counts = {}
@@ -75,7 +87,8 @@ const label = p => {
   return html.match(/<h1[^>]*>([\s\S]*?)<\/h1>/)[1].replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim()
 }
 const groups = [
-  ['Principais', Object.keys(pages).filter(p => ['/', '/servicos/', '/sobre/', '/contato/'].includes(p))],
+  ['Principais', Object.keys(pages).filter(p => ['/', '/servicos/', '/sobre/', '/contato/', '/privacidade/'].includes(p))],
+  ['Oeste e LEM', Object.keys(pages).filter(p => /oeste-da-bahia|-em-luis-eduardo-magalhaes\/$/.test(p) && !p.startsWith('/agencia-de-marketing-em-')).sort()],
   ['Serviços', Object.keys(pages).filter(p => p.startsWith('/servicos/') && p !== '/servicos/').sort()],
   ['Cidades', Object.keys(pages).filter(p => p.startsWith('/agencia-de-marketing-em-')).sort((a, b) => (a.includes('barreiras') ? -1 : b.includes('barreiras') ? 1 : a.localeCompare(b)))],
   ['Outras', ['/404.html']],
@@ -83,7 +96,7 @@ const groups = [
 const options = groups.map(([g, ps]) => `<optgroup label="${g}">${ps.map(p => `<option value="${p}">${label(p).replace(/&/g, '&amp;').replace(/</g, '&lt;')}</option>`).join('')}</optgroup>`).join('')
 
 // JSON dentro de <script>: escapar "</" para não fechar a tag
-const data = JSON.stringify({ pages, css, files, logo, svgs, paths }).replace(/<\//g, '<\\/')
+const data = JSON.stringify({ pages, css, files, logo, svgs, paths, footer, blocks }).replace(/<\//g, '<\\/')
 
 const shell = `<!doctype html>
 <html lang="pt-BR">
@@ -126,7 +139,7 @@ const shell = `<!doctype html>
 <script>
 var D = ${data}
 var f = document.getElementById('f'), sel = document.getElementById('page'), hist = []
-function fill(html) { html = html.replace(/%%S(\\d+)%%/g, function (_, i) { return D.svgs[i] }).replace(/%%P(\\d+)%%/g, function (_, i) { return D.paths[i] }); html = html.split('%%CSS%%').join(D.css).split('%%LOGO%%').join(D.logo); return html.replace(/%%F:([\\w.\\/-]+)%%/g, function (_, f) { return D.files[f] || '' }) }
+function fill(html) { html = html.split('%%FOOTER%%').join(D.footer).replace(/%%B(\\d+)%%/g, function (_, i) { return D.blocks[i] }).replace(/%%S(\\d+)%%/g, function (_, i) { return D.svgs[i] }).replace(/%%P(\\d+)%%/g, function (_, i) { return D.paths[i] }); html = html.split('%%CSS%%').join(D.css).split('%%LOGO%%').join(D.logo); return html.replace(/%%F:([\\w.\\/-]+)%%/g, function (_, f) { return D.files[f] || '' }) }
 function go(target, push) {
   var parts = target.split('#'), p = parts[0] || '/', hash = parts[1]
   if (!D.pages[p]) p = '/404.html'
