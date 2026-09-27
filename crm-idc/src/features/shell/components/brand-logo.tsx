@@ -1,26 +1,28 @@
 import * as React from "react";
 import Image from "next/image";
 
-import { IDC_COLORS, IDC_MARK } from "@/features/offline/lib/brand-icon";
+import { IDC_COLORS, IDC_LOGO_URL, IDC_MARK_URL } from "@/features/offline/lib/brand-icon";
 import { cn } from "@/lib/utils";
 
-/** Monograma "iDC" do logo da clínica ("i" dourado, "DC" cinza), mesmo desenho do favicon. */
-export function IdcMonogram({ className, ...props }: React.ComponentProps<"svg">) {
-  const { dot, stem, d, c } = IDC_MARK;
+/** Monograma "iDC" recortado do logo original (public/brand/idc-mark.png, ≈ 2:1). */
+export function IdcMonogram({ className, ...props }: Omit<React.ComponentProps<typeof Image>, "src" | "alt">) {
   return (
-    <svg viewBox="8 14 84 72" aria-hidden="true" focusable="false" className={className} {...props}>
-      <circle cx={dot.cx} cy={dot.cy} r={dot.r} fill={IDC_COLORS.gold} />
-      <path d={stem} fill={IDC_COLORS.gold} />
-      <path d={d} fill={IDC_COLORS.gray} fillRule="evenodd" />
-      <path d={c} fill={IDC_COLORS.gray} />
-    </svg>
+    <Image
+      src={IDC_MARK_URL}
+      alt=""
+      width={400}
+      height={201}
+      aria-hidden="true"
+      className={cn("h-auto object-contain", className)}
+      {...props}
+    />
   );
 }
 
 const MARK_SIZES = {
-  sm: { box: "size-8 rounded-lg", icon: "size-6" },
-  md: { box: "size-10 rounded-xl", icon: "size-8" },
-  lg: { box: "size-14 rounded-2xl", icon: "size-11" },
+  sm: { box: "size-8 rounded-lg", icon: "w-[26px]" },
+  md: { box: "size-10 rounded-xl", icon: "w-8" },
+  lg: { box: "size-14 rounded-2xl", icon: "w-11" },
 } as const;
 
 export type BrandMarkSize = keyof typeof MARK_SIZES;
@@ -33,7 +35,7 @@ interface BrandMarkProps extends React.ComponentProps<"span"> {
   alt?: string;
 }
 
-/** Selo quadrado da marca: logo configurado ou o monograma "iDC" sobre grafite. */
+/** Selo quadrado da marca: logo configurado ou o monograma "iDC" do logo original sobre branco. */
 export function BrandMark({ size = "md", logoUrl, alt = "", className, ...props }: BrandMarkProps) {
   const s = MARK_SIZES[size];
 
@@ -56,7 +58,11 @@ export function BrandMark({ size = "md", logoUrl, alt = "", className, ...props 
       aria-hidden={alt ? undefined : true}
       role={alt ? "img" : undefined}
       aria-label={alt || undefined}
-      className={cn("relative inline-flex shrink-0 items-center justify-center shadow-sm", s.box, className)}
+      className={cn(
+        "ring-border relative inline-flex shrink-0 items-center justify-center shadow-sm ring-1",
+        s.box,
+        className,
+      )}
       style={{ backgroundColor: IDC_COLORS.background }}
       {...props}
     >
@@ -74,8 +80,8 @@ interface BrandLogoProps extends React.ComponentProps<"div"> {
 }
 
 /**
- * Logo completo. Com logo configurado mostra só a imagem (ela já traz o nome);
- * sem logo, o monograma "iDC" + "Instituto Décio Carrilho".
+ * Logo completo. Com logo configurado em Configurações mostra essa imagem; senão o logo
+ * original do IDC ("stacked", com o slogan) ou o monograma + nome da clínica ("inline").
  */
 export function BrandLogo({
   logoUrl,
@@ -95,14 +101,25 @@ export function BrandLogo({
     );
   }
 
-  const stacked = layout === "stacked";
+  if (layout === "stacked") {
+    return (
+      <div data-slot="brand-logo" className={cn("flex flex-col items-center gap-2 text-center", className)} {...props}>
+        <Image
+          src={IDC_LOGO_URL}
+          alt={clinicName}
+          width={562}
+          height={348}
+          priority
+          className="h-auto w-56 max-w-full object-contain"
+        />
+        <p className="text-primary text-xs font-medium tracking-[0.18em] uppercase">{crmName}</p>
+      </div>
+    );
+  }
+
   return (
-    <div
-      data-slot="brand-logo"
-      className={cn("flex items-center", stacked ? "flex-col gap-3 text-center" : "gap-3", className)}
-      {...props}
-    >
-      <BrandMark size={stacked ? "lg" : "md"} />
+    <div data-slot="brand-logo" className={cn("flex items-center gap-3", className)} {...props}>
+      <BrandMark size="md" />
       <div className="min-w-0 space-y-0.5">
         <p className="text-foreground text-base leading-tight font-semibold tracking-tight text-balance">{clinicName}</p>
         <p className="text-primary text-xs font-medium tracking-[0.18em] uppercase">{crmName}</p>

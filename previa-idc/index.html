@@ -6,7 +6,8 @@
 <meta name="robots" content="noindex, nofollow">
 <meta name="theme-color" content="#0D6E6E">
 <meta name="description" content="Prévia do CRM do Instituto Décio Carrilho com dados de exemplo.">
-<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+<link rel="icon" type="image/png" sizes="48x48" href="/favicon-48.png">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <title>Prévia CRM IDC</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -97,7 +98,7 @@ p{margin:0}
 .app{flex:1;min-height:0;display:flex;position:relative}
 .sidebar{width:var(--sidebar-w);flex:none;background:var(--surface);border-right:1px solid var(--border);display:flex;flex-direction:column;overflow-y:auto;z-index:30}
 .sb-brand{display:flex;align-items:center;gap:10px;padding:18px 16px 14px;min-height:68px}
-.logo-mark{width:36px;height:36px;flex:none;display:block}
+.logo-mark{height:28px;width:auto;max-width:100%;flex:none;display:block;object-fit:contain}
 .sb-brand-text{display:flex;flex-direction:column;min-width:0;line-height:1.2}
 .sb-brand-text strong{font-size:15px;font-weight:700;letter-spacing:-.01em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .sb-brand-text span{font-size:11.5px;color:var(--muted);white-space:nowrap}
@@ -472,7 +473,7 @@ body.kb-dragging .kb-col.kb-over.kb-invalid{opacity:.7;box-shadow:inset 0 0 0 2p
 .code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:12px;line-height:1.5;white-space:pre;overflow:auto;min-height:150px;resize:vertical}
 .pdf-page{width:min(300px,100%);aspect-ratio:210/297;background:#fff;border:1px solid var(--border);box-shadow:var(--shadow-lg);border-radius:3px;padding:16px 16px 12px;display:flex;flex-direction:column;gap:8px;margin-inline:auto;font-size:7px;color:#1A1A1A;overflow:hidden}
 .pdf-h{display:flex;align-items:center;gap:6px;border-bottom:1.5px solid var(--primary);padding-bottom:6px}
-.pdf-h svg{width:18px;height:18px}
+.pdf-h img{height:12px;width:auto}
 .pdf-h b{font-size:9px}
 .pdf-kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:4px}
 .pdf-kpis div{border:1px solid var(--border);border-radius:3px;padding:3px 4px;display:grid}
@@ -515,10 +516,12 @@ body.kb-dragging .kb-col.kb-over.kb-invalid{opacity:.7;box-shadow:inset 0 0 0 2p
 .sk-line{height:14px;width:40%}
 
 /* ---------- Login ---------- */
-.login{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px;padding-block:28px;padding-inline:16px;overflow-y:auto;background:radial-gradient(1200px 500px at 50% -10%,var(--primary-soft),transparent 70%),var(--bg)}
+.login{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;gap:20px;padding-block:28px;padding-inline:16px;overflow-y:auto;background:radial-gradient(1200px 500px at 50% -10%,var(--primary-soft),transparent 70%),var(--bg)}
 .login-card{width:min(410px,100%);background:var(--surface);border-radius:16px;box-shadow:0 12px 36px rgba(13,60,60,.10),0 1px 3px rgba(0,0,0,.06);padding:30px 28px 26px;display:grid;gap:18px}
 .login-brand{display:flex;align-items:center;gap:12px}
-.login-brand .logo-mark{width:48px;height:48px}
+.login-logo{display:block;width:min(200px,75%);height:auto;margin:0 auto}
+.login>:first-child{margin-top:auto}
+.login>:last-child{margin-bottom:auto}
 .login-brand strong{display:block;font-size:18px;font-weight:700;letter-spacing:-.01em;line-height:1.2}
 .login-brand span{font-size:13px;color:var(--muted)}
 .login-card form{display:grid;gap:14px}
@@ -839,7 +842,7 @@ const ICONS = {
   save: '<path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/>'
 };
 const icon = (n, cls) => '<svg class="i' + (cls ? ' ' + cls : '') + '" viewBox="0 0 24 24" aria-hidden="true">' + (ICONS[n] || '') + '</svg>';
-const LOGO = '<svg class="logo-mark" viewBox="0 0 100 100" aria-hidden="true"><rect width="100" height="100" rx="22" fill="#2B2B2B"/><g transform="translate(0.5 0)"><circle cx="19" cy="27" r="6.5" fill="#E2B272"/><path d="M17.5 37.5C23.5 41 27 51 26.2 62.5C25.6 71.5 22.6 77.5 16.6 80C13.2 72 12 62.5 12.8 53C13.4 45.5 15.2 40.5 17.5 37.5Z" fill="#E2B272"/><path fill="#A7A7A7" fill-rule="evenodd" d="M31 22H44C62 22 72 34 72 50C72 66 62 78 44 78H31ZM37.5 24.6V75.4H44C58.5 75.4 66 65 66 50C66 35 58.5 24.6 44 24.6Z"/><path fill="#A7A7A7" d="M86.7 31.4A25 25 0 1 0 86.7 68.6L85.5 66.3A21 21 0 1 1 85.5 33.7Z"/></g></svg>';
+const LOGO = '<img class="logo-mark" src="/idc-mark.png" alt="" width="400" height="201">';
 
 /* =====================================================================
    4. Gerador de dados de exemplo (PRNG com semente fixa)
@@ -2697,7 +2700,7 @@ function roleChange(sel) {
    18. Login
    ===================================================================== */
 function renderLogin() {
-  $('#login').innerHTML = `<div class="login-card"><div class="login-brand">${LOGO}<div><strong>${esc(S.settings.crmName)}</strong><span>Instituto Décio Carrilho</span></div></div>
+  $('#login').innerHTML = `<div class="login-card"><div style="display:grid;gap:6px;text-align:center"><img class="login-logo" src="/idc-logo.png" alt="Instituto Décio Carrilho — Odontologia, Estética e Medicina Especializada" width="562" height="348"><span class="lbl" style="letter-spacing:.14em;text-transform:uppercase;font-size:11.5px;color:var(--primary)">${esc(S.settings.crmName)}</span></div>
     <div><h1 id="login-title" style="font-size:20px;font-weight:600">Entrar no painel</h1><p class="muted" style="font-size:13.5px;margin-top:4px">Acesso restrito à equipe da clínica. As contas são criadas pelo gestor.</p></div>
     <form id="login-form" novalidate>${fieldInput('login-email', 'Email', 'pedro@exemplo.com.br', { type: 'email' })}${fieldInput('login-pass', 'Senha', 'demonstracao', { type: 'password' })}<button type="submit" class="btn btn-primary">Entrar</button></form>
     <div class="login-demo"><span class="lbl">Contas de demonstração</span><button type="button" class="btn btn-outline" data-action="login-as" data-role="admin"><span class="avatar sm" aria-hidden="true">P</span>Pedro<small>Gestor de tráfego</small></button><button type="button" class="btn btn-outline" data-action="login-as" data-role="dentist"><span class="avatar sm" aria-hidden="true">DC</span>Dr. Décio Carrilho<small>Dentista</small></button><p class="field-hint">Nesta prévia qualquer email e senha funcionam. Emails com “decio” entram como dentista.</p></div>

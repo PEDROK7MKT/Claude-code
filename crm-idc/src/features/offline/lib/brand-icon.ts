@@ -1,46 +1,32 @@
 /**
- * Ícone do app (PWA / favicon): monograma "iDC" do Instituto Décio Carrilho —
- * "i" dourado e "DC" cinza sobre grafite, como no logo da clínica.
- * Fonte única do desenho — gera o src/app/icon.svg (conferido por teste), os PNGs
- * de src/app/apple-icon.tsx e o selo BrandMark do shell.
+ * Ícone do app (PWA / favicon): monograma "iDC" recortado do logo original do
+ * Instituto Décio Carrilho ("i" dourado, "DC" cinza) sobre fundo branco.
+ * Fonte única — gera o src/app/icon.svg (conferido por teste) e os PNGs de
+ * src/app/apple-icon.tsx. O logo completo fica em public/brand/.
  */
+import { IDC_MARK_PNG } from "./brand-assets";
 
+/** Cores amostradas do logo original. */
 export const IDC_COLORS = {
-  background: "#2B2B2B",
-  gold: "#E2B272",
-  gray: "#A7A7A7",
+  gold: "#DBB16F",
+  gray: "#AAAAAA",
+  background: "#FFFFFF",
 } as const;
 
-/**
- * Monograma desenhado num espaço 100×100 (letras ocupam x 12–87 · y 20–80,
- * centro ≈ 49,5 × 50). Pontos usados pelo teste da zona segura.
- */
-export const IDC_MARK = {
-  /** Pingo do "i" */
-  dot: { cx: 19, cy: 27, r: 6.5 },
-  /** Haste do "i" (folha inclinada) */
-  stem: "M17.5 37.5C23.5 41 27 51 26.2 62.5C25.6 71.5 22.6 77.5 16.6 80C13.2 72 12 62.5 12.8 53C13.4 45.5 15.2 40.5 17.5 37.5Z",
-  /** "D" com haste grossa e bojo de contraste (evenodd) */
-  d: "M31 22H44C62 22 72 34 72 50C72 66 62 78 44 78H31ZM37.5 24.6V75.4H44C58.5 75.4 66 65 66 50C66 35 58.5 24.6 44 24.6Z",
-  /** "C" grande sobreposto ao "D" */
-  c: "M86.7 31.4A25 25 0 1 0 86.7 68.6L85.5 66.3A21 21 0 1 1 85.5 33.7Z",
-  /** Caixa das letras no espaço 100×100 */
-  bounds: { x1: 12, y1: 20, x2: 87, y2: 80 },
-} as const;
+/** Arquivos do logo servidos de public/brand. */
+export const IDC_LOGO_URL = "/brand/idc-logo.png";
+export const IDC_MARK_URL = "/brand/idc-mark.png";
+
+/** Proporção largura/altura do monograma (≈ 2:1). */
+export const IDC_MARK_RATIO = IDC_MARK_PNG.width / IDC_MARK_PNG.height;
+
+/** `data:` URI do PNG do monograma (fundo transparente). */
+export function markPngDataUri(): string {
+  return `data:image/png;base64,${IDC_MARK_PNG.base64}`;
+}
 
 function round(n: number): number {
   return Math.round(n * 100) / 100;
-}
-
-/** Letras do monograma (sem fundo) como elementos SVG. */
-export function idcMarkShapes(): string {
-  const { dot, stem, d, c } = IDC_MARK;
-  return [
-    `<circle cx="${dot.cx}" cy="${dot.cy}" r="${dot.r}" fill="${IDC_COLORS.gold}"/>`,
-    `<path d="${stem}" fill="${IDC_COLORS.gold}"/>`,
-    `<path d="${d}" fill="${IDC_COLORS.gray}" fill-rule="evenodd"/>`,
-    `<path d="${c}" fill="${IDC_COLORS.gray}"/>`,
-  ].join("");
 }
 
 interface IconLayout {
@@ -48,53 +34,45 @@ interface IconLayout {
   box: number;
   /** Raio dos cantos do fundo (0 = quadrado inteiro, para maskable/iOS). */
   radius: number;
-  /** Escala do espaço 100×100 do monograma. */
-  scale: number;
+  /** Largura do monograma em relação ao lado do ícone. */
+  markWidth: number;
 }
 
 /**
- * - `favicon`: 64×64, cantos arredondados, letras grandes (legível a 16px).
- * - `maskable`: 512×512 sangrado; letras dentro da zona segura (círculo de 40%),
+ * - `favicon`: 64×64, cantos arredondados, monograma largo (legível a 16px).
+ * - `maskable`: 512×512 sangrado; monograma dentro da zona segura (círculo de 40%),
  *   serve para Android (maskable/any) e iOS (apple-touch-icon, sem transparência).
  */
 const LAYOUTS: Record<"favicon" | "maskable", IconLayout> = {
-  favicon: { box: 64, radius: 14, scale: 0.64 },
-  maskable: { box: 512, radius: 0, scale: 3.9 },
+  favicon: { box: 64, radius: 14, markWidth: 0.9 },
+  maskable: { box: 512, radius: 0, markWidth: 0.66 },
 };
 
 export type AppIconVariant = keyof typeof LAYOUTS;
 
-/** Deslocamento que centraliza as letras (centro da caixa) no ícone. */
-export function markTranslate(variant: AppIconVariant): [number, number] {
+/** Caixa do monograma centralizado no ícone. */
+export function markBox(variant: AppIconVariant): { x: number; y: number; width: number; height: number } {
   const l = LAYOUTS[variant];
-  const { x1, y1, x2, y2 } = IDC_MARK.bounds;
-  const cx = (x1 + x2) / 2;
-  const cy = (y1 + y2) / 2;
-  return [round(l.box / 2 - cx * l.scale), round(l.box / 2 - cy * l.scale)];
+  const width = round(l.box * l.markWidth);
+  const height = round(width / IDC_MARK_RATIO);
+  return { x: round((l.box - width) / 2), y: round((l.box - height) / 2), width, height };
 }
 
 /** SVG completo do ícone (string), sem dependências externas. */
 export function appIconSvg(variant: AppIconVariant): string {
   const l = LAYOUTS[variant];
-  const [tx, ty] = markTranslate(variant);
+  const m = markBox(variant);
   const rx = l.radius > 0 ? ` rx="${l.radius}"` : "";
 
   return [
     `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${l.box} ${l.box}" width="${l.box}" height="${l.box}">`,
     `<rect width="${l.box}" height="${l.box}"${rx} fill="${IDC_COLORS.background}"/>`,
-    `<g transform="translate(${tx} ${ty}) scale(${l.scale})">`,
-    idcMarkShapes(),
-    `</g>`,
+    `<image href="${markPngDataUri()}" x="${m.x}" y="${m.y}" width="${m.width}" height="${m.height}"/>`,
     `</svg>`,
   ].join("");
 }
 
-/** Escala usada por um variante (exposta para o teste da zona segura). */
-export function iconScale(variant: AppIconVariant): number {
-  return LAYOUTS[variant].scale;
-}
-
-/** `data:` URI do SVG (para <img> dentro do ImageResponse). */
+/** `data:` URI do SVG do ícone. */
 export function appIconDataUri(variant: AppIconVariant): string {
   return `data:image/svg+xml;charset=utf-8,${encodeURIComponent(appIconSvg(variant))}`;
 }
