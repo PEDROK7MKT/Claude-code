@@ -24,12 +24,12 @@
   --popover-foreground: #1a1a1a;
   --primary: var(--brand-primary);
   --primary-foreground: #ffffff;
-  --secondary: #eef4f4;
-  --secondary-foreground: #0b4f4f;
+  --secondary: color-mix(in srgb, var(--brand-primary) 7%, white);
+  --secondary-foreground: color-mix(in srgb, var(--brand-primary) 70%, black);
   --muted: #f0f0f0;
   --muted-foreground: #6b7280;
-  --accent: #e6f2f2;
-  --accent-foreground: #0b4f4f;
+  --accent: color-mix(in srgb, var(--brand-primary) 10%, white);
+  --accent-foreground: color-mix(in srgb, var(--brand-primary) 70%, black);
   --gold: var(--brand-accent);
   --gold-foreground: #3d2f00;
   --destructive: #ef4444;
@@ -50,8 +50,8 @@
   --sidebar-foreground: #1a1a1a;
   --sidebar-primary: var(--brand-primary);
   --sidebar-primary-foreground: #ffffff;
-  --sidebar-accent: #e6f2f2;
-  --sidebar-accent-foreground: #0b4f4f;
+  --sidebar-accent: var(--accent);
+  --sidebar-accent-foreground: var(--accent-foreground);
   --sidebar-border: #e4e4e7;
   --sidebar-ring: var(--brand-primary);
 }

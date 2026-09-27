@@ -2,6 +2,7 @@
  * Navegação do app autenticado: itens da sidebar (spec §5), item ativo e trilha do header.
  * Funções puras — os ícones ficam no componente (app-sidebar.tsx).
  */
+import { formatNumber } from "@/lib/format";
 
 export type NavItemId = "dashboard" | "leads" | "kanban" | "google-ads" | "gmn" | "relatorios" | "configuracoes";
 
@@ -90,5 +91,5 @@ export function formatNavBadgeCount(count: number | null | undefined): string | 
 
 /** "1 novo lead" / "3 novos leads" (leitores de tela e tooltip). */
 export function describeNewLeads(count: number): string {
-  return count === 1 ? "1 novo lead" : `${count.toLocaleString("pt-BR")} novos leads`;
+  return count === 1 ? "1 novo lead" : `${formatNumber(count)} novos leads`;
 }

@@ -1,6 +1,12 @@
 import { describe, expect, it } from "vitest";
 import { NETWORK_ERROR_MESSAGE } from "@/lib/errors";
-import { INACTIVE_ACCOUNT_MESSAGE, INVALID_CREDENTIALS_MESSAGE, loginErrorMessage, loginSchema } from "./login";
+import {
+  INACTIVE_ACCOUNT_MESSAGE,
+  INVALID_CREDENTIALS_MESSAGE,
+  isInactiveAccountError,
+  loginErrorMessage,
+  loginSchema,
+} from "./login";
 
 describe("loginSchema", () => {
   it("aceita e-mail válido (aparado) e senha", () => {
@@ -45,5 +51,15 @@ describe("loginErrorMessage", () => {
       "Muitas tentativas. Aguarde um momento e tente novamente.",
     );
     expect(loginErrorMessage(null)).toBe("Não foi possível concluir a operação. Tente novamente.");
+  });
+});
+
+describe("isInactiveAccountError", () => {
+  it("detecta usuário banido pelo código ou pela mensagem", () => {
+    expect(isInactiveAccountError({ code: "user_banned" })).toBe(true);
+    expect(isInactiveAccountError({ message: "User is banned" })).toBe(true);
+    expect(isInactiveAccountError({ code: "invalid_credentials" })).toBe(false);
+    expect(isInactiveAccountError(new Error("Failed to fetch"))).toBe(false);
+    expect(isInactiveAccountError(null)).toBe(false);
   });
 });

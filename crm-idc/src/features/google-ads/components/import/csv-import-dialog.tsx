@@ -109,6 +109,17 @@ function formatBytes(bytes: number): string {
   return `${formatDecimal(bytes / (1024 * 1024))} MB`;
 }
 
+/** Bytes do arquivo (Blob.arrayBuffer ou FileReader em navegadores antigos). */
+function readFileBytes(file: File): Promise<Uint8Array> {
+  if (typeof file.arrayBuffer === "function") return file.arrayBuffer().then((buffer) => new Uint8Array(buffer));
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(new Uint8Array(reader.result as ArrayBuffer));
+    reader.onerror = () => reject(reader.error ?? new Error("Falha ao ler o arquivo"));
+    reader.readAsArrayBuffer(file);
+  });
+}
+
 function CsvImporter({ allMetrics, campaignOptions, todayKey, importMutation, onClose }: CsvImporterProps) {
   const [file, setFile] = React.useState<LoadedFile | null>(null);
   const [reading, setReading] = React.useState(false);
@@ -152,8 +163,8 @@ function CsvImporter({ allMetrics, campaignOptions, todayKey, importMutation, on
     }
     setReading(true);
     try {
-      const buffer = await selected.arrayBuffer();
-      setFile({ name: selected.name, size: selected.size, text: decodeCsvBytes(new Uint8Array(buffer)) });
+      const bytes = await readFileBytes(selected);
+      setFile({ name: selected.name, size: selected.size, text: decodeCsvBytes(bytes) });
       setDefaultCampaign(null);
       setOnlyIssues(false);
     } catch {

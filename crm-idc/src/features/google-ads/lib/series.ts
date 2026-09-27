@@ -77,6 +77,17 @@ export function pickGranularity(range: DateKeyRange): Granularity {
   return "month";
 }
 
+/**
+ * Barras agrupadas (conversões × leads) ficam finas demais com muitos dias:
+ * por dia até ~6 semanas, depois por semana/mês.
+ */
+export function pickComparisonGranularity(range: DateKeyRange): Granularity {
+  const days = rangeLength(range);
+  if (days <= 45) return "day";
+  if (days <= 400) return "week";
+  return "month";
+}
+
 /** Chave do agrupamento: o próprio dia, a segunda-feira da semana ou o dia 1 do mês. */
 export function bucketKey(dateKey: string, granularity: Granularity): string {
   if (granularity === "day") return dateKey;

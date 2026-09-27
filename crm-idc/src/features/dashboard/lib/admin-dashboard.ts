@@ -4,7 +4,7 @@
  * Tudo em cima de @/lib/metrics (já testado) — aqui só a composição do dashboard.
  */
 import { LEAD_STATUSES, STATUS_META } from "@/lib/constants";
-import { getPeriodRanges, type DateInput, type DateRange, type PeriodKey } from "@/lib/dates";
+import { getPeriodRanges, PERIOD_OPTIONS, type DateInput, type DateRange, type PeriodKey } from "@/lib/dates";
 import { percentChange } from "@/lib/format";
 import {
   computeLeadKpis,
@@ -26,31 +26,53 @@ import { tooltipDayLabel } from "./labels";
 // Intervalos
 // -----------------------------------------------------------------------------
 
+/**
+ * Intervalos do período selecionado. Os nomes evitam `.current` de propósito:
+ * o React Compiler trata qualquer `x.current` como acesso a ref.
+ */
 export interface AdminDashboardRanges {
   period: PeriodKey;
-  current: DateRange;
-  previous: DateRange;
+  currentRange: DateRange;
+  previousRange: DateRange;
   /** Janela do gráfico "Leads por dia": últimos 30 dias, ou o período se for maior. */
-  trend: DateRange;
-  /** Uma única consulta de leads [createdFrom, createdTo) cobre período atual, anterior e gráfico. */
-  leadsQuery: { createdFrom: string; createdTo: string };
-  /** Métricas do Google Ads do início do período anterior ao fim do atual (inclusive). */
-  metricsQuery: { fromKey: string; toKey: string };
+  trendRange: DateRange;
 }
 
 export function getAdminDashboardRanges(period: PeriodKey, now: DateInput = Date.now()): AdminDashboardRanges {
   const { current, previous } = getPeriodRanges(period, now);
   const last30 = getPeriodRanges("30d", now).current;
   // Ambos terminam amanhã 00:00; vale o que começa antes.
-  const trend = last30.from.getTime() < current.from.getTime() ? last30 : current;
-  const fetchFrom = Math.min(previous.from.getTime(), trend.from.getTime());
+  const trendRange = last30.from.getTime() < current.from.getTime() ? last30 : current;
+  return { period, currentRange: current, previousRange: previous, trendRange };
+}
+
+export interface DashboardFetchWindow {
+  /** Leads criados em [createdFrom, createdTo) */
+  leadsQuery: { createdFrom: string; createdTo: string };
+  /** Métricas do Google Ads de fromKey a toKey (inclusive) */
+  metricsQuery: { fromKey: string; toKey: string };
+}
+
+/**
+ * Uma única janela de consulta que cobre TODOS os períodos do seletor (atual,
+ * anterior e gráfico de 30 dias). A chave da consulta só muda na virada do dia,
+ * então trocar o período é instantâneo — tudo é recortado em memória — e
+ * funciona offline com o cache persistido. São ~60 dias de leads (poucas centenas).
+ */
+export function getDashboardFetchWindow(now: DateInput = Date.now()): DashboardFetchWindow {
+  const all = PERIOD_OPTIONS.map((option) => getAdminDashboardRanges(option.value, now));
+  let from = all[0].previousRange.from;
+  let fromKey = all[0].previousRange.fromKey;
+  for (const ranges of all) {
+    for (const range of [ranges.previousRange, ranges.trendRange]) {
+      if (range.from.getTime() < from.getTime()) from = range.from;
+      if (range.fromKey < fromKey) fromKey = range.fromKey;
+    }
+  }
+  const { currentRange } = all[0];
   return {
-    period,
-    current,
-    previous,
-    trend,
-    leadsQuery: { createdFrom: new Date(fetchFrom).toISOString(), createdTo: current.to.toISOString() },
-    metricsQuery: { fromKey: previous.fromKey, toKey: current.toKey },
+    leadsQuery: { createdFrom: from.toISOString(), createdTo: currentRange.to.toISOString() },
+    metricsQuery: { fromKey, toKey: currentRange.toKey },
   };
 }
 
@@ -68,11 +90,11 @@ export function filterMetricsByRange<T extends Pick<DailyMetric, "date">>(
 /** Leads do período atual e do anterior, a partir da consulta única. */
 export function splitLeadsByPeriod<T extends Pick<Lead, "created_at">>(
   leads: readonly T[],
-  ranges: Pick<AdminDashboardRanges, "current" | "previous">,
-): { current: T[]; previous: T[] } {
+  ranges: Pick<AdminDashboardRanges, "currentRange" | "previousRange">,
+): { periodLeads: T[]; previousLeads: T[] } {
   return {
-    current: filterByCreatedAt(leads, ranges.current.from, ranges.current.to),
-    previous: filterByCreatedAt(leads, ranges.previous.from, ranges.previous.to),
+    periodLeads: filterByCreatedAt(leads, ranges.currentRange.from, ranges.currentRange.to),
+    previousLeads: filterByCreatedAt(leads, ranges.previousRange.from, ranges.previousRange.to),
   };
 }
 
@@ -168,7 +190,7 @@ export interface TrendPoint {
   date: string;
   /** dd/MM (eixo) */
   label: string;
-  /** "sáb, 26/09/2026" (tooltip) */
+  /** "sábado, 26/09/2026" (tooltip) */
   tooltipLabel: string;
   count: number;
   /** Valor da reta de tendência (mínimos quadrados), nunca negativo */

@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { capitalize, tooltipDayLabel, truncateLabel, weekdayHeading } from "./labels";
+import { axisLabelWidth, capitalize, longDateLabel, tooltipDayLabel, truncateLabel, weekdayHeading } from "./labels";
 
 describe("weekdayHeading", () => {
   it("dia da semana sem '-feira', com inicial maiúscula", () => {
@@ -17,8 +17,16 @@ describe("weekdayHeading", () => {
 
 describe("tooltipDayLabel", () => {
   it("dia abreviado + data completa", () => {
-    expect(tooltipDayLabel("2026-09-26")).toBe("sáb, 26/09/2026");
-    expect(tooltipDayLabel("2026-09-21")).toBe("seg, 21/09/2026");
+    expect(tooltipDayLabel("2026-09-26")).toBe("sábado, 26/09/2026");
+    expect(tooltipDayLabel("2026-09-21")).toBe("segunda, 21/09/2026");
+  });
+});
+
+describe("longDateLabel", () => {
+  it("data por extenso no fuso da clínica", () => {
+    expect(longDateLabel("2026-09-24T15:00:00Z")).toBe("Quinta-feira, 24 de setembro");
+    // 01/10 01:00 UTC ainda é 30/09 em Barreiras
+    expect(longDateLabel("2026-10-01T01:00:00Z")).toBe("Quarta-feira, 30 de setembro");
   });
 });
 
@@ -43,5 +51,15 @@ describe("truncateLabel", () => {
 
   it("não remove texto com limite inválido", () => {
     expect(truncateLabel("abc", 1)).toBe("abc");
+  });
+});
+
+describe("axisLabelWidth", () => {
+  it("proporcional ao rótulo mais longo, com mínimo e máximo", () => {
+    expect(axisLabelWidth(["dentista", "canal"])).toBe(Math.round(8 * 6.8 + 12));
+    expect(axisLabelWidth([])).toBe(48);
+    expect(axisLabelWidth(["a"])).toBe(48);
+    expect(axisLabelWidth(["x".repeat(60)])).toBe(140);
+    expect(axisLabelWidth(["abcd"], { charWidth: 10, padding: 0, min: 0 })).toBe(40);
   });
 });

@@ -66,6 +66,20 @@ export function comparisonLabel(period: PeriodKey): string {
   }
 }
 
+/** Complemento da descrição do cabeçalho: "comparado com os 7 dias anteriores". */
+export function comparisonSentence(period: PeriodKey): string {
+  switch (period) {
+    case "today":
+      return "comparado com ontem";
+    case "7d":
+      return "comparado com os 7 dias anteriores";
+    case "30d":
+      return "comparado com os 30 dias anteriores";
+    case "month":
+      return "comparado com o mesmo período do mês anterior";
+  }
+}
+
 /** "27/09/2026" · "21/09 – 27/09/2026" · "29/12/2025 – 04/01/2026" */
 export function formatRangeLabel(range: Pick<DateRange, "fromKey" | "toKey">): string {
   const { fromKey, toKey } = range;

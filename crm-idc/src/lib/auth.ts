@@ -2,6 +2,7 @@ import "server-only";
 
 import { cache } from "react";
 import { redirect } from "next/navigation";
+import { isNetworkError } from "@/lib/errors";
 import { createClient } from "@/lib/supabase/server";
 import type { Profile } from "@/types/database";
 
@@ -28,9 +29,18 @@ type SessionState =
 const getSessionState = cache(async (): Promise<SessionState> => {
   const supabase = await createClient();
   const { data: userData, error } = await supabase.auth.getUser();
+  // Falha de rede/5xx do Auth não é "deslogado": deixa o error boundary oferecer "Tentar novamente"
+  // (tratar como anônimo causaria loop /login ↔ /dashboard, já que o proxy valida o JWT localmente).
+  if (error && (isNetworkError(error) || (typeof error.status === "number" && error.status >= 500))) throw error;
   if (error || !userData.user) return { status: "anonymous" };
 
-  const { data: profile } = await supabase.from("profiles").select("*").eq("id", userData.user.id).maybeSingle();
+  const { data: profile, error: profileError } = await supabase
+    .from("profiles")
+    .select("*")
+    .eq("id", userData.user.id)
+    .maybeSingle();
+  // Erro transitório do banco não pode desativar/deslogar o usuário
+  if (profileError) throw profileError;
   if (!profile || !profile.active) return { status: "inactive" };
 
   return { status: "ok", session: { userId: userData.user.id, email: userData.user.email ?? null, profile } };

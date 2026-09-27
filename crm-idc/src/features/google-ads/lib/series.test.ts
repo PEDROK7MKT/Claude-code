@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { bucketKey, buildAdsChartSeries, hasSeriesValues, pickGranularity } from "./series";
+import { bucketKey, buildAdsChartSeries, hasSeriesValues, pickComparisonGranularity, pickGranularity } from "./series";
 
 const metric = (date: string, impressions: number, clicks: number, cost: number, conversions: number) => ({
   date,
@@ -14,6 +14,12 @@ describe("pickGranularity / bucketKey", () => {
     expect(pickGranularity({ from: "2026-07-01", to: "2026-09-27" })).toBe("day");
     expect(pickGranularity({ from: "2026-01-01", to: "2026-09-27" })).toBe("week");
     expect(pickGranularity({ from: "2024-01-01", to: "2026-09-27" })).toBe("month");
+  });
+
+  it("comparativo agrupado passa a semanal depois de ~6 semanas", () => {
+    expect(pickComparisonGranularity({ from: "2026-08-29", to: "2026-09-27" })).toBe("day");
+    expect(pickComparisonGranularity({ from: "2026-06-30", to: "2026-09-27" })).toBe("week");
+    expect(pickComparisonGranularity({ from: "2024-01-01", to: "2026-09-27" })).toBe("month");
   });
 
   it("semana começa na segunda-feira", () => {

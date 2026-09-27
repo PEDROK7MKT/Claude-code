@@ -6,6 +6,7 @@ import {
   buildTrendSeries,
   filterMetricsByRange,
   getAdminDashboardRanges,
+  getDashboardFetchWindow,
   kpiChange,
   sourceShares,
   splitLeadsByPeriod,
@@ -30,51 +31,75 @@ function metricRow(date: string, cost: number) {
 }
 
 describe("getAdminDashboardRanges", () => {
-  it("7 dias: gráfico de 30 dias e consulta única cobrindo tudo", () => {
+  it("7 dias: compara com os 7 anteriores; gráfico de 30 dias", () => {
     const r = getAdminDashboardRanges("7d", NOW);
-    expect(r.current.fromKey).toBe("2026-09-18");
-    expect(r.current.toKey).toBe("2026-09-24");
-    expect(r.previous.fromKey).toBe("2026-09-11");
-    expect(r.previous.toKey).toBe("2026-09-17");
-    expect(r.trend.fromKey).toBe("2026-08-26");
-    expect(r.trend.toKey).toBe("2026-09-24");
-    expect(r.leadsQuery).toEqual({
-      createdFrom: "2026-08-26T03:00:00.000Z",
-      createdTo: "2026-09-25T03:00:00.000Z",
-    });
-    expect(r.metricsQuery).toEqual({ fromKey: "2026-09-11", toKey: "2026-09-24" });
+    expect(r.currentRange.fromKey).toBe("2026-09-18");
+    expect(r.currentRange.toKey).toBe("2026-09-24");
+    expect(r.previousRange.fromKey).toBe("2026-09-11");
+    expect(r.previousRange.toKey).toBe("2026-09-17");
+    expect(r.trendRange.fromKey).toBe("2026-08-26");
+    expect(r.trendRange.toKey).toBe("2026-09-24");
   });
 
   it("hoje: compara com ontem; gráfico continua com 30 dias", () => {
     const r = getAdminDashboardRanges("today", NOW);
-    expect(r.current.fromKey).toBe("2026-09-24");
-    expect(r.previous.fromKey).toBe("2026-09-23");
-    expect(r.trend.fromKey).toBe("2026-08-26");
-    expect(r.leadsQuery.createdFrom).toBe("2026-08-26T03:00:00.000Z");
-    expect(r.metricsQuery).toEqual({ fromKey: "2026-09-23", toKey: "2026-09-24" });
+    expect(r.currentRange.fromKey).toBe("2026-09-24");
+    expect(r.currentRange.toKey).toBe("2026-09-24");
+    expect(r.previousRange.fromKey).toBe("2026-09-23");
+    expect(r.trendRange.fromKey).toBe("2026-08-26");
   });
 
-  it("30 dias: gráfico = período; consulta começa no período anterior", () => {
+  it("30 dias: gráfico = período", () => {
     const r = getAdminDashboardRanges("30d", NOW);
-    expect(r.trend).toEqual(r.current);
-    expect(r.previous.fromKey).toBe("2026-07-27");
-    expect(r.leadsQuery.createdFrom).toBe("2026-07-27T03:00:00.000Z");
+    expect(r.trendRange).toEqual(r.currentRange);
+    expect(r.previousRange.fromKey).toBe("2026-07-27");
+    expect(r.previousRange.toKey).toBe("2026-08-25");
   });
 
   it("mês atual curto: gráfico usa os últimos 30 dias", () => {
     const r = getAdminDashboardRanges("month", NOW);
-    expect(r.current.fromKey).toBe("2026-09-01");
-    expect(r.previous.fromKey).toBe("2026-08-01");
-    expect(r.previous.toKey).toBe("2026-08-24");
-    expect(r.trend.fromKey).toBe("2026-08-26");
-    expect(r.leadsQuery.createdFrom).toBe("2026-08-01T03:00:00.000Z");
+    expect(r.currentRange.fromKey).toBe("2026-09-01");
+    expect(r.previousRange.fromKey).toBe("2026-08-01");
+    expect(r.previousRange.toKey).toBe("2026-08-24");
+    expect(r.trendRange.fromKey).toBe("2026-08-26");
   });
 
   it("mês de 31 dias completo: gráfico cobre o mês inteiro", () => {
     const r = getAdminDashboardRanges("month", "2026-08-31T20:00:00Z");
-    expect(r.current.fromKey).toBe("2026-08-01");
-    expect(r.trend.fromKey).toBe("2026-08-01");
-    expect(r.trend.toKey).toBe("2026-08-31");
+    expect(r.currentRange.fromKey).toBe("2026-08-01");
+    expect(r.trendRange.fromKey).toBe("2026-08-01");
+    expect(r.trendRange.toKey).toBe("2026-08-31");
+  });
+});
+
+describe("getDashboardFetchWindow", () => {
+  it("cobre todos os períodos e comparações com uma única consulta", () => {
+    const w = getDashboardFetchWindow(NOW);
+    // o mais antigo: início dos 30 dias anteriores (27/07)
+    expect(w.leadsQuery).toEqual({
+      createdFrom: "2026-07-27T03:00:00.000Z",
+      createdTo: "2026-09-25T03:00:00.000Z",
+    });
+    expect(w.metricsQuery).toEqual({ fromKey: "2026-07-27", toKey: "2026-09-24" });
+    for (const period of ["today", "7d", "30d", "month"] as const) {
+      const r = getAdminDashboardRanges(period, NOW);
+      for (const range of [r.currentRange, r.previousRange, r.trendRange]) {
+        expect(range.from.getTime()).toBeGreaterThanOrEqual(Date.parse(w.leadsQuery.createdFrom));
+        expect(range.to.getTime()).toBeLessThanOrEqual(Date.parse(w.leadsQuery.createdTo));
+        expect(range.fromKey >= w.metricsQuery.fromKey).toBe(true);
+      }
+    }
+  });
+
+  it("no fim do mês, o mês anterior pode começar antes dos 60 dias", () => {
+    // 31/10: 30 dias anteriores começam em 02/09; mês anterior em 01/09
+    const w = getDashboardFetchWindow("2026-10-31T15:00:00Z");
+    expect(w.metricsQuery.fromKey).toBe("2026-09-01");
+    expect(w.leadsQuery.createdFrom).toBe("2026-09-01T03:00:00.000Z");
+  });
+
+  it("a chave só muda na virada do dia", () => {
+    expect(getDashboardFetchWindow("2026-09-24T03:00:00Z")).toEqual(getDashboardFetchWindow("2026-09-25T02:59:59Z"));
   });
 });
 
@@ -92,9 +117,9 @@ describe("filterMetricsByRange / splitLeadsByPeriod", () => {
       lead("2026-09-24T20:00:00Z"), // hoje
       lead("2026-09-22T12:00:00Z"), // fora dos dois
     ];
-    const { current, previous } = splitLeadsByPeriod(leads, ranges);
-    expect(current).toHaveLength(2);
-    expect(previous).toHaveLength(1);
+    const { periodLeads, previousLeads } = splitLeadsByPeriod(leads, ranges);
+    expect(periodLeads).toHaveLength(2);
+    expect(previousLeads).toHaveLength(1);
   });
 });
 
@@ -203,7 +228,7 @@ describe("buildAdminKpis", () => {
 });
 
 describe("buildTrendSeries", () => {
-  const range = getAdminDashboardRanges("7d", NOW).current; // 18/09 a 24/09
+  const range = getAdminDashboardRanges("7d", NOW).currentRange; // 18/09 a 24/09
 
   it("zera dias sem leads e ignora leads fora da janela", () => {
     const s = buildTrendSeries(
@@ -217,7 +242,7 @@ describe("buildTrendSeries", () => {
       range,
     );
     expect(s.points.map((p) => p.count)).toEqual([2, 0, 1, 0, 0, 0, 0]);
-    expect(s.points[0]).toMatchObject({ date: "2026-09-18", label: "18/09", tooltipLabel: "sex, 18/09/2026" });
+    expect(s.points[0]).toMatchObject({ date: "2026-09-18", label: "18/09", tooltipLabel: "sexta, 18/09/2026" });
     expect(s.total).toBe(3);
     expect(s.averagePerDay).toBeCloseTo(3 / 7);
   });
@@ -261,7 +286,7 @@ describe("buildStatusSeries / statusTotals / sourceShares", () => {
       { fromKey: "2026-09-24", toKey: "2026-09-24" },
     );
     expect(series).toHaveLength(1);
-    expect(series[0]).toMatchObject({ novo: 1, agendado: 1, total: 2, tooltipLabel: "qui, 24/09/2026" });
+    expect(series[0]).toMatchObject({ novo: 1, agendado: 1, total: 2, tooltipLabel: "quinta, 24/09/2026" });
   });
 
   it("totais por status na ordem do funil, só os presentes", () => {

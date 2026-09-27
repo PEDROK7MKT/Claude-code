@@ -1,5 +1,6 @@
 import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
+import { getSafeNextPath } from "@/features/auth/lib/redirect";
 import { SUPABASE_ANON_KEY, SUPABASE_URL, isSupabaseConfigured } from "@/lib/env";
 import type { Database } from "@/types/database";
 
@@ -49,9 +50,9 @@ export async function updateSession(request: NextRequest) {
   }
 
   if (isAuthenticated && pathname === "/login") {
-    const url = request.nextUrl.clone();
-    url.pathname = "/dashboard";
-    url.search = "";
+    // Já logado: respeita um ?next= seguro (caminho relativo interno), senão vai ao dashboard
+    const next = getSafeNextPath(request.nextUrl.searchParams.get("next")) ?? "/dashboard";
+    const url = new URL(next, request.nextUrl.origin);
     const redirect = NextResponse.redirect(url);
     response.cookies.getAll().forEach((c) => redirect.cookies.set(c));
     return redirect;

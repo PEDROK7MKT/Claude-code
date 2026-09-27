@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest";
 import {
   buildPeriodSearch,
   comparisonLabel,
+  comparisonSentence,
   DEFAULT_PERIOD,
   formatRangeLabel,
   isPeriodKey,
@@ -65,6 +66,15 @@ describe("comparisonLabel", () => {
     expect(comparisonLabel("7d")).toBe("vs 7 dias anteriores");
     expect(comparisonLabel("30d")).toBe("vs 30 dias anteriores");
     expect(comparisonLabel("month")).toBe("vs mesmo período do mês anterior");
+  });
+});
+
+describe("comparisonSentence", () => {
+  it("frase completa para o cabeçalho", () => {
+    expect(comparisonSentence("today")).toBe("comparado com ontem");
+    expect(comparisonSentence("7d")).toBe("comparado com os 7 dias anteriores");
+    expect(comparisonSentence("30d")).toBe("comparado com os 30 dias anteriores");
+    expect(comparisonSentence("month")).toBe("comparado com o mesmo período do mês anterior");
   });
 });
 

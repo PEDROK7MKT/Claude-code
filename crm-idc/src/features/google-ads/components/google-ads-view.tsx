@@ -25,7 +25,7 @@ import {
   type AdsPeriodPreset,
   type AdsPeriodSelection,
 } from "@/features/google-ads/lib/periods";
-import { buildAdsChartSeries, pickGranularity } from "@/features/google-ads/lib/series";
+import { buildAdsChartSeries, pickComparisonGranularity, pickGranularity } from "@/features/google-ads/lib/series";
 import { compareAdsKpis, computeAdsKpis } from "@/features/google-ads/lib/summary";
 import { useLeads } from "@/features/leads/api/leads-queries";
 import { formatDateKey, todayKey as getTodayKey } from "@/lib/dates";
@@ -95,12 +95,19 @@ export function GoogleAdsView() {
       ? computeAdsKpis(filterMetricsByCampaign(metricsInRange(allMetrics, previous), campaign), leadsInRange(leads, previous))
       : null;
     const granularity = pickGranularity(range);
+    const comparisonGranularity = pickComparisonGranularity(range);
+    const series = buildAdsChartSeries(metrics, leadsNow, range, granularity);
     return {
       metrics,
       kpis,
       changes: compareAdsKpis(kpis, previousKpis),
       granularity,
-      series: buildAdsChartSeries(metrics, leadsNow, range, granularity),
+      series,
+      comparisonGranularity,
+      comparisonSeries:
+        comparisonGranularity === granularity
+          ? series
+          : buildAdsChartSeries(metrics, leadsNow, range, comparisonGranularity),
       campaigns: groupDailyMetricsByCampaign(metrics),
     };
   }, [allMetrics, leadsQuery.data, campaign, range, previous]);
@@ -222,6 +229,8 @@ export function GoogleAdsView() {
         <AdsCharts
           series={view.series}
           granularity={view.granularity}
+          comparisonSeries={view.comparisonSeries}
+          comparisonGranularity={view.comparisonGranularity}
           kpis={view.kpis}
           leadsLoading={leadsLoading}
           leadsError={leadsError}

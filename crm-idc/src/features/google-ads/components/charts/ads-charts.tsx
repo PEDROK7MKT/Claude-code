@@ -31,18 +31,30 @@ const CPC_SERIES: readonly BarSeries[] = [
 ];
 
 interface AdsChartsProps {
+  /** Série das razões (CTR, CPC, custo por conversão) */
   series: readonly AdsChartPoint[];
   granularity: Granularity;
+  /** Série do comparativo (barras agrupadas: agrupa antes para não ficarem finas demais) */
+  comparisonSeries: readonly AdsChartPoint[];
+  comparisonGranularity: Granularity;
   kpis: AdsKpis;
   leadsLoading: boolean;
   leadsError: boolean;
 }
 
 /** Gráficos automáticos da spec §4.5: comparativo CRM, CTR, CPC médio e custo por conversão. */
-export function AdsCharts({ series, granularity, kpis, leadsLoading, leadsError }: AdsChartsProps) {
+export function AdsCharts({
+  series,
+  granularity,
+  comparisonSeries,
+  comparisonGranularity,
+  kpis,
+  leadsLoading,
+  leadsError,
+}: AdsChartsProps) {
   const per = GRANULARITY_LABEL[granularity];
-  const hasMetrics = series.some((point) => point.hasData);
-  const hasLeads = series.some((point) => point.crmLeads > 0);
+  const hasMetrics = comparisonSeries.some((point) => point.hasData);
+  const hasLeads = comparisonSeries.some((point) => point.crmLeads > 0);
   const captureRate = safeDivide(kpis.crmLeads, kpis.conversions);
 
   return (
@@ -56,7 +68,7 @@ export function AdsCharts({ series, granularity, kpis, leadsLoading, leadsError 
         ) : (
           <ChartCard
             title="Conversões Google Ads × Leads reais no CRM"
-            description={`O que o Google Ads registrou e o que chegou de fato no CRM, ${per}.`}
+            description={`O que o Google Ads registrou e o que chegou de fato no CRM, ${GRANULARITY_LABEL[comparisonGranularity]}.`}
             headline={`${formatNumber(kpis.conversions)} × ${formatNumber(kpis.crmLeads)}`}
             headlineLabel="conversões × leads"
             empty={leadsError || (!hasMetrics && !hasLeads)}
@@ -64,7 +76,7 @@ export function AdsCharts({ series, granularity, kpis, leadsLoading, leadsError 
             emptyDescription={leadsError ? "Não foi possível carregar os leads para o comparativo." : undefined}
           >
             <SeriesBarChart
-              data={series}
+              data={comparisonSeries}
               series={COMPARISON_SERIES}
               formatAxis={formatAxisCount}
               yAxisWidth={36}

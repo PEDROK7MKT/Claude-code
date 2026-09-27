@@ -27,16 +27,24 @@ interface AuthErrorLike {
   message?: unknown;
 }
 
+function asAuthError(err: unknown): { code: unknown; message: string } | null {
+  if (typeof err !== "object" || err === null) return null;
+  const { code, message } = err as AuthErrorLike;
+  return { code, message: typeof message === "string" ? message : "" };
+}
+
+/** Conta bloqueada no Supabase Auth (usuário desativado pelo admin). */
+export function isInactiveAccountError(err: unknown): boolean {
+  const e = asAuthError(err);
+  return Boolean(e && (e.code === "user_banned" || /user is banned/i.test(e.message)));
+}
+
 /** Erro do Supabase Auth → mensagem da tela de login. */
 export function loginErrorMessage(err: unknown): string {
-  if (typeof err === "object" && err !== null) {
-    const { code, message } = err as AuthErrorLike;
-    if (code === "invalid_credentials" || (typeof message === "string" && /invalid login credentials/i.test(message))) {
-      return INVALID_CREDENTIALS_MESSAGE;
-    }
-    if (code === "user_banned" || (typeof message === "string" && /user is banned/i.test(message))) {
-      return INACTIVE_ACCOUNT_MESSAGE;
-    }
+  const e = asAuthError(err);
+  if (e && (e.code === "invalid_credentials" || /invalid login credentials/i.test(e.message))) {
+    return INVALID_CREDENTIALS_MESSAGE;
   }
+  if (isInactiveAccountError(err)) return INACTIVE_ACCOUNT_MESSAGE;
   return getErrorMessage(err);
 }
