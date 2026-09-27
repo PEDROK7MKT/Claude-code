@@ -2,29 +2,39 @@ import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { describe, expect, it } from "vitest";
 
-import { BRAND } from "@/lib/constants";
-import { PNG_ICON_SIZES, appIconDataUri, appIconSvg, pngIconUrl, sparklePath } from "./brand-icon";
+import {
+  IDC_COLORS,
+  IDC_MARK,
+  PNG_ICON_SIZES,
+  appIconDataUri,
+  appIconSvg,
+  iconScale,
+  markTranslate,
+  pngIconUrl,
+} from "./brand-icon";
 
 const ICON_SVG = fileURLToPath(new URL("../../../app/icon.svg", import.meta.url));
-
-/** Pontos extremos de todos os comandos M/Q/C de um path absoluto (aproximação da caixa). */
-function pathPoints(d: string): Array<[number, number]> {
-  const nums = (d.match(/-?\d*\.?\d+/g) ?? []).map(Number);
-  const points: Array<[number, number]> = [];
-  for (let i = 0; i + 1 < nums.length; i += 2) points.push([nums[i], nums[i + 1]]);
-  return points;
-}
 
 describe("icon.svg", () => {
   it("é exatamente o SVG gerado (fonte única do desenho)", () => {
     expect(readFileSync(ICON_SVG, "utf8").trim()).toBe(appIconSvg("favicon"));
   });
 
-  it("usa as cores da marca", () => {
+  it("usa as cores do logo do IDC (grafite, dourado e cinza)", () => {
     const svg = appIconSvg("favicon");
-    expect(svg).toContain(BRAND.primary);
-    expect(svg).toContain(BRAND.accent);
+    expect(svg).toContain(IDC_COLORS.background);
+    expect(svg).toContain(IDC_COLORS.gold);
+    expect(svg).toContain(IDC_COLORS.gray);
     expect(svg).toContain('viewBox="0 0 64 64"');
+    expect(svg).toContain('rx="14"');
+  });
+
+  it("centraliza as letras no ícone", () => {
+    const [tx, ty] = markTranslate("favicon");
+    const s = iconScale("favicon");
+    const { x1, y1, x2, y2 } = IDC_MARK.bounds;
+    expect(tx + ((x1 + x2) / 2) * s).toBeCloseTo(32, 1);
+    expect(ty + ((y1 + y2) / 2) * s).toBeCloseTo(32, 1);
   });
 });
 
@@ -32,42 +42,27 @@ describe("ícone maskable (Android/iOS)", () => {
   const svg = appIconSvg("maskable");
 
   it("fundo sangrado, sem transparência nos cantos", () => {
-    expect(svg).toContain('<rect width="512" height="512" fill="url(#bg)"/>');
+    expect(svg).toContain(`<rect width="512" height="512" fill="${IDC_COLORS.background}"/>`);
     expect(svg).not.toContain("rx=");
   });
 
-  it("dente e brilho dentro da zona segura (círculo de raio 40%)", () => {
-    const transform = svg.match(/translate\(([\d.]+) ([\d.]+)\) scale\(([\d.]+)\)/);
-    expect(transform).not.toBeNull();
-    const [tx, ty, s] = transform!.slice(1).map(Number);
-    // caixa do dente no viewBox 24
+  it("letras dentro da zona segura (círculo de raio 40%)", () => {
+    const [tx, ty] = markTranslate("maskable");
+    const s = iconScale("maskable");
+    const { x1, y1, x2, y2 } = IDC_MARK.bounds;
     const corners: Array<[number, number]> = [
-      [3.3, 3.2],
-      [20.7, 3.2],
-      [3.3, 21],
-      [20.7, 21],
+      [x1, y1],
+      [x2, y1],
+      [x1, y2],
+      [x2, y2],
     ].map(([x, y]) => [tx + x * s, ty + y * s]);
-
-    const sparkle = svg.match(/<path d="(M[^"]+Z)" fill="#E8B931"/);
-    expect(sparkle).not.toBeNull();
-
-    const safeRadius = 512 * 0.4;
-    for (const [x, y] of [...corners, ...pathPoints(sparkle![1])]) {
-      expect(Math.hypot(x - 256, y - 256)).toBeLessThanOrEqual(safeRadius);
+    for (const [x, y] of corners) {
+      expect(Math.hypot(x - 256, y - 256)).toBeLessThanOrEqual(512 * 0.4);
     }
   });
 });
 
 describe("helpers", () => {
-  it("sparklePath é fechado e centrado", () => {
-    const d = sparklePath(10, 10, 5);
-    expect(d.startsWith("M10 5")).toBe(true);
-    expect(d.endsWith("Z")).toBe(true);
-    expect(d).toContain("15 10");
-    expect(d).toContain("10 15");
-    expect(d).toContain("5 10");
-  });
-
   it("data URI decodifica para o SVG", () => {
     const uri = appIconDataUri("maskable");
     expect(uri.startsWith("data:image/svg+xml;charset=utf-8,")).toBe(true);

@@ -1,33 +1,26 @@
 import * as React from "react";
 import Image from "next/image";
 
+import { IDC_COLORS, IDC_MARK } from "@/features/offline/lib/brand-icon";
 import { cn } from "@/lib/utils";
 
-/** Silhueta de dente (marca do IDC enquanto não há logo — spec §12 "usar placeholder"). */
-export function ToothIcon({ className, ...props }: React.ComponentProps<"svg">) {
+/** Monograma "iDC" do logo da clínica ("i" dourado, "DC" cinza), mesmo desenho do favicon. */
+export function IdcMonogram({ className, ...props }: React.ComponentProps<"svg">) {
+  const { dot, stem, d, c } = IDC_MARK;
   return (
-    <svg
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth={1.8}
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      aria-hidden="true"
-      focusable="false"
-      className={className}
-      {...props}
-    >
-      <path d="M7.4 3.2C4.9 3.2 3.3 5.2 3.3 7.8c0 2.1.7 3.5 1.3 4.9.6 1.5.9 3.2 1.2 5.2.3 1.9.9 3.1 2 3.1 1.2 0 1.6-1.3 1.9-2.9.3-1.8.8-3.1 2.3-3.1s2 1.3 2.3 3.1c.3 1.6.7 2.9 1.9 2.9 1.1 0 1.7-1.2 2-3.1.3-2 .6-3.7 1.2-5.2.6-1.4 1.3-2.8 1.3-4.9 0-2.6-1.6-4.6-4.1-4.6-1.9 0-2.8 1-4.6 1s-2.7-1-4.6-1Z" />
-      <path d="M8.2 7.1c.6-.5 1.4-.6 2.1-.3" opacity={0.55} />
+    <svg viewBox="8 14 84 72" aria-hidden="true" focusable="false" className={className} {...props}>
+      <circle cx={dot.cx} cy={dot.cy} r={dot.r} fill={IDC_COLORS.gold} />
+      <path d={stem} fill={IDC_COLORS.gold} />
+      <path d={d} fill={IDC_COLORS.gray} fillRule="evenodd" />
+      <path d={c} fill={IDC_COLORS.gray} />
     </svg>
   );
 }
 
 const MARK_SIZES = {
-  sm: { box: "size-8 rounded-lg", icon: "size-[18px]", dot: "size-1.5 top-1 right-1" },
-  md: { box: "size-10 rounded-xl", icon: "size-[22px]", dot: "size-2 top-1.5 right-1.5" },
-  lg: { box: "size-14 rounded-2xl", icon: "size-8", dot: "size-2.5 top-2 right-2" },
+  sm: { box: "size-8 rounded-lg", icon: "size-6" },
+  md: { box: "size-10 rounded-xl", icon: "size-8" },
+  lg: { box: "size-14 rounded-2xl", icon: "size-11" },
 } as const;
 
 export type BrandMarkSize = keyof typeof MARK_SIZES;
@@ -40,7 +33,7 @@ interface BrandMarkProps extends React.ComponentProps<"span"> {
   alt?: string;
 }
 
-/** Selo quadrado da marca: logo configurado ou dente branco sobre o teal com detalhe dourado. */
+/** Selo quadrado da marca: logo configurado ou o monograma "iDC" sobre grafite. */
 export function BrandMark({ size = "md", logoUrl, alt = "", className, ...props }: BrandMarkProps) {
   const s = MARK_SIZES[size];
 
@@ -63,16 +56,11 @@ export function BrandMark({ size = "md", logoUrl, alt = "", className, ...props 
       aria-hidden={alt ? undefined : true}
       role={alt ? "img" : undefined}
       aria-label={alt || undefined}
-      className={cn(
-        "bg-primary text-primary-foreground relative inline-flex shrink-0 items-center justify-center shadow-sm",
-        "bg-[linear-gradient(135deg,var(--primary),color-mix(in_srgb,var(--primary)_78%,black))]",
-        s.box,
-        className,
-      )}
+      className={cn("relative inline-flex shrink-0 items-center justify-center shadow-sm", s.box, className)}
+      style={{ backgroundColor: IDC_COLORS.background }}
       {...props}
     >
-      <ToothIcon className={s.icon} />
-      <span className={cn("bg-gold ring-primary absolute rounded-full ring-2", s.dot)} />
+      <IdcMonogram className={s.icon} />
     </span>
   );
 }
@@ -87,7 +75,7 @@ interface BrandLogoProps extends React.ComponentProps<"div"> {
 
 /**
  * Logo completo. Com logo configurado mostra só a imagem (ela já traz o nome);
- * sem logo, o selo do dente + "Instituto Décio Carrilho".
+ * sem logo, o monograma "iDC" + "Instituto Décio Carrilho".
  */
 export function BrandLogo({
   logoUrl,
