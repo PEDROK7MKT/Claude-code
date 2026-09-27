@@ -85,7 +85,7 @@ export function GmnReviewsChart({ data, className }: { data: GmnSeriesPoint[]; c
             dot={pointDot(GMN_COLORS.rating)}
             activeDot={pointDot(GMN_COLORS.rating, 5)}
           />
-          <ChartLegend content={<ChartLegendContent />} />
+          <ChartLegend itemSorter={null} content={<ChartLegendContent />} />
         </ComposedChart>
       </ChartContainer>
     </GmnChartCard>

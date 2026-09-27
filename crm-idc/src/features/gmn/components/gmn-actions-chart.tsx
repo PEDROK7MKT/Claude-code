@@ -17,6 +17,7 @@ import {
   GMN_COLORS,
   GRID_COLOR,
   GmnChartCard,
+  LINE_X_PADDING,
   X_AXIS_PROPS,
   Y_AXIS_PROPS,
   axisNumber,
@@ -52,7 +53,7 @@ export function GmnActionsChart({ data, className }: { data: GmnSeriesPoint[]; c
       <ChartContainer config={config} className={CHART_CLASS}>
         <LineChart data={data} margin={{ top: 8, right: 12, left: 0, bottom: 0 }}>
           <CartesianGrid vertical={false} stroke={GRID_COLOR} />
-          <XAxis {...X_AXIS_PROPS} />
+          <XAxis {...X_AXIS_PROPS} padding={LINE_X_PADDING} />
           <YAxis {...Y_AXIS_PROPS} width={40} tickFormatter={axisNumber} />
           <ChartTooltip
             cursor={{ stroke: GRID_COLOR, strokeWidth: 1 }}
@@ -72,7 +73,7 @@ export function GmnActionsChart({ data, className }: { data: GmnSeriesPoint[]; c
               activeDot={pointDot(config[key].color, 5)}
             />
           ))}
-          <ChartLegend content={<ChartLegendContent />} />
+          <ChartLegend itemSorter={null} content={<ChartLegendContent />} />
         </LineChart>
       </ChartContainer>
     </GmnChartCard>

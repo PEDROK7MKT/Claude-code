@@ -38,6 +38,9 @@ export const X_AXIS_PROPS = {
   interval: "preserveStartEnd",
 } as const;
 
+/** Folga nas pontas do eixo X de linhas/áreas: o rótulo dd/MM/yyyy do último ponto não é cortado. */
+export const LINE_X_PADDING = { left: 8, right: 24 } as const;
+
 export const Y_AXIS_PROPS = {
   tickLine: false,
   axisLine: false,
