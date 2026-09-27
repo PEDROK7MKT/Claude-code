@@ -234,7 +234,11 @@ async function openEnvelope(intro, { short, release }) {
     }).finished.catch(() => {});
   }
 
-  // b) as duas partes se soltam 2–3 px
+  // b) as duas partes se soltam 2–3 px (as metades precisam estar carregadas)
+  await Promise.race([
+    Promise.all([top, base].map((im) => { im.loading = 'eager'; return im.decode ? im.decode().catch(() => {}) : null; })),
+    wait(800),
+  ]);
   intro.classList.add('is-breaking');
   top.animate([{ transform: 'translate(0, 0) rotate(0deg)' }, { transform: 'translate(-.5px, -2.5px) rotate(-.6deg)' }], { duration: d(170), easing: 'ease-out', fill: 'forwards' });
   base.animate([{ transform: 'translate(0, 0) rotate(0deg)' }, { transform: 'translate(.5px, 2px) rotate(.3deg)' }], { duration: d(170), easing: 'ease-out', fill: 'forwards' });
@@ -463,6 +467,11 @@ function stones() {
   };
 
   radios.forEach((r) => r.addEventListener('change', () => { if (r.checked) select(r.value, 'toque'); }));
+  // tocar (ou Espaço) na pedra que já vem marcada não dispara 'change', mas é uma escolha
+  radios.forEach((r) => r.addEventListener('click', () => {
+    if (!stoneChosen) track('stone_select', { pedra: r.value, via: 'toque' });
+    stoneChosen = true;
+  }));
 
   // ----- gesto -----
   let drag = null;
@@ -558,7 +567,11 @@ const DDD = new Set([11, 12, 13, 14, 15, 16, 17, 18, 19, 21, 22, 24, 27, 28, 31,
   41, 42, 43, 44, 45, 46, 47, 48, 49, 51, 53, 54, 55, 61, 62, 63, 64, 65, 66, 67, 68, 69, 71, 73, 74, 75,
   77, 79, 81, 82, 83, 84, 85, 86, 87, 88, 89, 91, 92, 93, 94, 95, 96, 97, 98, 99]);
 
-const CONSENT = CONFIG.consent;
+// texto padrão caso o config.js em uso seja de uma versão sem `consent`
+const CONSENT = CONFIG.consent || {
+  whatsapp: 'Ao entrar na lista, você autoriza a Valora Suisse a enviar pelo WhatsApp mensagens sobre o lançamento desta coleção. Não vendemos nem compartilhamos seu número para publicidade. Para sair, é só responder SAIR. ',
+  email: 'Ao entrar na lista, você autoriza a Valora Suisse a enviar por e-mail mensagens sobre o lançamento desta coleção. Não vendemos nem compartilhamos seu e-mail para publicidade. Para sair, use o link no fim de cada e-mail. ',
+};
 
 // Telefone: separa DDI internacional, tira 55 / 0 / código de operadora
 function phoneDigits(raw) {
@@ -699,6 +712,7 @@ function waitlist() {
       err.append(' ', a, '.');
     }
     err.hidden = !msg;
+    if (!msg) status.textContent = ''; // não deixa um erro antigo na região lida pelo leitor de tela
     [phone, email].forEach((el) => {
       if (msg && el === input()) el.setAttribute('aria-invalid', 'true');
       else el.removeAttribute('aria-invalid');

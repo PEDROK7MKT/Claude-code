@@ -4,9 +4,10 @@ Página de pré-lançamento da nova coleção (zircônia e moissanite), feita pa
 tráfego do Instagram: mobile primeiro, leve e sem dependências.
 
 - **HTML + CSS + JS puro**, sem etapa de build. Módulos ES nativos. Sem bibliotecas externas.
-- Primeira tela (envelope, fontes, foto do hero, CSS e JS, com gzip): **~235 KB**. A página
-  inteira, com todas as fotos em AVIF num celular de tela 3x: ~550 KB. Quem entra por `#lista`
-  não baixa o lacre.
+- Primeira tela (envelope com o lacre, fontes, foto do hero, CSS e JS, com gzip): **~270 KB** em
+  tela 2x e ~300 KB em 3x. A página inteira, com todas as fotos em AVIF: ~550 KB (o navegador
+  adianta as fotos de baixo por conta própria em conexões rápidas). Quem entra por `#lista` não
+  baixa o lacre.
 - Fontes (Cormorant Garamond e Montserrat) hospedadas na própria página.
 
 ## Rodar localmente
@@ -44,7 +45,9 @@ Tudo que é editável está em **`js/config.js`** (itens marcados com `⚠ CONFI
    (`privacidade.html`) — preencher razão social, CNPJ, contato, fornecedores e prazo de guarda
    (trechos destacados entre colchetes) e confirmar que "responder SAIR" / "link no fim do e-mail"
    existem de fato. Mudou o texto? Mude também `consentVersion`.
-7. **Logo oficial em SVG** — o lockup atual é tipográfico (Cormorant + Montserrat) e não reproduz
+7. **Tradução da tagline**: no rodapé está "O que tem valor permanece." (sem a vírgula do brief,
+   que separava sujeito e verbo). Se a marca preferir o texto original, troque em `index.html`.
+8. **Logo oficial em SVG** — o lockup atual é tipográfico (Cormorant + Montserrat) e não reproduz
    a cauda do "R" do logo gravado nos estojos. Com o SVG, basta trocar os três `.brand` do HTML.
 
 ## Lista de espera · como plugar o backend

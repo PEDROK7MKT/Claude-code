@@ -58,5 +58,16 @@
 
     <p class="back"><a class="link" href="./#lista">Voltar à página do lançamento</a></p>
   </main>
+  <script>
+    // Veio da página do lançamento? "Voltar" usa o histórico: mantém o número
+    // digitado, a posição na página e os parâmetros de campanha do link.
+    (function () {
+      var ref = document.referrer || '';
+      if (ref.indexOf(location.origin) !== 0 || history.length < 2) return;
+      Array.prototype.forEach.call(document.querySelectorAll('a[href="./#lista"]'), function (a) {
+        a.addEventListener('click', function (e) { e.preventDefault(); history.back(); });
+      });
+    })();
+  </script>
 </body>
 </html>

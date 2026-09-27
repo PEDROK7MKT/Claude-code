@@ -768,7 +768,7 @@ h1, h2, h3 {
 /* =====================================================================
    CELULAR DEITADO (pouca altura, largura de celular)
    ===================================================================== */
-@media (orientation: landscape) and (max-height: 500px) and (max-width: 899px) {
+@media (orientation: landscape) and (max-height: 500px) {
   .hero { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
   .hero-media { grid-column: 2; grid-row: 1; height: 100vh; height: 100svh; max-height: none; min-height: 0; }
   .hero-media img { object-position: 42% 46%; }

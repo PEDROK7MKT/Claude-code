@@ -22,13 +22,8 @@
   <meta name="twitter:card" content="summary_large_image" />
 
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
-  <link rel="preload" href="assets/fonts/cormorant-garamond-italic-latin.woff2" as="font" type="font/woff2" crossorigin />
-  <link rel="preload" href="assets/fonts/cormorant-garamond-latin.woff2" as="font" type="font/woff2" crossorigin />
-  <link rel="preload" href="assets/fonts/montserrat-latin.woff2" as="font" type="font/woff2" crossorigin />
-  <link rel="stylesheet" href="css/style.css" />
-
   <script>
-    // Roda antes da primeira pintura (menos de 1 KB). Decide se o envelope aparece:
+    // Roda antes de tudo (menos de 1 KB). Decide se o envelope aparece:
     //  1ª visita → abertura completa · volta em até 7 dias → versão curta
     //  link com #âncora, ?intro=0 ou botão "voltar" do navegador → sem abertura
     //  ?intro=1 → força a completa
@@ -36,11 +31,6 @@
       var d = document.documentElement, q = location.search, mode = 'full', seen = 0, nav;
       d.className = d.className.replace('no-js', 'js');
       document.addEventListener('touchstart', function () {}, { passive: true }); // :active no iOS
-      // rede de segurança: se o JS principal não assumir em 2,5 s (rede ruim, erro no
-      // config.js…), a página volta ao modo sem JS — com formulário alternativo e tudo
-      setTimeout(function () {
-        if (!window.__mainOk) { d.classList.remove('intro-on'); d.classList.replace('js', 'no-js'); }
-      }, 2500);
       try { seen = +localStorage.getItem('valora:intro') || 0; } catch (e) {}
       if (seen && Date.now() - seen < 6048e5) mode = 'short';
       if (/[?&]intro=1/.test(q)) mode = 'full';
@@ -49,13 +39,33 @@
       if (mode === 'off') return;
       d.classList.add('intro-on');
       d.setAttribute('data-intro', mode);
-      // o lacre só é baixado quando o envelope vai mesmo aparecer
-      var l = document.createElement('link');
-      l.rel = 'preload'; l.as = 'image'; l.type = 'image/webp'; l.href = 'assets/lacre.webp';
-      l.setAttribute('fetchpriority', 'high');
-      document.head.appendChild(l);
+      // o lacre só é baixado quando o envelope vai mesmo aparecer (e bem cedo)
+      ['lacre.webp', 'lacre-topo.webp', 'lacre-base.webp'].forEach(function (f, i) {
+        var l = document.createElement('link');
+        l.rel = 'preload'; l.as = 'image'; l.type = 'image/webp'; l.href = 'assets/' + f;
+        if (!i) l.setAttribute('fetchpriority', 'high');
+        document.head.appendChild(l);
+      });
     })();
   </script>
+  <link rel="preload" href="assets/fonts/cormorant-garamond-italic-latin.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="assets/fonts/cormorant-garamond-latin.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="assets/fonts/montserrat-latin.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="stylesheet" href="css/style.css" />
+  <script>
+    // Rede de segurança (conta a partir da chegada do CSS):
+    //  · se o JS principal não assumiu em 2,5 s, o envelope sai e a página aparece;
+    //  · se o módulo falhar de vez (erro no config.js, arquivo que não chega),
+    //    a página passa ao modo sem JS, com o formulário alternativo.
+    (function () {
+      var d = document.documentElement;
+      setTimeout(function () { if (!window.__mainOk) d.classList.remove('intro-on'); }, 2500);
+      document.addEventListener('DOMContentLoaded', function () {
+        if (!window.__mainOk) { d.classList.remove('intro-on'); d.classList.replace('js', 'no-js'); }
+      });
+    })();
+  </script>
+
   <link rel="modulepreload" href="js/config.js" />
   <script type="module" src="js/main.js"></script>
 </head>
@@ -162,7 +172,10 @@
   };
   (function () {
     var intro = document.getElementById('intro');
-    if (intro && getComputedStyle(intro).display !== 'none') window.__valoraLayout(intro);
+    if (!intro || getComputedStyle(intro).display === 'none') return;
+    window.__valoraLayout(intro);
+    // o envelope vai aparecer: as imagens do lacre (lazy no HTML) carregam já
+    Array.prototype.forEach.call(intro.querySelectorAll('img'), function (i) { i.loading = 'eager'; });
   })();
 </script>
 
@@ -330,9 +343,9 @@
 
     <figure class="piece piece--3">
       <picture>
-        <source type="image/avif" srcset="assets/img/produto-2-480.avif 480w, assets/img/produto-2-800.avif 800w" sizes="(min-width: 900px) 22vw, 56vw" />
-        <source type="image/webp" srcset="assets/img/produto-2-480.webp 480w, assets/img/produto-2-800.webp 800w" sizes="(min-width: 900px) 22vw, 56vw" />
-        <img src="assets/img/produto-2-480.jpg" width="1254" height="1254" loading="lazy" decoding="async"
+        <source type="image/avif" srcset="assets/img/anel-galeria-480.avif 480w, assets/img/anel-galeria-800.avif 800w" sizes="(min-width: 900px) 22vw, 56vw" />
+        <source type="image/webp" srcset="assets/img/anel-galeria-480.webp 480w, assets/img/anel-galeria-800.webp 800w" sizes="(min-width: 900px) 22vw, 56vw" />
+        <img src="assets/img/anel-galeria-480.jpg" srcset="assets/img/anel-galeria-480.jpg 480w, assets/img/anel-galeria-800.jpg 800w" sizes="(min-width: 900px) 22vw, 56vw" width="1020" height="1020" loading="lazy" decoding="async"
              alt="Anel solitário de seis garras, sobre papel claro." />
       </picture>
       <figcaption><b>Anel solitário</b><span>Seis garras, uma só pedra.</span></figcaption>

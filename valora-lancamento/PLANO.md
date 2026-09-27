@@ -207,3 +207,13 @@ verificação adversarial. Principais correções:
   - "No dia 10 de outubro, avisamos você no WhatsApp…".
 - **Foto do anel:** sem a lasca verde do envelope no recorte e com o papel levado para o Marfim
   (a pedra protegida).
+- **Rodada de regressão.** Três verificadores retestaram os 34 achados no código corrigido. Os
+  pendentes e as regressões encontradas também foram resolvidos:
+  - as metades do lacre são pré-carregadas, e a quebra espera por elas;
+  - a decisão da abertura roda antes do CSS, então o lacre é pedido cedo;
+  - com o JS lento, a página não alterna mais de modo;
+  - tocar na pedra já marcada conta como escolha;
+  - "Voltar" da política preserva o número digitado;
+  - celulares grandes deitados usam o layout de paisagem;
+  - as bordas da foto do anel se dissolvem no Marfim, e a galeria usa um recorte sem o envelope.
+
