@@ -239,22 +239,25 @@ $$;
 -- Um lead: dados realistas + simulação do funil.
 -- p_mode: 'auto' (simula pelo tempo decorrido) ou o status final desejado para
 -- os leads "vitrine" recentes ('novo', 'em_contato', 'agendado', 'confirmado').
+-- p_source: origem (sorteada pelo chamador com pesos fixos).
 -- -----------------------------------------------------------------------------
 CREATE OR REPLACE FUNCTION pg_temp.seed_lead(
   p_i INT,
   p_created TIMESTAMPTZ,
   p_mode TEXT,
   p_admin UUID,
-  p_dentist UUID
+  p_dentist UUID,
+  p_source TEXT
 )
 RETURNS UUID
 LANGUAGE plpgsql
 AS $$
 DECLARE
-  v_staff UUID := COALESCE(p_dentist, p_admin);
+  -- quem opera o WhatsApp: na maioria a equipe do Dr. Décio, às vezes o gestor
+  v_staff UUID := CASE WHEN random() < 0.8 THEN COALESCE(p_dentist, p_admin) ELSE COALESCE(p_admin, p_dentist) END;
   v_doctor UUID := COALESCE(p_dentist, p_admin);
   v_id UUID;
-  v_source TEXT;
+  v_source CONSTANT TEXT := p_source;
   v_campaign TEXT;
   v_keyword TEXT;
   v_ad_group TEXT;
@@ -280,21 +283,6 @@ DECLARE
   v_parent_name TEXT;
   v_parent_phone TEXT;
 BEGIN
-  -- Origem (pesos: Google Ads e GMN na frente); as 7 fontes aparecem com certeza
-  IF p_i % 15 = 7 AND p_i / 15 < 7 THEN
-    v_source := (ARRAY['outro', 'indicacao', 'instagram', 'google_organico', 'gmn', 'google_ads', 'retorno'])[p_i / 15 + 1];
-  ELSE
-    v_source := pg_temp.pick(ARRAY[
-      'google_ads', 'google_ads', 'google_ads', 'google_ads', 'google_ads', 'google_ads', 'google_ads', 'google_ads', 'google_ads', 'google_ads',
-      'google_ads', 'google_ads', 'google_ads', 'google_ads', 'google_ads', 'google_ads', 'google_ads', 'google_ads', 'google_ads', 'google_ads',
-      'gmn', 'gmn', 'gmn', 'gmn', 'gmn', 'gmn', 'gmn', 'gmn', 'gmn',
-      'google_organico', 'google_organico', 'google_organico',
-      'instagram', 'instagram', 'instagram',
-      'indicacao', 'indicacao', 'indicacao',
-      'retorno', 'retorno',
-      'outro']);
-  END IF;
-
   -- Paciente
   v_name := CASE WHEN random() < 0.58
     THEN pg_temp.pick(ARRAY['Maria', 'Ana', 'Francisca', 'Antônia', 'Adriana', 'Juliana', 'Márcia', 'Fernanda', 'Patrícia',
@@ -403,7 +391,8 @@ BEGIN
   END;
 
   -- Retorno: parte dos pacientes de retorno é o mesmo telefone de um atendimento anterior (regra 4: vínculo)
-  IF v_source = 'retorno' AND (random() < 0.7 OR p_i % 15 = 7) THEN
+  IF v_source = 'retorno'
+     AND (random() < 0.5 OR NOT EXISTS (SELECT 1 FROM public.leads WHERE parent_lead_id IS NOT NULL)) THEN
     SELECT l.id, l.name, l.phone INTO v_parent, v_parent_name, v_parent_phone
     FROM public.leads l
     WHERE l.status = 'compareceu' AND l.attended_at < p_created - interval '7 days'
@@ -594,6 +583,12 @@ DECLARE
   v_start DATE;
   v_reviews CONSTANT INT[] := ARRAY[148, 153, 159, 166, 173, 181, 188];
   v_ts TIMESTAMPTZ;
+  -- origens: "saco" embaralhado a cada 41 leads (proporções estáveis; as 7 aparecem)
+  v_source_weights CONSTANT TEXT[] := array_cat(array_cat(array_cat(
+    array_fill('google_ads'::TEXT, ARRAY[20]), array_fill('gmn'::TEXT, ARRAY[9])),
+    ARRAY['google_organico', 'google_organico', 'google_organico', 'instagram', 'instagram', 'instagram']),
+    ARRAY['indicacao', 'indicacao', 'indicacao', 'retorno', 'retorno', 'outro']);
+  v_bag TEXT[];
 BEGIN
   IF EXISTS (SELECT 1 FROM public.leads) THEN
     RAISE NOTICE 'Seed ignorado: já existem leads no banco (o seed de demonstração só roda em banco vazio).';
@@ -624,16 +619,20 @@ BEGIN
   -- 2) leads (em ordem cronológica)
   FOREACH v_ts IN ARRAY v_times LOOP
     v_i := v_i + 1;
-    PERFORM pg_temp.seed_lead(v_i, v_ts, 'auto', v_admin, v_dentist);
+    IF (v_i - 1) % array_length(v_source_weights, 1) = 0 THEN
+      SELECT array_agg(w ORDER BY random()) INTO v_bag FROM unnest(v_source_weights) w;
+    END IF;
+    PERFORM pg_temp.seed_lead(v_i, v_ts, 'auto', v_admin, v_dentist,
+      v_bag[(v_i - 1) % array_length(v_source_weights, 1) + 1]);
   END LOOP;
 
   -- 3) vitrine: leads recentes em todos os status abertos
-  PERFORM pg_temp.seed_lead(v_i + 1, now() - interval '4 days 2 hours', 'confirmado', v_admin, v_dentist);
-  PERFORM pg_temp.seed_lead(v_i + 2, now() - interval '2 days 5 hours', 'agendado', v_admin, v_dentist);
-  PERFORM pg_temp.seed_lead(v_i + 3, now() - interval '20 hours', 'em_contato', v_admin, v_dentist);
-  PERFORM pg_temp.seed_lead(v_i + 4, now() - interval '2 hours 10 minutes', 'em_contato', v_admin, v_dentist);
-  PERFORM pg_temp.seed_lead(v_i + 5, now() - interval '70 minutes', 'novo', v_admin, v_dentist);
-  PERFORM pg_temp.seed_lead(v_i + 6, now() - interval '25 minutes', 'novo', v_admin, v_dentist);
+  PERFORM pg_temp.seed_lead(v_i + 1, now() - interval '4 days 2 hours', 'confirmado', v_admin, v_dentist, 'gmn');
+  PERFORM pg_temp.seed_lead(v_i + 2, now() - interval '2 days 5 hours', 'agendado', v_admin, v_dentist, 'google_ads');
+  PERFORM pg_temp.seed_lead(v_i + 3, now() - interval '20 hours', 'em_contato', v_admin, v_dentist, 'google_ads');
+  PERFORM pg_temp.seed_lead(v_i + 4, now() - interval '2 hours 10 minutes', 'em_contato', v_admin, v_dentist, 'instagram');
+  PERFORM pg_temp.seed_lead(v_i + 5, now() - interval '70 minutes', 'novo', v_admin, v_dentist, 'gmn');
+  PERFORM pg_temp.seed_lead(v_i + 6, now() - interval '25 minutes', 'novo', v_admin, v_dentist, 'google_ads');
 
   -- updated_at = último evento do lead (o trigger usaria now() para todos)
   IF pg_has_role(current_user, (SELECT relowner FROM pg_class WHERE oid = 'public.leads'::regclass), 'USAGE') THEN
@@ -708,7 +707,7 @@ BEGIN
 END
 $seed$;
 
-DROP FUNCTION IF EXISTS pg_temp.seed_lead(INT, TIMESTAMPTZ, TEXT, UUID, UUID);
+DROP FUNCTION IF EXISTS pg_temp.seed_lead(INT, TIMESTAMPTZ, TEXT, UUID, UUID, TEXT);
 DROP FUNCTION IF EXISTS pg_temp.after_scheduled(UUID, TIMESTAMPTZ, TIMESTAMPTZ, INT, BOOLEAN, UUID, UUID);
 DROP FUNCTION IF EXISTS pg_temp.step(UUID, TEXT, TIMESTAMPTZ, UUID, TEXT, TIMESTAMPTZ);
 DROP FUNCTION IF EXISTS pg_temp.slot(TIMESTAMPTZ, INT, INT);
