@@ -3,7 +3,7 @@
  * em formato brasileiro → números), avisos não bloqueantes e formatação dos inputs.
  */
 import { z } from "zod";
-import { isValidDateKey } from "@/features/google-ads/api/daily-metrics-utils";
+import { dailyMetricKey, isValidDateKey } from "@/features/google-ads/api/daily-metrics-utils";
 import { formatNumber, parseBRNumber } from "@/lib/format";
 import type { DailyMetric } from "@/types/database";
 
@@ -24,7 +24,7 @@ export function parseFormNumber(raw: string | null | undefined): number | null {
   return parseBRNumber(value);
 }
 
-type NumberKind = "integer" | "money" | "decimal";
+export type NumberKind = "integer" | "money" | "decimal";
 
 function numberField(kind: NumberKind) {
   return z.string().superRefine((raw, ctx) => {
@@ -137,3 +137,18 @@ export function formatNumberInput(raw: string, kind: NumberKind): string {
   if (kind === "integer") return Number.isInteger(n) ? formatNumber(n) : raw;
   return decimalFmt.format(n);
 }
+
+/**
+ * Lançamento já existente para o mesmo dia e campanha (mesma regra do índice único
+ * do banco), ignorando a própria linha em edição.
+ */
+export function findMetricConflict<T extends Pick<DailyMetric, "id" | "date" | "campaign">>(
+  metrics: readonly T[],
+  target: { date: string; campaign: string | null },
+  excludeId?: string | null,
+): T | null {
+  if (!target.campaign || !isValidDateKey(target.date)) return null;
+  const key = dailyMetricKey({ date: target.date, campaign: target.campaign });
+  return metrics.find((m) => m.id !== excludeId && dailyMetricKey({ date: m.date.slice(0, 10), campaign: m.campaign }) === key) ?? null;
+}
+

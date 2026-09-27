@@ -45,6 +45,9 @@ interface ChangeStatusContext {
 
 const LEADS_MUTATION_KEY = QUERY_KEYS.leads;
 
+/** mutationKey de useChangeLeadStatus — usada por useMutationState para saber se há mudança pendente. */
+export const CHANGE_LEAD_STATUS_MUTATION_KEY = [...LEADS_MUTATION_KEY, "change-status"] as const;
+
 /** Substitui o lead em todos os caches sob ["leads"] (lista, coleções, detalhe). */
 function writeLeadToCaches(queryClient: ReturnType<typeof useQueryClient>, lead: Lead): void {
   queryClient.setQueriesData({ queryKey: QUERY_KEYS.leads }, (old: unknown) => replaceLeadInData(old, lead));
@@ -139,7 +142,7 @@ export function useUpdateLead(): UseMutationResult<Lead, Error, UpdateLeadVariab
 export function useChangeLeadStatus(): UseMutationResult<Lead, Error, ChangeLeadStatusVariables, ChangeStatusContext> {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationKey: [...LEADS_MUTATION_KEY, "change-status"],
+    mutationKey: CHANGE_LEAD_STATUS_MUTATION_KEY,
     onMutate: async (vars: ChangeLeadStatusVariables): Promise<ChangeStatusContext> => {
       const current = findLeadInCaches(queryClient.getQueriesData({ queryKey: QUERY_KEYS.leads }), vars.lead.id) ?? vars.lead;
       const { scheduledAt } = validateStatusChange(current, vars);

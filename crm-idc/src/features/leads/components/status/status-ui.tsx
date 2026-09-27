@@ -12,32 +12,40 @@ import {
   RotateCcwIcon,
   UserCheckIcon,
   UserXIcon,
-  type LucideIcon,
+  type LucideProps,
 } from "lucide-react";
 
 import type { LeadStatus } from "@/types/database";
 
-import { isReschedule, type StatusActionTone } from "./status-actions";
+import { isReschedule, statusChangeFlow, type StatusActionTone } from "./status-actions";
 
 /** Ícone da ação `from → to` (ex.: reagendar usa o calendário com setas). */
-export function statusActionIcon(from: LeadStatus, to: LeadStatus): LucideIcon {
+export function StatusActionIcon({ from, to, ...props }: { from: LeadStatus; to: LeadStatus } & LucideProps) {
   switch (to) {
     case "novo":
-      return CircleDotIcon;
+      return <CircleDotIcon aria-hidden="true" {...props} />;
     case "em_contato":
-      return from === "perdido" ? RotateCcwIcon : MessageCircleIcon;
+      return from === "perdido" ? (
+        <RotateCcwIcon aria-hidden="true" {...props} />
+      ) : (
+        <MessageCircleIcon aria-hidden="true" {...props} />
+      );
     case "agendado":
-      return isReschedule(from) ? CalendarSyncIcon : CalendarPlusIcon;
+      return isReschedule(from) ? (
+        <CalendarSyncIcon aria-hidden="true" {...props} />
+      ) : (
+        <CalendarPlusIcon aria-hidden="true" {...props} />
+      );
     case "confirmado":
-      return CalendarCheckIcon;
+      return <CalendarCheckIcon aria-hidden="true" {...props} />;
     case "compareceu":
-      return UserCheckIcon;
+      return <UserCheckIcon aria-hidden="true" {...props} />;
     case "nao_compareceu":
-      return UserXIcon;
+      return <UserXIcon aria-hidden="true" {...props} />;
     case "cancelado":
-      return CalendarXIcon;
+      return <CalendarXIcon aria-hidden="true" {...props} />;
     case "perdido":
-      return BanIcon;
+      return <BanIcon aria-hidden="true" {...props} />;
   }
 }
 
@@ -67,6 +75,29 @@ export const stopPropagationHandlers = {
   onTouchStart: stop,
   onKeyDown: stop,
 } as const;
+
+/**
+ * Seleção de status a partir de um DropdownMenu. Mudanças diretas são pedidas na
+ * hora; as que abrem diálogo esperam o menu fechar e devolver o foco ao gatilho
+ * (`onCloseAutoFocus`), para que o diálogo devolva o foco a ele ao fechar.
+ */
+export function useMenuStatusSelect(onRequest: (to: LeadStatus) => void): {
+  select: (to: LeadStatus) => void;
+  onCloseAutoFocus: () => void;
+} {
+  const deferredRef = React.useRef<LeadStatus | null>(null);
+  return {
+    select: (to) => {
+      if (statusChangeFlow(to) === "immediate") onRequest(to);
+      else deferredRef.current = to;
+    },
+    onCloseAutoFocus: () => {
+      const to = deferredRef.current;
+      deferredRef.current = null;
+      if (to) onRequest(to);
+    },
+  };
+}
 
 /**
  * Envolve conteúdo (normalmente portais: diálogos, menus) sem gerar caixa no
