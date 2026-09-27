@@ -183,9 +183,10 @@ export function LoginForm({ next, inactive }: LoginFormProps) {
           )}
         </Button>
 
-        <p className="text-muted-foreground flex items-start justify-center gap-1.5 text-center text-xs text-pretty">
-          <KeyRoundIcon aria-hidden="true" className="mt-px size-3.5 shrink-0" />
-          <span>Esqueceu a senha? Peça ao administrador para redefinir.</span>
+        <p className="text-muted-foreground text-center text-xs text-pretty">
+          {/* ícone inline para acompanhar o texto centralizado quando ele quebra linha */}
+          <KeyRoundIcon aria-hidden="true" className="mr-1.5 inline size-3.5 -translate-y-px align-middle" />
+          Esqueceu a senha? Peça ao administrador para redefinir.
         </p>
       </form>
     </Form>
