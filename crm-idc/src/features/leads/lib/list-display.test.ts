@@ -10,6 +10,8 @@ import {
   pageRange,
   pageRangeLabel,
   paginationItems,
+  recentFreshIds,
+  showResultsLabel,
 } from "./list-display";
 
 // 27/09/2026 10:00 em Barreiras (13:00 UTC)
@@ -44,6 +46,15 @@ describe("contagem", () => {
     expect(leadsHeaderDescription(137, false)).toBe("137 leads no total");
     expect(leadsHeaderDescription(1, true)).toBe("1 lead encontrado com os filtros atuais");
     expect(leadsHeaderDescription(12, true)).toBe("12 leads encontrados com os filtros atuais");
+  });
+});
+
+describe("showResultsLabel", () => {
+  it("descreve o botão que fecha o painel de filtros", () => {
+    expect(showResultsLabel(undefined)).toBe("Ver resultados");
+    expect(showResultsLabel(0)).toBe("Nenhum lead encontrado");
+    expect(showResultsLabel(1)).toBe("Ver 1 lead");
+    expect(showResultsLabel(1234)).toBe("Ver 1.234 leads");
   });
 });
 
@@ -172,5 +183,30 @@ describe("findFreshLeadIds", () => {
     ];
     expect(findFreshLeadIds([], rows, reference, 60_000)).toEqual([]);
     expect(findFreshLeadIds([], rows, reference, 3 * 60_000)).toEqual(["b"]);
+  });
+});
+
+describe("recentFreshIds", () => {
+  const rows = [
+    { id: "a", created_at: "2026-09-27T12:59:30.000Z" },
+    { id: "b", created_at: "2026-09-27T12:55:00.000Z" },
+    { id: "c", created_at: "2026-09-27T13:00:20.000Z" },
+  ];
+
+  it("mantém só os recém-chegados ainda dentro da janela", () => {
+    const fresh = new Set(["a", "b", "c"]);
+    expect([...recentFreshIds(fresh, rows, NOW.getTime())].sort()).toEqual(["a", "c"]);
+  });
+
+  it("devolve o mesmo conjunto quando nada expirou (sem re-renderizar à toa)", () => {
+    const fresh = new Set(["a"]);
+    expect(recentFreshIds(fresh, rows, NOW.getTime())).toBe(fresh);
+    const none = new Set<string>();
+    expect(recentFreshIds(none, rows, NOW.getTime())).toBe(none);
+  });
+
+  it("ignora ids fora da página e datas inválidas", () => {
+    const fresh = new Set(["x", "d"]);
+    expect(recentFreshIds(fresh, [...rows, { id: "d", created_at: "invalida" }], NOW.getTime()).size).toBe(0);
   });
 });

@@ -392,6 +392,17 @@ function drawChartBox(doc: jsPDF, box: ChartBox, y: number, rowH: number): void 
   if (box.legendH) legendBlock(doc, chart.legend, x + CHART_PAD, cy + 2.6, inner, true);
 }
 
+/** Largura (px) abaixo da qual a captura veio de uma tela estreita (celular). */
+export const NARROW_CHART_PX = 520;
+
+/**
+ * Largura do gráfico no PDF. Capturas estreitas (exportação pelo celular) ocupam
+ * meia coluna: esticadas na página inteira ficariam baixas, pequenas e centralizadas.
+ */
+export function pdfChartSpan(chart: Pick<ReportPdfChart, "span" | "image">): "full" | "half" {
+  return chart.span === "full" && chart.image.width < NARROW_CHART_PX ? "half" : chart.span;
+}
+
 /** Agrupa os gráficos em linhas: dois "half" seguidos dividem a linha. */
 function layoutChartRows(doc: jsPDF, charts: readonly ReportPdfChart[]): ChartBox[][] {
   const gap = 5;
@@ -401,11 +412,12 @@ function layoutChartRows(doc: jsPDF, charts: readonly ReportPdfChart[]): ChartBo
   while (i < charts.length) {
     const chart = charts[i];
     const next = charts[i + 1];
-    if (chart.span === "half" && next?.span === "half") {
+    const span = pdfChartSpan(chart);
+    if (span === "half" && next && pdfChartSpan(next) === "half") {
       rows.push([measureChart(doc, chart, MARGIN, halfW, 50), measureChart(doc, next, MARGIN + halfW + gap, halfW, 50)]);
       i += 2;
     } else {
-      rows.push([measureChart(doc, chart, MARGIN, CONTENT_W, chart.span === "half" ? 60 : 52)]);
+      rows.push([measureChart(doc, chart, MARGIN, CONTENT_W, span === "half" ? 60 : 52)]);
       i += 1;
     }
   }

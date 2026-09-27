@@ -1,7 +1,10 @@
+import { readFileSync } from "node:fs";
+import { resolve } from "node:path";
 import { describe, expect, it } from "vitest";
 import { DEFAULT_APP_SETTINGS } from "@/features/settings/api/defaults";
 import { DEFAULT_WHATSAPP_MESSAGE } from "@/lib/constants";
 import {
+  brandThemeVars,
   brandingSchema,
   brandingValuesToUpdate,
   hasNamePlaceholder,
@@ -90,6 +93,25 @@ describe("conversões", () => {
   it("previewColor usa o fallback enquanto a cor está incompleta", () => {
     expect(previewColor("#12", "#0D6E6E")).toBe("#0D6E6E");
     expect(previewColor("123456", "#0D6E6E")).toBe("#123456");
+  });
+});
+
+describe("brandThemeVars (prévia das cores)", () => {
+  it("aplica a cor primária e a de destaque nos tokens do tema", () => {
+    const vars = brandThemeVars("#123456", "#ABCDEF");
+    expect(vars["--primary"]).toBe("#123456");
+    expect(vars["--ring"]).toBe("#123456");
+    expect(vars["--secondary"]).toBe("color-mix(in srgb, #123456 7%, white)");
+    expect(vars["--gold"]).toBe("#ABCDEF");
+    expect(vars["--gold-foreground"]).toBe("#3D2F00");
+  });
+
+  it("cobre todos os tokens derivados da marca em globals.css", () => {
+    const css = readFileSync(resolve(process.cwd(), "src/app/globals.css"), "utf8");
+    const derived = [...css.matchAll(/(--[\w-]+):[^;]*var\(--brand-(?:primary|accent)\)/g)].map((m) => m[1]);
+    expect(derived.length).toBeGreaterThan(0);
+    const keys = Object.keys(brandThemeVars("#000000", "#FFFFFF"));
+    for (const token of new Set(derived)) expect(keys).toContain(token);
   });
 });
 

@@ -38,7 +38,8 @@ export function UserRowActions({ user, currentUserId, onAction }: UserRowActions
   const availability = userActionAvailability(user, currentUserId);
   const isSelf = user.id === currentUserId;
 
-  const select = (action: UserAction) => () => {
+  // só grava a escolha; a ação dispara em onCloseAutoFocus (menu já fechado)
+  const select = (action: UserAction) => {
     pending.current = action;
   };
 
@@ -60,15 +61,15 @@ export function UserRowActions({ user, currentUserId, onAction }: UserRowActions
       >
         <DropdownMenuLabel className="truncate">{user.full_name}</DropdownMenuLabel>
         <DropdownMenuSeparator />
-        <DropdownMenuItem onSelect={select("edit-name")}>
+        <DropdownMenuItem onSelect={() => select("edit-name")}>
           <PencilIcon aria-hidden="true" />
           Editar nome
         </DropdownMenuItem>
-        <DropdownMenuItem onSelect={select("change-role")} disabled={!availability["change-role"].allowed}>
+        <DropdownMenuItem onSelect={() => select("change-role")} disabled={!availability["change-role"].allowed}>
           <UserCogIcon aria-hidden="true" />
           Alterar perfil
         </DropdownMenuItem>
-        <DropdownMenuItem onSelect={select("reset-password")}>
+        <DropdownMenuItem onSelect={() => select("reset-password")}>
           <KeyRoundIcon aria-hidden="true" />
           Redefinir senha
         </DropdownMenuItem>
@@ -76,14 +77,14 @@ export function UserRowActions({ user, currentUserId, onAction }: UserRowActions
         {user.active ? (
           <DropdownMenuItem
             variant="destructive"
-            onSelect={select("deactivate")}
+            onSelect={() => select("deactivate")}
             disabled={!availability.deactivate.allowed}
           >
             <UserXIcon aria-hidden="true" />
             Desativar acesso
           </DropdownMenuItem>
         ) : (
-          <DropdownMenuItem onSelect={select("reactivate")}>
+          <DropdownMenuItem onSelect={() => select("reactivate")}>
             <UserCheckIcon aria-hidden="true" />
             Reativar acesso
           </DropdownMenuItem>

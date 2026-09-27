@@ -9,7 +9,7 @@ import { formatPhone } from "@/lib/format";
 import type { Lead } from "@/types/database";
 
 export const CSV_DELIMITER = ";";
-export const CSV_BOM = "﻿";
+export const CSV_BOM = "\uFEFF";
 export const CSV_LINE_BREAK = "\r\n";
 
 interface CsvColumn {

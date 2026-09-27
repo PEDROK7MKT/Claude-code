@@ -7,7 +7,7 @@ import type { AppSettingsUpdate } from "@/features/settings/api/defaults";
 import { BRAND } from "@/lib/constants";
 import { whatsappUrl } from "@/lib/format";
 import type { AppSettings } from "@/types/database";
-import { isHexColor, normalizeHexInput } from "./color";
+import { ACCENT_FOREGROUND, isHexColor, normalizeHexInput } from "./color";
 
 export const CLINIC_NAME_MAX = 80;
 export const CRM_NAME_MAX = 40;
@@ -97,6 +97,28 @@ export function brandingValuesToUpdate(values: BrandingValues): AppSettingsUpdat
 /** Cor válida para pré-visualizar enquanto o admin digita (senão, o fallback). */
 export function previewColor(value: string | null | undefined, fallback: string): string {
   return normalizeHexInput(value) ?? fallback;
+}
+
+/**
+ * Tokens do tema derivados das cores da marca — espelha globals.css. Variáveis
+ * CSS são resolvidas onde são declaradas (:root), então a prévia precisa
+ * redefinir cada token derivado, não só --brand-primary/--brand-accent.
+ */
+export function brandThemeVars(primary: string, accent: string): Record<`--${string}`, string> {
+  return {
+    "--brand-primary": primary,
+    "--brand-accent": accent,
+    "--primary": primary,
+    "--secondary": `color-mix(in srgb, ${primary} 7%, white)`,
+    "--secondary-foreground": `color-mix(in srgb, ${primary} 70%, black)`,
+    "--accent": `color-mix(in srgb, ${primary} 10%, white)`,
+    "--accent-foreground": `color-mix(in srgb, ${primary} 70%, black)`,
+    "--ring": primary,
+    "--sidebar-primary": primary,
+    "--sidebar-ring": primary,
+    "--gold": accent,
+    "--gold-foreground": ACCENT_FOREGROUND,
+  };
 }
 
 export interface WhatsappPreview {

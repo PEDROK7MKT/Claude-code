@@ -67,3 +67,16 @@ export function summarizeDuplicates(leads: readonly DuplicateLead[]): DuplicateS
   }
   return { count, openCount, latest, title, description };
 }
+
+/**
+ * Título do card de contatos com o mesmo telefone no detalhe do lead:
+ * "Contatos anteriores deste telefone" quando todos entraram antes dele.
+ */
+export function samePhoneTitle(
+  lead: Pick<Lead, "created_at">,
+  others: ReadonlyArray<Pick<Lead, "created_at">>,
+): string {
+  const current = Date.parse(lead.created_at);
+  const allBefore = others.every((other) => Date.parse(other.created_at) < current);
+  return allBefore ? "Contatos anteriores deste telefone" : "Outros contatos deste telefone";
+}

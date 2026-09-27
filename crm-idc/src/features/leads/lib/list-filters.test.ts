@@ -1,8 +1,9 @@
 import { describe, expect, it } from "vitest";
 
-import { LEAD_STATUSES } from "@/lib/constants";
+import { LEAD_SOURCES, LEAD_STATUSES, SERVICES } from "@/lib/constants";
 
 import {
+  filterButtonLabel,
   filterChipRemoveLabel,
   getFilterChips,
   isPeriodSelectValue,
@@ -10,6 +11,9 @@ import {
   periodLabel,
   periodSelectValue,
   removeFilterChip,
+  SERVICE_FILTER_OPTIONS,
+  SOURCE_FILTER_OPTIONS,
+  STATUS_FILTER_OPTIONS,
   STATUS_QUICK_FILTERS,
   toggleListValue,
 } from "./list-filters";
@@ -105,5 +109,31 @@ describe("chips de filtros", () => {
     const [search, status] = getFilterChips(full);
     expect(filterChipRemoveLabel(search)).toBe("Remover busca “maria”");
     expect(filterChipRemoveLabel(status)).toBe("Remover filtro de status novo");
+  });
+});
+
+describe("opções dos filtros", () => {
+  it("seguem a ordem canônica do funil, das fontes e dos serviços", () => {
+    expect(STATUS_FILTER_OPTIONS.map((option) => option.value)).toEqual([...LEAD_STATUSES]);
+    expect(SOURCE_FILTER_OPTIONS.map((option) => option.value)).toEqual(LEAD_SOURCES.map((source) => source.value));
+    expect(SERVICE_FILTER_OPTIONS.map((option) => option.value)).toEqual(SERVICES.map((service) => service.value));
+  });
+
+  it("usam rótulos em pt-BR com inicial maiúscula", () => {
+    expect(STATUS_FILTER_OPTIONS.find((option) => option.value === "nao_compareceu")?.label).toBe("Não compareceu");
+    expect(SOURCE_FILTER_OPTIONS.find((option) => option.value === "google_ads")?.label).toBe("Google Ads");
+    expect(SERVICE_FILTER_OPTIONS.find((option) => option.value === "implante")?.label).toBe("Implante Dentário");
+  });
+});
+
+describe("filterButtonLabel", () => {
+  it("mostra a quantidade de filtros do painel (sem a busca)", () => {
+    expect(filterButtonLabel(params())).toBe("Filtros");
+    expect(filterButtonLabel(params({ q: "maria" }))).toBe("Filtros");
+    expect(
+      filterButtonLabel(
+        params({ status: ["novo", "agendado"], source: ["google_ads"], period: { kind: "preset", key: "7d" } }),
+      ),
+    ).toBe("Filtros (4)");
   });
 });

@@ -7,7 +7,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { BrandMark } from "@/features/shell/components/brand-logo";
-import { ACCENT_FOREGROUND } from "../../lib/color";
+import { brandThemeVars } from "../../lib/branding";
 import { LogoPreview } from "./logo-preview";
 
 export interface BrandPreviewProps {
@@ -24,13 +24,7 @@ export interface BrandPreviewProps {
  * quadro, então botões, badges e barras usam os componentes reais do app.
  */
 export function BrandPreview({ primary, accent, crmName, clinicName, logoUrl }: BrandPreviewProps) {
-  const themeVars = {
-    "--primary": primary,
-    "--ring": primary,
-    "--sidebar-primary": primary,
-    "--gold": accent,
-    "--gold-foreground": ACCENT_FOREGROUND,
-  } as CSSProperties;
+  const themeVars = brandThemeVars(primary, accent) as CSSProperties;
 
   return (
     // puramente visual: inert tira os botões de exemplo do foco e dos leitores de tela
@@ -89,6 +83,7 @@ export function BrandPreview({ primary, accent, crmName, clinicName, logoUrl }: 
             Cancelar
           </Button>
           <Badge>admin</Badge>
+          <Badge variant="secondary">dentista</Badge>
           <span className="text-primary text-sm font-medium underline underline-offset-4">Ver detalhes</span>
         </div>
       </div>

@@ -42,7 +42,10 @@ const STOPPED_LABEL: Partial<Record<LeadStatus, string>> = {
   nao_compareceu: "Não compareceu",
 };
 
-/** Etapas esperadas por status (datas podem faltar em leads antigos/importados). */
+/**
+ * Etapa alcançada garantida pelo status. -1: status que interrompe o funil em
+ * qualquer ponto (cancelado, perdido) — a etapa vem das datas gravadas.
+ */
 const STAGE_BY_STATUS: Record<LeadStatus, number> = {
   novo: 0,
   em_contato: 1,
@@ -57,14 +60,16 @@ const STAGE_BY_STATUS: Record<LeadStatus, number> = {
 export function buildFunnelSteps(lead: FunnelLead): FunnelStep[] {
   const dates = STEP_DEFS.map((def) => (lead[def.field] as string | null) ?? null);
 
-  // Última etapa alcançada: a maior entre as datas gravadas e o que o status garante.
+  // Em andamento/finalizado: o status define a etapa (datas além dela são de um ciclo
+  // anterior, ex.: lead perdido e reativado). Cancelado/perdido: última data gravada.
+  const stage = STAGE_BY_STATUS[lead.status];
   let reached = 0;
-  dates.forEach((date, index) => {
-    if (date) reached = Math.max(reached, index);
-  });
-  reached = Math.max(reached, STAGE_BY_STATUS[lead.status]);
-  // Não compareceu: a consulta (comparecimento) não aconteceu, mesmo com attended_at antigo.
-  if (lead.status === "nao_compareceu") reached = Math.min(reached, 3);
+  if (stage >= 0) reached = stage;
+  else {
+    dates.forEach((date, index) => {
+      if (date) reached = index;
+    });
+  }
 
   const stopped = STOPPED_LABEL[lead.status] ?? null;
   const finished = lead.status === "compareceu";
@@ -74,7 +79,9 @@ export function buildFunnelSteps(lead: FunnelLead): FunnelStep[] {
     const base = { key: def.key, label: def.label, date };
 
     if (index <= reached) {
-      const description = def.key === "entrada" ? null : date ? null : "Sem data registrada";
+      let description: string | null = null;
+      if (def.key === "agendamento") description = date ? "Data da consulta" : "Sem data registrada";
+      else if (def.key !== "entrada" && !date) description = "Sem data registrada";
       return { ...base, state: "done", description };
     }
     if (index === reached + 1 && !finished) {
@@ -85,7 +92,7 @@ export function buildFunnelSteps(lead: FunnelLead): FunnelStep[] {
   });
 }
 
-/** Índice (0-based) da etapa atual/ponto de parada — para aria-current e barra de progresso. */
+/** Etapas concluídas × total (texto de progresso e leitores de tela). */
 export function funnelProgress(steps: readonly FunnelStep[]): { completed: number; total: number } {
   return { completed: steps.filter((step) => step.state === "done").length, total: steps.length };
 }

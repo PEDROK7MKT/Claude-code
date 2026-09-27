@@ -45,7 +45,7 @@ const PRINT_CSS = `
 }
 `;
 
-const SOURCE_LABEL: Record<ReportSourceKey, string> = {
+const UNAVAILABLE_LABEL: Record<ReportSourceKey, string> = {
   metrics: "métricas do Google Ads",
   gmn: "métricas do Google Meu Negócio",
 };
@@ -120,7 +120,7 @@ export function ReportsView({ currentMonth, today, initialSettings }: ReportsVie
             <AlertTitle>Parte dos dados não carregou</AlertTitle>
             <AlertDescription>
               <p>
-                O relatório foi montado sem as {state.unavailable.map((key) => SOURCE_LABEL[key]).join(" e ")}.
+                O relatório foi montado sem as {state.unavailable.map((key) => UNAVAILABLE_LABEL[key]).join(" e ")}.
               </p>
               <Button type="button" variant="outline" size="sm" className="mt-2" onClick={state.retry} disabled={state.isRefetching}>
                 <RefreshCwIcon aria-hidden="true" className={state.isRefetching ? "animate-spin" : undefined} />

@@ -41,6 +41,13 @@ export function leadsHeaderDescription(total: number, filtered: boolean): string
   return `${formatLeadCount(total)} no total`;
 }
 
+/** Botão que fecha o painel de filtros no celular: "Ver 37 leads" · "Nenhum lead encontrado". */
+export function showResultsLabel(total: number | null | undefined): string {
+  if (total == null) return "Ver resultados";
+  if (total <= 0) return "Nenhum lead encontrado";
+  return `Ver ${formatLeadCount(total)}`;
+}
+
 export interface PageRange {
   /** Posição do primeiro item exibido (1-based; 0 se vazio) */
   from: number;
@@ -177,4 +184,23 @@ export function findFreshLeadIds(
       return Number.isFinite(created) && referenceMs - created <= windowMs;
     })
     .map((row) => row.id);
+}
+
+/**
+ * Dos leads marcados como recém-chegados, os que ainda estão dentro da janela
+ * em relação ao relógio da lista — o selo "agora" some sozinho depois de alguns minutos.
+ */
+export function recentFreshIds(
+  freshIds: ReadonlySet<string>,
+  rows: ReadonlyArray<Pick<Lead, "id" | "created_at">>,
+  nowMs: number,
+  windowMs = FRESH_LEAD_WINDOW_MS,
+): ReadonlySet<string> {
+  if (freshIds.size === 0) return freshIds;
+  const recent = rows.filter((row) => {
+    if (!freshIds.has(row.id)) return false;
+    const created = new Date(row.created_at).getTime();
+    return Number.isFinite(created) && nowMs - created <= windowMs;
+  });
+  return recent.length === freshIds.size ? freshIds : new Set(recent.map((row) => row.id));
 }

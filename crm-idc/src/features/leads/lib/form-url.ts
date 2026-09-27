@@ -32,11 +32,27 @@ export interface UrlAutofillResult {
   ignoredSource: LeadSource | null;
   /** A URL tinha algum dado aproveitável? */
   found: boolean;
-  /** Clique do Google Ads (gclid/gbraid/wbraid) detectado. */
+  /** Clique do Google Ads (gclid) detectado. */
   hasClickId: boolean;
 }
 
 const DIRECT_FIELDS = ["keyword", "landing_page", "utm_source", "utm_medium", "utm_campaign", "utm_term", "utm_content"] as const;
+
+/**
+ * O texto colado parece uma URL/query string? Evita "preencher" a página de
+ * destino com "/" quando a pessoa cola um texto qualquer.
+ * Aceita "https://site/pagina?…", "site.com.br/pagina", "/pagina?…" e "?utm_source=…".
+ */
+export function looksLikeUrl(input: string | null | undefined): boolean {
+  const value = (input ?? "").trim();
+  if (!value || /\s/.test(value)) return false;
+  if (/^[a-z][a-z0-9+.-]*:\/\//i.test(value)) return true;
+  if (value.startsWith("/") || value.startsWith("?")) return true;
+  return /^[\w-]+(\.[\w-]+)+(?:[/?#:]|$)/.test(value);
+}
+
+export const INVALID_URL_MESSAGE =
+  "Isso não parece um endereço. Cole a URL completa, ex.: https://institutodeciocarrilho.com.br/urgencia?utm_source=google";
 
 /** Fonte ainda "em aberto": sem seleção ou "outro". */
 export function isSourceOpenForGuess(source: string | null | undefined): boolean {

@@ -2,11 +2,42 @@
  * Filtros da lista de leads: atalhos de status, chips removíveis e rótulos do
  * período. Funções puras (testadas em list-filters.test.ts).
  */
-import { SERVICE_LABEL, SOURCE_LABEL, STATUS_META } from "@/lib/constants";
+import { LEAD_SOURCES, LEAD_STATUSES, SERVICE_LABEL, SERVICES, SOURCE_LABEL, STATUS_META } from "@/lib/constants";
 import { formatDateKey, PERIOD_OPTIONS, type PeriodKey } from "@/lib/dates";
 import type { LeadSource, LeadStatus, ServiceType } from "@/types/database";
 
-import { patchLeadListParams, type LeadListParams, type LeadListPeriod } from "./list-params";
+import { countPanelFilters, patchLeadListParams, type LeadListParams, type LeadListPeriod } from "./list-params";
+
+// -----------------------------------------------------------------------------
+// Opções dos filtros de múltipla escolha (ordem canônica)
+// -----------------------------------------------------------------------------
+
+export interface FilterOption<T extends string> {
+  value: T;
+  label: string;
+}
+
+/** Status na ordem do funil, com inicial maiúscula ("Em contato"). */
+export const STATUS_FILTER_OPTIONS: ReadonlyArray<FilterOption<LeadStatus>> = LEAD_STATUSES.map((value) => ({
+  value,
+  label: STATUS_META[value].title,
+}));
+
+export const SOURCE_FILTER_OPTIONS: ReadonlyArray<FilterOption<LeadSource>> = LEAD_SOURCES.map(({ value, label }) => ({
+  value,
+  label,
+}));
+
+export const SERVICE_FILTER_OPTIONS: ReadonlyArray<FilterOption<ServiceType>> = SERVICES.map(({ value, label }) => ({
+  value,
+  label,
+}));
+
+/** Botão do painel de filtros no celular: "Filtros" · "Filtros (3)". */
+export function filterButtonLabel(params: LeadListParams): string {
+  const count = countPanelFilters(params);
+  return count > 0 ? `Filtros (${count})` : "Filtros";
+}
 
 // -----------------------------------------------------------------------------
 // Atalhos de status ("abas" rápidas)

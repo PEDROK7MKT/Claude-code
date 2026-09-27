@@ -13,7 +13,12 @@ const SERVICE_WORKER_HEADERS = [
   { key: "Content-Type", value: "application/javascript; charset=utf-8" },
   { key: "Cache-Control", value: "no-cache, no-store, must-revalidate" },
   { key: "Service-Worker-Allowed", value: "/" },
+  // o SW só busca o próprio domínio
+  { key: "Content-Security-Policy", value: "default-src 'self'; script-src 'self'" },
 ];
+
+/** Script de rastreamento de UTMs usado no site institutodeciocarrilho.com.br (docs/WEBHOOK.md). */
+const TRACKER_HEADERS = [{ key: "Cache-Control", value: "public, max-age=3600, stale-while-revalidate=86400" }];
 
 const nextConfig: NextConfig = {
   poweredByHeader: false,
@@ -21,6 +26,7 @@ const nextConfig: NextConfig = {
     return [
       { source: "/:path*", headers: SECURITY_HEADERS },
       { source: "/sw.js", headers: SERVICE_WORKER_HEADERS },
+      { source: "/idc-lead-tracker.js", headers: TRACKER_HEADERS },
     ];
   },
 };

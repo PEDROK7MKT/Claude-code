@@ -4,7 +4,7 @@
  */
 import type { Lead } from "@/types/database";
 
-import { LEAD_FIELD_LABEL, type LeadFormField, type LeadFormOutput } from "./form-schema";
+import { LEAD_FIELD_LABEL, type LeadFormField, type LeadFormOutput, type LeadFormValues } from "./form-schema";
 
 export type LeadChanges = Partial<LeadFormOutput>;
 
@@ -38,4 +38,57 @@ export function hasLeadChanges(changes: LeadChanges): boolean {
 /** Rótulos dos campos alterados, na ordem do formulário. */
 export function changedFieldLabels(changes: LeadChanges): string[] {
   return FORM_FIELDS.filter((field) => field in changes).map((field) => LEAD_FIELD_LABEL[field]);
+}
+
+/**
+ * Mesmos valores de formulário (campos de texto)? Usado para saber se o lead
+ * mudou no servidor (Realtime/outra aba) e o formulário precisa ser atualizado.
+ */
+export function sameFormValues(a: LeadFormValues, b: LeadFormValues): boolean {
+  const keys = new Set([...Object.keys(a), ...Object.keys(b)] as Array<keyof LeadFormValues>);
+  for (const key of keys) {
+    if ((a[key] ?? "") !== (b[key] ?? "")) return false;
+  }
+  return true;
+}
+
+/** Campos marcados como alterados pelo react-hook-form (formState.dirtyFields). */
+export function dirtyFieldNames(dirtyFields: Partial<Record<keyof LeadFormValues, boolean | undefined>>): Array<keyof LeadFormValues> {
+  return (Object.keys(dirtyFields) as Array<keyof LeadFormValues>).filter((key) => dirtyFields[key] === true);
+}
+
+const FORM_KEY_ORDER: ReadonlyArray<keyof LeadFormValues> = [
+  "name",
+  "phone",
+  "source",
+  "campaignOption",
+  "campaignOther",
+  "keyword",
+  "ad_group",
+  "landing_page",
+  "utm_source",
+  "utm_medium",
+  "utm_campaign",
+  "utm_term",
+  "utm_content",
+  "service",
+  "service_detail",
+  "estimated_value",
+  "assigned_to",
+  "notes",
+];
+
+function formKeyLabel(key: keyof LeadFormValues): string {
+  return key === "campaignOption" || key === "campaignOther" ? LEAD_FIELD_LABEL.campaign : LEAD_FIELD_LABEL[key];
+}
+
+/** Rótulos dos campos alterados no formulário, na ordem da tela e sem repetição ("Campanha" uma vez). */
+export function dirtyFieldLabels(names: ReadonlyArray<keyof LeadFormValues>): string[] {
+  const labels: string[] = [];
+  for (const key of FORM_KEY_ORDER) {
+    if (!names.includes(key)) continue;
+    const label = formKeyLabel(key);
+    if (!labels.includes(label)) labels.push(label);
+  }
+  return labels;
 }

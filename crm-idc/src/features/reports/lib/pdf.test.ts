@@ -1,7 +1,14 @@
 import { describe, expect, it } from "vitest";
 import { buildReportChartSpecs } from "./charts";
 import { buildReportKpis } from "./kpis";
-import { buildReportPdf, reportPdfFileName, type ReportPdfChart, type ReportPdfInput } from "./pdf";
+import {
+  NARROW_CHART_PX,
+  buildReportPdf,
+  pdfChartSpan,
+  reportPdfFileName,
+  type ReportPdfChart,
+  type ReportPdfInput,
+} from "./pdf";
 import { buildMonthReport } from "./report";
 import { buildReportSummary } from "./summary";
 import { DEFAULT_REPORT_SORT, sortReportLeads } from "./table";
@@ -105,7 +112,31 @@ describe("buildReportPdf", () => {
     expect(doc.output()).toContain("(Nenhum lead no período.)");
   });
 
+  it("capturas estreitas (celular) também entram no PDF", () => {
+    const input = makeInput(4, true);
+    const narrow = input.charts.map((chart) => ({ ...chart, image: { ...chart.image, width: 340, height: 260 } }));
+    const doc = buildReportPdf({ ...input, charts: narrow }, { compress: false });
+    const out = doc.output();
+    expect(out.match(/\/Subtype \/Image/g)?.length ?? 0).toBeGreaterThanOrEqual(1);
+    expect(out).toContain("(Leads por dia)");
+    expect(out).toContain("(Funil por status)");
+  });
+
   it("nome do arquivo", () => {
     expect(reportPdfFileName("2026-03")).toBe("relatorio-IDC-2026-03.pdf");
+  });
+});
+
+describe("pdfChartSpan", () => {
+  const image = (width: number) => ({ dataUrl: PIXEL, width, height: 260 });
+
+  it("mantém a largura pedida em capturas de desktop", () => {
+    expect(pdfChartSpan({ span: "full", image: image(900) })).toBe("full");
+    expect(pdfChartSpan({ span: "half", image: image(900) })).toBe("half");
+  });
+
+  it("capturas estreitas ocupam meia coluna", () => {
+    expect(pdfChartSpan({ span: "full", image: image(NARROW_CHART_PX - 1) })).toBe("half");
+    expect(pdfChartSpan({ span: "full", image: image(NARROW_CHART_PX) })).toBe("full");
   });
 });

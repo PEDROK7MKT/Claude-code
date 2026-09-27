@@ -21,6 +21,7 @@ import {
   summarizeProfiles,
   type UserAction,
 } from "../../lib/users";
+import { CREATE_USER_DEFAULTS } from "../../lib/user-schemas";
 import { ChangeRoleDialog } from "./change-role-dialog";
 import { CreateUserDialog } from "./create-user-dialog";
 import { EditNameDialog } from "./edit-name-dialog";
@@ -78,7 +79,8 @@ export function UsersPanel() {
             {profilesQuery.isSuccess ? describeProfilesSummary(summary) : "Quem pode acessar o CRM"}
           </CardDescription>
           <CardAction>
-            <Button type="button" size="sm" onClick={() => openCreate(showFirstAccess ? "dentist" : "admin")}>
+            {/* menor privilégio por padrão: o admin escolhe "gestor" conscientemente */}
+            <Button type="button" size="sm" onClick={() => openCreate(CREATE_USER_DEFAULTS.role)}>
               <UserPlusIcon aria-hidden="true" />
               <span className="hidden sm:inline">Novo usuário</span>
               <span className="sm:hidden">Novo</span>

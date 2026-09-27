@@ -27,7 +27,7 @@ describe("buildLeadsCsv", () => {
   const lines = parse(csv);
 
   it("começa com BOM UTF-8 e usa CRLF", () => {
-    expect(csv.startsWith("﻿")).toBe(true);
+    expect(csv.startsWith("\uFEFF")).toBe(true);
     expect(csv.endsWith("\r\n")).toBe(true);
   });
 

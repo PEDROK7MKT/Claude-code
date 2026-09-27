@@ -41,9 +41,9 @@ const REPLACEMENTS: Record<string, string> = {
 };
 
 /** Espaços especiais (NBSP tem largura errada na métrica da Helvetica do jsPDF). */
-const SPACES = /[   -   　]/g;
+const SPACES = /[\u00A0\u1680\u2000-\u200A\u202F\u205F\u3000]/g;
 /** Invisíveis: zero-width, marcas de direção, seletores de variação de emoji. */
-const INVISIBLE = /[​-‍⁠﻿‎‏︀-️]/g;
+const INVISIBLE = /[\u200B-\u200D\u2060\uFEFF\u200E\u200F\uFE00-\uFE0F]/g;
 
 function isEncodable(char: string): boolean {
   const code = char.codePointAt(0) ?? 0;
@@ -70,7 +70,7 @@ export function toPdfText(value: string | null | undefined): string {
       continue;
     }
     // letras com diacríticos fora do Latin-1 (ő, ł…) → letra base
-    const base = char.normalize("NFD").replace(/[̀-ͯ]/g, "");
+    const base = char.normalize("NFD").replace(/[\u0300-\u036F]/g, "");
     if (base && [...base].every(isEncodable)) out += base;
     // demais (emojis, ideogramas, símbolos) são descartados
   }

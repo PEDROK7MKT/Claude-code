@@ -3,6 +3,7 @@
 import * as React from "react";
 
 import { clearPersistedCache } from "@/components/providers/query-provider";
+import { clearOfflinePageCaches } from "@/features/offline/clear-offline-caches";
 import { SIGN_OUT_PATH } from "../lib/redirect";
 
 /**
@@ -19,6 +20,12 @@ export function useSignOut(): { signOut: () => Promise<void>; signingOut: boolea
       await clearPersistedCache();
     } catch {
       // sai mesmo se o IndexedDB falhar
+    }
+    try {
+      // páginas salvas pelo service worker (inclui abas que o SW ainda não controla)
+      await clearOfflinePageCaches();
+    } catch {
+      // idem
     }
     window.location.assign(SIGN_OUT_PATH);
   }, []);

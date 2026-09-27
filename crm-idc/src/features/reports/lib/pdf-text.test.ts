@@ -16,13 +16,13 @@ describe("toPdfText", () => {
 
   it("remove emojis e caracteres invisíveis", () => {
     expect(toPdfText("Maria 😊 Silva")).toBe("Maria Silva");
-    expect(toPdfText("Dente 🦷​")).toBe("Dente ");
+    expect(toPdfText("Dente 🦷\u200B")).toBe("Dente ");
     expect(toPdfText("ok👍🏽")).toBe("ok");
   });
 
   it("normaliza espaços especiais (NBSP do Intl) e diacríticos fora do Latin-1", () => {
-    expect(toPdfText("R$ 42,10")).toBe("R$ 42,10");
-    expect(toPdfText("1 000")).toBe("1 000");
+    expect(toPdfText("R$\u00A042,10")).toBe("R$ 42,10");
+    expect(toPdfText("1\u202F000")).toBe("1 000");
     expect(toPdfText("ő ę ş ğ")).toBe("o e s g");
   });
 
