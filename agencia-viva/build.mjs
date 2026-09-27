@@ -79,9 +79,14 @@ const svcArt = {
   'gestao-de-trafego-pago': () => `<span class="art art--chart" aria-hidden="true"><b>Faturamento ↑</b>${[22, 30, 26, 42, 38, 58, 66, 84].map(h => `<i style="--h:${h}%"></i>`).join('')}</span>`,
   'social-media': () => `<span class="art art--posts" aria-hidden="true">${['Reels ▶', 'Post', 'Story', 'Promo'].map(t => `<span>${t}</span>`).join('')}</span>`,
   'criacao-de-sites': () => '<span class="art art--browser" aria-hidden="true"><span class="bar"><i></i><i></i><i></i><span class="url"><span>suaempresa.com.br</span></span></span><span class="body"><span style="flex:1"><i style="width:90%"></i><i style="width:70%"></i><i style="width:80%"></i></span><span class="fb">WhatsApp</span></span></span>',
-  'google-meu-negocio-seo-local': () => `<span class="art art--search" aria-hidden="true"><span class="q"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M20 20l-4.8-4.8"/></svg>marketing perto de mim</span><span class="res">${logoIc('googlemaps')}<span><b>Sua Empresa</b><span class="stars">★★★★★</span> · aberto agora</span></span></span>`,
+  'google-meu-negocio-seo-local': () => `<span class="art art--search" aria-hidden="true"><span class="q"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M20 20l-4.8-4.8"/></svg>dentista perto de mim</span><span class="res">${logoIc('googlemaps')}<span><b>Sua Clínica</b><span class="stars">★★★★★</span> · aberto agora</span></span></span>`,
   'identidade-visual': () => '<span class="art art--pen" aria-hidden="true"><svg viewBox="0 0 300 92"><path class="handle" d="M40 70L90 12M170 18L230 78"/><path class="curve" d="M40 70C90 12 150 10 170 18S220 88 260 60"/><rect class="anchor" x="34" y="64" width="12" height="12"/><rect class="anchor" x="164" y="12" width="12" height="12"/><circle class="anchor" cx="90" cy="12" r="5"/><circle class="anchor" cx="230" cy="78" r="5"/><rect class="sw" x="268" y="8" width="26" height="26" rx="6" fill="#0b0b0b"/><rect class="sw" x="268" y="40" width="26" height="26" rx="6" fill="#fff"/><path d="M252 70l14-14 6 6-14 14-8 2z" fill="#0b0b0b"/></svg></span>',
   'producao-de-conteudo-audiovisual': () => '<span class="art art--timeline" aria-hidden="true"><span class="cam"><svg viewBox="0 0 24 24"><rect x="2.5" y="6.5" width="13" height="11" rx="2.5"/><path d="M15.5 10.5l6-3.5v10l-6-3.5z"/></svg></span><span class="tracks"><span class="tr"><i style="flex:3"></i><i style="flex:2"></i><i style="flex:4"></i></span><span class="tr"><i style="flex:2"></i><i style="flex:5"></i><i style="flex:1"></i></span><span class="tr"><i style="flex:6"></i><i style="flex:3"></i></span><span class="head"></span></span></span>',
+}
+// rótulo manuscrito de cada cartão (categoria, não sequência)
+const svcTag = {
+  'gestao-de-trafego-pago': 'anúncios', 'social-media': 'conteúdo', 'criacao-de-sites': 'site',
+  'google-meu-negocio-seo-local': 'Google', 'identidade-visual': 'marca', 'producao-de-conteudo-audiovisual': 'vídeo',
 }
 const svcStamp = {
   'criacao-de-sites': '<path d="M4 5h16v14H4z"/><path d="M4 9h16M8 13l-2 2 2 2M16 13l2 2-2 2M13 12l-2 6"/>',
@@ -263,25 +268,46 @@ const faqBlock = (title, faq, note = 'Não achou sua dúvida? Manda no WhatsApp.
 const ticket = (s, i, tag = 'h3') => `<a class="ticket" href="${svcPath(s)}">
     <span class="tape" aria-hidden="true"></span>
     ${svcLogos[s.slug] ? logos(svcLogos[s.slug]) : `<span class="stampic" aria-hidden="true"><svg viewBox="0 0 24 24">${svcStamp[s.slug] || ic[s.icon]}</svg></span>`}
-    <span class="n" aria-hidden="true">${['um', 'dois', 'três', 'quatro', 'cinco', 'seis'][i] || i + 1}.</span>
+    <span class="tnum" aria-hidden="true">${svcTag[s.slug] || ''}</span>
     <${tag}>${esc(s.short)}</${tag}>
     <p>${esc(s.pitch)}</p>
     ${svcArt[s.slug] ? svcArt[s.slug]() : ''}
     <span class="go">Ver como funciona ${icon('arrow')}</span>
   </a>`
 
-const cta = (title = 'Sua empresa merece ser <span class="s">encontrada.</span>', text = 'Chama no WhatsApp e conta o que você vende. A gente olha seu Instagram, seu Google e seus anúncios e te diz, sem enrolação, por onde começar.') => `
-<section class="cta dark" aria-labelledby="h-cta">
-  <span class="bang" aria-hidden="true">!</span>
-  <div class="wrap">
-    <h2 id="h-cta" data-split>${title}</h2>
-    <p data-rise>${text}</p>
-    <div class="hero-cta" data-rise>
-      <a class="btn btn--main btn--lg" href="${wa()}" target="_blank" rel="noopener">${waIcon} Chamar no WhatsApp</a>
-      <a class="go" href="${site.instagram}" target="_blank" rel="noopener">${logoIc('instagram')} Espiar o Instagram ${icon('arrow')}</a>
-    </div>
+// nomes iguais aos do CRM (crm/src/config.js SERVICOS), pra marcar o serviço certo no lead
+const crmServico = { 'gestao-de-trafego-pago': 'Tráfego pago', 'social-media': 'Social media', 'criacao-de-sites': 'Site', 'google-meu-negocio-seo-local': 'SEO local / Google', 'identidade-visual': 'Identidade visual', 'producao-de-conteudo-audiovisual': 'Audiovisual' }
+// formulário "Quero um orçamento": grava direto no funil do CRM (função lead_do_site no Supabase)
+const leadForm = ({ servico = '', cidade = '' } = {}) => `<form class="lead-form paper" data-lead-form data-endpoint="${site.leads.url}/rest/v1/rpc/lead_do_site" data-key="${site.leads.key}" data-wa="${site.whatsapp}" novalidate>
+  <h3>Quero um <span class="s">orçamento</span></h3>
+  <p class="lf-sub">Deixa seu contato que a gente te chama no WhatsApp.</p>
+  <label class="lf-field"><span>Seu nome</span><input name="nome" required autocomplete="name" maxlength="120"></label>
+  <label class="lf-field"><span>WhatsApp</span><input name="telefone" type="tel" required inputmode="tel" autocomplete="tel" placeholder="(77) 9 9999-9999" maxlength="20"></label>
+  <div class="lf-row">
+    <label class="lf-field"><span>Cidade</span><select name="cidade">${cities.map(c => `<option${c.name === (cidade || 'Barreiras') ? ' selected' : ''}>${esc(c.name)}</option>`).join('')}<option>Outra cidade</option></select></label>
+    <label class="lf-field"><span>Precisa de</span><select name="servico"><option value="">Ainda não sei</option>${services.map(v => `<option value="${esc(crmServico[v.slug])}"${v.short === servico ? ' selected' : ''}>${esc(v.short)}</option>`).join('')}</select></label>
   </div>
-  <span class="hand" aria-hidden="true">a gente responde em horário comercial</span>
+  <label class="lf-field"><span>Quer contar mais? <small>(opcional)</small></span><textarea name="mensagem" rows="3" maxlength="1000" placeholder="O que a sua empresa faz, o que você quer melhorar…"></textarea></label>
+  <label class="lf-hp" aria-hidden="true">Não preencha<input name="site_empresa" tabindex="-1" autocomplete="off"></label>
+  <button class="btn btn--main" type="submit">Enviar pedido</button>
+  <p class="lf-legal">Ao enviar, você autoriza a Agência Viva a falar com você pelo WhatsApp sobre este pedido. <a href="/privacidade/">Como usamos seus dados</a>.</p>
+  <div class="lf-status" role="status" aria-live="polite"></div>
+</form>`
+
+const cta = (title = 'Sua empresa merece ser <span class="s">encontrada.</span>', text = 'Chama no WhatsApp e conta o que você vende. A gente olha seu Instagram, seu Google e seus anúncios e te diz, sem enrolação, por onde começar.', form = {}) => `
+<section class="cta dark" id="orcamento" aria-labelledby="h-cta">
+  <span class="bang" aria-hidden="true">!</span>
+  <div class="wrap cta-grid">
+    <div>
+      <h2 id="h-cta" data-split>${title}</h2>
+      <p data-rise>${text}</p>
+      <div class="hero-cta" data-rise>
+        <a class="btn btn--main btn--lg" href="${wa()}" target="_blank" rel="noopener">${waIcon} Chamar no WhatsApp</a>
+        <a class="go" href="${site.instagram}" target="_blank" rel="noopener">${logoIc('instagram')} Espiar o Instagram ${icon('arrow')}</a>
+      </div>
+    </div>
+    ${leadForm(form)}
+  </div>
 </section>`
 
 const phoneChat = (msgs, seq = false, who = ['C', 'Cliente novo', 'via anúncio · online']) => `<div class="phone" aria-hidden="true"><div class="phone__screen">
@@ -372,7 +398,7 @@ ${body}
     <p class="giant" aria-hidden="true"><span>V</span><span>I</span><span>V</span><span>A</span><span>!</span></p>
     <div class="ftr-bottom">
       <span>© ${new Date().getFullYear()} ${esc(site.name)}${site.cnpj ? ` · CNPJ ${esc(site.cnpj)}` : ''} · Agência de marketing em Barreiras - BA</span>
-      <span>Barreiras · LEM · Oeste da Bahia · <a href="/crm/" rel="nofollow">Área da equipe</a></span>
+      <span>Barreiras · LEM · Oeste da Bahia · <a href="/privacidade/">Privacidade</a> · <a href="/crm/" rel="nofollow">Área da equipe</a></span>
     </div>
   </div>
 </footer>
@@ -426,7 +452,7 @@ page({
 
 <div class="bands" aria-hidden="true">
   <div class="band band--b"><div class="band__track">${[0, 1].map(() => `<span>${cities.map(c => `${esc(c.name)} <i>·</i>`).join(' ')}</span>`).join('')}</div></div>
-  <div class="band band--a"><div class="band__track">${[0, 1].map(() => `<span>${[['Tráfego pago', 'meta'], ['Instagram', 'instagram'], ['Google Maps', 'googlemaps'], ['TikTok', 'tiktok'], ['Google Ads', 'googleads'], ['Reels', 'youtube'], ['WhatsApp', 'whatsapp']].map(([t, l]) => `${t} ${logoIc(l)}`).join(' ')}</span>`).join('')}</div></div>
+  <div class="band band--a"><div class="band__track">${[0, 1].map(() => `<span>${[['Tráfego pago', 'meta'], ['Instagram', 'instagram'], ['Google Maps', 'googlemaps'], ['TikTok', 'tiktok'], ['Google Ads', 'googleads'], ['YouTube', 'youtube'], ['WhatsApp', 'whatsapp']].map(([t, l]) => `${t} ${logoIc(l)}`).join(' ')}</span>`).join('')}</div></div>
 </div>
 
 <section class="manifesto dark" aria-label="Por que a Viva existe">
@@ -552,9 +578,8 @@ page({
   </div>
 </section>
 <section class="sec" style="padding-top:20px" aria-label="Lista de serviços">
-  <div class="wrap rio">
-    <svg class="rio__svg" aria-hidden="true"><path/><path class="rio__shine"/></svg>
-    <div class="tickets">${services.map((s, i) => ticket(s, i, 'h2')).join('')}</div>
+  <div class="wrap">
+    <div class="minis">${services.map((s, i) => ticket(s, i, 'h2')).join('')}</div>
   </div>
 </section>
 ${cta()}`,
@@ -603,7 +628,7 @@ for (const s of services) {
     <aside class="aside paper" data-rise>
       <span class="hand" aria-hidden="true">sem compromisso!</span>
       <h2>Vamos conversar?</h2>
-      <p>Conta rapidinho como está a sua empresa hoje. A gente te diz se ${esc(s.short.toLowerCase())} faz sentido agora, ou o que vem antes.</p>
+      <p>Conta rapidinho como está a sua empresa hoje. A gente te diz se ${esc(s.short)} faz sentido agora ou se tem algo que vem antes.</p>
       <a class="btn btn--main" href="${wa(`Olá, Agência Viva! Quero conversar sobre ${s.short}.`)}" target="_blank" rel="noopener">${waIcon} Chamar no WhatsApp</a>
     </aside>
   </div>
@@ -614,14 +639,14 @@ for (const s of services) {
     <div class="steps">${s.steps.map(t => `<div class="step paper" data-rise><h3>${esc(t)}</h3></div>`).join('')}</div>
   </div>
 </section>
-${faqBlock(`Dúvidas sobre <span class="s">${esc(s.short.toLowerCase())}.</span>`, s.faq)}
+${faqBlock(`Dúvidas sobre <span class="s">${esc(s.short)}.</span>`, s.faq)}
 <section class="sec" style="padding-top:0" aria-labelledby="h-mais">
   <div class="wrap">
     <div class="sec-head"><h2 id="h-mais" class="h2" data-split>Combina <span class="s">com:</span></h2></div>
     <div class="minis">${others.map(o => ticket(o, services.indexOf(o), 'h3')).join('')}</div>
   </div>
 </section>
-${cta()}`,
+${cta(undefined, undefined, { servico: s.short })}`,
   })
 }
 
@@ -694,7 +719,7 @@ ${faqBlock(`Marketing em <span class="s">${esc(c.name)}.</span>`, faq)}
     <div class="chips" data-rise>${others.map(o => `<a href="${cityPath(o)}">${esc(o.name)}</a>`).join('')}${landings.filter(l => !l.service).map(l => `<a href="${landingPath(l)}">${esc(l.nav || l.h1)}</a>`).join('')}</div>
   </div>
 </section>
-${cta(`Sua empresa viva em <span class="s">${esc(c.name)}.</span>`)}`,
+${cta(`Sua empresa viva em <span class="s">${esc(c.name)}.</span>`, undefined, { cidade: c.name })}`,
   })
 }
 
@@ -732,7 +757,7 @@ for (const l of landings) {
       ${l.sections.map(sec => `<h2 data-split>${esc(sec.h2)}</h2>
       ${sec.paragraphs.map(t => `<p data-rise>${esc(t)}</p>`).join('')}
       ${sec.bullets && sec.bullets.length ? `<ul class="checklist paper" data-rise>${sec.bullets.map(b => `<li>${esc(b)}</li>`).join('')}</ul>` : ''}`).join('')}
-      <p data-rise>${svc ? `Veja também o serviço completo de <a href="${svcPath(svc)}">${esc(svc.name.toLowerCase())} em Barreiras</a>` : 'Veja também os <a href="/servicos/">serviços da Viva</a>'}${city ? ` e a página de <a href="${cityPath(city)}">marketing em ${esc(city.name)}</a>` : ''}.</p>
+      <p data-rise>${svc ? `Veja também o serviço completo de <a href="${svcPath(svc)}">${esc(svc.name)} em Barreiras</a>` : 'Veja também os <a href="/servicos/">serviços da Viva</a>'}${city ? ` e a página de <a href="${cityPath(city)}">marketing em ${esc(city.name)}</a>` : ''}.</p>
     </div>
     <aside class="aside paper" data-rise>
       <span class="hand" aria-hidden="true">sem compromisso</span>
@@ -749,7 +774,7 @@ ${faq.length ? faqBlock('Perguntas <span class="s">frequentes.</span>', faq) : '
     <div class="minis">${services.map((s, i) => ticket(s, i, 'h3')).join('')}</div>
   </div>
 </section>
-${cta()}`,
+${cta(undefined, undefined, { servico: svc ? svc.short : '', cidade: city ? city.name : '' })}`,
   })
 }
 
@@ -834,6 +859,37 @@ page({
       <p data-rise style="margin-top:28px"><a class="btn btn--ghost" href="${site.mapsUrl}" target="_blank" rel="noopener">Abrir no Google Maps</a></p>
     </div>
     ${mapSvg()}
+  </div>
+</section>`,
+})
+
+// Privacidade (LGPD) — formulário de orçamento
+page({
+  path: '/privacidade/',
+  title: 'Política de Privacidade | Agência Viva',
+  desc: 'Como a Agência Viva trata os dados enviados pelo formulário de orçamento e pelo WhatsApp: o que coletamos, para quê, onde guardamos e como pedir exclusão.',
+  ld: [crumbsLd([['Início', '/'], ['Privacidade', '/privacidade/']])],
+  updated: '2026-09-27',
+  body: `
+<section class="phero">
+  <div class="wrap">
+    ${crumbsHtml([['Início', '/'], ['Privacidade', '/privacidade/']])}
+    <h1 data-split>Seus dados, <span class="s">sem mistério.</span></h1>
+    <p class="lede" data-rise=".1">Resumo de como a Agência Viva trata as informações que você envia pelo formulário de orçamento ou pelo WhatsApp.</p>
+  </div>
+</section>
+<section class="sec" style="padding-top:0">
+  <div class="wrap prose">
+    <h2>Quem somos</h2>
+    <p>${esc(site.name)} (${esc(site.alternateName)}), CNPJ ${esc(site.cnpj)}, Barreiras - BA. Somos os responsáveis pelos dados enviados por este site.</p>
+    <h2>O que coletamos</h2>
+    <p>No formulário de orçamento: nome, WhatsApp, cidade, o serviço de interesse e a mensagem que você escrever. Nada é coletado sem você enviar. O site não usa cookies de rastreamento nem ferramentas de publicidade.</p>
+    <h2>Para que usamos</h2>
+    <p>Só para responder o seu pedido e conversar sobre o orçamento (Lei 13.709/2018, art. 7º, V: procedimentos preliminares a um contrato, a seu pedido). Não vendemos nem repassamos seus dados.</p>
+    <h2>Onde ficam guardados</h2>
+    <p>No nosso sistema de atendimento, hospedado no Supabase em servidores de São Paulo, com acesso restrito à equipe da Viva. Se não virar contrato, apagamos os dados quando não forem mais necessários para o atendimento.</p>
+    <h2>Seus direitos</h2>
+    <p>Você pode pedir a qualquer momento para ver, corrigir ou apagar seus dados. É só mandar uma mensagem no <a href="${wa('Olá! Quero ver/apagar os dados que enviei no site.')}" target="_blank" rel="noopener">WhatsApp</a> ou para <a href="mailto:${esc(site.email)}">${esc(site.email)}</a>.</p>
   </div>
 </section>`,
 })

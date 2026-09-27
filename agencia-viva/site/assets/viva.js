@@ -17,6 +17,7 @@
     burger && burger.setAttribute('aria-expanded', open)
     burger && burger.setAttribute('aria-label', open ? 'Fechar menu' : 'Abrir menu')
     if (lenis) open ? lenis.stop() : lenis.start()
+    document.querySelectorAll('main, footer, .wa-float').forEach(el => { el.inert = open })
   }
   burger && burger.addEventListener('click', () => setMenu(!doc.classList.contains('nav-open')))
   addEventListener('keydown', e => { if (e.key === 'Escape' && doc.classList.contains('nav-open')) { setMenu(false); burger.focus() } })
@@ -32,6 +33,47 @@
     else if (y < lastY - 2 || y < 400) hdr.classList.remove('is-hidden')
     lastY = y
   }
+
+  // ─── formulário "Quero um orçamento" → funil do CRM ───
+  const aberto = Date.now()
+  document.querySelectorAll('[data-lead-form]').forEach(form => {
+    const status = form.querySelector('.lf-status')
+    const btn = form.querySelector('button[type=submit]')
+    const campo = n => form.elements[n]
+    const waLink = txt => `https://wa.me/${form.dataset.wa}?text=${encodeURIComponent(txt)}`
+    const erro = (msg, el) => {
+      status.className = 'lf-status'; status.textContent = msg
+      if (el) { el.setAttribute('aria-invalid', 'true'); el.focus() }
+    }
+    form.addEventListener('input', e => e.target.removeAttribute('aria-invalid'))
+    form.addEventListener('submit', async e => {
+      e.preventDefault()
+      const nome = campo('nome').value.trim(), tel = campo('telefone').value.trim()
+      const digitos = tel.replace(/\D/g, '')
+      if (nome.length < 2) return erro('Coloca seu nome, por favor.', campo('nome'))
+      if (digitos.length < 10 || digitos.length > 13) return erro('Confere o WhatsApp com DDD, tipo (77) 9 9999-9999.', campo('telefone'))
+      const dados = { p_nome: nome, p_telefone: tel, p_cidade: campo('cidade').value, p_servico: campo('servico').value, p_mensagem: campo('mensagem').value.trim() }
+      const resumo = `Olá, Agência Viva! Sou ${nome}${dados.p_cidade ? ` (${dados.p_cidade})` : ''}.${dados.p_servico ? ` Tenho interesse em ${dados.p_servico}.` : ''}${dados.p_mensagem ? ' ' + dados.p_mensagem : ''}`
+      // robô: campo escondido preenchido ou envio instantâneo → finge sucesso e não grava
+      if (campo('site_empresa').value || Date.now() - aberto < 2500) { form.classList.add('sent'); status.className = 'lf-status ok'; status.textContent = 'Recebido!'; return }
+      btn.disabled = true; btn.textContent = 'Enviando…'
+      try {
+        const r = await fetch(form.dataset.endpoint, { method: 'POST', headers: { apikey: form.dataset.key, 'Content-Type': 'application/json' }, body: JSON.stringify(dados) })
+        if (!r.ok) throw new Error(String(r.status))
+        form.classList.add('sent')
+        status.className = 'lf-status ok'
+        status.innerHTML = `<b>Recebido, ${nome.split(' ')[0].replace(/[<>&"]/g, '')}!</b><br>A gente vai te chamar no WhatsApp. Se quiser adiantar a conversa:<br><a class="btn btn--main" target="_blank" rel="noopener"></a>`
+        const a = status.querySelector('a'); a.href = waLink(resumo); a.textContent = 'Chamar no WhatsApp agora'
+        status.focus && status.setAttribute('tabindex', '-1')
+        status.focus()
+      } catch (err) {
+        btn.disabled = false; btn.textContent = 'Enviar pedido'
+        status.className = 'lf-status'
+        status.innerHTML = 'Não conseguimos enviar agora. Manda direto no WhatsApp, que chega na hora: <br><a class="btn btn--main" target="_blank" rel="noopener"></a>'
+        const a = status.querySelector('a'); a.href = waLink(resumo); a.textContent = 'Enviar pelo WhatsApp'
+      }
+    })
+  })
 
   // ─── mapa interativo (funciona com ou sem animação) ───
   const mapWrap = document.querySelector('[data-map]')
@@ -64,6 +106,7 @@
     mapWrap.querySelectorAll('[data-city]').forEach(el => {
       el.addEventListener('mouseenter', () => setCity(el.dataset.city))
       el.addEventListener('focus', () => setCity(el.dataset.city))
+      el.addEventListener('click', e => { if (!fine && !el.classList.contains('is-on')) { e.preventDefault(); setCity(el.dataset.city) } })
     })
     setCity('barreiras')
   }
@@ -109,7 +152,7 @@
         }),
       })
     })
-    ScrollTrigger.refresh()
+    ScrollTrigger.sort(); ScrollTrigger.refresh()
   })
 
   gsap.utils.toArray('[data-rise]').forEach(el => {
@@ -136,9 +179,10 @@
 
     mm.add(DESK, () => {
       const st = { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true }
-      gsap.to('.phone', { yPercent: -10, rotate: -3, ease: 'none', scrollTrigger: st })
-      gsap.to('.chip--maps', { y: -120, ease: 'none', scrollTrigger: { ...st } })
-      gsap.to('.chip--ig', { y: -40, x: -30, ease: 'none', scrollTrigger: { ...st } })
+      const ini = { immediateRender: false, ease: 'none' }
+      gsap.fromTo('.phone', { yPercent: 0, rotate: 0 }, { yPercent: -10, rotate: -7, ...ini, scrollTrigger: st })
+      gsap.fromTo('.chip--maps', { y: 0 }, { y: -120, ...ini, scrollTrigger: { ...st } })
+      gsap.fromTo('.chip--ig', { y: 0, x: 0 }, { y: -40, x: -30, ...ini, scrollTrigger: { ...st } })
       gsap.fromTo('.hero h1', { filter: 'blur(0px)', opacity: 1, y: 0 }, { filter: 'blur(6px)', opacity: 0.2, y: -60, ease: 'none', immediateRender: false, scrollTrigger: { ...st, start: '30% top' } })
     })
   }
@@ -152,7 +196,7 @@
 
   // ─── faixas cruzadas: sentidos opostos, aceleram com a rolagem ───
   const bandLoops = [...document.querySelectorAll('.band__track')].map((t, i) =>
-    gsap.fromTo(t, { xPercent: i ? -50 : 0 }, { xPercent: i ? 0 : -50, duration: i ? 46 : 38, ease: 'none', repeat: -1 }))
+    gsap.fromTo(t, { xPercent: i ? -50 : 0 }, { xPercent: i ? 0 : -50, duration: i ? 46 : 38, ease: 'none', repeat: -1 }).totalTime((i ? 46 : 38) * 500))
   if (bandLoops.length) {
     let dir = 1
     ScrollTrigger.create({ trigger: '.bands', start: 'top bottom', end: 'bottom top', onUpdate: s => {
@@ -195,7 +239,7 @@
       const obj = { p: 0 }
       place(0); setActive(0)
       const st = ScrollTrigger.create({
-        trigger: svc, start: 'top top', end: () => `+=${(n - 1) * innerHeight * 0.55}`, pin: true, scrub: 0.6, anticipatePin: 1,
+        trigger: svc, start: 'top top', end: () => `+=${(n - 1) * innerHeight * 0.55}`, pin: true, scrub: 0.6,
         snap: { snapTo: 1 / (n - 1), duration: { min: 0.2, max: 0.6 }, ease: 'power2.inOut', delay: 0.08 },
         onUpdate: s => { obj.p = s.progress * (n - 1); place(obj.p); setActive(Math.round(obj.p)) },
       })
@@ -243,7 +287,7 @@
     const items = gsap.utils.toArray('.notif .n')
     mm.add(DESK, () => {
       gsap.set(items, { y: 520, opacity: 0, rotate: i => (i % 2 ? 6 : -6), scale: 0.92 })
-      const tl = gsap.timeline({ scrollTrigger: { trigger: notif, start: 'top top', end: `+=${items.length * 55}%`, pin: true, scrub: 0.7, anticipatePin: 1 } })
+      const tl = gsap.timeline({ scrollTrigger: { trigger: notif, start: 'top top', end: `+=${items.length * 55}%`, pin: true, scrub: 0.7 } })
       tl.from('.lock', { y: 60, rotate: 4, duration: 0.6, ease: 'power2.out' })
       items.forEach((it, i) => tl.to(it, { y: 0, opacity: 1, rotate: 0, scale: 1, duration: 1, ease: 'back.out(1.3)' }, 0.4 + i * 0.9))
       tl.to({}, { duration: 0.6 })
@@ -302,5 +346,9 @@
     b.addEventListener('pointerleave', () => { xTo(0); yTo(0) })
   })
 
-  addEventListener('load', () => ScrollTrigger.refresh())
+  // os gatilhos de entrada foram criados antes das seções presas: reordena pela posição na página
+  const reordenar = () => { ScrollTrigger.sort(); ScrollTrigger.refresh() }
+  reordenar()
+  document.fonts.ready.then(() => requestAnimationFrame(reordenar))
+  addEventListener('load', reordenar)
 })()

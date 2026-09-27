@@ -44,6 +44,9 @@ export const site = {
   sameAs: ['https://www.instagram.com/agenciaviva_/'],
 }
 
+// formulário do site → funil do CRM (chave publicável: pode ficar no navegador; o banco só aceita a função lead_do_site)
+site.leads = { url: 'https://vlgehxcxiedaswtzlcmz.supabase.co', key: 'sb_publishable_HfNjQOPwTHBXCSZwUY555w_kh8l_KJc' }
+
 export const wa = (msg = 'Olá, Agência Viva! Quero crescer no digital. Podemos conversar?') =>
   `https://wa.me/${site.whatsapp}?text=${encodeURIComponent(msg)}`
 
