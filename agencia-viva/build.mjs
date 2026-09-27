@@ -18,7 +18,9 @@ const svcPath = s => `/servicos/${s.slug}/`
 const A = site.address
 const addrLine = `${A.street} - ${A.district}, ${A.city} - ${A.state}, ${A.zip}`
 // H1 com o final em itálico serifado: 'Agência de marketing em' + 'Barreiras'
-const accentH1 = (h1, accent) => accent && h1.endsWith(accent) ? `${esc(h1.slice(0, -accent.length))}<span class="s">${esc(accent)}</span>` : esc(h1)
+// cola o " - BA" na palavra de antes, pro título não quebrar deixando "- BA" sozinho numa linha
+const glueUF = s => s.replace(/ - BA(?=\.?$)/, '&nbsp;-&nbsp;BA')
+const accentH1 = (h1, accent) => accent && h1.endsWith(accent) ? `${glueUF(esc(h1.slice(0, -accent.length)))}<span class="s">${glueUF(esc(accent))}</span>` : glueUF(esc(h1))
 const landingPath = l => `/${l.slug}/`
 // tempo de mercado calculado a partir da abertura do CNPJ: vira "10 anos" sozinho
 // no primeiro build depois de 09/11/2026 (o site é estático, precisa republicar)
@@ -169,7 +171,7 @@ const roads = [
   [[-12.15, -44.99], [-11.75, -44.91], [-11.05, -45.19]], // rumo a Riachão e Formosa
   [[-12.15, -44.99], [-12.36, -44.97], [-13.34, -44.64], [-13.4, -44.19]], // rumo ao sul
 ]
-const labelPos = { 'luis-eduardo-magalhaes': ['middle', 0, -48], correntina: ['end', -22, 2], 'bom-jesus-da-lapa': ['end', -22, -10], 'sao-desiderio': ['start', 22, 18] }
+const labelPos = { 'luis-eduardo-magalhaes': ['middle', 24, -60], correntina: ['end', -22, 2], 'bom-jesus-da-lapa': ['middle', -40, -60], 'santa-maria-da-vitoria': ['start', 20, 30], 'sao-desiderio': ['start', 22, 18] }
 const pinSvg = (c, big) => {
   const [x, y] = proj(geoOf(c))
   const [anchor, dx, dy] = labelPos[c.slug] || ['start', 22, -10]
@@ -195,22 +197,46 @@ const mapSvg = () => {
 const miniMap = c => {
   const main = cities.find(x => x.main)
   const pts = c.main ? cities.filter(x => ['barreiras', 'sao-desiderio', 'riachao-das-neves', 'luis-eduardo-magalhaes'].includes(x.slug)) : [main, c]
-  const xy = pts.map(p => proj(geoOf(p)))
-  const xs = xy.map(p => p[0]), ys = xy.map(p => p[1])
-  const pad = 130
-  let x0 = Math.min(...xs) - pad, x1 = Math.max(...xs) + pad, y0 = Math.min(...ys) - pad - 30, y1 = Math.max(...ys) + pad
+  const [bx, by] = proj(geoOf(main))
+  // cidade colada em Barreiras (São Desidério): aproxima o mapa em volta da base pros pinos não se atropelarem
+  const [rx, ry] = proj(geoOf(c)), sep = c.main ? Infinity : Math.hypot(rx - bx, ry - by)
+  const k = sep < 100 ? 100 / sep : 1
+  const P = p => { const [x, y] = proj(geoOf(p)); return [bx + (x - bx) * k, by + (y - by) * k] }
+  const [cx, cy] = P(c)
+  const scaleOf = p => (p === c ? 1.3 : c.main ? 0.8 : 1)
+  // caixas ocupadas (pinos, textos) pra escolher onde cada nome cabe sem cobrir nada
+  const pinBox = new Map(pts.map(p => { const [x, y] = P(p), s = scaleOf(p); return [p, [x - 17 * s, y - 50 * s, x + 17 * s, y]] }))
+  const boxes = [...pinBox.values()]
+  const txtBox = (x, y, anchor, w, fs) => { const l = anchor === 'start' ? x : anchor === 'end' ? x - w : x - w / 2; return [l - 8, y - fs * 0.8 - 4, l + w + 8, y + fs * 0.25 + 4] }
+  const hit = (b, own) => boxes.some(o => o !== own && b[0] < o[2] && b[2] > o[0] && b[1] < o[3] && b[3] > o[1])
+  let trip = ''
+  if (!c.main) {
+    const t = c.dist.replace('a cerca de ', '~'), mx = (bx + cx) / 2 + 40, ty = Math.min(by - 50, cy - 65) - 14
+    boxes.push(txtBox(mx, ty, 'middle', t.length * 12.5, 30))
+    trip = `<path class="trip" d="M${bx},${by - 20} Q${mx},${Math.min(by, cy) - 70} ${cx},${cy - 20}"/>
+    <text class="dist" x="${mx}" y="${ty}" text-anchor="middle">${esc(t)}</text>`
+  }
+  // o nome da cidade da página escolhe lugar primeiro; ordem de preferência: embaixo, direita, esquerda, em cima
+  const labels = [c, ...pts.filter(p => p !== c)].map(p => {
+    const [x, y] = P(p), s = scaleOf(p), w = p.name.length * 12
+    const tries = [['middle', x, y + 30], ['start', x + 20 * s + 4, y - 33 * s + 8], ['end', x - 20 * s - 4, y - 33 * s + 8], ['middle', x, y - 50 * s - 12]]
+    const [a, lx, ly] = tries.find(([a, lx, ly]) => !hit(txtBox(lx, ly, a, w, 22), pinBox.get(p))) || tries[0]
+    boxes.push(txtBox(lx, ly, a, w, 22))
+    return `<text x="${lx.toFixed(1)}" y="${ly.toFixed(1)}" text-anchor="${a}">${esc(p.name)}</text>`
+  })
+  const pinsHtml = [...pts.filter(p => p !== c), c].map(p => {
+    const [x, y] = P(p)
+    return `<g class="pin${p === c ? ' pin--here' : ''}" transform="translate(${x.toFixed(1)} ${y.toFixed(1)}) scale(${scaleOf(p)})"><path d="${pinPath}"/></g>`
+  }).join('')
+  // enquadramento: os pontos com folga pro mapa respirar, e todo texto dentro com margem
+  const xy = pts.map(P), xs = xy.map(p => p[0]), ys = xy.map(p => p[1]), pad = 130, m = 20
+  let x0 = Math.min(Math.min(...xs) - pad, ...boxes.map(b => b[0] - m)), x1 = Math.max(Math.max(...xs) + pad, ...boxes.map(b => b[2] + m))
+  let y0 = Math.min(Math.min(...ys) - pad - 30, ...boxes.map(b => b[1] - m)), y1 = Math.max(Math.max(...ys) + pad, ...boxes.map(b => b[3] + m))
   const w = Math.max(x1 - x0, 420), h = Math.max(y1 - y0, 320)
   x0 -= (w - (x1 - x0)) / 2; y0 -= (h - (y1 - y0)) / 2
-  const [bx, by] = proj(geoOf(main)), [cx, cy] = proj(geoOf(c))
-  const trip = c.main ? '' : `<path class="trip" d="M${bx},${by - 20} Q${(bx + cx) / 2 + 40},${Math.min(by, cy) - 70} ${cx},${cy - 20}"/>
-    <text class="dist" x="${(bx + cx) / 2 + 40}" y="${Math.min(by, cy) - 58}" text-anchor="middle">${esc(c.dist.replace('a cerca de ', '~'))}</text>`
-  const pinsHtml = pts.map(p => {
-    const [x, y] = proj(geoOf(p))
-    const here = p === c
-    return `<g class="pin${here ? ' pin--here' : ''}" transform="translate(${x} ${y}) scale(${here ? 1.3 : 1})"><path d="${pinPath}"/></g><text x="${x}" y="${y + 30}" text-anchor="middle">${esc(p.name)}</text>`
-  }).join('')
+  const geo = rivers.map(([cls, p]) => `<path class="${cls}" d="${curve(p)}"/>`).join('')
   return `<figure class="minimap paper prop"><svg viewBox="${x0.toFixed(0)} ${y0.toFixed(0)} ${w.toFixed(0)} ${h.toFixed(0)}" role="img" aria-label="Mapa de ${esc(c.name)}${c.main ? '' : ' em relação a Barreiras'}">
-    ${rivers.map(([cls, p]) => `<path class="${cls}" d="${curve(p)}"/>`).join('')}${trip}${pinsHtml}</svg>
+    ${k === 1 ? geo : `<g class="zoom" style="--k:${k.toFixed(3)}" transform="translate(${bx} ${by}) scale(${k.toFixed(3)}) translate(${-bx} ${-by})">${geo}</g>`}${trip}${pinsHtml}${labels.join('')}</svg>
     <figcaption>${c.main ? 'Nossa base, no coração do Oeste baiano.' : `${esc(c.name)} fica ${esc(c.dist)}.`}</figcaption></figure>`
 }
 
@@ -297,7 +323,7 @@ const leadForm = ({ servico = '', cidade = '' } = {}) => `<form class="lead-form
 </form>`
 
 const cta = (title = 'Sua empresa merece ser <span class="s">encontrada.</span>', text = 'Chama no WhatsApp e conta o que você vende. A gente olha seu Instagram, seu Google e seus anúncios e te diz por onde começar.', form = {}) => `
-<section class="cta dark" id="orcamento" aria-labelledby="h-cta">
+<section class="cta dark${title.replace(/<[^>]+>/g, '').length > 28 ? ' cta--long' : ''}" id="orcamento" aria-labelledby="h-cta">
   <span class="bang" aria-hidden="true">!</span>
   <div class="wrap cta-grid">
     <div>
@@ -374,7 +400,7 @@ ${body}
     <div class="ftr-grid">
       <div>
         <a class="logo" href="/"><img src="/assets/logo-viva.png" alt="Agência Viva" width="934" height="432" loading="lazy"></a>
-        <p style="max-width:30ch">Agência de marketing digital em Barreiras - BA, feita por gente do Oeste da Bahia.</p>
+        <p style="max-width:30ch">Agência de marketing digital em Barreiras&nbsp;-&nbsp;BA, feita por gente do Oeste da Bahia.</p>
       </div>
       <div>
         <h2>Serviços</h2>
@@ -400,7 +426,7 @@ ${body}
     </div>
     <p class="giant" aria-hidden="true"><span>V</span><span>I</span><span>V</span><span>A</span><span>!</span></p>
     <div class="ftr-bottom">
-      <span>© ${new Date().getFullYear()} ${esc(site.name)}${site.cnpj ? ` · CNPJ ${esc(site.cnpj)}` : ''} · Agência de marketing em Barreiras - BA</span>
+      <span>© ${new Date().getFullYear()} ${esc(site.name)}${site.cnpj ? ` · CNPJ ${esc(site.cnpj)}` : ''} · Agência de marketing em Barreiras&nbsp;-&nbsp;BA</span>
       <span>Barreiras · LEM · Oeste da Bahia · <a href="/privacidade/">Privacidade</a> · <a href="/crm/" rel="nofollow">Área da equipe</a></span>
     </div>
   </div>
@@ -549,6 +575,7 @@ page({
       <h2 id="h-cid" class="h2" data-split style="margin-top:18px">De Barreiras pra todo o <span class="s">Oeste.</span></h2>
       <p class="lede" data-rise style="margin-top:26px">Do agro de Luís Eduardo Magalhães e Formosa do Rio Preto ao comércio de Correntina e Santa Maria da Vitória. Passa o mouse no mapa ou toca na sua cidade:</p>
       <div class="chips" data-rise>${cities.map(c => `<a href="${cityPath(c)}" data-city="${c.slug}">${esc(c.name)}</a>`).join('')}</div>
+      ${landings.filter(l => !l.service && !l.city).map(l => `<p data-rise style="margin-top:22px"><a class="go" href="${landingPath(l)}">${esc(l.nav || l.h1)}: o que muda de cidade pra cidade ${icon('arrow')}</a></p>`).join('')}
     </div>
     <div style="position:relative">
       ${mapSvg()}
@@ -632,6 +659,7 @@ for (const s of services) {
       <h2 data-split>Por que isso importa no <span class="s">Oeste.</span></h2>
       <p data-rise>${esc(s.why)}</p>
       <p data-rise>A gente atende empresas de ${listPt(cities.map(c => `<a href="${cityPath(c)}">${esc(c.name)}</a>`))}.</p>
+      ${landings.filter(l => l.service === s.slug).map(l => { const lc = cities.find(c => c.slug === l.city); return `<p data-rise>Tem empresa em ${esc(lc.name)}? Veja a página de <a href="${landingPath(l)}">${esc(l.nav || l.h1)}</a>.</p>` }).join('')}
     </div>
     <aside class="aside paper" data-rise>
       <span class="hand" aria-hidden="true">manda um oi!</span>
@@ -732,6 +760,7 @@ ${cta(`Sua empresa viva em <span class="s">${esc(c.name)}.</span>`, undefined, {
 }
 
 // Páginas novas do plano de SEO (hub do Oeste, serviço × LEM)
+const cityLd = c => ({ '@type': 'City', name: `${c.name}, Bahia`, ...(cityCopy[c.slug] && cityCopy[c.slug].wiki ? { sameAs: cityCopy[c.slug].wiki } : {}) })
 for (const l of landings) {
   const city = l.city && cities.find(c => c.slug === l.city)
   const svc = l.service && services.find(s => s.slug === l.service)
@@ -745,7 +774,7 @@ for (const l of landings) {
     ld: [crumbsLd(crumbs), ...(faq.length ? [faqLd(faq)] : []), {
       '@context': 'https://schema.org', '@type': 'Service', '@id': abs(landingPath(l)) + '#servico', name: l.h1, serviceType: svc ? svc.name : 'Marketing digital',
       provider: { '@id': bizId }, url: abs(landingPath(l)),
-      areaServed: city ? { '@type': 'City', name: `${city.name}, Bahia`, ...(cityCopy[city.slug] && cityCopy[city.slug].wiki ? { sameAs: cityCopy[city.slug].wiki } : {}) } : cities.map(c => ({ '@type': 'City', name: `${c.name}, Bahia` })),
+      areaServed: city ? cityLd(city) : [{ '@type': 'AdministrativeArea', name: 'Oeste da Bahia' }, ...cities.map(cityLd)],
     }],
     body: `
 <section class="phero">
@@ -764,8 +793,10 @@ for (const l of landings) {
     <div class="prose">
       ${l.sections.map(sec => `<h2 data-split>${esc(sec.h2)}</h2>
       ${sec.paragraphs.map(t => `<p data-rise>${esc(t)}</p>`).join('')}
+      ${(sec.cities || []).map(it => { const c = cities.find(x => x.slug === it.city), mais = landings.filter(o => o !== l && o.city === c.slug); return `<h3 data-rise><a href="${cityPath(c)}">${esc(c.name)}</a></h3>
+      <p data-rise>${esc(it.text)}${mais.length ? ` Veja também ${listPt(mais.map(o => `<a href="${landingPath(o)}">${esc(o.nav || o.h1)}</a>`))}.` : ''}</p>` }).join('')}
       ${sec.bullets && sec.bullets.length ? `<ul class="checklist paper" data-rise>${sec.bullets.map(b => `<li>${esc(b)}</li>`).join('')}</ul>` : ''}`).join('')}
-      <p data-rise>${svc ? `Veja também o serviço completo de <a href="${svcPath(svc)}">${esc(svc.name)} em Barreiras</a>` : 'Veja também os <a href="/servicos/">serviços da Viva</a>'}${city ? ` e a página de <a href="${cityPath(city)}">marketing em ${esc(city.name)}</a>` : ''}.</p>
+      <p data-rise>${svc ? `Veja também o serviço completo de <a href="${svcPath(svc)}">${esc(svc.name)} em Barreiras</a>` : 'Veja também os <a href="/servicos/">serviços da Viva</a>'}${city ? ` e a página de <a href="${cityPath(city)}">marketing em ${esc(city.name)}</a>` : ''}.${(() => { const irmas = landings.filter(o => o !== l && city && o.city === city.slug); return irmas.length ? ` Em ${esc(city.name)}, tem também ${listPt(irmas.map(o => `<a href="${landingPath(o)}">${esc(o.nav || o.h1)}</a>`))}.` : '' })()}</p>
     </div>
     <aside class="aside paper" data-rise>
       <span class="hand" aria-hidden="true">manda um oi</span>
@@ -775,7 +806,7 @@ for (const l of landings) {
     </aside>
   </div>
 </section>
-${faq.length ? faqBlock('Perguntas <span class="s">frequentes.</span>', faq) : ''}
+${faq.length ? faqBlock(`Dúvidas sobre ${svc ? '' : 'o '}<span class="s">${esc(svc ? svc.short : 'Oeste')}${city ? ` em ${esc(city.slug === 'luis-eduardo-magalhaes' ? 'LEM' : city.name)}` : ''}.</span>`, faq) : ''}
 <section class="sec sec--paper2" aria-labelledby="h-mais">
   <div class="wrap">
     <div class="sec-head"><h2 id="h-mais" class="h2" data-split>O que a gente <span class="s">faz.</span></h2></div>
@@ -799,7 +830,7 @@ page({
     <div>
       ${crumbsHtml([['Início', '/'], ['Sobre', '/sobre/']])}
       <h1 data-split>${years >= 10 ? 'Dez anos' : `Desde ${foundedYear}`} no Oeste. <span class="s">Pensando grande.</span></h1>
-      <p class="lede" data-rise=".1">A Agência Viva é uma agência de marketing de Barreiras - BA criada pra dar às empresas da região a mesma força digital das grandes marcas.</p>
+      <p class="lede" data-rise=".1">A Agência Viva é uma agência de marketing de Barreiras&nbsp;-&nbsp;BA criada pra dar às empresas da região a mesma força digital das grandes marcas.</p>
     </div>
     <div class="prop"><div class="polaroid"><div class="polaroid__img"><img src="/assets/logo-viva.png" alt="" width="934" height="432"></div><span class="hand">Barreiras - BA</span><span class="tape" aria-hidden="true"></span></div></div>
   </div>
@@ -842,17 +873,13 @@ page({
     <div>
       ${crumbsHtml([['Início', '/'], ['Contato', '/contato/']])}
       <h1 data-split>Bora <span class="s">conversar?</span></h1>
-      <p class="lede" data-rise=".1">O caminho mais rápido é o WhatsApp. É só mandar um oi contando o que a sua empresa faz.</p>
+      <p class="lede" data-rise=".1">O caminho mais rápido é o WhatsApp: é só mandar um oi contando o que a sua empresa faz. Se preferir, deixa seu contato no formulário que a gente te chama.</p>
       <div class="hero-cta" data-rise=".2">
         <a class="btn btn--main btn--lg" href="${wa()}" target="_blank" rel="noopener">${waIcon} ${esc(site.phoneDisplay)}</a>
         <a class="go" href="${site.instagram}" target="_blank" rel="noopener">${esc(site.instagramHandle)} ${icon('arrow')}</a>
       </div>
     </div>
-    <div class="prop" style="display:flex;justify-content:center">${phoneChat([
-      ['out', 'Oi, Agência Viva! Tenho uma loja em Barreiras e quero crescer no Instagram.', '10:02'],
-      ['in', 'Oi! Que bom te ver por aqui 😊 Me conta: o que você vende e há quanto tempo?', '10:05'],
-      ['typing'],
-    ], false, ['V', 'Agência Viva', 'online'])}</div>
+    <div id="orcamento" class="contato-form" data-rise=".2">${leadForm()}</div>
   </div>
 </section>
 <section class="sec" style="padding-top:30px">
@@ -872,12 +899,13 @@ page({
 })
 
 // Privacidade (LGPD) — formulário de orçamento
+const privAtualizada = '2026-09-27'
 page({
   path: '/privacidade/',
   title: 'Política de Privacidade | Agência Viva',
   desc: 'Como a Agência Viva trata os dados enviados pelo formulário de orçamento e pelo WhatsApp: o que coletamos, para quê, onde guardamos e como pedir exclusão.',
   ld: [crumbsLd([['Início', '/'], ['Privacidade', '/privacidade/']])],
-  updated: '2026-09-27',
+  updated: privAtualizada,
   body: `
 <section class="phero">
   <div class="wrap">
@@ -889,7 +917,7 @@ page({
 <section class="sec" style="padding-top:0">
   <div class="wrap prose">
     <h2>Quem somos</h2>
-    <p>${esc(site.name)} (${esc(site.alternateName)}), CNPJ ${esc(site.cnpj)}, Barreiras - BA. Somos os responsáveis pelos dados enviados por este site.</p>
+    <p>${esc(site.name)} (${esc(site.alternateName)}), CNPJ ${esc(site.cnpj)}, Barreiras&nbsp;-&nbsp;BA. Somos os responsáveis pelos dados enviados por este site.</p>
     <h2>O que coletamos</h2>
     <p>No formulário de orçamento: nome, WhatsApp, cidade, o serviço de interesse e a mensagem que você escrever. Nada é coletado sem você enviar. O site não usa cookies de rastreamento nem ferramentas de publicidade.</p>
     <h2>Para que usamos</h2>
@@ -898,6 +926,7 @@ page({
     <p>No nosso sistema de atendimento, hospedado no Supabase em servidores de São Paulo, com acesso restrito à equipe da Viva. Se não virar contrato, apagamos os dados quando não forem mais necessários para o atendimento.</p>
     <h2>Seus direitos</h2>
     <p>Você pode pedir a qualquer momento para ver, corrigir ou apagar seus dados. É só mandar uma mensagem no <a href="${wa('Olá! Quero ver/apagar os dados que enviei no site.')}" target="_blank" rel="noopener">WhatsApp</a> ou para <a href="mailto:${esc(site.email)}">${esc(site.email)}</a>.</p>
+    <p class="fine">Atualizada em ${new Date(privAtualizada + 'T12:00:00').toLocaleDateString('pt-BR', { day: 'numeric', month: 'long', year: 'numeric' })}.</p>
   </div>
 </section>`,
 })
@@ -950,6 +979,9 @@ ${services.map(s => `- [${s.name}](${abs(svcPath(s))}): ${s.desc}`).join('\n')}
 
 ## Cidades atendidas
 ${cities.map(c => `- [${c.name}, BA](${abs(cityPath(c))})`).join('\n')}
+
+## Páginas locais
+${landings.map(l => `- [${l.nav || l.h1}](${abs(landingPath(l))}): ${l.description}`).join('\n')}
 
 ## Perguntas frequentes
 ${homeFaq.map(([q, a]) => `### ${q}\n${a}`).join('\n\n')}

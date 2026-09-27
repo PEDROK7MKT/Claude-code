@@ -36,16 +36,21 @@
 
   // ─── formulário "Quero um orçamento" → funil do CRM ───
   const aberto = Date.now()
-  document.querySelectorAll('[data-lead-form]').forEach(form => {
+  // o formulário muda de altura ao enviar: recalcula as animações de rolagem abaixo dele
+  const relayout = () => { if (window.ScrollTrigger) requestAnimationFrame(() => ScrollTrigger.refresh()) }
+  document.querySelectorAll('[data-lead-form]').forEach((form, i) => {
     const status = form.querySelector('.lf-status')
+    status.id ||= 'lf-status-' + i
     const btn = form.querySelector('button[type=submit]')
     const campo = n => form.elements[n]
     const waLink = txt => `https://wa.me/${form.dataset.wa}?text=${encodeURIComponent(txt)}`
     const erro = (msg, el) => {
       status.className = 'lf-status'; status.textContent = msg
-      if (el) { el.setAttribute('aria-invalid', 'true'); el.focus() }
+      form.querySelectorAll('[aria-describedby]').forEach(f => f !== el && f.removeAttribute('aria-describedby'))
+      // o motivo fica ligado ao campo: o leitor de tela lê junto quando o foco chega nele
+      if (el) { el.setAttribute('aria-invalid', 'true'); el.setAttribute('aria-describedby', status.id); requestAnimationFrame(() => el.focus()) }
     }
-    form.addEventListener('input', e => e.target.removeAttribute('aria-invalid'))
+    form.addEventListener('input', e => { e.target.removeAttribute('aria-invalid'); e.target.removeAttribute('aria-describedby') })
     form.addEventListener('submit', async e => {
       e.preventDefault()
       const nome = campo('nome').value.trim(), tel = campo('telefone').value.trim()
@@ -55,7 +60,7 @@
       const dados = { p_nome: nome, p_telefone: tel, p_cidade: campo('cidade').value, p_servico: campo('servico').value, p_mensagem: campo('mensagem').value.trim() }
       const resumo = `Olá, Agência Viva! Sou ${nome}${dados.p_cidade ? ` (${dados.p_cidade})` : ''}.${dados.p_servico ? ` Tenho interesse em ${dados.p_servico}.` : ''}${dados.p_mensagem ? ' ' + dados.p_mensagem : ''}`
       // robô: campo escondido preenchido ou envio instantâneo → finge sucesso e não grava
-      if (campo('site_empresa').value || Date.now() - aberto < 2500) { form.classList.add('sent'); status.className = 'lf-status ok'; status.textContent = 'Recebido!'; return }
+      if (campo('site_empresa').value || Date.now() - aberto < 2500) { form.classList.add('sent'); status.className = 'lf-status ok'; status.textContent = 'Recebido!'; relayout(); return }
       btn.disabled = true; btn.textContent = 'Enviando…'
       try {
         const r = await fetch(form.dataset.endpoint, { method: 'POST', headers: { apikey: form.dataset.key, 'Content-Type': 'application/json' }, body: JSON.stringify(dados) })
@@ -64,13 +69,15 @@
         status.className = 'lf-status ok'
         status.innerHTML = `<b>Recebido, ${nome.split(' ')[0].replace(/[<>&"]/g, '')}!</b><br>A gente vai te chamar no WhatsApp. Se quiser adiantar a conversa:<br><a class="btn btn--main" target="_blank" rel="noopener"></a>`
         const a = status.querySelector('a'); a.href = waLink(resumo); a.textContent = 'Chamar no WhatsApp agora'
-        status.focus && status.setAttribute('tabindex', '-1')
+        status.setAttribute('tabindex', '-1')
         status.focus()
+        relayout()
       } catch (err) {
         btn.disabled = false; btn.textContent = 'Enviar pedido'
         status.className = 'lf-status'
         status.innerHTML = 'Não conseguimos enviar agora. Manda direto no WhatsApp, que chega na hora: <br><a class="btn btn--main" target="_blank" rel="noopener"></a>'
         const a = status.querySelector('a'); a.href = waLink(resumo); a.textContent = 'Enviar pelo WhatsApp'
+        relayout()
       }
     })
   })
@@ -145,7 +152,7 @@
     document.querySelectorAll('[data-split]').forEach(el => {
       if (!window.SplitText) return
       SplitText.create(el, {
-        type: 'lines', mask: 'lines', linesClass: 'split-line', autoSplit: true,
+        type: 'lines', mask: 'lines', reduceWhiteSpace: false, linesClass: 'split-line', autoSplit: true,
         onSplit: self => gsap.from(self.lines, {
           yPercent: 110, rotate: 2, duration: 1.05, ease: 'expo.out', stagger: 0.09, delay: inHero(el) ? 0.1 : 0,
           scrollTrigger: inHero(el) ? undefined : { trigger: el, start: 'top 88%', once: true },
@@ -266,7 +273,7 @@
         }
         path.setAttribute('d', d)
         const len = path.getTotalLength()
-        gsap.set(path, { strokeDasharray: len, strokeDashoffset: len })
+        gsap.set(path, { strokeDasharray: `${len} ${len + 80}`, strokeDashoffset: len + 40 }) // folga: esconde também a ponta redonda do traço
         return gsap.to(path, { strokeDashoffset: 0, ease: 'none', scrollTrigger: { trigger: wheel, start: 'top 75%', end: 'bottom 80%', scrub: 0.6 } })
       }
       let tw
