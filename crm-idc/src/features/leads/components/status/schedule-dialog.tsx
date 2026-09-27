@@ -76,6 +76,8 @@ export interface ScheduleDialogProps {
   submitLabel?: string;
   /** Mostra a transição "status atual → agendado" (padrão: true). */
   showTransition?: boolean;
+  /** Onde a observação fica registrada (padrão: histórico do lead, junto da mudança de status). */
+  noteHint?: string;
 }
 
 /**
@@ -124,6 +126,7 @@ function ScheduleForm({
   description,
   submitLabel,
   showTransition = true,
+  noteHint = "Fica registrada no histórico do lead.",
   pending,
   onPendingChange,
   onDone,
@@ -279,7 +282,7 @@ function ScheduleForm({
                   />
                 </FormControl>
                 <FormDescription className="flex justify-between gap-2 text-xs">
-                  <span>Fica registrada no histórico do lead.</span>
+                  <span>{noteHint}</span>
                   <span className="shrink-0 tabular-nums">
                     {note.length}/{STATUS_NOTE_MAX_LENGTH}
                   </span>

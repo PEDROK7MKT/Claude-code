@@ -8,7 +8,6 @@ import {
   emptyCompetitorDraft,
   formatDraftField,
   isSelfName,
-  moveItem,
   parseRatingText,
   parseReviewsText,
   sameCompetitors,
@@ -126,21 +125,7 @@ describe("draftsDiffer / sameCompetitors", () => {
 
   it("sameCompetitors considera a ordem", () => {
     expect(sameCompetitors(COMPETITORS, [...COMPETITORS])).toBe(true);
-    expect(sameCompetitors(COMPETITORS, moveItem(COMPETITORS, 0, 1))).toBe(false);
-  });
-});
-
-describe("moveItem", () => {
-  it("move para cima e para baixo", () => {
-    expect(moveItem(["a", "b", "c"], 0, 2)).toEqual(["b", "c", "a"]);
-    expect(moveItem(["a", "b", "c"], 2, 1)).toEqual(["a", "c", "b"]);
-  });
-
-  it("ignora índices inválidos sem mutar a original", () => {
-    const list = ["a", "b"];
-    expect(moveItem(list, 0, 5)).toEqual(["a", "b"]);
-    expect(moveItem(list, -1, 0)).toEqual(["a", "b"]);
-    expect(moveItem(list, 1, 1)).not.toBe(list);
+    expect(sameCompetitors(COMPETITORS, [COMPETITORS[1], COMPETITORS[0], ...COMPETITORS.slice(2)])).toBe(false);
   });
 });
 

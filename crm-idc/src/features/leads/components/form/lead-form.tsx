@@ -6,6 +6,7 @@ import { ClipboardListIcon, Loader2Icon, NotebookPenIcon, SaveIcon, StethoscopeI
 import { useForm, useWatch, type UseFormReturn } from "react-hook-form";
 import { toast } from "sonner";
 
+import { ConfirmDialog } from "@/components/shared/confirm-dialog";
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
 import { Separator } from "@/components/ui/separator";
@@ -190,8 +191,11 @@ interface EditFooterProps {
 /**
  * Salvar/Descartar da edição. Com alterações pendentes, fica fixo no rodapé da
  * tela (acima da barra de ações do celular) para não se perder em formulários longos.
+ * Descartar pede confirmação, como nos demais formulários (um toque errado perderia a edição).
  */
 function EditFooter({ dirty, saving, changedLabels, onDiscard }: EditFooterProps) {
+  const [confirmDiscard, setConfirmDiscard] = React.useState(false);
+
   return (
     <div
       className={cn(
@@ -211,7 +215,7 @@ function EditFooter({ dirty, saving, changedLabels, onDiscard }: EditFooterProps
         )}
       </p>
       <div className="flex flex-col-reverse gap-2 sm:flex-row">
-        <Button type="button" variant="outline" disabled={!dirty || saving} onClick={onDiscard}>
+        <Button type="button" variant="outline" disabled={!dirty || saving} onClick={() => setConfirmDiscard(true)}>
           Descartar alterações
         </Button>
         <Button type="submit" disabled={!dirty || saving}>
@@ -219,6 +223,17 @@ function EditFooter({ dirty, saving, changedLabels, onDiscard }: EditFooterProps
           {saving ? "Salvando…" : "Salvar alterações"}
         </Button>
       </div>
+
+      <ConfirmDialog
+        open={confirmDiscard}
+        onOpenChange={setConfirmDiscard}
+        destructive
+        title="Descartar alterações?"
+        description="As alterações feitas neste lead serão perdidas."
+        confirmLabel="Descartar"
+        cancelLabel="Continuar editando"
+        onConfirm={onDiscard}
+      />
     </div>
   );
 }

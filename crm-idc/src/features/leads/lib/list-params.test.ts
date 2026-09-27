@@ -11,6 +11,7 @@ import {
   EMPTY_LEAD_LIST_PARAMS,
   hasActiveFilters,
   isValidDateKey,
+  leadListReturnHref,
   MOBILE_SORT_OPTIONS,
   mobileSortOptions,
   nextDateKey,
@@ -188,6 +189,30 @@ describe("buildLeadListHref", () => {
     expect(buildLeadListHref({ source: ["google_ads"], period: { kind: "preset", key: "7d" } })).toBe(
       "/leads?fonte=google_ads&periodo=7d",
     );
+  });
+});
+
+describe("leadListReturnHref", () => {
+  it("volta para a lista com os filtros e a página guardados", () => {
+    expect(leadListReturnHref("/leads?status=novo&pagina=3")).toBe("/leads?status=novo&pagina=3");
+    expect(leadListReturnHref("/leads?fonte=google_ads&periodo=7d&ordem=name.asc")).toBe(
+      "/leads?fonte=google_ads&periodo=7d&ordem=name.asc",
+    );
+    expect(leadListReturnHref("/leads")).toBe("/leads");
+  });
+
+  it("descarta parâmetros inválidos e normaliza a query", () => {
+    expect(leadListReturnHref("/leads?status=xyz&pagina=-2&foo=bar")).toBe("/leads");
+  });
+
+  it("ausente, de outra rota ou externo → /leads", () => {
+    expect(leadListReturnHref(null)).toBe("/leads");
+    expect(leadListReturnHref(undefined)).toBe("/leads");
+    expect(leadListReturnHref("")).toBe("/leads");
+    expect(leadListReturnHref("/leads/abc")).toBe("/leads");
+    expect(leadListReturnHref("/kanban?status=novo")).toBe("/leads");
+    expect(leadListReturnHref("//evil.example/leads")).toBe("/leads");
+    expect(leadListReturnHref("https://evil.example/leads?status=novo")).toBe("/leads");
   });
 });
 

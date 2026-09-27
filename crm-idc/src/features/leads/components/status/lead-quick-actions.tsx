@@ -2,6 +2,7 @@
 
 import * as React from "react";
 import { ChevronDownIcon, Loader2Icon, RefreshCwIcon } from "lucide-react";
+import { toast } from "sonner";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -150,6 +151,10 @@ function QuickActionButton({ from, action, size, disabled, onRequest }: QuickAct
             variant={toneButtonVariant(action.tone)}
             aria-disabled="true"
             className={className}
+            // O tooltip não abre no toque (Radix): no celular, o toque mostra o motivo num aviso.
+            onClick={() => {
+              if (action.disabledReason) toast.info(action.disabledReason, { id: "status-action-unavailable" });
+            }}
           >
             <StatusActionIcon from={from} to={action.to} />
             {action.label}

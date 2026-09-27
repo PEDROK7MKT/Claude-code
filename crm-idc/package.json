@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "typecheck": "tsc --noEmit",
+    "typecheck": "next typegen && tsc --noEmit",
     "test": "vitest run",
     "test:watch": "vitest",
     "test:db": "bash supabase/tests/run.sh --seed"
@@ -24,7 +24,6 @@
     "@tanstack/react-query-persist-client": "^5.104.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
-    "cmdk": "^1.1.1",
     "date-fns": "^4.4.0",
     "idb-keyval": "^6.3.0",
     "jspdf": "^4.2.1",

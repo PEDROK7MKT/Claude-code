@@ -97,6 +97,7 @@ describe("buildCompetitorRanking", () => {
       [
         { name: " idc ", rating: 4.9, reviews: 999 },
         { name: "Instituto Décio Carrilho", rating: 4.9, reviews: 999 },
+        { name: "IDC  Instituto Decio  Carrilho", rating: 4.9, reviews: 999 },
         { name: "  ", rating: 5, reviews: 10 },
         { name: "Outra", rating: 5, reviews: 10 },
       ],

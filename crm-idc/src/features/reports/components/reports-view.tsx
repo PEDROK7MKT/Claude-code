@@ -158,7 +158,12 @@ export function ReportsView({ currentMonth, today, initialSettings }: ReportsVie
           <h2 id="relatorio-leads" className="sr-only">
             Leads do período
           </h2>
-          <ReportLeadsTable key={monthKey} leads={leads} monthLabel={report.monthLabel} />
+          <ReportLeadsTable
+            key={monthKey}
+            leads={leads}
+            monthLabel={report.monthLabel}
+            whatsappMessage={settings?.whatsapp_message || undefined}
+          />
         </section>
       </div>
     );

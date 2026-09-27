@@ -9,10 +9,13 @@ import {
   KeyRoundIcon,
   MinusIcon,
   PlusIcon,
+  RefreshCwIcon,
   TrendingDownIcon,
   TrendingUpIcon,
+  WifiOffIcon,
 } from "lucide-react";
 
+import { EmptyState } from "@/components/shared/empty-state";
 import { ErrorState } from "@/components/shared/error-state";
 import { PageHeader } from "@/components/shared/page-header";
 import { Card } from "@/components/ui/card";
@@ -21,7 +24,7 @@ import { useLeads } from "@/features/leads/api/leads-queries";
 import { startOfDateKey, type PeriodKey } from "@/lib/dates";
 import { formatDecimal, formatNumber } from "@/lib/format";
 import { topKeywords } from "@/lib/metrics";
-import { useNow } from "../hooks/use-now";
+import { useNow } from "@/hooks/use-now";
 import {
   buildAdminKpis,
   buildStatusSeries,
@@ -43,8 +46,9 @@ import {
   PERIOD_CHOICES,
   PERIOD_PARAM,
 } from "../lib/period";
-import { AdminKpiGrid } from "./admin-kpi-grid";
-import { ChartHeadline, DashboardChartCard, type ChartErrorState } from "./charts/dashboard-chart-card";
+import { queryLoadState } from "../lib/query-state";
+import { AdminKpiGrid, type MetricsErrorState } from "./admin-kpi-grid";
+import { ChartHeadline, DashboardChartCard } from "./charts/dashboard-chart-card";
 import { KeywordsBarChart } from "./charts/keywords-bar-chart";
 import { LeadsTrendChart } from "./charts/leads-trend-chart";
 import { SourceDonutChart } from "./charts/source-donut-chart";
@@ -112,12 +116,25 @@ export function AdminDashboard({ initialPeriod }: AdminDashboardProps) {
     });
   }, [view, metrics, ranges]);
 
-  const leadsLoading = leadsQuery.isPending;
-  const leadsFailed = leadsQuery.isError && !leads;
-  const metricsError: ChartErrorState | null =
-    metricsQuery.isError && !metrics
-      ? { onRetry: () => void metricsQuery.refetch(), retrying: metricsQuery.isFetching }
+  // Offline sem cópia neste aparelho (ex.: dia novo — as chaves incluem a data) a
+  // consulta fica pausada: mostra "Sem conexão" em vez de esqueletos sem fim
+  const leadsState = queryLoadState(leadsQuery);
+  const metricsState = queryLoadState(metricsQuery);
+  const leadsLoading = leadsState === "loading";
+  const leadsFailed = leadsState === "error";
+  const leadsOffline = leadsState === "offline";
+  const metricsError: MetricsErrorState | null =
+    metricsState === "error" || metricsState === "offline"
+      ? {
+          onRetry: () => void metricsQuery.refetch(),
+          retrying: metricsQuery.isFetching,
+          offline: metricsState === "offline",
+        }
       : null;
+  const retryOffline = () => {
+    void leadsQuery.refetch();
+    void metricsQuery.refetch();
+  };
 
   const periodChoice = PERIOD_CHOICES.find((choice) => choice.value === period) ?? PERIOD_CHOICES[2];
   const currentLabel = formatRangeLabel(ranges.currentRange);
@@ -135,17 +152,17 @@ export function AdminDashboard({ initialPeriod }: AdminDashboardProps) {
         }
         actions={
           <>
-            <LiveIndicator className="order-last md:order-first" />
+            <LiveIndicator hasSavedData={!leadsOffline} className="order-last md:order-first" />
             <PeriodSelector value={period} onChange={changePeriod} className="w-full sm:w-auto" />
           </>
         }
       />
 
-      {leadsFailed ? null : (
+      {leadsFailed || leadsOffline ? null : (
         <AdminKpiGrid
           kpis={kpis}
           leadsLoading={leadsLoading}
-          metricsLoading={metricsQuery.isPending}
+          metricsLoading={metricsState === "loading"}
           metricsError={metricsError}
           changeLabel={comparisonLabel(period)}
         />
@@ -153,7 +170,16 @@ export function AdminDashboard({ initialPeriod }: AdminDashboardProps) {
 
       <div className="grid gap-4 xl:grid-cols-[minmax(0,1fr)_20rem] 2xl:grid-cols-[minmax(0,1fr)_22rem]">
         <div className="min-w-0">
-          {leadsFailed ? (
+          {leadsOffline ? (
+            <Card>
+              <EmptyState
+                icon={WifiOffIcon}
+                title="Sem conexão com a internet"
+                description="Os dados de hoje ainda não foram baixados neste aparelho. Os indicadores e gráficos aparecem assim que a conexão voltar."
+                action={{ label: "Tentar novamente", onClick: retryOffline, icon: RefreshCwIcon, variant: "outline" }}
+              />
+            </Card>
+          ) : leadsFailed ? (
             <Card>
               <ErrorState
                 title="Não foi possível carregar os leads"

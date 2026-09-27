@@ -17,6 +17,7 @@ import {
   toLeadFilters,
   type LeadListSortColumn,
 } from "@/features/leads/lib/list-params";
+import { useWhatsappMessage } from "@/features/settings/api/app-settings";
 
 import { ActiveFilterChips } from "./active-filter-chips";
 import { LeadSearchInput } from "./lead-search-input";
@@ -24,6 +25,7 @@ import { LeadsFilterBar } from "./leads-filter-bar";
 import { LeadsFilterSheet } from "./leads-filter-sheet";
 import { LeadsPagination } from "./leads-pagination";
 import { LeadsResults } from "./leads-results";
+import { rememberLeadListHref } from "./list-return-href";
 import { StatusQuickFilters } from "./status-quick-filters";
 import { useClock } from "./use-clock";
 import { useFreshLeadIds } from "./use-fresh-lead-ids";
@@ -50,12 +52,19 @@ export function LeadsListView() {
   const { data, isPlaceholderData } = query;
   const filtered = hasActiveFilters(params);
   const resultsRef = React.useRef<HTMLElement>(null);
+  // mensagem do WhatsApp personalizada em Configurações (a mesma do detalhe e do kanban)
+  const whatsappMessage = useWhatsappMessage();
 
   // A página exibida pode ter sido ajustada (filtros encolheram o total): reflete na URL
   const shownPage = data && !isPlaceholderData ? data.page : undefined;
   React.useEffect(() => {
     if (shownPage !== undefined && shownPage !== params.page) update({ page: shownPage });
   }, [shownPage, params.page, update]);
+
+  // "Voltar para leads" no detalhe volta para esta busca/filtros/página
+  React.useEffect(() => {
+    rememberLeadListHref(buildLeadListHref(params));
+  }, [params]);
 
   const freshIds = useFreshLeadIds(
     serializeLeadListParams(params),
@@ -123,6 +132,7 @@ export function LeadsListView() {
           onClearFilters={clearFilters}
           now={now}
           freshIds={highlighted}
+          whatsappMessage={whatsappMessage}
         />
         {data && data.total > 0 ? (
           <LeadsPagination

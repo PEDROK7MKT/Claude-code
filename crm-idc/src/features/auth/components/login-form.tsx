@@ -3,15 +3,16 @@
 import * as React from "react";
 import { useRouter } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useIsRestoring } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 import { ArrowRightIcon, CircleAlertIcon, KeyRoundIcon, LoaderCircleIcon } from "lucide-react";
 
-import { clearPersistedCache } from "@/components/providers/query-provider";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { createClient } from "@/lib/supabase/client";
+import { clearLocalSessionData } from "../lib/local-session";
 import { LOGIN_DEFAULT_VALUES, isInactiveAccountError, loginErrorMessage, loginSchema, type LoginValues } from "../lib/login";
 import { resolvePostLoginPath } from "../lib/redirect";
 import { InactiveAccountNotice } from "./login-notices";
@@ -44,6 +45,18 @@ export function LoginForm({ next, inactive }: LoginFormProps) {
   });
   const { setFocus } = form;
 
+  // Chegar ao /login = não há sessão válida (logout, sessão expirada, usuário desativado via
+  // /auth/signout?reason=inactive — rota do servidor, que não alcança o IndexedDB). Apaga os
+  // dados de pacientes que ficaram neste navegador, depois que o PersistQueryClientProvider
+  // termina de restaurar o cache (senão ele os devolveria à memória e ao IndexedDB).
+  // Roda uma vez (isRestoring só vai de true a false); após um login, a limpeza fica com o onSubmit.
+  const isRestoring = useIsRestoring();
+  const [signedIn, setSignedIn] = React.useState(false);
+  React.useEffect(() => {
+    if (isRestoring || signedIn) return;
+    void clearLocalSessionData();
+  }, [isRestoring, signedIn]);
+
   // Foco no e-mail em telas com mouse (no celular, abrir o teclado de cara esconde o card)
   React.useEffect(() => {
     if (window.matchMedia("(pointer: fine)").matches) setFocus("email");
@@ -72,7 +85,9 @@ export function LoginForm({ next, inactive }: LoginFormProps) {
       }
 
       // cache offline de outra sessão/usuário neste navegador não deve aparecer
-      await clearPersistedCache();
+      // (e a limpeza da montagem não pode rodar depois, com o app já carregando)
+      setSignedIn(true);
+      await clearLocalSessionData();
       const destination = resolvePostLoginPath({ next, role: profile?.role });
       startNavigation(() => {
         router.replace(destination);

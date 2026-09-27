@@ -80,8 +80,18 @@ A tabela de rotas está em `src/features/offline/lib/cache-strategy.ts` (TypeScr
   `ServiceWorkerRegister` envia `WARM_CACHE` com a página atual e os assets já baixados. Com isso,
   um recarregamento offline já funciona.
 - **Sessão:** ao passar por `/auth/signout` ou `/login`, o SW apaga as cópias de páginas, porque
-  elas contêm nome e e-mail no menu. O logout também limpa o IndexedDB (`clearPersistedCache()`).
-  Para limpar pela página existe `clearOfflinePageCaches()` (`src/features/offline/clear-offline-caches.ts`).
+  elas contêm nome e e-mail no menu. O botão **Sair** (`useSignOut`, `src/features/auth/hooks/use-sign-out.ts`):
+  1. faz `POST /auth/signout` via `fetch` e também expira no navegador os cookies `sb-*-auth-token`
+     (assim o logout funciona mesmo offline, quando a rota não chega a rodar);
+  2. apaga o cache do IndexedDB e as cópias de páginas do SW (`clearLocalSessionData()`, em
+     `src/features/auth/lib/local-session.ts`, que chama `clearPersistedCache()` e
+     `clearOfflinePageCaches()`);
+  3. avisa as outras abas pelo `BroadcastChannel` `idc-auth`: elas limpam o próprio cache e vão
+     para o `/login`.
+
+  A tela de `/login` também limpa o cache persistido assim que a restauração termina. Isso cobre
+  quem chega lá sem clicar em Sair: usuário desativado, sessão expirada ou revogada (o
+  `requireSession()` manda para `/auth/signout`, que apaga os cookies e redireciona ao `/login`).
 
 ## Como as atualizações chegam
 

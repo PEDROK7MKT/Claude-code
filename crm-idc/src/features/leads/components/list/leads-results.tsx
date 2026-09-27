@@ -35,6 +35,8 @@ export interface LeadsResultsProps {
   onClearFilters: () => void;
   now: number;
   freshIds: ReadonlySet<string>;
+  /** Modelo da mensagem do WhatsApp (Configurações); padrão: DEFAULT_WHATSAPP_MESSAGE */
+  whatsappMessage?: string;
 }
 
 const PANEL = "bg-card rounded-xl border shadow-xs";
@@ -44,7 +46,16 @@ const PANEL = "bg-card rounded-xl border shadow-xs";
  * novamente", aviso offline, estados vazios (nenhum lead × nenhum resultado) e a
  * tabela (≥ md) ou os cards (< md). A página anterior fica esmaecida enquanto a próxima carrega.
  */
-export function LeadsResults({ query, sort, onSort, filtered, onClearFilters, now, freshIds }: LeadsResultsProps) {
+export function LeadsResults({
+  query,
+  sort,
+  onSort,
+  filtered,
+  onClearFilters,
+  now,
+  freshIds,
+  whatsappMessage,
+}: LeadsResultsProps) {
   const isMobile = useIsMobile();
   const { data } = query;
   const retry = () => void query.refetch();
@@ -132,9 +143,21 @@ export function LeadsResults({ query, sort, onSort, filtered, onClearFilters, no
       </div>
     );
   } else if (isMobile) {
-    content = <LeadsCardList rows={data.rows} now={now} freshIds={freshIds} busy={busy} />;
+    content = (
+      <LeadsCardList rows={data.rows} now={now} freshIds={freshIds} busy={busy} whatsappMessage={whatsappMessage} />
+    );
   } else {
-    content = <LeadsTable rows={data.rows} sort={sort} onSort={onSort} now={now} freshIds={freshIds} busy={busy} />;
+    content = (
+      <LeadsTable
+        rows={data.rows}
+        sort={sort}
+        onSort={onSort}
+        now={now}
+        freshIds={freshIds}
+        busy={busy}
+        whatsappMessage={whatsappMessage}
+      />
+    );
   }
 
   return (

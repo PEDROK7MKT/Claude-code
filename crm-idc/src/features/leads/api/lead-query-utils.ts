@@ -6,7 +6,7 @@
 import type { QueryKey } from "@tanstack/react-query";
 import { PAGE_SIZE, QUERY_KEYS, STATUS_META } from "@/lib/constants";
 import { AppError } from "@/lib/errors";
-import { normalizePhone } from "@/lib/format";
+import { foldText, normalizePhone, searchPhoneDigits } from "@/lib/format";
 import { canTransition, requiresSchedule, transitionErrorMessage } from "@/lib/lead-status";
 import { canonicalCampaignName } from "@/lib/utm";
 import type { Lead, LeadInsert, LeadSource, LeadStatus, ServiceType } from "@/types/database";
@@ -19,7 +19,7 @@ export type SortDirection = "asc" | "desc";
 
 /** Filtros da lista paginada de leads (/leads). */
 export interface LeadFilters {
-  /** Nome (ilike) OU dígitos do telefone */
+  /** Todas as palavras no nome (sem acento/caixa) OU dígitos do telefone */
   search?: string;
   status?: LeadStatus[];
   source?: LeadSource[];
@@ -173,19 +173,46 @@ export function quotePostgrestValue(value: string): string {
 }
 
 /**
- * Filtro para `.or()` da busca: nome contém o termo (ilike) OU, se o termo parece
- * telefone, o telefone contém os dígitos. Retorna null para busca vazia.
+ * Letra sem acento → classe com as variantes acentuadas. As maiúsculas entram
+ * explicitamente para não depender do locale do banco no `~*`.
+ */
+const ACCENT_CLASSES: Readonly<Record<string, string>> = {
+  a: "[aáàâãäAÁÀÂÃÄ]",
+  e: "[eéèêëEÉÈÊË]",
+  i: "[iíìîïIÍÌÎÏ]",
+  o: "[oóòôõöOÓÒÔÕÖ]",
+  u: "[uúùûüUÚÙÛÜ]",
+  c: "[cçCÇ]",
+  n: "[nñNÑ]",
+  y: "[yýÿYÝŸ]",
+};
+
+/**
+ * Palavra da busca → regex POSIX (operador `imatch`, `~*`) que a encontra no nome
+ * com ou sem acento: "João" → "j[oó…][aá…][oó…]". Metacaracteres digitados são escapados.
+ */
+export function accentInsensitivePattern(word: string): string {
+  return Array.from(
+    foldText(word),
+    (char) => ACCENT_CLASSES[char] ?? char.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"),
+  ).join("");
+}
+
+/**
+ * Filtro para `.or()` da busca (spec §4.3), igual à do kanban: TODAS as palavras
+ * no nome, em qualquer ordem, sem diferenciar acento e caixa ("joao santos" acha
+ * "João dos Santos") OU, se o termo parece telefone, o telefone contém os dígitos.
+ * Retorna null para busca vazia.
  */
 export function buildLeadSearchFilter(search: string | null | undefined): string | null {
   const term = cleanString(search ?? undefined);
   if (!term) return null;
-  const parts = [`name.ilike.${quotePostgrestValue(`%${escapeLikePattern(term)}%`)}`];
-  if (/^[\d\s()+.-]+$/.test(term)) {
-    let digits = term.replace(/\D/g, "");
-    if (digits.length >= 12 && digits.startsWith("55")) digits = digits.slice(2);
-    if (digits.length >= 2) parts.push(`phone.ilike.%${digits}%`);
-  }
-  return parts.join(",");
+  const words = foldText(term).split(" ").filter(Boolean);
+  const nameParts = words.map((word) => `name.imatch.${quotePostgrestValue(accentInsensitivePattern(word))}`);
+  const parts = nameParts.length > 1 ? [`and(${nameParts.join(",")})`] : nameParts;
+  const digits = searchPhoneDigits(term);
+  if (digits) parts.push(`phone.ilike.%${digits}%`);
+  return parts.length ? parts.join(",") : null;
 }
 
 // -----------------------------------------------------------------------------

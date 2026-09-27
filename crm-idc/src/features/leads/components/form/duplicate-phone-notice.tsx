@@ -39,7 +39,7 @@ export function DuplicatePhoneNotice({ duplicates, checking, mode, id }: Duplica
   return (
     <Alert id={id} role="status" className="border-amber-300 bg-amber-50 text-amber-900">
       <TriangleAlertIcon aria-hidden="true" />
-      <AlertTitle className="line-clamp-none">
+      <AlertTitle>
         {mode === "edit" ? "Este telefone já pertence a outro lead" : summary.title}
       </AlertTitle>
       <AlertDescription className="text-amber-900/80">

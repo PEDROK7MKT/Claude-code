@@ -16,13 +16,15 @@ import { DeltaPill } from "../delta-pill";
 export interface NewLeadsTodayCardProps {
   summary: NewLeadsSummary | null;
   loading: boolean;
+  /** Offline e sem cópia neste aparelho: "Sem conexão" + "Tentar novamente" no lugar do erro genérico. */
+  offline?: boolean;
   onRetry?: () => void;
   retrying?: boolean;
   className?: string;
 }
 
 /** Card grande em destaque "Leads novos hoje" (spec §4.2 — dashboard do dentista). */
-export function NewLeadsTodayCard({ summary, loading, onRetry, retrying, className }: NewLeadsTodayCardProps) {
+export function NewLeadsTodayCard({ summary, loading, offline = false, onRetry, retrying, className }: NewLeadsTodayCardProps) {
   return (
     <Card
       aria-busy={loading || undefined}
@@ -51,8 +53,12 @@ export function NewLeadsTodayCard({ summary, loading, onRetry, retrying, classNa
         ) : !summary ? (
           <ErrorState
             size="sm"
-            title="Não foi possível carregar"
-            message="Verifique a conexão e tente de novo."
+            title={offline ? "Sem conexão" : "Não foi possível carregar"}
+            message={
+              offline
+                ? "Os leads de hoje ainda não foram baixados neste aparelho."
+                : "Verifique a conexão e tente de novo."
+            }
             onRetry={onRetry}
             retrying={retrying}
             className="text-primary-foreground [&_h3]:text-primary-foreground [&_p]:text-primary-foreground/80"

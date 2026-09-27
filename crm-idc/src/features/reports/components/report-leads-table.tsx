@@ -58,10 +58,12 @@ function serviceLabel(lead: Pick<Lead, "service">): string {
 interface ReportLeadsTableProps {
   leads: readonly Lead[];
   monthLabel: string;
+  /** Modelo da mensagem do WhatsApp (Configurações); padrão: DEFAULT_WHATSAPP_MESSAGE. */
+  whatsappMessage?: string;
 }
 
 /** Leads que entraram no mês, com o status atual: tabela ordenável (desktop) e cards (mobile). */
-export function ReportLeadsTable({ leads, monthLabel }: ReportLeadsTableProps) {
+export function ReportLeadsTable({ leads, monthLabel, whatsappMessage }: ReportLeadsTableProps) {
   const [sort, setSort] = React.useState<ReportSort>(DEFAULT_REPORT_SORT);
   const [page, setPage] = React.useState(1);
   const listRef = React.useRef<HTMLDivElement>(null);
@@ -115,7 +117,13 @@ export function ReportLeadsTable({ leads, monthLabel }: ReportLeadsTableProps) {
                   >
                     {lead.name}
                   </Link>
-                  <PhoneLink phone={lead.phone} name={lead.name} showIcon={false} className="text-xs" />
+                  <PhoneLink
+                    phone={lead.phone}
+                    name={lead.name}
+                    message={whatsappMessage}
+                    showIcon={false}
+                    className="text-xs"
+                  />
                 </TableCell>
                 <TableCell>
                   <SourceBadge source={lead.source} variant="plain" />

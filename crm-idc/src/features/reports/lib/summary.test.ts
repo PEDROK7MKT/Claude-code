@@ -40,9 +40,11 @@ describe("buildReportSummary — cenário completo", () => {
   const [first, second] = summaryFor({
     leads: all,
     previousLeads: all,
+    // um lançamento em cada dia com lead do Google Ads (regra 7: o custo real cruza os mesmos dias)
     metrics: [
-      makeMetric({ date: "2026-03-02", cost: 200, clicks: 90, impressions: 2000, conversions: 5 }),
-      makeMetric({ date: "2026-03-03", cost: 100, clicks: 30, impressions: 1000, conversions: 3 }),
+      ...["2026-03-02", "2026-03-03", "2026-03-04", "2026-03-05", "2026-03-06", "2026-03-08"].map((date, i) =>
+        makeMetric({ date, cost: 50, clicks: 20, impressions: 500, conversions: i === 0 || i === 3 ? 2 : 1 }),
+      ),
     ],
     previousMetrics: [],
     gmnMetrics: [makeGmn({ total_reviews: 188, new_reviews: 5, average_rating: 4.9 })],
@@ -171,6 +173,30 @@ describe("buildReportSummary — Google Ads", () => {
       metrics: [makeMetric({ date: "2026-03-02", cost: 0, conversions: 0 })],
     });
     expect(second).toContain("Não houve investimento registrado no Google Ads em março de 2026. Ainda assim, o Google Ads trouxe 1 lead.");
+  });
+
+  it("regra 7: leads do Google Ads em dias sem métricas ficam fora do custo real (e a frase avisa)", () => {
+    const [, second] = summaryFor({
+      leads: [...leadsOnDays(2, "2026-03-02", { status: "agendado", scheduled_at: "2026-03-20T12:00:00.000Z" }), ...leadsOnDays(3, "2026-03-20")],
+      metrics: [
+        makeMetric({ date: "2026-03-02", cost: 60, clicks: 0, impressions: 0, conversions: 0 }),
+        makeMetric({ date: "2026-03-03", cost: 40, clicks: 0, impressions: 0, conversions: 0 }),
+      ],
+    });
+    expect(second).toContain(
+      `O Google Ads trouxe 5 leads, com custo real de ${formatCurrency(50)} por lead e ${formatCurrency(50)} por agendamento.`,
+    );
+    expect(second).toContain("3 deles chegaram em dias sem métricas lançadas e ficaram fora desse cálculo.");
+  });
+
+  it("regra 7: todos os leads do Google Ads em dias sem métricas", () => {
+    const [, second] = summaryFor({
+      leads: leadsOnDays(2, "2026-03-20"),
+      metrics: [makeMetric({ date: "2026-03-02", cost: 80, clicks: 0, impressions: 0, conversions: 0 })],
+    });
+    expect(second).toContain(
+      "O Google Ads trouxe 2 leads, todos em dias sem métricas lançadas, então o custo real por lead não pôde ser calculado.",
+    );
   });
 
   it("singular: 1 lead do Google Ads e 1 conversão", () => {

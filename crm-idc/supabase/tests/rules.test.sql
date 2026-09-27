@@ -318,18 +318,24 @@ INSERT INTO tests.statuses VALUES
 GRANT SELECT ON ALL TABLES IN SCHEMA tests TO PUBLIC;
 
 -- -----------------------------------------------------------------------------
--- Fixtures (confirmadas): usuários criados como o GoTrue faria
+-- Fixtures (confirmadas): usuários com o papel em app_metadata (só a service
+-- role/SQL grava), já liberados — o estado em que o createUser do CRM os deixa
 -- -----------------------------------------------------------------------------
 BEGIN;
 DO $$
 BEGIN
   PERFORM tests.as_auth_admin();
-  INSERT INTO auth.users (id, email, raw_user_meta_data) VALUES
-    (tests.uid('admin'),    'gestor@idc.test',   '{"full_name": "Gestor de Tráfego", "role": "admin"}'),
-    (tests.uid('dentist'),  'decio@idc.test',    '{"full_name": "Dr. Décio Carrilho", "role": "dentist"}'),
-    (tests.uid('dentist2'), 'recepcao@idc.test', '{"full_name": "Recepção IDC", "role": "dentist"}'),
-    (tests.uid('inactive'), 'antigo@idc.test',   '{"full_name": "Ex-colaborador", "role": "dentist"}'),
-    (tests.uid('admin2'),   'socio@idc.test',    '{"full_name": "Sócio Administrador", "role": "admin"}');
+  INSERT INTO auth.users (id, email, raw_app_meta_data, raw_user_meta_data) VALUES
+    (tests.uid('admin'),    'gestor@idc.test',
+     '{"provider": "email", "providers": ["email"], "role": "admin"}',   '{"full_name": "Gestor de Tráfego"}'),
+    (tests.uid('dentist'),  'decio@idc.test',
+     '{"provider": "email", "providers": ["email"], "role": "dentist"}', '{"full_name": "Dr. Décio Carrilho"}'),
+    (tests.uid('dentist2'), 'recepcao@idc.test',
+     '{"provider": "email", "providers": ["email"], "role": "dentist"}', '{"full_name": "Recepção IDC"}'),
+    (tests.uid('inactive'), 'antigo@idc.test',
+     '{"provider": "email", "providers": ["email"], "role": "dentist"}', '{"full_name": "Ex-colaborador"}'),
+    (tests.uid('admin2'),   'socio@idc.test',
+     '{"provider": "email", "providers": ["email"], "role": "admin"}',   '{"full_name": "Sócio Administrador"}');
   -- desativar é feito pelo servidor (service role) em Configurações
   PERFORM tests.login_service();
   UPDATE public.profiles SET active = FALSE WHERE id = tests.uid('inactive');
@@ -351,7 +357,7 @@ BEGIN
     PERFORM tests.eq((tests.profile(tests.uid('dentist'))).role, 'dentist', 'role do dentista');
     PERFORM tests.eq((tests.profile(tests.uid('dentist'))).full_name, 'Dr. Décio Carrilho', 'nome do dentista');
     PERFORM tests.eq((tests.profile(tests.uid('inactive'))).active, FALSE, 'usuário desativado');
-    PERFORM tests.eq((tests.profile(tests.uid('admin'))).active, TRUE, 'novo usuário nasce ativo');
+    PERFORM tests.eq((tests.profile(tests.uid('admin'))).active, TRUE, 'usuário com app_metadata.role nasce ativo');
     RAISE NOTICE 'PASS | %', t;
   EXCEPTION WHEN OTHERS THEN
     RAISE NOTICE 'FAIL | % → % [%]', t, SQLERRM, SQLSTATE;
@@ -363,14 +369,15 @@ ROLLBACK;
 BEGIN;
 DO $test$
 DECLARE
-  t CONSTANT TEXT := 'handle_new_user: cria profile com role e nome do metadata e grava o email';
+  t CONSTANT TEXT := 'handle_new_user: cria profile com role do app_metadata, nome do user_metadata e grava o email';
   v_id CONSTANT UUID := 'b0000000-0000-4000-8000-000000000001';
   p public.profiles;
 BEGIN
   BEGIN
     PERFORM tests.as_auth_admin();
-    INSERT INTO auth.users (id, email, raw_user_meta_data)
-    VALUES (v_id, 'nova.gestora@idc.test', '{"full_name": "  Nova Gestora  ", "role": "admin"}');
+    INSERT INTO auth.users (id, email, raw_app_meta_data, raw_user_meta_data)
+    VALUES (v_id, 'nova.gestora@idc.test',
+            '{"provider": "email", "providers": ["email"], "role": "admin"}', '{"full_name": "  Nova Gestora  "}');
     p := tests.profile(v_id);
     PERFORM tests.ok(p.id IS NOT NULL, 'profile não foi criado');
     PERFORM tests.eq(p.role, 'admin', 'role');
@@ -392,15 +399,19 @@ DECLARE
 BEGIN
   BEGIN
     PERFORM tests.as_auth_admin();
-    INSERT INTO auth.users (id, email, raw_user_meta_data) VALUES
-      ('b0000000-0000-4000-8000-000000000011', 'hacker@idc.test', '{"full_name": "Hacker", "role": "superadmin"}'),
-      ('b0000000-0000-4000-8000-000000000012', 'semmeta@idc.test', '{}'),
-      ('b0000000-0000-4000-8000-000000000013', 'nulo@idc.test', NULL),
-      ('b0000000-0000-4000-8000-000000000014', 'branco@idc.test', '{"full_name": "   ", "role": ""}');
+    INSERT INTO auth.users (id, email, raw_app_meta_data, raw_user_meta_data) VALUES
+      ('b0000000-0000-4000-8000-000000000011', 'hacker@idc.test',
+       '{"provider": "email", "providers": ["email"], "role": "superadmin"}', '{"full_name": "Hacker"}'),
+      ('b0000000-0000-4000-8000-000000000012', 'semmeta@idc.test', '{"provider": "email", "providers": ["email"]}', '{}'),
+      ('b0000000-0000-4000-8000-000000000013', 'nulo@idc.test', NULL, NULL),
+      ('b0000000-0000-4000-8000-000000000014', 'branco@idc.test',
+       '{"provider": "email", "providers": ["email"], "role": ""}', '{"full_name": "   "}');
     PERFORM tests.eq((tests.profile('b0000000-0000-4000-8000-000000000011')).role, 'dentist', 'role inválido');
     PERFORM tests.eq((tests.profile('b0000000-0000-4000-8000-000000000012')).role, 'dentist', 'sem role');
+    PERFORM tests.eq((tests.profile('b0000000-0000-4000-8000-000000000012')).active, FALSE, 'sem role nasce inativo');
     PERFORM tests.eq((tests.profile('b0000000-0000-4000-8000-000000000012')).full_name, 'semmeta@idc.test', 'nome = email');
     PERFORM tests.eq((tests.profile('b0000000-0000-4000-8000-000000000013')).role, 'dentist', 'metadata NULL');
+    PERFORM tests.eq((tests.profile('b0000000-0000-4000-8000-000000000013')).active, FALSE, 'metadata NULL nasce inativo');
     PERFORM tests.eq((tests.profile('b0000000-0000-4000-8000-000000000014')).full_name, 'branco@idc.test', 'nome em branco = email');
     PERFORM tests.eq((tests.profile('b0000000-0000-4000-8000-000000000014')).role, 'dentist', 'role vazio');
     RAISE NOTICE 'PASS | %', t;
@@ -414,7 +425,7 @@ ROLLBACK;
 BEGIN;
 DO $test$
 DECLARE
-  t CONSTANT TEXT := 'handle_new_user: app_metadata.role (service role) tem precedência sobre user_metadata';
+  t CONSTANT TEXT := 'handle_new_user: só app_metadata.role (service role) define o papel; user_metadata.role é ignorado';
 BEGIN
   BEGIN
     PERFORM tests.as_auth_admin();
@@ -425,6 +436,73 @@ BEGIN
        '{"provider": "email", "providers": ["email"], "role": "dentist"}', '{"full_name": "B", "role": "admin"}');
     PERFORM tests.eq((tests.profile('b0000000-0000-4000-8000-000000000021')).role, 'admin', 'app_metadata admin');
     PERFORM tests.eq((tests.profile('b0000000-0000-4000-8000-000000000022')).role, 'dentist', 'app_metadata dentist');
+    RAISE NOTICE 'PASS | %', t;
+  EXCEPTION WHEN OTHERS THEN
+    RAISE NOTICE 'FAIL | % → % [%]', t, SQLERRM, SQLSTATE;
+  END;
+END
+$test$;
+ROLLBACK;
+
+BEGIN;
+DO $test$
+DECLARE
+  t CONSTANT TEXT := 'handle_new_user: cadastro público com user_metadata.role=admin vira dentist INATIVO sem acesso a dados';
+  v_id CONSTANT UUID := 'b0000000-0000-4000-8000-000000000031';
+  p public.profiles;
+BEGIN
+  BEGIN
+    PERFORM tests.as_auth_admin();
+    -- formato do supabase.auth.signUp({ options: { data: { role: 'admin' } } }) com a anon key
+    INSERT INTO auth.users (id, email, raw_app_meta_data, raw_user_meta_data)
+    VALUES (v_id, 'intruso@idc.test', '{"provider": "email", "providers": ["email"]}',
+            '{"full_name": "Intruso", "role": "admin"}');
+    p := tests.profile(v_id);
+    PERFORM tests.eq(p.role, 'dentist', 'user_metadata.role ignorado');
+    PERFORM tests.eq(p.active, FALSE, 'nasce inativo');
+    -- entra com a própria sessão (como o PostgREST faria com o JWT do cadastro)
+    PERFORM set_config('request.jwt.claims',
+      json_build_object('sub', v_id, 'role', 'authenticated', 'aud', 'authenticated')::text, true);
+    PERFORM set_config('role', 'authenticated', true);
+    PERFORM set_config('search_path', 'public, extensions', true);
+    PERFORM tests.ok(NOT public.is_active_user(), 'is_active_user() deveria ser falso');
+    PERFORM tests.ok(NOT public.is_admin(), 'is_admin() deveria ser falso');
+    PERFORM tests.eq((SELECT COUNT(*)::INT FROM public.profiles WHERE id <> v_id), 0, 'não enxerga outros profiles');
+    RAISE NOTICE 'PASS | %', t;
+  EXCEPTION WHEN OTHERS THEN
+    RAISE NOTICE 'FAIL | % → % [%]', t, SQLERRM, SQLSTATE;
+  END;
+END
+$test$;
+ROLLBACK;
+
+BEGIN;
+DO $test$
+DECLARE
+  t CONSTANT TEXT := 'handle_new_user: fluxo do auth.admin.createUser (app_metadata no UPDATE) + upsert do CRM libera a conta';
+  v_id CONSTANT UUID := 'b0000000-0000-4000-8000-000000000032';
+  p public.profiles;
+BEGIN
+  BEGIN
+    PERFORM tests.as_auth_admin();
+    -- GoTrue: INSERT só com provider/providers; app_metadata do admin vem num UPDATE em seguida
+    INSERT INTO auth.users (id, email, raw_app_meta_data, raw_user_meta_data)
+    VALUES (v_id, 'nova.dentista@idc.test', '{"provider": "email", "providers": ["email"]}',
+            '{"full_name": "Nova Dentista", "role": "admin"}');
+    UPDATE auth.users SET raw_app_meta_data = raw_app_meta_data || '{"role": "admin"}' WHERE id = v_id;
+    p := tests.profile(v_id);
+    PERFORM tests.eq(p.active, FALSE, 'antes do upsert do CRM');
+    PERFORM tests.eq(p.role, 'dentist', 'antes do upsert do CRM');
+    -- createUser (src/features/settings/actions/users.ts) completa o profile com a service role
+    PERFORM tests.login_service();
+    INSERT INTO public.profiles (id, full_name, email, role, active)
+    VALUES (v_id, 'Nova Dentista', 'nova.dentista@idc.test', 'admin', TRUE)
+    ON CONFLICT (id) DO UPDATE
+      SET full_name = EXCLUDED.full_name, email = EXCLUDED.email, role = EXCLUDED.role, active = EXCLUDED.active;
+    PERFORM tests.as_superuser();
+    p := tests.profile(v_id);
+    PERFORM tests.eq(p.active, TRUE, 'depois do upsert do CRM');
+    PERFORM tests.eq(p.role, 'admin', 'depois do upsert do CRM');
     RAISE NOTICE 'PASS | %', t;
   EXCEPTION WHEN OTHERS THEN
     RAISE NOTICE 'FAIL | % → % [%]', t, SQLERRM, SQLSTATE;

@@ -32,7 +32,9 @@
   --accent-foreground: color-mix(in srgb, var(--brand-primary) 70%, black);
   --gold: var(--brand-accent);
   --gold-foreground: #3d2f00;
-  --destructive: #ef4444;
+  /* red-600: 4,83:1 no branco (texto de erro, botões destrutivos) — #ef4444 (3,76:1) reprova o WCAG AA.
+     A paleta da spec (#EF4444) continua em BRAND.error, STATUS_META e nos gráficos. */
+  --destructive: #dc2626;
   --destructive-foreground: #ffffff;
   --success: #22c55e;
   --warning: #eab308;

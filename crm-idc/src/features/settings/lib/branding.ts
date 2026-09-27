@@ -4,7 +4,6 @@
  */
 import { z } from "zod";
 import type { AppSettingsUpdate } from "@/features/settings/api/defaults";
-import { BRAND } from "@/lib/constants";
 import { whatsappUrl } from "@/lib/format";
 import type { AppSettings } from "@/types/database";
 import { ACCENT_FOREGROUND, isHexColor, normalizeHexInput } from "./color";
@@ -19,8 +18,6 @@ export const NAME_PLACEHOLDER = "{nome}";
 
 /** Lead fictício usado na prévia da mensagem. */
 export const SAMPLE_LEAD = { name: "Maria Silva", phone: "77987654321" } as const;
-
-export const DEFAULT_BRAND_COLORS = { primary_color: BRAND.primary, accent_color: BRAND.accent } as const;
 
 /**
  * Logo: endereço http(s) absoluto ou caminho do próprio site ("/logo.png").

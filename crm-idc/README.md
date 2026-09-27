@@ -39,7 +39,7 @@ Scripts úteis:
 
 ```bash
 npm run build       # build de produção
-npm run typecheck   # checagem de tipos
+npm run typecheck   # checagem de tipos (gera antes os tipos de rota do Next: next typegen)
 npm run lint        # ESLint
 npm test            # testes unitários (vitest)
 bash supabase/tests/run.sh   # testes do banco num Postgres 16 local (regras de negócio + RLS)
@@ -54,10 +54,12 @@ bash supabase/tests/run.sh   # testes do banco num Postgres 16 local (regras de 
    (tabelas, índices, RLS, triggers de regra de negócio, RPC e Realtime).
 3. **Authentication → Sign In / Providers**: deixe habilitado apenas **Email** e
    **desative "Allow new users to sign up"** (não há cadastro público — só o admin cria contas).
+   Mesmo que essa opção fique ligada, contas criadas fora do CRM nascem **inativas**
+   (perfil _Dentista_, sem acesso a nenhum dado) até um admin liberá-las.
 4. Crie o primeiro usuário admin em **Authentication → Users → Add user** (marque
-   "Auto Confirm User") e depois rode no SQL Editor:
+   "Auto Confirm User") e depois rode no SQL Editor para promovê-lo e ativá-lo:
    ```sql
-   UPDATE public.profiles SET role = 'admin', full_name = 'Seu Nome'
+   UPDATE public.profiles SET role = 'admin', active = true, full_name = 'Seu Nome'
    WHERE email = 'seu-email@exemplo.com';
    ```
 5. (Opcional) Carregue dados de demonstração com [`supabase/seed.sql`](supabase/seed.sql).
@@ -71,6 +73,8 @@ bash supabase/tests/run.sh   # testes do banco num Postgres 16 local (regras de 
 2. Em **Settings → Environment Variables** cadastre:
    `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`, `SUPABASE_SERVICE_ROLE_KEY`,
    `WEBHOOK_SECRET` e `WEBHOOK_ALLOWED_ORIGINS`.
+   Gere o `WEBHOOK_SECRET` com `openssl rand -hex 32` (mínimo 16 caracteres; o valor de exemplo
+   do `.env.example` é recusado e o webhook responde 503).
 3. **Settings → Domains → Add**: `crm.institutodeciocarrilho.com.br`
    (ou `painel.institutodeciocarrilho.com.br`).
 4. No DNS do domínio, crie um registro **CNAME** `crm` → `cname.vercel-dns.com`.

@@ -2,6 +2,7 @@
 
 import * as React from "react";
 import type { Profile, UserRole } from "@/types/database";
+import { useSignOutFromOtherTabs } from "./hooks/use-sign-out";
 
 export interface SessionValue {
   profile: Profile;
@@ -22,9 +23,11 @@ interface SessionProviderProps {
 
 /**
  * Sessão do usuário logado para componentes cliente. Montado no layout autenticado
- * (`src/app/(app)/layout.tsx`) com os dados de `requireSession()`.
+ * (`src/app/(app)/layout.tsx`) com os dados de `requireSession()`. Também encerra esta
+ * aba quando o usuário clica em "Sair" em outra aba (apaga o cache e volta ao login).
  */
 export function SessionProvider({ profile, email, children }: SessionProviderProps) {
+  useSignOutFromOtherTabs();
   const value = React.useMemo<SessionValue>(
     () => ({
       profile,
@@ -48,9 +51,4 @@ export function useSession(): SessionValue {
     );
   }
   return session;
-}
-
-/** Como useSession(), mas retorna null fora do layout autenticado (ex.: componentes compartilhados). */
-export function useOptionalSession(): SessionValue | null {
-  return React.useContext(SessionContext);
 }

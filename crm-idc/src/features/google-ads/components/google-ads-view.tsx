@@ -12,6 +12,7 @@ import { PageHeader } from "@/components/shared/page-header";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import { useSession } from "@/features/auth/session-context";
+import { useNow } from "@/hooks/use-now";
 import { useDailyMetrics, useDeleteDailyMetric } from "@/features/google-ads/api/daily-metrics";
 import { buildCampaignOptions, filterLeadsByCampaign, filterMetricsByCampaign } from "@/features/google-ads/lib/campaigns";
 import {
@@ -28,7 +29,7 @@ import {
 import { buildAdsChartSeries, pickComparisonGranularity, pickGranularity } from "@/features/google-ads/lib/series";
 import { compareAdsKpis, computeAdsKpis } from "@/features/google-ads/lib/summary";
 import { useLeads } from "@/features/leads/api/leads-queries";
-import { formatDateKey, todayKey as getTodayKey } from "@/lib/dates";
+import { formatDateKey } from "@/lib/dates";
 import { formatCurrency } from "@/lib/format";
 import { groupDailyMetricsByCampaign } from "@/lib/metrics";
 import type { DailyMetric } from "@/types/database";
@@ -50,7 +51,9 @@ function formatRange(range: DateKeyRange): string {
 /** Página Google Ads (spec §4.5 + regra 7): métricas diárias cruzadas com os leads reais do CRM. */
 export function GoogleAdsView() {
   const { isAdmin } = useSession();
-  const [today] = React.useState(() => getTodayKey());
+  // "Hoje" acompanha a virada do dia com a tela aberta (PWA instalado, aba fixa):
+  // presets, janela de leads, data padrão do lançamento e validação do CSV.
+  const { today } = useNow();
 
   // Filtros
   const [selection, setSelection] = React.useState<AdsPeriodSelection>(DEFAULT_ADS_PERIOD);
@@ -81,8 +84,11 @@ export function GoogleAdsView() {
   // Uma consulta cobre o período atual e o anterior (comparação ↑↓%)
   const leadWindow = rangeToLeadWindow(previous ? { from: previous.from, to: range.to } : range);
   const leadsQuery = useLeads({ ...leadWindow, source: GOOGLE_ADS_SOURCE });
-  const leadsLoading = leadsQuery.isPending;
-  const leadsError = leadsQuery.isError && !leadsQuery.data;
+  // offline sem cópia deste período no aparelho: a consulta fica pausada até reconectar
+  // (sem isso os KPIs de leads e o comparativo ficariam em skeleton para sempre)
+  const leadsOffline = leadsQuery.isPending && leadsQuery.fetchStatus === "paused";
+  const leadsLoading = leadsQuery.isPending && !leadsOffline;
+  const leadsError = (leadsQuery.isError && !leadsQuery.data) || leadsOffline;
 
   const campaignOptions = React.useMemo(() => buildCampaignOptions(allMetrics), [allMetrics]);
 
@@ -139,7 +145,16 @@ export function GoogleAdsView() {
   ) : null;
 
   let content: React.ReactNode;
-  if (metricsQuery.isPending) {
+  if (metricsQuery.isPending && metricsQuery.fetchStatus === "paused") {
+    // offline e nada salvo neste aparelho ainda: a consulta fica pausada até reconectar
+    content = (
+      <ErrorState
+        title="Sem conexão com o servidor"
+        message="As métricas do Google Ads ainda não foram salvas neste aparelho. Conecte-se à internet para carregá-las."
+        onRetry={() => void metricsQuery.refetch()}
+      />
+    );
+  } else if (metricsQuery.isPending) {
     content = (
       <div className="space-y-6">
         <CardGridSkeleton count={4} />
@@ -207,9 +222,11 @@ export function GoogleAdsView() {
         {leadsError ? (
           <Alert variant="destructive">
             <TriangleAlertIcon aria-hidden="true" />
-            <AlertTitle>Não foi possível carregar os leads do CRM</AlertTitle>
+            <AlertTitle>{leadsOffline ? "Sem conexão" : "Não foi possível carregar os leads do CRM"}</AlertTitle>
             <AlertDescription className="flex flex-wrap items-center gap-2">
-              O CPL real e o comparativo com os leads ficam indisponíveis.
+              {leadsOffline
+                ? "Os leads deste período ainda não foram baixados neste aparelho. O CPL real e o comparativo com os leads ficam indisponíveis até reconectar."
+                : "O CPL real e o comparativo com os leads ficam indisponíveis."}
               <Button
                 type="button"
                 size="sm"

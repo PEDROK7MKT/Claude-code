@@ -6,7 +6,7 @@ import { cn } from "@/lib/utils";
 export function SettingsPageSkeleton({ className }: { className?: string }) {
   return (
     <div className={cn("space-y-6", className)}>
-      <PageHeaderSkeleton withActions={false} />
+      <PageHeaderSkeleton withActions={false} announce={false} />
       <div className="bg-muted grid h-9 w-full grid-cols-3 gap-1 rounded-lg p-[3px] sm:w-[27rem]">
         <Skeleton className="bg-card h-full rounded-md" />
         <Skeleton className="h-full rounded-md bg-transparent" />

@@ -7,8 +7,10 @@ import {
   MapPinnedIcon,
   MousePointerClickIcon,
   NavigationIcon,
+  RefreshCwIcon,
   SearchIcon,
   StoreIcon,
+  WifiOffIcon,
   type LucideIcon,
 } from "lucide-react";
 
@@ -19,10 +21,12 @@ import { Card, CardAction, CardContent, CardDescription, CardHeader, CardTitle }
 import { Skeleton } from "@/components/ui/skeleton";
 import { useGmnMetrics } from "@/features/gmn/api/gmn-metrics";
 import { StarRating } from "@/features/gmn/components/star-rating";
+import { formatDateKey } from "@/lib/dates";
 import { formatDecimal, formatNumber } from "@/lib/format";
 import { cn } from "@/lib/utils";
 import { pickGmnComparison, summarizeGmn, type GmnFlowStat } from "../lib/gmn-summary";
 import { formatRangeLabel } from "../lib/period";
+import { queryLoadState } from "../lib/query-state";
 import { DeltaPill } from "./delta-pill";
 
 const GMN_CONTEXT = "vs período anterior do GMN";
@@ -35,7 +39,9 @@ export function GmnSummaryCard({ className }: { className?: string }) {
     return comparison ? summarizeGmn(comparison) : null;
   }, [query.data]);
 
-  if (query.isPending) return <GmnSummarySkeleton className={className} />;
+  // Offline sem cópia neste aparelho a consulta fica pausada: avisa em vez de esqueleto sem fim
+  const state = queryLoadState(query);
+  if (state === "loading") return <GmnSummarySkeleton className={className} />;
 
   const hasData = summary !== null;
 
@@ -66,7 +72,15 @@ export function GmnSummaryCard({ className }: { className?: string }) {
       </CardHeader>
 
       <CardContent>
-        {query.isError && !query.data ? (
+        {state === "offline" ? (
+          <EmptyState
+            size="sm"
+            icon={WifiOffIcon}
+            title="Sem conexão com a internet"
+            description="As métricas do Google Meu Negócio ainda não foram baixadas neste aparelho."
+            action={{ label: "Tentar novamente", onClick: () => void query.refetch(), icon: RefreshCwIcon, variant: "outline" }}
+          />
+        ) : state === "error" ? (
           <ErrorState size="sm" onRetry={() => void query.refetch()} retrying={query.isFetching} />
         ) : !summary ? (
           <EmptyState
@@ -80,7 +94,16 @@ export function GmnSummaryCard({ className }: { className?: string }) {
           <div className="grid gap-4 lg:grid-cols-[minmax(0,18rem)_minmax(0,1fr)] xl:grid-cols-1">
             {/* Nota e avaliações */}
             <div className="bg-gold/10 rounded-xl p-4">
-              <p className="text-muted-foreground text-xs font-medium">Nota média</p>
+              <p className="text-muted-foreground text-xs font-medium">
+                Nota média
+                {summary.rating.fromPeriodEnd ? (
+                  <span className="font-normal">
+                    {" "}
+                    · informada no período até{" "}
+                    <span className="tabular-nums">{formatDateKey(summary.rating.fromPeriodEnd)}</span>
+                  </span>
+                ) : null}
+              </p>
               <div className="mt-1 flex flex-wrap items-center gap-x-3 gap-y-1">
                 <span className="text-foreground text-4xl leading-none font-bold tracking-tight tabular-nums">
                   {formatDecimal(summary.rating.value)}

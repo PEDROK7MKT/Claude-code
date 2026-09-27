@@ -81,6 +81,20 @@ export function computeLeadKpis(leads: ReadonlyArray<Pick<Lead, "status" | "sour
   };
 }
 
+/**
+ * Regra 7 (custo do dia × leads do mesmo dia): leads google_ads criados em dias que têm métrica
+ * lançada — a base das razões de custo do Google Ads (CPL real, custo por agendamento real).
+ * Leads de dias ainda sem lançamento (ex.: hoje; o lançamento costuma sair no dia seguinte)
+ * ficam de fora para não baixar o CPL real artificialmente.
+ */
+export function googleAdsLeadsOnMetricDays<T extends Pick<Lead, "source" | "created_at">>(
+  leads: readonly T[],
+  metrics: ReadonlyArray<Pick<DailyMetric, "date">>,
+): T[] {
+  const days = new Set(metrics.map((m) => m.date.slice(0, 10)));
+  return leads.filter((lead) => lead.source === "google_ads" && days.has(toDateKey(lead.created_at)));
+}
+
 /** Contagem por status (todos os status presentes, inclusive zerados). */
 export function countByStatus(leads: ReadonlyArray<Pick<Lead, "status">>): Record<LeadStatus, number> {
   const counts = Object.fromEntries(LEAD_STATUSES.map((s) => [s, 0])) as Record<LeadStatus, number>;

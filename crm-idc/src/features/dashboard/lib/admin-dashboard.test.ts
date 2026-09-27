@@ -140,12 +140,12 @@ describe("kpiChange", () => {
 
 describe("buildAdminKpis", () => {
   const currentLeads = [
-    lead("x", "agendado"),
-    lead("x", "confirmado"),
-    lead("x", "compareceu", "gmn"),
-    lead("x", "novo", "instagram"),
+    lead("2026-09-20T12:00:00Z", "agendado"),
+    lead("2026-09-21T12:00:00Z", "confirmado"),
+    lead("2026-09-20T13:00:00Z", "compareceu", "gmn"),
+    lead("2026-09-22T12:00:00Z", "novo", "instagram"),
   ];
-  const previousLeads = [lead("x", "agendado"), lead("x", "perdido")];
+  const previousLeads = [lead("2026-09-12T12:00:00Z", "agendado"), lead("2026-09-13T12:00:00Z", "perdido")];
 
   it("calcula KPIs e variações vs período anterior", () => {
     const k = buildAdminKpis({
@@ -216,9 +216,39 @@ describe("buildAdminKpis", () => {
     expect(k.investment.change).toBeCloseTo(60);
   });
 
+  it("regra 7: 'Só Google Ads' ignora leads de anúncio de dias sem lançamento (ex.: hoje)", () => {
+    const k = buildAdminKpis({
+      currentLeads: [
+        ...currentLeads,
+        // hoje (24/09, 00:30 em Barreiras): ainda sem custo lançado
+        lead("2026-09-24T03:30:00Z", "novo"),
+        lead("2026-09-24T15:00:00Z", "agendado"),
+      ],
+      previousLeads,
+      currentMetrics: [metricRow("2026-09-20", 160), metricRow("2026-09-21", 40)],
+      previousMetrics: [],
+    });
+    // 200 / 2 leads de anúncio dos dias 20 e 21 (não 200 / 4)
+    expect(k.costPerGoogleAdsLead).toBe(100);
+    expect(k.current.googleAdsLeads).toBe(4);
+    // o CPL geral (spec) continua dividindo pelo total de leads do período
+    expect(k.costPerLead.value).toBeCloseTo(200 / 6);
+  });
+
+  it("regra 7: leads de anúncio só em dias sem lançamento → sem CPL de anúncio", () => {
+    const k = buildAdminKpis({
+      currentLeads: [lead("2026-09-24T15:00:00Z")],
+      previousLeads: [],
+      currentMetrics: [metricRow("2026-09-20", 50)],
+      previousMetrics: [],
+    });
+    expect(k.costPerGoogleAdsLead).toBeNull();
+    expect(k.current.googleAdsLeads).toBe(1);
+  });
+
   it("aceita custo DECIMAL vindo como string", () => {
     const k = buildAdminKpis({
-      currentLeads: [lead("x")],
+      currentLeads: [lead("2026-09-20T12:00:00Z")],
       previousLeads: [],
       currentMetrics: [{ date: "2026-09-20", cost: "10.10" as unknown as number }, metricRow("2026-09-21", 0.2)],
       previousMetrics: [],

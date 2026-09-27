@@ -12,6 +12,7 @@ import {
   countBySource,
   countByStatus,
   filterByCreatedAt,
+  googleAdsLeadsOnMetricDays,
   leadsPerDay,
   linearTrend,
   summarizeDailyMetrics,
@@ -25,6 +26,7 @@ import {
 import type { DailyMetric, GmnMetric, Lead, LeadStatus, ServiceType } from "@/types/database";
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
+import { latestRating } from "@/features/gmn/lib/summary";
 import { monthLabel, shiftMonth } from "./month";
 
 /** Campos do lead usados nos cálculos do relatório. */
@@ -49,6 +51,8 @@ export interface PeriodStats {
   ads: AdsTotals | null;
   /** Dias distintos com métrica lançada */
   adsDays: number;
+  /** Leads google_ads criados em dias com métrica lançada — base do CPL real (regra 7) */
+  googleAdsLeadsOnMetricDays: number;
 }
 
 export interface ServiceCount {
@@ -155,9 +159,17 @@ function buildPeriodStats(
   const adsState: AdsState = metrics == null ? "unavailable" : metrics.length === 0 ? "empty" : "ready";
   const ads = adsState === "ready" && metrics ? summarizeDailyMetrics(metrics) : null;
   const base = computeLeadKpis(leads, ads?.cost ?? 0);
+  // regra 7: o custo por lead/agendamento do Google Ads só considera os leads google_ads dos dias
+  // com métrica lançada (no mês corrente, os de hoje ainda não têm custo lançado)
+  const costedLeads = metrics ? googleAdsLeadsOnMetricDays(leads, metrics) : [];
+  const costed = ads ? computeLeadKpis(costedLeads, ads.cost) : null;
   // sem métricas lançadas o custo é desconhecido (não é R$ 0,00)
-  const kpis: LeadKpis = ads
-    ? base
+  const kpis: LeadKpis = costed
+    ? {
+        ...base,
+        costPerGoogleAdsLead: costed.costPerGoogleAdsLead,
+        costPerGoogleAdsScheduled: costed.costPerGoogleAdsScheduled,
+      }
     : {
         ...base,
         costPerLead: null,
@@ -179,6 +191,7 @@ function buildPeriodStats(
     adsState,
     ads,
     adsDays: metrics ? new Set(metrics.map((m) => m.date.slice(0, 10))).size : 0,
+    googleAdsLeadsOnMetricDays: costedLeads.length,
   };
 }
 
@@ -203,8 +216,9 @@ export function topService(leads: ReadonlyArray<Pick<Lead, "service">>): Service
 }
 
 /**
- * Registro do GMN mais recente que terminou até o fim do mês (nota e total de
- * avaliações "na data do relatório"), mais as avaliações novas dos períodos do mês.
+ * Registro do GMN mais recente que terminou até o fim do mês (total de avaliações
+ * "na data do relatório"), a nota mais recente informada até essa data e as
+ * avaliações novas dos períodos do mês.
  */
 export function gmnSnapshotForMonth(
   rows: ReadonlyArray<
@@ -222,9 +236,9 @@ export function gmnSnapshotForMonth(
     if (!latest || end > latest.period_end.slice(0, 10)) latest = row;
   }
   if (!latest) return null;
-  const rating = latest.average_rating == null ? null : Number(latest.average_rating);
+  // o último lançamento do mês pode vir sem nota: usa a mais recente informada até o fim do mês
   return {
-    rating: rating != null && Number.isFinite(rating) ? rating : null,
+    rating: latestRating(rows, range.toKey)?.rating ?? null,
     totalReviews: Number(latest.total_reviews) || 0,
     newReviewsInMonth,
     periodStart: latest.period_start.slice(0, 10),

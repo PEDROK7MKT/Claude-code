@@ -38,14 +38,27 @@ export interface WaitingLeadsCardProps {
   /** Leads em "novo", do mais antigo para o mais recente */
   leads: readonly Lead[] | null;
   now: number;
+  /** Modelo da mensagem do WhatsApp (Configurações); padrão: DEFAULT_WHATSAPP_MESSAGE. */
+  whatsappMessage?: string;
   loading: boolean;
+  /** Offline e sem cópia neste aparelho: "Sem conexão" + "Tentar novamente" no lugar do erro genérico. */
+  offline?: boolean;
   onRetry?: () => void;
   retrying?: boolean;
   className?: string;
 }
 
 /** "Leads aguardando resposta" (status novo): quem espera há mais tempo primeiro + "Em contato" em um clique. */
-export function WaitingLeadsCard({ leads, now, loading, onRetry, retrying, className }: WaitingLeadsCardProps) {
+export function WaitingLeadsCard({
+  leads,
+  now,
+  whatsappMessage,
+  loading,
+  offline = false,
+  onRetry,
+  retrying,
+  className,
+}: WaitingLeadsCardProps) {
   const { requestChange, dialogs } = useStatusChange();
   const visible = leads?.slice(0, MAX_VISIBLE) ?? [];
   const total = leads?.length ?? 0;
@@ -72,7 +85,13 @@ export function WaitingLeadsCard({ leads, now, loading, onRetry, retrying, class
         {loading ? (
           <ListSkeleton rows={4} label="Carregando leads aguardando resposta…" />
         ) : !leads ? (
-          <ErrorState size="sm" onRetry={onRetry} retrying={retrying} />
+          <ErrorState
+            size="sm"
+            title={offline ? "Sem conexão com a internet" : undefined}
+            message={offline ? "A fila de leads novos ainda não foi baixada neste aparelho." : undefined}
+            onRetry={onRetry}
+            retrying={retrying}
+          />
         ) : total === 0 ? (
           <EmptyState
             size="sm"
@@ -103,6 +122,7 @@ export function WaitingLeadsCard({ leads, now, loading, onRetry, retrying, class
                   key={lead.id}
                   lead={lead}
                   level={waitingLevel(lead.created_at, now)}
+                  whatsappMessage={whatsappMessage}
                   onContact={() => void requestChange(lead, "em_contato")}
                 />
               ))}
@@ -124,7 +144,14 @@ export function WaitingLeadsCard({ leads, now, loading, onRetry, retrying, class
   );
 }
 
-function WaitingLeadRow({ lead, level, onContact }: { lead: Lead; level: WaitingLevel; onContact: () => void }) {
+interface WaitingLeadRowProps {
+  lead: Lead;
+  level: WaitingLevel;
+  whatsappMessage?: string;
+  onContact: () => void;
+}
+
+function WaitingLeadRow({ lead, level, whatsappMessage, onContact }: WaitingLeadRowProps) {
   const pending = useLeadStatusPending(lead.id);
   const service = lead.service ? SERVICE_LABEL[lead.service] : null;
 
@@ -155,7 +182,14 @@ function WaitingLeadRow({ lead, level, onContact }: { lead: Lead; level: Waiting
         </p>
       </div>
 
-      <WhatsAppButton phone={lead.phone} name={lead.name} iconOnly size="sm" variant="outline" />
+      <WhatsAppButton
+        phone={lead.phone}
+        name={lead.name}
+        message={whatsappMessage}
+        iconOnly
+        size="sm"
+        variant="outline"
+      />
       <Button
         type="button"
         size="sm"

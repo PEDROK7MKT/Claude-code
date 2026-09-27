@@ -39,7 +39,7 @@ describe("buildReportKpis", () => {
     const kpis = kpisFor({
       leads: all,
       previousLeads: all,
-      metrics: [makeMetric({ date: "2026-03-05", cost: 500, clicks: 100, impressions: 2000 })],
+      metrics: [makeMetric({ date: "2026-03-02", cost: 500, clicks: 100, impressions: 2000 })],
       previousMetrics: [makeMetric({ date: "2026-02-05", cost: 400, clicks: 80, impressions: 2000 })],
       gmnMetrics: [makeGmn()],
     });
@@ -53,7 +53,12 @@ describe("buildReportKpis", () => {
     // CPL: 500/10 = 50 vs 400/8 = 50 → 0%
     expect(kpis.get("costPerLead")).toMatchObject({ value: formatCurrency(50), change: 0, invertChange: true });
     expect(kpis.get("costPerScheduled")).toMatchObject({ value: formatCurrency(100), change: null });
-    expect(kpis.get("costPerGoogleAdsLead")).toMatchObject({ value: formatCurrency(100), invertChange: true });
+    // regra 7: só o lead do Google Ads de 02/03 (único dia lançado) entra no CPL real
+    expect(kpis.get("costPerGoogleAdsLead")).toMatchObject({
+      value: formatCurrency(500),
+      invertChange: true,
+      hint: "investimento ÷ 1 lead do Google Ads dos dias lançados",
+    });
     expect(kpis.get("clicks")).toMatchObject({ value: "100", change: 25, hint: "2.000 impressões" });
     expect(kpis.get("ctr")).toMatchObject({ value: "5%", change: 25 });
     expect(kpis.get("gmnRating")).toMatchObject({ value: "4,9", hint: "188 avaliações · até 31/03/2026" });

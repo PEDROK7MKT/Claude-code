@@ -67,6 +67,13 @@ export function NewLeadView() {
   };
 
   const leave = () => router.push(LEADS_PATH);
+  // Voltar (cabeçalho) com dados digitados pede a mesma confirmação do "Cancelar".
+  // onNavigate só roda na navegação dentro do app: ctrl/cmd+clique ainda abre nova aba.
+  const guardLeave = (event: { preventDefault: () => void }) => {
+    if (!dirty) return;
+    event.preventDefault();
+    setConfirmLeave(true);
+  };
 
   return (
     <div className="mx-auto w-full max-w-4xl space-y-6">
@@ -75,7 +82,7 @@ export function NewLeadView() {
         description="Cadastre um contato que chegou pelo WhatsApp ou por telefone. Campos com * são obrigatórios."
         breadcrumb={
           <Button asChild variant="ghost" size="sm" className="text-muted-foreground -ml-2 w-fit">
-            <Link href={LEADS_PATH}>
+            <Link href={LEADS_PATH} onNavigate={guardLeave}>
               <ArrowLeftIcon aria-hidden="true" />
               Voltar para leads
             </Link>

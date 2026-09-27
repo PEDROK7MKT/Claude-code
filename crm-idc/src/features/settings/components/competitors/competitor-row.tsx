@@ -1,12 +1,11 @@
 "use client";
 
 import type { ReactNode } from "react";
-import { ArrowDownIcon, ArrowUpIcon, StarIcon, Trash2Icon } from "lucide-react";
+import { StarIcon, Trash2Icon } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { cn } from "@/lib/utils";
 import {
   COMPETITOR_NAME_MAX,
   type CompetitorDraft,
@@ -14,55 +13,32 @@ import {
   type CompetitorField,
 } from "../../lib/competitors";
 
-export type RowMove = "up" | "down";
-
 export interface CompetitorRowProps {
   draft: CompetitorDraft;
   index: number;
-  total: number;
   /** Erros visíveis (campos já tocados ou após tentar salvar) */
   errors: CompetitorDraftErrors;
   disabled: boolean;
   onChange: (id: string, field: CompetitorField, value: string) => void;
   onBlur: (id: string, field: CompetitorField) => void;
-  onMove: (id: string, direction: RowMove) => void;
   onRemove: (id: string) => void;
 }
 
 /**
  * Uma linha do editor: card no celular, linha de "tabela" (grid) a partir de `md`.
  * Os rótulos ficam visíveis só no celular — no desktop o cabeçalho faz esse papel.
+ * Sem controles de ordem: o comparativo do GMN ordena sozinho (avaliações, nota, nome).
  */
-export function CompetitorRow({
-  draft,
-  index,
-  total,
-  errors,
-  disabled,
-  onChange,
-  onBlur,
-  onMove,
-  onRemove,
-}: CompetitorRowProps) {
+export function CompetitorRow({ draft, index, errors, disabled, onChange, onBlur, onRemove }: CompetitorRowProps) {
   const base = `competitor-${draft.id}`;
   const label = draft.name.trim() || `concorrente ${index + 1}`;
 
-  const actions = (
-    <RowActions
-      id={draft.id}
-      label={label}
-      isFirst={index === 0}
-      isLast={index === total - 1}
-      disabled={disabled}
-      onMove={onMove}
-      onRemove={onRemove}
-    />
-  );
+  const actions = <RemoveButton id={draft.id} label={label} disabled={disabled} onRemove={onRemove} />;
 
   return (
     <li
       data-row={draft.id}
-      className="bg-card rounded-lg border p-3 md:grid md:grid-cols-[2.25rem_minmax(0,1fr)_7rem_8rem_7.5rem] md:items-start md:gap-3 md:rounded-none md:border-0 md:border-b md:bg-transparent md:px-2 md:py-2.5 md:last:border-b-0"
+      className="bg-card rounded-lg border p-3 md:grid md:grid-cols-[2.25rem_minmax(0,1fr)_7rem_8rem_2rem] md:items-start md:gap-3 md:rounded-none md:border-0 md:border-b md:bg-transparent md:px-2 md:py-2.5 md:last:border-b-0"
     >
       <div className="mb-2 flex items-center justify-between md:mb-0 md:h-9">
         <span className="bg-primary/10 text-primary flex size-7 items-center justify-center rounded-full text-xs font-semibold tabular-nums">
@@ -151,55 +127,26 @@ function Field({ id, label, error, children }: { id: string; label: string; erro
   );
 }
 
-interface RowActionsProps {
+interface RemoveButtonProps {
   id: string;
   label: string;
-  isFirst: boolean;
-  isLast: boolean;
   disabled: boolean;
-  onMove: (id: string, direction: RowMove) => void;
   onRemove: (id: string) => void;
 }
 
-function RowActions({ id, label, isFirst, isLast, disabled, onMove, onRemove }: RowActionsProps) {
+function RemoveButton({ id, label, disabled, onRemove }: RemoveButtonProps) {
   return (
-    <div className="flex items-center gap-0.5">
-      <Button
-        type="button"
-        variant="ghost"
-        size="icon-sm"
-        data-action="up"
-        aria-label={`Mover ${label} para cima`}
-        title="Mover para cima"
-        disabled={disabled || isFirst}
-        onClick={() => onMove(id, "up")}
-      >
-        <ArrowUpIcon aria-hidden="true" />
-      </Button>
-      <Button
-        type="button"
-        variant="ghost"
-        size="icon-sm"
-        data-action="down"
-        aria-label={`Mover ${label} para baixo`}
-        title="Mover para baixo"
-        disabled={disabled || isLast}
-        onClick={() => onMove(id, "down")}
-      >
-        <ArrowDownIcon aria-hidden="true" />
-      </Button>
-      <Button
-        type="button"
-        variant="ghost"
-        size="icon-sm"
-        aria-label={`Remover ${label}`}
-        title="Remover"
-        disabled={disabled}
-        onClick={() => onRemove(id)}
-        className={cn("text-destructive hover:bg-destructive/10 hover:text-destructive")}
-      >
-        <Trash2Icon aria-hidden="true" />
-      </Button>
-    </div>
+    <Button
+      type="button"
+      variant="ghost"
+      size="icon-sm"
+      aria-label={`Remover ${label}`}
+      title="Remover"
+      disabled={disabled}
+      onClick={() => onRemove(id)}
+      className="text-destructive hover:bg-destructive/10 hover:text-destructive"
+    >
+      <Trash2Icon aria-hidden="true" />
+    </Button>
   );
 }

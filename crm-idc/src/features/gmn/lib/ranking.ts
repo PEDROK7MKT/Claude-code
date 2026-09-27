@@ -2,14 +2,12 @@
  * Ranking do IDC frente aos concorrentes no Google (spec §4.6 e §7).
  * Ordena por número de avaliações (desempate pela nota). Funções puras.
  */
+import { isSelfName } from "@/features/settings/lib/competitors";
 import { formatNumber } from "@/lib/format";
 import type { Competitor } from "@/types/database";
 
 /** Rótulo da clínica no comparativo. */
 export const IDC_LABEL = "IDC";
-
-/** Nomes de concorrentes que representam a própria clínica (evita linha duplicada). */
-const SELF_NAMES = new Set(["idc", "instituto decio carrilho"]);
 
 export interface IdcStanding {
   /** Nota média mais recente (null se nunca informada) */
@@ -49,15 +47,6 @@ export interface CompetitorRanking {
   maxReviews: number;
 }
 
-function normalizeName(name: string): string {
-  return name
-    .normalize("NFD")
-    .replace(/[̀-ͯ]/g, "")
-    .trim()
-    .toLowerCase()
-    .replace(/\s+/g, " ");
-}
-
 function ratingValue(rating: number | null): number {
   return rating ?? -1;
 }
@@ -86,7 +75,8 @@ export function buildCompetitorRanking(
   idc: IdcStanding | null,
 ): CompetitorRanking {
   const base: Array<Omit<RankingEntry, "position">> = competitors
-    .filter((c) => c.name.trim() && !SELF_NAMES.has(normalizeName(c.name)))
+    // concorrente com o nome da própria clínica não vira linha duplicada (mesma regra do editor)
+    .filter((c) => c.name.trim() && !isSelfName(c.name))
     .map((c, index) => ({
       key: `competitor-${index}-${c.name}`,
       name: c.name.trim(),

@@ -13,7 +13,7 @@ import { cn } from "@/lib/utils";
 export function GmnPageSkeleton({ withHeader = true, className }: { withHeader?: boolean; className?: string }) {
   return (
     <div className={cn("space-y-6", className)}>
-      {withHeader ? <PageHeaderSkeleton /> : null}
+      {withHeader ? <PageHeaderSkeleton announce={false} /> : null}
       <div className="grid gap-4 lg:grid-cols-5">
         <ChartSkeleton height={220} className="lg:col-span-2" />
         <TableSkeleton rows={6} columns={3} mobileCards={false} className="lg:col-span-3" />

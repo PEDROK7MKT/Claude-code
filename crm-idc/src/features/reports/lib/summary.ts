@@ -121,11 +121,26 @@ function adsSentences(report: MonthReport): string[] {
   sentences.push(`O investimento no Google Ads foi de ${formatCurrency(ads.cost)}${clicks}.`);
 
   if (k.googleAdsLeads > 0) {
-    const perScheduled =
-      k.costPerGoogleAdsScheduled !== null ? ` e ${formatCurrency(k.costPerGoogleAdsScheduled)} por agendamento` : "";
-    sentences.push(
-      `O Google Ads trouxe ${googleLeads}, com custo real de ${formatCurrency(k.costPerGoogleAdsLead)} por lead${perScheduled}.`,
-    );
+    // regra 7: o custo real só cruza os leads dos dias com métricas lançadas
+    const outside = k.googleAdsLeads - current.googleAdsLeadsOnMetricDays;
+    if (k.costPerGoogleAdsLead === null) {
+      sentences.push(
+        `O Google Ads trouxe ${googleLeads}, todos em dias sem métricas lançadas, então o custo real por lead não pôde ser calculado.`,
+      );
+    } else {
+      const perScheduled =
+        k.costPerGoogleAdsScheduled !== null ? ` e ${formatCurrency(k.costPerGoogleAdsScheduled)} por agendamento` : "";
+      sentences.push(
+        `O Google Ads trouxe ${googleLeads}, com custo real de ${formatCurrency(k.costPerGoogleAdsLead)} por lead${perScheduled}.`,
+      );
+      if (outside > 0) {
+        sentences.push(
+          outside === 1
+            ? "1 deles chegou em dia sem métricas lançadas e ficou fora desse cálculo."
+            : `${formatNumber(outside)} deles chegaram em dias sem métricas lançadas e ficaram fora desse cálculo.`,
+        );
+      }
+    }
   } else {
     sentences.push("Nenhum lead do Google Ads foi registrado no CRM no período.");
   }

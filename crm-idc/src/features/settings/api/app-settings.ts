@@ -35,6 +35,15 @@ export function useAppSettings(initialData?: AppSettings): UseQueryResult<AppSet
   });
 }
 
+/**
+ * Modelo da mensagem do WhatsApp definido em Configurações → Personalização, para passar como
+ * `message` a PhoneLink/WhatsAppButton/whatsappUrl. `undefined` (vazio/carregando) = mensagem padrão.
+ * Usa a mesma consulta (em cache e persistida) de useAppSettings: não gera requisição extra.
+ */
+export function useWhatsappMessage(): string | undefined {
+  return useAppSettings().data?.whatsapp_message || undefined;
+}
+
 /** Salva configurações (só admin — RLS). Depois, chame router.refresh() para atualizar a marca no layout. */
 export function useUpdateAppSettings(): UseMutationResult<AppSettings, Error, AppSettingsUpdate> {
   const queryClient = useQueryClient();

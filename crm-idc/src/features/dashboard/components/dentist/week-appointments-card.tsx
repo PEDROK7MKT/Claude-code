@@ -25,7 +25,11 @@ export interface WeekAppointmentsCardProps {
   /** "21/09 – 27/09/2026" */
   weekLabel: string;
   now: number;
+  /** Modelo da mensagem do WhatsApp (Configurações); padrão: DEFAULT_WHATSAPP_MESSAGE. */
+  whatsappMessage?: string;
   loading: boolean;
+  /** Offline e sem cópia neste aparelho: "Sem conexão" + "Tentar novamente" no lugar do erro genérico. */
+  offline?: boolean;
   onRetry?: () => void;
   retrying?: boolean;
   className?: string;
@@ -36,7 +40,9 @@ export function WeekAppointmentsCard({
   days,
   weekLabel,
   now,
+  whatsappMessage,
   loading,
+  offline = false,
   onRetry,
   retrying,
   className,
@@ -68,7 +74,13 @@ export function WeekAppointmentsCard({
         {loading ? (
           <ListSkeleton rows={4} label="Carregando agenda da semana…" />
         ) : !days ? (
-          <ErrorState size="sm" onRetry={onRetry} retrying={retrying} />
+          <ErrorState
+            size="sm"
+            title={offline ? "Sem conexão com a internet" : undefined}
+            message={offline ? "A agenda desta semana ainda não foi baixada neste aparelho." : undefined}
+            onRetry={onRetry}
+            retrying={retrying}
+          />
         ) : days.length === 0 ? (
           <EmptyState
             size="sm"
@@ -99,7 +111,12 @@ export function WeekAppointmentsCard({
                 </h3>
                 <ul className="divide-y">
                   {day.items.map((lead) => (
-                    <AppointmentRow key={lead.id} lead={lead} awaiting={isAwaitingAttendance(lead, now)} />
+                    <AppointmentRow
+                      key={lead.id}
+                      lead={lead}
+                      awaiting={isAwaitingAttendance(lead, now)}
+                      whatsappMessage={whatsappMessage}
+                    />
                   ))}
                 </ul>
               </section>
@@ -111,7 +128,7 @@ export function WeekAppointmentsCard({
   );
 }
 
-function AppointmentRow({ lead, awaiting }: { lead: Lead; awaiting: boolean }) {
+function AppointmentRow({ lead, awaiting, whatsappMessage }: { lead: Lead; awaiting: boolean; whatsappMessage?: string }) {
   const pending = useLeadStatusPending(lead.id);
   const service = lead.service ? SERVICE_LABEL[lead.service] : null;
 
@@ -133,7 +150,7 @@ function AppointmentRow({ lead, awaiting }: { lead: Lead; awaiting: boolean }) {
           {lead.name}
         </Link>
         <div className="text-muted-foreground flex flex-wrap items-center gap-x-3 gap-y-1 text-xs">
-          <PhoneLink phone={lead.phone} name={lead.name} className="text-xs" />
+          <PhoneLink phone={lead.phone} name={lead.name} message={whatsappMessage} className="text-xs" />
           {service ? <span className="truncate">{service}</span> : null}
           <StatusBadge status={lead.status} />
         </div>

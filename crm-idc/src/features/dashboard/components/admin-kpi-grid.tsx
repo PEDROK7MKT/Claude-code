@@ -17,14 +17,21 @@ import { cn } from "@/lib/utils";
 import type { AdminKpis } from "../lib/admin-dashboard";
 import type { ChartErrorState } from "./charts/dashboard-chart-card";
 
+export interface MetricsErrorState extends ChartErrorState {
+  offline?: boolean;
+}
+
 export interface AdminKpiGridProps {
   kpis: AdminKpis | null;
   /** Leads ainda carregando: todos os cards em esqueleto. */
   leadsLoading: boolean;
   /** Métricas do Google Ads carregando: só os cards de custo em esqueleto. */
   metricsLoading: boolean;
-  /** Falha ao carregar o Google Ads (sem cache): custos "—" com "Tentar novamente". */
-  metricsError: ChartErrorState | null;
+  /**
+   * Google Ads indisponível sem cópia salva (falha ou offline): custos "—" com
+   * "Tentar novamente". `offline`: sem conexão (a consulta está pausada), não erro.
+   */
+  metricsError: MetricsErrorState | null;
   /** "vs ontem", "vs 7 dias anteriores"… */
   changeLabel: string;
   className?: string;
@@ -49,7 +56,7 @@ export function AdminKpiGrid({
 
   // Linha auxiliar dos cards de custo quando não há o que calcular
   const errorHint = metricsError ? (
-    <MetricsErrorHint onRetry={metricsError.onRetry} retrying={metricsError.retrying} />
+    <MetricsErrorHint onRetry={metricsError.onRetry} retrying={metricsError.retrying} offline={metricsError.offline} />
   ) : null;
   const costFallbackHint = errorHint ?? (noAds ? "Sem lançamentos do Google Ads no período" : null);
 
@@ -84,7 +91,11 @@ export function AdminKpiGrid({
             <>
               Só Google Ads:{" "}
               {kpis.costPerGoogleAdsLead === null ? (
-                "nenhum lead de anúncio"
+                kpis.current.googleAdsLeads > 0 ? (
+                  "nenhum lead de anúncio nos dias lançados"
+                ) : (
+                  "nenhum lead de anúncio"
+                )
               ) : (
                 <span className="tabular-nums">{formatCurrency(kpis.costPerGoogleAdsLead)} por lead de anúncio</span>
               )}
@@ -135,10 +146,10 @@ function NoAdsHint() {
   );
 }
 
-function MetricsErrorHint({ onRetry, retrying }: { onRetry: () => void; retrying?: boolean }) {
+function MetricsErrorHint({ onRetry, retrying, offline }: MetricsErrorState) {
   return (
     <>
-      Erro ao carregar o Google Ads.{" "}
+      {offline ? "Sem conexão para carregar o Google Ads." : "Erro ao carregar o Google Ads."}{" "}
       <button
         type="button"
         onClick={onRetry}

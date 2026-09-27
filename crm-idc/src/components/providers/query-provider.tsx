@@ -15,7 +15,12 @@ export const PERSISTED_CACHE_BUSTER = "idc-crm-v1";
 export const PERSISTED_CACHE_MAX_AGE = 7 * 24 * 60 * 60 * 1000;
 
 const STALE_TIME = 30 * 1000;
-const GC_TIME = 24 * 60 * 60 * 1000;
+/**
+ * Precisa ser ≥ maxAge do persister: quando uma query inativa é coletada, o persister regrava o
+ * IndexedDB sem ela — com 24 h, telas não abertas no último dia perderiam a cópia offline antes
+ * dos 7 dias prometidos (docs/OFFLINE.md).
+ */
+const GC_TIME = PERSISTED_CACHE_MAX_AGE;
 const MAX_RETRIES = 2;
 
 function makeQueryClient(): QueryClient {

@@ -6,7 +6,6 @@ import {
   getActiveNavItem,
   getBreadcrumbs,
   getNavItems,
-  getPageTitle,
   isNavItemActive,
   normalizePathname,
 } from "./navigation";
@@ -71,7 +70,7 @@ describe("getActiveNavItem", () => {
   });
 });
 
-describe("getBreadcrumbs / getPageTitle", () => {
+describe("getBreadcrumbs", () => {
   it("seções viram um único item sem link", () => {
     expect(getBreadcrumbs("/dashboard")).toEqual([{ label: "Dashboard" }]);
     expect(getBreadcrumbs("/kanban")).toEqual([{ label: "Kanban" }]);
@@ -93,14 +92,6 @@ describe("getBreadcrumbs / getPageTitle", () => {
   it("subpáginas não mapeadas mostram a seção; rotas desconhecidas não têm trilha", () => {
     expect(getBreadcrumbs("/configuracoes/usuarios")).toEqual([{ label: "Configurações", href: "/configuracoes" }]);
     expect(getBreadcrumbs("/qualquer")).toEqual([]);
-  });
-
-  it("título = último item da trilha, com fallback", () => {
-    expect(getPageTitle("/leads/novo")).toBe("Novo lead");
-    expect(getPageTitle("/leads/abc")).toBe("Detalhe do lead");
-    expect(getPageTitle("/gmn")).toBe("Google Meu Negócio");
-    expect(getPageTitle("/qualquer")).toBe("IDC CRM");
-    expect(getPageTitle("/qualquer", "Painel")).toBe("Painel");
   });
 });
 

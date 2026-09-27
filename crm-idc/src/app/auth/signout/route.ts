@@ -7,8 +7,9 @@ import { isSupabaseConfigured } from "@/lib/env";
 import { createClient } from "@/lib/supabase/server";
 
 /**
- * Encerra a sessão e volta ao login (303). Usado pelo botão "Sair" (após limpar o
- * cache offline) e por requireSession() para usuários desativados (?reason=inactive).
+ * Encerra a sessão e volta ao login (303). Usado pelo botão "Sair" (POST via fetch; se não
+ * houve resposta, navegação até aqui ao voltar a conexão) e por requireSession() para
+ * usuários desativados (?reason=inactive).
  * Funciona mesmo sem sessão ou sem conexão com o Supabase.
  */
 async function signOutAndRedirect(request: NextRequest): Promise<NextResponse> {

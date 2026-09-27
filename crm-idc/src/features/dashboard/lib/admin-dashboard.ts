@@ -11,6 +11,7 @@ import {
   countBySource,
   countByStatus,
   filterByCreatedAt,
+  googleAdsLeadsOnMetricDays,
   leadsPerDay,
   linearTrend,
   statusPerDay,
@@ -131,7 +132,7 @@ export interface AdminKpis {
   costPerLead: KpiMetric;
   costPerScheduled: KpiMetric;
   investment: KpiMetric;
-  /** Investimento / leads de Google Ads — linha auxiliar do card de CPL */
+  /** Investimento / leads de Google Ads dos dias lançados (regra 7) — linha auxiliar do card de CPL */
   costPerGoogleAdsLead: number | null;
   /** Há lançamentos do Google Ads no período atual / anterior */
   hasAdsData: boolean;
@@ -141,8 +142,8 @@ export interface AdminKpis {
 }
 
 export interface AdminKpiInput {
-  currentLeads: ReadonlyArray<Pick<Lead, "status" | "source">>;
-  previousLeads: ReadonlyArray<Pick<Lead, "status" | "source">>;
+  currentLeads: ReadonlyArray<Pick<Lead, "status" | "source" | "created_at">>;
+  previousLeads: ReadonlyArray<Pick<Lead, "status" | "source" | "created_at">>;
   currentMetrics: ReadonlyArray<Pick<DailyMetric, "date" | "cost">>;
   previousMetrics: ReadonlyArray<Pick<DailyMetric, "date" | "cost">>;
 }
@@ -157,6 +158,12 @@ export function buildAdminKpis(input: AdminKpiInput): AdminKpis {
   const hadAdsData = input.previousMetrics.length > 0;
   const current = computeLeadKpis(input.currentLeads, sumAdsCost(input.currentMetrics));
   const previous = computeLeadKpis(input.previousLeads, sumAdsCost(input.previousMetrics));
+  // regra 7: "Só Google Ads" cruza o custo com os leads de anúncio dos dias lançados
+  // (os de hoje, ainda sem lançamento, baixariam o CPL real artificialmente)
+  const costedAds = computeLeadKpis(
+    googleAdsLeadsOnMetricDays(input.currentLeads, input.currentMetrics),
+    sumAdsCost(input.currentMetrics),
+  );
   const costs = hasAdsData && hadAdsData;
 
   return {
@@ -175,7 +182,7 @@ export function buildAdminKpis(input: AdminKpiInput): AdminKpis {
       costs,
     ),
     investment: metric(current.investment, previous.investment, hasAdsData),
-    costPerGoogleAdsLead: hasAdsData ? current.costPerGoogleAdsLead : null,
+    costPerGoogleAdsLead: hasAdsData ? costedAds.costPerGoogleAdsLead : null,
     hasAdsData,
     hadAdsData,
     adsDays: new Set(input.currentMetrics.map((m) => m.date.slice(0, 10))).size,

@@ -4,8 +4,17 @@ import { useOnlineStatus } from "@/components/providers/app-providers";
 import { useRealtimeConnected } from "@/components/providers/realtime-provider";
 import { cn } from "@/lib/utils";
 
+export interface LiveIndicatorProps {
+  /**
+   * Há dados salvos na tela. `false` quando, offline, nada foi baixado neste
+   * aparelho ainda (ex.: dia novo): não promete "dados salvos" que não existem.
+   */
+  hasSavedData?: boolean;
+  className?: string;
+}
+
 /** "Ao vivo" quando o Realtime está conectado (spec §6.3: KPIs em tempo real). */
-export function LiveIndicator({ className }: { className?: string }) {
+export function LiveIndicator({ hasSavedData = true, className }: LiveIndicatorProps) {
   const connected = useRealtimeConnected();
   const online = useOnlineStatus();
 
@@ -13,7 +22,7 @@ export function LiveIndicator({ className }: { className?: string }) {
     return (
       <span role="status" className={cn("text-muted-foreground inline-flex items-center gap-1.5 text-xs", className)}>
         <span aria-hidden="true" className="bg-muted-foreground/50 size-2 rounded-full" />
-        Offline — exibindo dados salvos
+        {hasSavedData ? "Offline — exibindo dados salvos" : "Offline — aguardando conexão"}
       </span>
     );
   }

@@ -2,7 +2,7 @@
  * Colunas do kanban do funil (spec §4.4): ordem, agrupamento, ordenação dos
  * cards e alvos válidos de arraste (regra 2). Funções puras — columns.test.ts.
  */
-import { LEAD_STATUSES, STATUS_META } from "@/lib/constants";
+import { LEAD_STATUSES } from "@/lib/constants";
 import { canTransition, isLeadStatus } from "@/lib/lead-status";
 import type { Lead, LeadStatus } from "@/types/database";
 
@@ -166,9 +166,4 @@ export function getDropTargets(from: LeadStatus | null | undefined): Record<Lead
 /** O card pode ser arrastado? (compareceu é final: não há para onde ir) */
 export function isMovableStatus(status: LeadStatus): boolean {
   return LEAD_STATUSES.some((to) => canTransition(status, to));
-}
-
-/** "Novo", "Em contato"… (título da coluna) */
-export function columnTitle(status: LeadStatus): string {
-  return STATUS_META[status].title;
 }

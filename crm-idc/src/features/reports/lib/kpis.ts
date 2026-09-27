@@ -144,7 +144,12 @@ export function buildReportKpis(report: MonthReport): ReportKpi[] {
       id: "costPerGoogleAdsLead",
       label: "CPL real Google Ads",
       value: formatCurrency(k.costPerGoogleAdsLead),
-      hint: adsHint(current, `investimento ÷ ${plural(k.googleAdsLeads, "lead do Google Ads", "leads do Google Ads")}`),
+      hint: adsHint(
+        current,
+        `investimento ÷ ${plural(current.googleAdsLeadsOnMetricDays, "lead do Google Ads", "leads do Google Ads")}${
+          current.googleAdsLeadsOnMetricDays < k.googleAdsLeads ? " dos dias lançados" : ""
+        }`,
+      ),
       change: adsChange(report, (s) => s.kpis.costPerGoogleAdsLead),
       invertChange: true,
     },

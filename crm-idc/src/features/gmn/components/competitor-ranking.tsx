@@ -5,9 +5,13 @@ import { EmptyState } from "@/components/shared/empty-state";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardAction, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { buildSettingsTabSearch } from "@/features/settings/lib/tabs";
 import { formatDecimal, formatNumber } from "@/lib/format";
 import { cn } from "@/lib/utils";
 import { ordinal, type CompetitorRanking as Ranking, type RankingEntry } from "../lib/ranking";
+
+/** Abre Configurações direto na aba Concorrentes ("/configuracoes?aba=concorrentes"). */
+const COMPETITORS_SETTINGS_HREF = `/configuracoes${buildSettingsTabSearch("", "concorrentes")}`;
 
 export interface CompetitorRankingProps {
   ranking: Ranking;
@@ -26,7 +30,7 @@ export function CompetitorRanking({ ranking, isAdmin, className }: CompetitorRan
         {isAdmin ? (
           <CardAction>
             <Button asChild variant="ghost" size="sm">
-              <Link href="/configuracoes">
+              <Link href={COMPETITORS_SETTINGS_HREF}>
                 <SettingsIcon aria-hidden="true" />
                 Editar
                 <span className="sr-only"> concorrentes</span>
@@ -43,6 +47,7 @@ export function CompetitorRanking({ ranking, isAdmin, className }: CompetitorRan
             icon={UsersIcon}
             title="Nenhum concorrente cadastrado"
             description="Cadastre os concorrentes em Configurações para comparar as avaliações."
+            action={isAdmin ? { label: "Cadastrar concorrentes", href: COMPETITORS_SETTINGS_HREF } : undefined}
           />
         ) : (
           <>

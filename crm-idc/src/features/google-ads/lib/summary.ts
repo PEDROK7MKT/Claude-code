@@ -1,22 +1,29 @@
 /**
  * KPIs da página Google Ads: totais do Google Ads + leads reais do CRM (regra 7:
- * CPL real = custo ÷ leads do Google Ads registrados no CRM). Funções puras.
+ * CPL real = custo do dia ÷ leads do Google Ads registrados no CRM naquele mesmo dia).
+ * Funções puras.
  */
-import { computeLeadKpis, summarizeDailyMetrics, type AdsTotals } from "@/lib/metrics";
+import { computeLeadKpis, googleAdsLeadsOnMetricDays, summarizeDailyMetrics, type AdsTotals } from "@/lib/metrics";
 import { percentChange } from "@/lib/format";
 import type { DailyMetric, Lead } from "@/types/database";
 
 type MetricLike = Pick<DailyMetric, "date" | "impressions" | "clicks" | "cost" | "conversions">;
-type LeadLike = Pick<Lead, "status" | "source" | "campaign">;
+type LeadLike = Pick<Lead, "status" | "source" | "campaign" | "created_at">;
 
 export interface AdsKpis extends AdsTotals {
   /** Leads google_ads criados no período (CRM) */
   crmLeads: number;
   /** Desses, quantos estão agendado/confirmado/compareceu */
   crmScheduled: number;
-  /** Custo ÷ leads reais (regra 7) */
+  /** Leads google_ads criados em dias com métrica lançada (base do CPL real) */
+  leadsOnMetricDays: number;
+  /** Desses, quantos estão agendado/confirmado/compareceu (base do custo por agendamento real) */
+  scheduledOnMetricDays: number;
+  /** Leads google_ads de dias ainda sem lançamento (ex.: hoje) — ficam fora das razões de custo */
+  leadsOutsideMetricDays: number;
+  /** Custo ÷ leads reais dos dias com lançamento (regra 7) */
   realCpl: number | null;
-  /** Custo ÷ agendamentos reais */
+  /** Custo ÷ agendamentos reais dos dias com lançamento */
   realCostPerScheduled: number | null;
   /** Leads do Google Ads sem campanha informada (não entram na tabela por campanha) */
   leadsWithoutCampaign: number;
@@ -24,18 +31,32 @@ export interface AdsKpis extends AdsTotals {
   daysWithData: number;
 }
 
+/**
+ * Totais do período + leads reais do CRM. As razões de custo (CPL real, custo por
+ * agendamento real) só usam os leads criados em dias que têm métrica lançada: o custo
+ * de um dia é cruzado com os leads daquele mesmo dia (regra 7). Assim, os leads de hoje
+ * (o lançamento costuma sair no dia seguinte) não baixam o CPL real artificialmente.
+ * Com filtro de campanha, `metrics` e `leads` já chegam filtrados — o conjunto de dias
+ * passa a ser o da campanha.
+ */
 export function computeAdsKpis(metrics: readonly MetricLike[], leads: readonly LeadLike[]): AdsKpis {
   const totals = summarizeDailyMetrics(metrics);
+  const metricDays = new Set(metrics.map((m) => m.date.slice(0, 10)));
   const adsLeads = leads.filter((lead) => lead.source === "google_ads");
-  const leadKpis = computeLeadKpis(adsLeads, totals.cost);
+  const costedLeads = googleAdsLeadsOnMetricDays(adsLeads, metrics);
+  const all = computeLeadKpis(adsLeads, totals.cost);
+  const costed = computeLeadKpis(costedLeads, totals.cost);
   return {
     ...totals,
-    crmLeads: leadKpis.googleAdsLeads,
-    crmScheduled: leadKpis.googleAdsScheduled,
-    realCpl: leadKpis.costPerGoogleAdsLead,
-    realCostPerScheduled: leadKpis.costPerGoogleAdsScheduled,
+    crmLeads: all.googleAdsLeads,
+    crmScheduled: all.googleAdsScheduled,
+    leadsOnMetricDays: costed.googleAdsLeads,
+    scheduledOnMetricDays: costed.googleAdsScheduled,
+    leadsOutsideMetricDays: all.googleAdsLeads - costed.googleAdsLeads,
+    realCpl: costed.costPerGoogleAdsLead,
+    realCostPerScheduled: costed.costPerGoogleAdsScheduled,
     leadsWithoutCampaign: adsLeads.filter((lead) => !lead.campaign?.trim()).length,
-    daysWithData: new Set(metrics.map((m) => m.date.slice(0, 10))).size,
+    daysWithData: metricDays.size,
   };
 }
 

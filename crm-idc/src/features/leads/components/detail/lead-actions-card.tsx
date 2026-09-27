@@ -99,6 +99,8 @@ function AppointmentEditor({ lead }: { lead: Lead }) {
           </>
         }
         submitLabel="Salvar horário"
+        // sem mudança de status não há registro no histórico: a nota vai para as anotações
+        noteHint="É adicionada às notas do lead."
       />
     </div>
   );

@@ -91,13 +91,15 @@ export async function createUser(input: CreateUserValues): Promise<ActionResult>
       email: values.email,
       password: values.password,
       email_confirm: true,
-      user_metadata: { full_name: values.full_name, role: values.role },
-      // app_metadata só é gravável pela service role: é o papel lido primeiro pelo trigger handle_new_user
+      user_metadata: { full_name: values.full_name },
+      // app_metadata só é gravável pela service role (user_metadata o próprio usuário altera):
+      // é a única fonte de papel para o trigger handle_new_user e para o JWT
       app_metadata: { role: values.role },
     });
     if (error) throw error;
 
-    // O trigger já cria o profile; o upsert garante nome/papel/e-mail mesmo se ele não existir no banco.
+    // O trigger cria o profile INATIVO como dentista (o GoTrue grava app_metadata só depois do
+    // INSERT); este upsert define nome/papel/e-mail e libera a conta (active = true).
     const { error: profileError } = await admin
       .from("profiles")
       .upsert(

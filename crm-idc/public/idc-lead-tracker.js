@@ -197,8 +197,10 @@
 
   /**
    * Envia { name, phone, service?, service_detail?, message?, website? } junto com a
-   * origem guardada. Resolve com { ok, id, duplicate_of }; rejeita com Error
-   * (mensagem em pt-BR do CRM, `status` e `fields` com os erros por campo).
+   * origem guardada. Resolve sempre com { ok: true, id: null, duplicate_of: null }:
+   * no modo público o CRM não informa o id nem se o telefone já estava cadastrado
+   * (proteção LGPD). Rejeita com Error (mensagem em pt-BR do CRM, `status` e
+   * `fields` com os erros por campo).
    * Formulário urlencoded = requisição "simples" (sem preflight CORS); keepalive
    * garante o envio mesmo se a página for trocada pelo WhatsApp logo em seguida.
    */

@@ -41,7 +41,7 @@ export function ReportsContentSkeleton({ className }: { className?: string }) {
 export function ReportsPageSkeleton() {
   return (
     <div className="space-y-6">
-      <PageHeaderSkeleton withActions={false} />
+      <PageHeaderSkeleton withActions={false} announce={false} />
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div className="flex gap-1.5">
           <Skeleton className="size-9" />

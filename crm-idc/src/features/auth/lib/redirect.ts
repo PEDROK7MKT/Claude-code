@@ -30,7 +30,8 @@ const PLACEHOLDER_ORIGIN = "http://idc.invalid";
 
 /**
  * Valida o `?next=` do login: só caminhos relativos do próprio app.
- * Rejeita URLs absolutas (`https://…`), relativas ao protocolo (`//host`, `/\host`),
+ * Rejeita URLs absolutas (`https://…`), relativas ao protocolo (`//host`, `/\host`, e também
+ * as que só viram `//host` após normalizar os segmentos de ponto, como `/.//host`),
  * esquemas (`javascript:`), caracteres de controle e rotas de autenticação.
  * Retorna o caminho normalizado (pathname + search + hash) ou `null`.
  */
@@ -51,6 +52,9 @@ export function getSafeNextPath(value: unknown): string | null {
   if (url.origin !== PLACEHOLDER_ORIGIN) return null;
 
   const pathname = url.pathname;
+  // Confere de novo após normalizar: segmentos de ponto ("/.//evil.com", "/%2e//evil.com",
+  // "/a/..//evil.com") colapsam em "//evil.com", que o navegador trata como outro host.
+  if (pathname.startsWith("//")) return null;
   if (BLOCKED_NEXT_PREFIXES.some((prefix) => pathname === prefix || pathname.startsWith(`${prefix}/`))) return null;
   return `${pathname}${url.search}${url.hash}`;
 }

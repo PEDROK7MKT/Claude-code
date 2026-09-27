@@ -10,8 +10,6 @@ import { shareLabel } from "./summary";
 
 export type ReportChartId = "leads-per-day" | "sources" | "status-funnel" | "ads-vs-crm";
 
-export const REPORT_CHART_IDS: readonly ReportChartId[] = ["leads-per-day", "sources", "status-funnel", "ads-vs-crm"];
-
 /** Atributo que marca o contêiner de cada gráfico na página (captura do SVG para o PDF). */
 export const CHART_DATA_ATTRIBUTE = "data-report-chart";
 

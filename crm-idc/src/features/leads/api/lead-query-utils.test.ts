@@ -1,11 +1,13 @@
 import { describe, expect, it } from "vitest";
 import { PAGE_SIZE, QUERY_KEYS } from "@/lib/constants";
 import { AppError } from "@/lib/errors";
+import { foldText, searchPhoneDigits } from "@/lib/format";
 import { transitionErrorMessage } from "@/lib/lead-status";
 import type { Lead, LeadHistory } from "@/types/database";
 import {
   INVALID_PHONE_MESSAGE,
   applyOptimisticLead,
+  accentInsensitivePattern,
   applyStatusChange,
   buildLeadSearchFilter,
   escapeLikePattern,
@@ -118,27 +120,89 @@ describe("normalizeLeadFilters / leadKeys", () => {
 });
 
 describe("busca no PostgREST", () => {
+  const A = "[aáàâãäAÁÀÂÃÄ]";
+  const E = "[eéèêëEÉÈÊË]";
+  const I = "[iíìîïIÍÌÎÏ]";
+  const O = "[oóòôõöOÓÒÔÕÖ]";
+  const C = "[cçCÇ]";
+  const N = "[nñNÑ]";
+  /** O padrão usa só classes e escapes com a mesma semântica no `~*` do Postgres e no RegExp. */
+  const nameMatches = (word: string, name: string) => new RegExp(accentInsensitivePattern(word), "i").test(name);
+
   it("escapa curingas do LIKE e aspas/barras do PostgREST", () => {
     expect(escapeLikePattern("50%_off\\")).toBe("50\\%\\_off\\\\");
     expect(quotePostgrestValue('a"b\\c')).toBe('"a\\"b\\\\c"');
   });
 
-  it("nome com vírgulas e parênteses fica entre aspas", () => {
-    expect(buildLeadSearchFilter("Silva, Maria (filha)")).toBe('name.ilike."%Silva, Maria (filha)%"');
+  it("dobra acentos e caixa como o kanban", () => {
+    expect(foldText("JOSÉ Antônio Conceição")).toBe("jose antonio conceicao");
   });
 
-  it("% e _ digitados são literais", () => {
-    expect(buildLeadSearchFilter("50%_off")).toBe('name.ilike."%50\\\\%\\\\_off%"');
+  it("padrão do nome ignora acentos e caixa nos dois sentidos", () => {
+    expect(accentInsensitivePattern("joao")).toBe(`j${O}${A}${O}`);
+    expect(accentInsensitivePattern("João")).toBe(`j${O}${A}${O}`);
+    expect(nameMatches("joao", "João da Silva")).toBe(true);
+    expect(nameMatches("JOÃO", "joao")).toBe(true);
+    expect(nameMatches("conceicao", "MARIA DA CONCEIÇÃO")).toBe(true);
+    expect(nameMatches("Muñoz", "Carlos Munoz")).toBe(true);
+    expect(nameMatches("joana", "João")).toBe(false);
+  });
+
+  it("metacaracteres de regex e curingas do LIKE digitados são literais", () => {
+    expect(accentInsensitivePattern("(77)")).toBe("\\(77\\)");
+    expect(accentInsensitivePattern("a.b*")).toBe(`${A}\\.b\\*`);
+    expect(nameMatches("(filha)", "Maria (filha)")).toBe(true);
+    expect(nameMatches("m.ria", "Maria")).toBe(false);
+    expect(nameMatches("50%_off", "50%_off")).toBe(true);
+    expect(nameMatches("50%_off", "500 off")).toBe(false);
+  });
+
+  it("uma palavra → imatch simples, entre aspas", () => {
+    expect(buildLeadSearchFilter("João")).toBe(`name.imatch."j${O}${A}${O}"`);
+    expect(buildLeadSearchFilter("O'Neil")).toBe(`name.imatch."${O}'${N}${E}${I}l"`);
+  });
+
+  it("várias palavras → todas no nome, em qualquer ordem (and)", () => {
+    expect(buildLeadSearchFilter("maria  santos")).toBe(
+      `and(name.imatch."m${A}r${I}${A}",name.imatch."s${A}${N}t${O}s")`,
+    );
+    expect(buildLeadSearchFilter("Silva, Conceição")).toBe(
+      `and(name.imatch."s${I}lv${A},",name.imatch."${C}${O}${N}${C}${E}${I}${C}${A}${O}")`,
+    );
+  });
+
+  it("aspas e barras do termo ficam escapadas para o PostgREST", () => {
+    expect(buildLeadSearchFilter('x"z')).toBe('name.imatch."x\\"z"');
+    expect(buildLeadSearchFilter("x\\z")).toBe('name.imatch."x\\\\\\\\z"');
   });
 
   it("termo com cara de telefone busca também nos dígitos", () => {
-    expect(buildLeadSearchFilter("(77) 98765")).toBe('name.ilike."%(77) 98765%",phone.ilike.%7798765%');
-    expect(buildLeadSearchFilter("+55 77 98765-4321")).toBe('name.ilike."%+55 77 98765-4321%",phone.ilike.%77987654321%');
+    expect(buildLeadSearchFilter("98765")).toBe('name.imatch."98765",phone.ilike.%98765%');
+    expect(buildLeadSearchFilter("(77) 98765")).toBe(
+      'and(name.imatch."\\\\(77\\\\)",name.imatch."98765"),phone.ilike.%7798765%',
+    );
+    expect(buildLeadSearchFilter("+55 77 98765-4321")).toMatch(/,phone\.ilike\.%77987654321%$/);
+  });
+
+  it("telefone completo em qualquer formato aceito vira os dígitos salvos", () => {
+    expect(searchPhoneDigits("(077) 98765-4321")).toBe("77987654321");
+    expect(searchPhoneDigits("0 77 98765-4321")).toBe("77987654321");
+    expect(searchPhoneDigits("+55 77 98765-4321")).toBe("77987654321");
+    expect(searchPhoneDigits("(77) 3611-2233")).toBe("7736112233");
+    expect(buildLeadSearchFilter("(077) 98765-4321")).toMatch(/,phone\.ilike\.%77987654321%$/);
+  });
+
+  it("telefone parcial: só dígitos, sem o 55 do país", () => {
+    expect(searchPhoneDigits("(77) 98765")).toBe("7798765");
+    expect(searchPhoneDigits("4321")).toBe("4321");
+    expect(searchPhoneDigits("98765-43")).toBe("9876543");
+    expect(searchPhoneDigits("7")).toBeNull();
+    expect(searchPhoneDigits("Maria 2")).toBeNull();
   });
 
   it("nomes com números não buscam no telefone; 1 dígito também não", () => {
-    expect(buildLeadSearchFilter("Maria 2")).toBe('name.ilike."%Maria 2%"');
-    expect(buildLeadSearchFilter("7")).toBe('name.ilike."%7%"');
+    expect(buildLeadSearchFilter("Maria 2")).toBe(`and(name.imatch."m${A}r${I}${A}",name.imatch."2")`);
+    expect(buildLeadSearchFilter("7")).toBe('name.imatch."7"');
   });
 
   it("vazio → null", () => {

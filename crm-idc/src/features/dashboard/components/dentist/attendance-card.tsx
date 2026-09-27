@@ -23,13 +23,23 @@ export interface AttendanceCardProps {
   /** "Setembro de 2026" */
   monthLabel: string;
   loading: boolean;
+  /** Offline e sem cópia neste aparelho: "Sem conexão" + "Tentar novamente" no lugar do erro genérico. */
+  offline?: boolean;
   onRetry?: () => void;
   retrying?: boolean;
   className?: string;
 }
 
 /** "Taxa de comparecimento do mês": compareceu / (compareceu + não compareceu), com anel de progresso. */
-export function AttendanceCard({ summary, monthLabel, loading, onRetry, retrying, className }: AttendanceCardProps) {
+export function AttendanceCard({
+  summary,
+  monthLabel,
+  loading,
+  offline = false,
+  onRetry,
+  retrying,
+  className,
+}: AttendanceCardProps) {
   return (
     <Card className={cn("min-w-0 gap-4", className)}>
       <CardHeader>
@@ -53,7 +63,13 @@ export function AttendanceCard({ summary, monthLabel, loading, onRetry, retrying
             </div>
           </div>
         ) : !summary ? (
-          <ErrorState size="sm" onRetry={onRetry} retrying={retrying} />
+          <ErrorState
+            size="sm"
+            title={offline ? "Sem conexão com a internet" : undefined}
+            message={offline ? "As consultas do mês ainda não foram baixadas neste aparelho." : undefined}
+            onRetry={onRetry}
+            retrying={retrying}
+          />
         ) : (
           <AttendanceBody summary={summary} />
         )}

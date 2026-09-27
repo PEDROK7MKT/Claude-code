@@ -74,6 +74,23 @@ export function parseBRNumber(input: string | number | null | undefined): number
 }
 
 // -----------------------------------------------------------------------------
+// Texto (busca e comparação)
+// -----------------------------------------------------------------------------
+
+/** Minúsculas e sem acentos: "JOSÉ Antônio" → "jose antonio" (busca e comparação de nomes). */
+export function foldText(value: string): string {
+  return value.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+}
+
+/** Minúsculo, sem acento, separadores viram "_": "Implante Dentário" → "implante_dentario". */
+export function slugify(value: string): string {
+  return foldText(value)
+    .trim()
+    .replace(/[^a-z0-9]+/g, "_")
+    .replace(/^_+|_+$/g, "");
+}
+
+// -----------------------------------------------------------------------------
 // Telefone (Brasil)
 // -----------------------------------------------------------------------------
 
@@ -94,6 +111,21 @@ export function normalizePhone(input: string | null | undefined): string | null 
   if (digits.length !== 10 && digits.length !== 11) return null;
   if (digits.startsWith("0")) return null;
   return digits;
+}
+
+/**
+ * Dígitos para buscar no telefone quando o termo parece um (null caso contrário) — mesma
+ * regra na lista de leads (/leads) e no kanban. Número completo em qualquer formato aceito
+ * no cadastro ("(077) 98765-4321", "+55 77…", "0 77…") vira os 10/11 dígitos salvos;
+ * parcial só perde o "55" do país.
+ */
+export function searchPhoneDigits(term: string): string | null {
+  if (!/^[\d\s()+.-]+$/.test(term)) return null;
+  const full = normalizePhone(term);
+  if (full) return full;
+  let digits = term.replace(/\D/g, "");
+  if (digits.length >= 12 && digits.startsWith("55")) digits = digits.slice(2);
+  return digits.length >= 2 ? digits : null;
 }
 
 /** "77987654321" → "(77) 98765-4321" · "7736112233" → "(77) 3611-2233" */

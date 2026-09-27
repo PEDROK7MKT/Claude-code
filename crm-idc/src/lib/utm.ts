@@ -3,6 +3,7 @@
  * URL e o formulário é preenchido automaticamente). Função pura, sem dependências de DOM.
  */
 import { CAMPAIGNS } from "@/lib/constants";
+import { slugify } from "@/lib/format";
 import type { LeadSource } from "@/types/database";
 
 export interface ParsedLeadUrl {
@@ -34,17 +35,6 @@ const EMPTY: ParsedLeadUrl = {
   gclid: null,
   source: null,
 };
-
-/** Normaliza para comparação: minúsculo, sem acento, separadores viram "_". */
-function slugify(value: string): string {
-  return value
-    .normalize("NFD")
-    .replace(/[̀-ͯ]/g, "")
-    .toLowerCase()
-    .trim()
-    .replace(/[^a-z0-9]+/g, "_")
-    .replace(/^_+|_+$/g, "");
-}
 
 /**
  * Nome canônico da campanha: se `value` for o slug (utm_campaign) ou o nome de uma

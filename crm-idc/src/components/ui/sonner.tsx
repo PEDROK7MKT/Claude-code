@@ -5,7 +5,7 @@ import { CircleCheckIcon, InfoIcon, Loader2Icon, OctagonXIcon, TriangleAlertIcon
 import { Toaster as Sonner, type ToasterProps } from "sonner";
 
 /** Toaster do sonner no tema claro do CRM (sem next-themes). Montar uma vez no layout raiz. */
-const Toaster = ({ ...props }: ToasterProps) => {
+const Toaster = ({ toastOptions, ...props }: ToasterProps) => {
   return (
     <Sonner
       theme="light"
@@ -13,6 +13,8 @@ const Toaster = ({ ...props }: ToasterProps) => {
       position="top-right"
       closeButton
       containerAriaLabel="Notificações"
+      // o padrão do sonner é "Close toast" (em inglês) no botão X de cada notificação
+      toastOptions={{ closeButtonAriaLabel: "Fechar notificação", ...toastOptions }}
       icons={{
         success: <CircleCheckIcon className="size-4 text-green-600" />,
         info: <InfoIcon className="size-4 text-primary" />,

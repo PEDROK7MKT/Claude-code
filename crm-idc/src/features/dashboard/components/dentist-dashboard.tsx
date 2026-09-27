@@ -8,11 +8,12 @@ import { PageHeader } from "@/components/shared/page-header";
 import { Button } from "@/components/ui/button";
 import { useSession } from "@/features/auth/session-context";
 import { useLeads } from "@/features/leads/api/leads-queries";
+import { useWhatsappMessage } from "@/features/settings/api/app-settings";
 import { formatMonthYear, startOfDateKey } from "@/lib/dates";
 import { firstName } from "@/lib/format";
 import { APPOINTMENT_STATUSES } from "@/lib/metrics";
 import type { LeadsQueryOptions } from "@/features/leads/api/leads-queries";
-import { useNow } from "../hooks/use-now";
+import { useNow } from "@/hooks/use-now";
 import {
   getDentistDashboardRanges,
   groupAppointmentsByDay,
@@ -22,6 +23,7 @@ import {
 } from "../lib/dentist-dashboard";
 import { capitalize, longDateLabel } from "../lib/labels";
 import { formatRangeLabel } from "../lib/period";
+import { queryLoadState } from "../lib/query-state";
 import { AttendanceCard } from "./dentist/attendance-card";
 import { NewLeadsTodayCard } from "./dentist/new-leads-today-card";
 import { WaitingLeadsCard } from "./dentist/waiting-leads-card";
@@ -39,6 +41,8 @@ const WAITING_QUERY: LeadsQueryOptions = { status: ["novo"] };
 export function DentistDashboard() {
   const { profile } = useSession();
   const { now, today } = useNow();
+  // mensagem do WhatsApp personalizada em Configurações (a mesma da lista, do kanban e do detalhe)
+  const whatsappMessage = useWhatsappMessage();
   // Intervalos por dia: as chaves das consultas só mudam à meia-noite
   const ranges = React.useMemo(() => getDentistDashboardRanges(startOfDateKey(today)), [today]);
   const appointmentsQueryOptions = React.useMemo<LeadsQueryOptions>(
@@ -65,6 +69,13 @@ export function DentistDashboard() {
   );
   const waitingLeads = React.useMemo(() => (waiting ? sortWaitingLeads(waiting) : null), [waiting]);
 
+  // Offline sem cópia neste aparelho (ex.: dia novo — as chaves incluem a data) a
+  // consulta fica pausada: cada card mostra "Sem conexão" em vez de esqueleto sem fim
+  const recentState = queryLoadState(recentQuery);
+  const appointmentsState = queryLoadState(appointmentsQuery);
+  const waitingState = queryLoadState(waitingQuery);
+  const hasSavedData = [recentState, appointmentsState, waitingState].some((state) => state !== "offline");
+
   const name = firstName(profile.full_name);
 
   return (
@@ -74,7 +85,7 @@ export function DentistDashboard() {
         description={`${longDateLabel(startOfDateKey(today))} · resumo do dia e da semana`}
         actions={
           <>
-            <LiveIndicator className="order-last md:order-first" />
+            <LiveIndicator hasSavedData={hasSavedData} className="order-last md:order-first" />
             <Button asChild variant="outline" size="sm">
               <Link href="/kanban">
                 <KanbanSquareIcon aria-hidden="true" />
@@ -94,14 +105,16 @@ export function DentistDashboard() {
       <div className="grid gap-4 md:grid-cols-2">
         <NewLeadsTodayCard
           summary={newLeads}
-          loading={recentQuery.isPending}
+          loading={recentState === "loading"}
+          offline={recentState === "offline"}
           onRetry={() => void recentQuery.refetch()}
           retrying={recentQuery.isFetching}
         />
         <AttendanceCard
           summary={attendance}
           monthLabel={capitalize(formatMonthYear(ranges.month.from))}
-          loading={appointmentsQuery.isPending}
+          loading={appointmentsState === "loading"}
+          offline={appointmentsState === "offline"}
           onRetry={() => void appointmentsQuery.refetch()}
           retrying={appointmentsQuery.isFetching}
         />
@@ -113,7 +126,9 @@ export function DentistDashboard() {
           days={weekDays}
           weekLabel={formatRangeLabel(ranges.week)}
           now={now}
-          loading={appointmentsQuery.isPending}
+          whatsappMessage={whatsappMessage}
+          loading={appointmentsState === "loading"}
+          offline={appointmentsState === "offline"}
           onRetry={() => void appointmentsQuery.refetch()}
           retrying={appointmentsQuery.isFetching}
         />
@@ -121,7 +136,9 @@ export function DentistDashboard() {
           className="lg:col-span-2"
           leads={waitingLeads}
           now={now}
-          loading={waitingQuery.isPending}
+          whatsappMessage={whatsappMessage}
+          loading={waitingState === "loading"}
+          offline={waitingState === "offline"}
           onRetry={() => void waitingQuery.refetch()}
           retrying={waitingQuery.isFetching}
         />

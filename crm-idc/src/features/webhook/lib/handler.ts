@@ -5,6 +5,9 @@
  *
  * Ordem: configuração (503) → autenticação/rate limit (401/429) → corpo (413/415/400)
  * → honeypot (modo público) → validação (400) → duplicados (regra 4) → gravação (201).
+ *
+ * Modo público: todo envio aceito (criado, reenvio ou honeypot) recebe a mesma
+ * resposta `200 { ok: true, id: null, duplicate_of: null }` — ver PUBLIC_ACCEPTED.
  */
 import { authenticateWebhookRequest } from "@/features/webhook/lib/auth";
 import { parseBody, readBodyText } from "@/features/webhook/lib/body";
@@ -18,6 +21,21 @@ import { isHoneypotFilled, parseWebhookPayload } from "@/features/webhook/lib/sc
 import type { ExistingLead, WebhookLeadRepository, WebhookResponseBody } from "@/features/webhook/lib/types";
 
 const LOG_PREFIX = "[webhook/lead]";
+
+/**
+ * Resposta única do modo público para envio aceito — lead criado, reenvio em até
+ * 2 min ou honeypot. O `Origin` pode ser forjado (curl), então o modo público não
+ * devolve id, duplicate_of nem repeated: senão qualquer um descobriria se um
+ * telefone já é lead/paciente da clínica (dado de saúde, LGPD).
+ */
+const PUBLIC_ACCEPTED = { ok: true, id: null, duplicate_of: null } as const satisfies WebhookResponseBody;
+
+/** Motivo do segredo inválido, para o log do servidor (nunca vai na resposta). */
+const SECRET_PROBLEM_LOG: Record<NonNullable<WebhookConfig["secretProblem"]>, string> = {
+  missing: "não configurado",
+  too_short: `tem menos de ${MIN_SECRET_LENGTH} caracteres`,
+  placeholder: "ainda é o valor de exemplo do .env.example (gere um com: openssl rand -hex 32)",
+};
 
 export interface WebhookLogger {
   error(message: string, detail?: string): void;
@@ -72,11 +90,7 @@ export function createLeadWebhookHandler(deps: LeadWebhookDeps): LeadWebhookHand
 
     // 1. Configuração: sem segredo o webhook fica desligado (nunca grava sem autenticação)
     if (!config.secret) {
-      logger.error(
-        `${LOG_PREFIX} WEBHOOK_SECRET ${
-          config.secretProblem === "too_short" ? `tem menos de ${MIN_SECRET_LENGTH} caracteres` : "não configurado"
-        }; requisição recusada.`,
-      );
+      logger.error(`${LOG_PREFIX} WEBHOOK_SECRET ${SECRET_PROBLEM_LOG[config.secretProblem ?? "missing"]}; requisição recusada.`);
       return fail(503, WEBHOOK_MESSAGES.notConfigured);
     }
     if (!config.databaseConfigured) {
@@ -117,10 +131,10 @@ export function createLeadWebhookHandler(deps: LeadWebhookDeps): LeadWebhookHand
     const parsed = parseBody(text, request.headers.get("content-type"));
     if (!parsed.ok) return fail(parsed.status, parsed.error);
 
-    // 4. Honeypot: robô recebe "sucesso" e nada é gravado
+    // 4. Honeypot: robô recebe o mesmo "sucesso" de um envio real e nada é gravado
     if (mode === "public" && isHoneypotFilled(parsed.data)) {
       logger.warn(`${LOG_PREFIX} campo isca preenchido; envio descartado.`);
-      return reply(200, { ok: true, id: null, duplicate_of: null });
+      return reply(200, PUBLIC_ACCEPTED);
     }
 
     // 5. Validação e normalização
@@ -142,11 +156,14 @@ export function createLeadWebhookHandler(deps: LeadWebhookDeps): LeadWebhookHand
 
       if (previous && isRecentRepeat(previous, now())) {
         logger.info(`${LOG_PREFIX} reenvio do lead ${previous.id}; nada foi gravado.`);
+        if (mode === "public") return reply(200, PUBLIC_ACCEPTED);
         return reply(200, { ok: true, id: previous.id, duplicate_of: null, repeated: true });
       }
 
       const { id } = await repository.insertLead(linkDuplicate(normalized.lead, previous));
       logger.info(`${LOG_PREFIX} lead ${id} criado${previous ? ` (possível duplicado de ${previous.id})` : ""}.`);
+      // detalhes (id, duplicate_of) só para integrações autenticadas pelo segredo
+      if (mode === "public") return reply(200, PUBLIC_ACCEPTED);
       return reply(201, { ok: true, id, duplicate_of: previous?.id ?? null });
     } catch (error) {
       logger.error(`${LOG_PREFIX} falha ao gravar o lead.`, describeError(error));

@@ -63,7 +63,16 @@ describe("pickGmnComparison", () => {
 
   it("um único registro: sem anterior", () => {
     const only = row("only", "2026-09-01", "2026-09-30");
-    expect(pickGmnComparison([only])).toEqual({ latest: only, previous: null });
+    expect(pickGmnComparison([only])).toEqual({ latest: only, previous: null, latestRated: null });
+  });
+
+  it("latestRated: registro mais recente que tem nota (pula os sem nota)", () => {
+    const sep = row("sep", "2026-09-01", "2026-09-30", { average_rating: null });
+    const aug = row("aug", "2026-08-01", "2026-08-31", { average_rating: 4.8 });
+    const jul = row("jul", "2026-07-01", "2026-07-31", { average_rating: 4.7 });
+    expect(pickGmnComparison([jul, sep, aug])?.latestRated?.id).toBe("aug");
+    const rated = row("rated", "2026-10-01", "2026-10-31", { average_rating: 4.9 });
+    expect(pickGmnComparison([sep, rated, aug])?.latestRated?.id).toBe("rated");
   });
 });
 
@@ -90,7 +99,7 @@ describe("summarizeGmn", () => {
     expect(summary.searchViews).toEqual({ value: 1200, change: 20 });
     expect(summary.websiteClicks.change).toBeCloseTo(-10);
     expect(summary.directionRequests.change).toBe(0);
-    expect(summary.rating).toEqual({ value: 4.9, diff: 0.1 });
+    expect(summary.rating).toEqual({ value: 4.9, diff: 0.1, fromPeriodEnd: null });
     expect(summary.totalReviews).toEqual({ value: 188, diff: 6, newReviews: 6 });
     expect(summary.previousPeriod).toEqual({ start: "2026-08-01", end: "2026-08-30" });
   });
@@ -121,7 +130,7 @@ describe("summarizeGmn", () => {
       previous: row("a", "2026-08-01", "2026-08-30", { website_clicks: 0, average_rating: 4.9 }),
     });
     expect(summary.websiteClicks.change).toBeNull();
-    expect(summary.rating).toEqual({ value: null, diff: null });
+    expect(summary.rating).toEqual({ value: null, diff: null, fromPeriodEnd: null });
   });
 
   it("aceita DECIMAL como string", () => {
@@ -129,6 +138,34 @@ describe("summarizeGmn", () => {
       latest: row("b", "2026-09-01", "2026-09-30", { average_rating: "4.9" as unknown as number }),
       previous: row("a", "2026-08-01", "2026-08-30", { average_rating: "4.7" as unknown as number }),
     });
-    expect(summary.rating).toEqual({ value: 4.9, diff: 0.2 });
+    expect(summary.rating).toEqual({ value: 4.9, diff: 0.2, fromPeriodEnd: null });
+  });
+
+  it("registro mais recente sem nota: usa a última nota informada, sem variação", () => {
+    const sep = row("sep", "2026-09-22", "2026-09-28", { average_rating: null, total_reviews: 190 });
+    const week = row("week", "2026-09-15", "2026-09-21", { average_rating: null, total_reviews: 188 });
+    const aug = row("aug", "2026-08-01", "2026-08-31", { average_rating: 4.8, total_reviews: 180 });
+    const comparison = pickGmnComparison([aug, week, sep]);
+    expect(comparison).not.toBeNull();
+    const summary = summarizeGmn(comparison!);
+    expect(summary.rating).toEqual({ value: 4.8, diff: null, fromPeriodEnd: "2026-08-31" });
+    // avaliações e período continuam do registro mais recente
+    expect(summary.totalReviews.value).toBe(190);
+    expect(summary.periodEnd).toBe("2026-09-28");
+  });
+
+  it("nota do mais recente: sem fromPeriodEnd; variação só com as duas notas", () => {
+    const sep = row("sep", "2026-09-01", "2026-09-30", { average_rating: 4.9 });
+    const aug = row("aug", "2026-08-01", "2026-08-31", { average_rating: null });
+    const jul = row("jul", "2026-07-01", "2026-07-31", { average_rating: 4.6 });
+    const summary = summarizeGmn(pickGmnComparison([jul, aug, sep])!);
+    expect(summary.rating).toEqual({ value: 4.9, diff: null, fromPeriodEnd: null });
+  });
+
+  it("nenhum registro com nota → null", () => {
+    const summary = summarizeGmn(
+      pickGmnComparison([row("sep", "2026-09-01", "2026-09-30"), row("aug", "2026-08-01", "2026-08-31")])!,
+    );
+    expect(summary.rating).toEqual({ value: null, diff: null, fromPeriodEnd: null });
   });
 });

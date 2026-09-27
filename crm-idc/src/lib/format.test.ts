@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import {
   firstName,
+  foldText,
   formatCurrency,
   formatDecimal,
   formatNumber,
@@ -12,6 +13,8 @@ import {
   parseBRNumber,
   percentChange,
   safeDivide,
+  searchPhoneDigits,
+  slugify,
   whatsappUrl,
 } from "@/lib/format";
 
@@ -53,6 +56,35 @@ describe("normalizePhone", () => {
   it("null/undefined → null", () => {
     expect(normalizePhone(null)).toBeNull();
     expect(normalizePhone(undefined)).toBeNull();
+  });
+});
+
+describe("searchPhoneDigits", () => {
+  it("número completo em qualquer formato aceito vira os dígitos salvos", () => {
+    expect(searchPhoneDigits("(077) 98765-4321")).toBe("77987654321");
+    expect(searchPhoneDigits("0 77 98765-4321")).toBe("77987654321");
+    expect(searchPhoneDigits("+55 (77) 98765-4321")).toBe("77987654321");
+  });
+
+  it("parcial: só os dígitos; texto ou 1 dígito → null", () => {
+    expect(searchPhoneDigits("98765")).toBe("98765");
+    expect(searchPhoneDigits("(77) 98765")).toBe("7798765");
+    expect(searchPhoneDigits("7")).toBeNull();
+    expect(searchPhoneDigits("Maria")).toBeNull();
+  });
+});
+
+describe("foldText / slugify", () => {
+  it("foldText tira acentos e caixa", () => {
+    expect(foldText("JOSÉ Antônio Conceição")).toBe("jose antonio conceicao");
+    expect(foldText("  Ação ")).toBe("  acao ");
+  });
+
+  it("slugify troca separadores por _ e apara as pontas", () => {
+    expect(slugify("Implante Dentário")).toBe("implante_dentario");
+    expect(slugify("  --Google Ads!! ")).toBe("google_ads");
+    expect(slugify("IDC | Urgência e Canal")).toBe("idc_urgencia_e_canal");
+    expect(slugify("")).toBe("");
   });
 });
 

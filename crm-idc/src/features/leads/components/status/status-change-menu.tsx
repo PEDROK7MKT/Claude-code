@@ -82,6 +82,8 @@ export function StatusChangeMenu({
               aria-label={`Status: ${STATUS_META[lead.status].label}. Alterar status de ${lead.name}`}
               className={cn(
                 "group/status focus-visible:ring-ring/50 inline-flex items-center gap-1 rounded-full outline-none focus-visible:ring-[3px] disabled:cursor-not-allowed",
+                // área de toque ≥ 24px (WCAG 2.5.8) sem mudar o visual do badge
+                "relative after:absolute after:-inset-x-1 after:-inset-y-2",
                 className,
               )}
             >

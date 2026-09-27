@@ -42,15 +42,6 @@ export function useGmnMetrics(): UseQueryResult<GmnMetric[]> {
   });
 }
 
-/** Registro mais recente do GMN (null se não houver) — compartilha o cache de useGmnMetrics. */
-export function useLatestGmnMetric(): UseQueryResult<GmnMetric | null> {
-  return useQuery({
-    queryKey: gmnMetricsKeys.list(),
-    queryFn: ({ signal }) => fetchGmnMetrics(createClient(), signal),
-    select: (rows) => rows[0] ?? null,
-  });
-}
-
 function invalidateGmn(queryClient: ReturnType<typeof useQueryClient>): Promise<void> {
   return queryClient.invalidateQueries({ queryKey: QUERY_KEYS.gmnMetrics });
 }

@@ -8,9 +8,9 @@ import { EmptyState } from "@/components/shared/empty-state";
 import { ErrorState } from "@/components/shared/error-state";
 import { PageHeader } from "@/components/shared/page-header";
 import { Button } from "@/components/ui/button";
-import { useAppSettings } from "@/features/settings/api/app-settings";
+import { useWhatsappMessage } from "@/features/settings/api/app-settings";
 import { useClock } from "@/features/leads/components/list/use-clock";
-import { clearKanbanFilters } from "@/features/kanban/lib/filters";
+import { clearKanbanFilters, kanbanLeadListHref } from "@/features/kanban/lib/filters";
 import { getErrorMessage } from "@/lib/errors";
 
 import { useKanbanLeads } from "../hooks/use-kanban-leads";
@@ -28,8 +28,7 @@ export function KanbanView() {
   const { filters, replace, update } = useKanbanParams();
   const now = useClock();
   const data = useKanbanLeads(filters.showOldFinals, now);
-  const settings = useAppSettings();
-  const whatsappMessage = settings.data?.whatsapp_message || undefined;
+  const whatsappMessage = useWhatsappMessage();
 
   const clearFilters = React.useCallback(() => replace(clearKanbanFilters(filters)), [replace, filters]);
   const showOldFinals = React.useCallback(() => update({ showOldFinals: true }), [update]);
@@ -82,7 +81,7 @@ export function KanbanView() {
         actions={
           <>
             <Button asChild variant="outline">
-              <Link href="/leads">
+              <Link href={kanbanLeadListHref(filters)}>
                 <ListIcon aria-hidden="true" />
                 Ver lista
               </Link>

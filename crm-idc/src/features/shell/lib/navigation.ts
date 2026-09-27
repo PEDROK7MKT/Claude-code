@@ -77,12 +77,6 @@ export function getBreadcrumbs(pathname: string | null | undefined): BreadcrumbE
   return [{ label: section.label, href: section.href }];
 }
 
-/** Título da página atual (último item da trilha). */
-export function getPageTitle(pathname: string | null | undefined, fallback = "IDC CRM"): string {
-  const crumbs = getBreadcrumbs(pathname);
-  return crumbs[crumbs.length - 1]?.label ?? fallback;
-}
-
 /** Texto do badge de novos leads (limita em "99+"); `null` esconde o badge. */
 export function formatNavBadgeCount(count: number | null | undefined): string | null {
   if (typeof count !== "number" || !Number.isFinite(count) || count <= 0) return null;

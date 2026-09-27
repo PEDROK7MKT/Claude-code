@@ -34,6 +34,27 @@ describe("getSafeNextPath", () => {
     expect(getSafeNextPath("leads")).toBeNull();
   });
 
+  it("rejeita segmentos de ponto que, normalizados, viram //host (open redirect)", () => {
+    expect(getSafeNextPath("/.//evil.com")).toBeNull();
+    expect(getSafeNextPath("/..//evil.com")).toBeNull();
+    expect(getSafeNextPath("/a/..//evil.com")).toBeNull();
+    expect(getSafeNextPath("/%2e//evil.com")).toBeNull();
+    expect(getSafeNextPath("/%2E%2E//evil.com")).toBeNull();
+    expect(getSafeNextPath("/././/evil.com/leads?x=1")).toBeNull();
+    // o resultado nunca é relativo ao protocolo
+    for (const value of ["/.//evil.com", "/leads/.//x", "/leads/..//x"]) {
+      expect(getSafeNextPath(value)?.startsWith("//") ?? false).toBe(false);
+    }
+    // barra dupla no meio do caminho continua no próprio app
+    expect(getSafeNextPath("/leads/.//x")).toBe("/leads//x");
+  });
+
+  it("rejeita rotas de autenticação escondidas por segmentos de ponto", () => {
+    expect(getSafeNextPath("/./login")).toBeNull();
+    expect(getSafeNextPath("/%2e/login")).toBeNull();
+    expect(getSafeNextPath("/leads/../auth/signout")).toBeNull();
+  });
+
   it("rejeita caracteres de controle (tab/quebra de linha viram // no navegador)", () => {
     expect(getSafeNextPath("/\t/evil.com")).toBeNull();
     expect(getSafeNextPath("/\n/evil.com")).toBeNull();
@@ -73,6 +94,7 @@ describe("resolvePostLoginPath", () => {
   it("cai na página inicial do papel quando next é ausente ou inseguro", () => {
     expect(resolvePostLoginPath({ next: null, role: "admin" })).toBe(DASHBOARD_PATH);
     expect(resolvePostLoginPath({ next: "https://evil.com", role: "dentist" })).toBe(DASHBOARD_PATH);
+    expect(resolvePostLoginPath({ next: "/.//evil.com", role: "admin" })).toBe(DASHBOARD_PATH);
     expect(resolvePostLoginPath({ next: "/login", role: null })).toBe(DASHBOARD_PATH);
   });
 });

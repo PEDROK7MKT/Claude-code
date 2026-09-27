@@ -65,7 +65,8 @@ export function ActiveFilterChips({ params, onChange, onClear, className }: Acti
               data-chip-action
               onClick={() => remove(chip, index)}
               aria-label={filterChipRemoveLabel(chip)}
-              className="hover:bg-foreground/10 focus-visible:ring-ring/50 inline-flex size-5 shrink-0 items-center justify-center rounded-full opacity-70 transition-colors outline-none hover:opacity-100 focus-visible:opacity-100 focus-visible:ring-[3px]"
+              // área de toque de 28px (after:) sem aumentar o chip
+              className="hover:bg-foreground/10 focus-visible:ring-ring/50 relative inline-flex size-5 shrink-0 items-center justify-center rounded-full opacity-70 transition-colors outline-none after:absolute after:-inset-1 hover:opacity-100 focus-visible:opacity-100 focus-visible:ring-[3px]"
             >
               <XIcon aria-hidden="true" className="size-3" />
             </button>

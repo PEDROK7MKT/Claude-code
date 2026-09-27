@@ -4,6 +4,7 @@ import {
   buildReviewsHighlight,
   compareLatestPeriods,
   findComparablePrevious,
+  latestRating,
   ratingAxisDomain,
   ratingAxisTicks,
   reviewsAxis,
@@ -144,6 +145,26 @@ describe("buildReviewsHighlight", () => {
     expect(h?.reviewsDelta).toBeNull();
     expect(h?.ratingDelta).toBeNull();
     expect(buildReviewsHighlight([])).toBeNull();
+  });
+});
+
+describe("latestRating", () => {
+  it("nota do registro mais recente que tem nota (em qualquer ordem de entrada)", () => {
+    expect(latestRating([semana, jul, ago])).toEqual({ rating: 4.9, periodEnd: "2026-08-31" });
+    expect(latestRating([jul])).toEqual({ rating: 4.8, periodEnd: "2026-07-31" });
+  });
+
+  it("com data limite, ignora registros que terminam depois dela", () => {
+    expect(latestRating([jul, ago, semana], "2026-08-15")).toEqual({
+      rating: 4.8,
+      periodEnd: "2026-07-31",
+    });
+    expect(latestRating([jul, ago], "2026-06-30")).toBeNull();
+  });
+
+  it("null sem registros ou sem nenhuma nota", () => {
+    expect(latestRating([])).toBeNull();
+    expect(latestRating([row("a", "2026-01-01", "2026-01-31"), semana])).toBeNull();
   });
 });
 

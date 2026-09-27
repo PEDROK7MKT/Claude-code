@@ -52,7 +52,12 @@ export async function updateSession(request: NextRequest) {
   if (isAuthenticated && pathname === "/login") {
     // Já logado: respeita um ?next= seguro (caminho relativo interno), senão vai ao dashboard
     const next = getSafeNextPath(request.nextUrl.searchParams.get("next")) ?? "/dashboard";
-    const url = new URL(next, request.nextUrl.origin);
+    // Só pathname/search/hash do destino: a origem é sempre a da requisição (nunca `//host`)
+    const url = request.nextUrl.clone();
+    const target = new URL(next, "http://idc.invalid");
+    url.pathname = target.pathname;
+    url.search = target.search;
+    url.hash = target.hash;
     const redirect = NextResponse.redirect(url);
     response.cookies.getAll().forEach((c) => redirect.cookies.set(c));
     return redirect;

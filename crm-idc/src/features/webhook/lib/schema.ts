@@ -7,6 +7,7 @@
 import { z } from "zod";
 import { FIELD_LIMITS, FIELD_MESSAGES, HONEYPOT_FIELD } from "@/features/webhook/lib/constants";
 import type { WebhookFieldError } from "@/features/webhook/lib/types";
+import { slugify } from "@/lib/format";
 
 // -----------------------------------------------------------------------------
 // Limpeza de texto
@@ -112,16 +113,6 @@ const FIELD_ALIASES: Readonly<Record<string, WebhookField>> = {
 
 const CANONICAL_FIELDS: ReadonlySet<string> = new Set(WEBHOOK_FIELDS);
 
-function normalizeKey(key: string): string {
-  return key
-    .normalize("NFD")
-    .replace(/[̀-ͯ]/g, "")
-    .trim()
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, "_")
-    .replace(/^_+|_+$/g, "");
-}
-
 /**
  * Traduz apelidos para os nomes da API. O nome oficial sempre vence o apelido;
  * entre apelidos, vence o primeiro com valor. Campos desconhecidos são descartados.
@@ -131,7 +122,7 @@ export function applyFieldAliases(raw: Readonly<Record<string, unknown>>): Parti
   const fromAlias = new Set<WebhookField>();
   for (const [key, value] of Object.entries(raw)) {
     if (value === undefined || value === null || value === "") continue;
-    const normalized = normalizeKey(key);
+    const normalized = slugify(key);
     if (CANONICAL_FIELDS.has(normalized)) {
       const field = normalized as WebhookField;
       if (!(field in out) || fromAlias.has(field)) {

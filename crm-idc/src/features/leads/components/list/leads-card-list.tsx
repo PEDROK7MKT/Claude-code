@@ -22,11 +22,13 @@ export interface LeadsCardListProps {
   now: number;
   freshIds: ReadonlySet<string>;
   busy?: boolean;
+  /** Modelo da mensagem do WhatsApp (Configurações); padrão: DEFAULT_WHATSAPP_MESSAGE */
+  whatsappMessage?: string;
   className?: string;
 }
 
 /** Leads em cards empilhados (< md) — spec §5: "tabelas em mobile viram cards". */
-export function LeadsCardList({ rows, now, freshIds, busy = false, className }: LeadsCardListProps) {
+export function LeadsCardList({ rows, now, freshIds, busy = false, whatsappMessage, className }: LeadsCardListProps) {
   return (
     <ul
       aria-label="Leads"
@@ -35,7 +37,7 @@ export function LeadsCardList({ rows, now, freshIds, busy = false, className }: 
     >
       {rows.map((lead) => (
         <li key={lead.id}>
-          <LeadCard lead={lead} now={now} fresh={freshIds.has(lead.id)} />
+          <LeadCard lead={lead} now={now} fresh={freshIds.has(lead.id)} whatsappMessage={whatsappMessage} />
         </li>
       ))}
     </ul>
@@ -46,7 +48,14 @@ export function LeadsCardList({ rows, now, freshIds, busy = false, className }: 
  * Card inteiro clicável pelo link do nome (camada `after:` cobrindo o card);
  * status, telefone e WhatsApp ficam acima dela (`relative z-10`) com ação própria.
  */
-function LeadCard({ lead, now, fresh }: { lead: Lead; now: number; fresh: boolean }) {
+interface LeadCardProps {
+  lead: Lead;
+  now: number;
+  fresh: boolean;
+  whatsappMessage?: string;
+}
+
+function LeadCard({ lead, now, fresh, whatsappMessage }: LeadCardProps) {
   const nameId = React.useId();
   const href = leadDetailHref(lead.id);
 
@@ -92,10 +101,11 @@ function LeadCard({ lead, now, fresh }: { lead: Lead; now: number; fresh: boolea
       </div>
 
       <div className="mt-3 flex items-center justify-between gap-3">
-        <PhoneLink phone={lead.phone} name={lead.name} className="relative z-10 text-sm" />
+        <PhoneLink phone={lead.phone} name={lead.name} message={whatsappMessage} className="relative z-10 text-sm" />
         <WhatsAppButton
           phone={lead.phone}
           name={lead.name}
+          message={whatsappMessage}
           size="sm"
           variant="outline"
           iconOnly

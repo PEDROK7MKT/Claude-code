@@ -12,15 +12,6 @@ export interface SessionContext {
   profile: Profile;
 }
 
-/**
- * Usuário logado + profile (deduplicado por requisição).
- * Retorna null se não houver sessão, profile, ou se o usuário estiver desativado.
- */
-export const getSession = cache(async (): Promise<SessionContext | null> => {
-  const state = await getSessionState();
-  return state.status === "ok" ? state.session : null;
-});
-
 type SessionState =
   | { status: "ok"; session: SessionContext }
   | { status: "anonymous" }
@@ -48,13 +39,16 @@ const getSessionState = cache(async (): Promise<SessionState> => {
 
 /**
  * Exige login (Server Components / Actions).
- * - Sem sessão → /login
+ * - Sem sessão (ou sessão revogada no Auth) → /auth/signout → /login
  * - Sessão válida mas usuário desativado/sem profile → /auth/signout?reason=inactive
- *   (encerra a sessão antes de voltar ao login, evitando loop login ↔ dashboard)
+ * Passa sempre pela rota que apaga os cookies sb-*-auth-token: se o Auth revogou a sessão
+ * (usuário excluído, senha redefinida pelo admin, timeout) mas o JWT ainda não expirou, o
+ * proxy (getClaims, validação local) continuaria vendo a sessão em /login e mandaria de volta
+ * ao dashboard — loop /login ↔ /dashboard até o JWT expirar. Sem cookies é só um salto a mais.
  */
 export async function requireSession(): Promise<SessionContext> {
   const state = await getSessionState();
-  if (state.status === "anonymous") redirect("/login");
+  if (state.status === "anonymous") redirect("/auth/signout");
   if (state.status === "inactive") redirect("/auth/signout?reason=inactive");
   return state.session;
 }

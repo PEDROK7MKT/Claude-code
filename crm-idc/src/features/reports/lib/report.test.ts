@@ -122,7 +122,9 @@ describe("buildMonthReport — Google Ads", () => {
     expect(report.current.ads?.clicks).toBe(80);
     expect(report.current.adsDays).toBe(2);
     expect(report.current.kpis.costPerLead).toBe(50);
-    expect(report.current.kpis.costPerGoogleAdsLead).toBe(50);
+    // regra 7: só os leads google_ads dos dias lançados (10 e 11/03) entram no CPL real
+    expect(report.current.kpis.googleAdsLeads).toBe(4);
+    expect(report.current.kpis.costPerGoogleAdsLead).toBe(100);
 
     const comparison = report.adsComparison ?? [];
     expect(comparison).toHaveLength(31);
@@ -131,6 +133,36 @@ describe("buildMonthReport — Google Ads", () => {
     // dia sem lançamento: conversões null (lacuna), leads do CRM contados
     const day12 = comparison.find((p) => p.date === "2026-03-12");
     expect(day12).toMatchObject({ conversions: null, crmLeads: 1 });
+  });
+});
+
+describe("buildMonthReport — CPL real Google Ads (regra 7)", () => {
+  it("mês em andamento: leads de anúncio de hoje (sem lançamento) não baixam o CPL real", () => {
+    const leads = [
+      makeLead({ created_at: "2026-09-20T15:00:00.000Z", status: "agendado" }),
+      makeLead({ created_at: "2026-09-21T15:00:00.000Z" }),
+      // hoje (27/09): custo ainda não lançado
+      makeLead({ created_at: "2026-09-27T13:00:00.000Z", status: "agendado" }),
+      makeLead({ created_at: "2026-09-27T14:00:00.000Z" }),
+      makeLead({ created_at: "2026-09-27T14:30:00.000Z", source: "gmn" }),
+    ];
+    const metrics = [makeMetric({ date: "2026-09-20", cost: 120 }), makeMetric({ date: "2026-09-21", cost: 80 })];
+    const report = buildMonthReport({ monthKey: "2026-09", today: "2026-09-27", leads, metrics });
+    const k = report.current.kpis;
+    expect(k.googleAdsLeads).toBe(4);
+    expect(k.costPerGoogleAdsLead).toBe(100); // 200 / 2, não 200 / 4
+    expect(k.costPerGoogleAdsScheduled).toBe(200); // 1 agendamento nos dias lançados
+    // o CPL geral (spec) segue investimento ÷ todos os leads do mês
+    expect(k.costPerLead).toBe(40);
+  });
+
+  it("anúncios só em dias sem lançamento: CPL real indefinido", () => {
+    const leads = [makeLead({ created_at: "2026-09-27T13:00:00.000Z" })];
+    const metrics = [makeMetric({ date: "2026-09-20", cost: 50 })];
+    const report = buildMonthReport({ monthKey: "2026-09", today: "2026-09-27", leads, metrics });
+    expect(report.current.kpis.costPerGoogleAdsLead).toBeNull();
+    expect(report.current.kpis.costPerGoogleAdsScheduled).toBeNull();
+    expect(report.current.kpis.costPerLead).toBe(50);
   });
 });
 
@@ -201,6 +233,26 @@ describe("gmnSnapshotForMonth", () => {
       periodStart: "2026-03-16",
       periodEnd: "2026-03-31",
     });
+  });
+
+  it("último lançamento do mês sem nota: usa a nota mais recente informada até o fim do mês", () => {
+    const rows = [
+      makeGmn({ period_start: "2026-04-01", period_end: "2026-04-07", average_rating: 3.1 }),
+      makeGmn({ period_start: "2026-03-25", period_end: "2026-03-31", total_reviews: 190, average_rating: null }),
+      makeGmn({ period_start: "2026-03-18", period_end: "2026-03-24", total_reviews: 188, average_rating: 4.7 }),
+      makeGmn({ period_start: "2026-03-11", period_end: "2026-03-17", total_reviews: 186, average_rating: 4.6 }),
+    ];
+    expect(gmnSnapshotForMonth(rows, range)).toMatchObject({
+      rating: 4.7,
+      totalReviews: 190,
+      periodStart: "2026-03-25",
+      periodEnd: "2026-03-31",
+    });
+  });
+
+  it("nenhum registro até o mês com nota: rating null", () => {
+    const rows = [makeGmn({ period_start: "2026-03-01", period_end: "2026-03-31", average_rating: null })];
+    expect(gmnSnapshotForMonth(rows, range)).toMatchObject({ rating: null, totalReviews: 188 });
   });
 
   it("aceita nota como string e registro de meses anteriores", () => {

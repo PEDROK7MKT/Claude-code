@@ -44,6 +44,23 @@ export function sortByPeriodDesc<T extends Pick<GmnRow, "period_start" | "period
   });
 }
 
+/**
+ * Nota mais recente informada: a do primeiro registro (por sortByPeriodDesc) com nota — o
+ * último lançamento pode vir sem nota. Com `untilKey` (yyyy-MM-dd), ignora os registros que
+ * terminam depois dessa data (ex.: fim do mês do relatório). `null` se nenhum tiver nota.
+ */
+export function latestRating(
+  rows: ReadonlyArray<Pick<GmnRow, "period_start" | "period_end" | "average_rating">>,
+  untilKey?: string,
+): { rating: number; periodEnd: string } | null {
+  for (const row of sortByPeriodDesc(rows)) {
+    if (untilKey && row.period_end.slice(0, 10) > untilKey) continue;
+    const rating = toRating(row.average_rating);
+    if (rating != null) return { rating, periodEnd: row.period_end };
+  }
+  return null;
+}
+
 // -----------------------------------------------------------------------------
 // Série dos gráficos de evolução
 // -----------------------------------------------------------------------------
@@ -216,20 +233,20 @@ export function buildReviewsHighlight<T extends GmnRow>(rows: readonly T[]): Rev
   const [latest, previous = null] = sorted;
   if (!latest) return null;
 
-  const withRating = sorted.find((row) => toRating(row.average_rating) != null) ?? null;
-  const rating = withRating ? toRating(withRating.average_rating) : null;
-  const latestRating = toRating(latest.average_rating);
+  const rated = latestRating(sorted);
+  const currentRating = toRating(latest.average_rating);
   const previousRating = previous ? toRating(previous.average_rating) : null;
 
   return {
     latest,
     previous,
-    rating,
-    ratingFromPeriodEnd: withRating && withRating !== latest ? withRating.period_end : null,
+    rating: rated?.rating ?? null,
+    // o registro mais recente não tem nota: mostra a do último período que tem
+    ratingFromPeriodEnd: rated && currentRating == null ? rated.periodEnd : null,
     totalReviews: latest.total_reviews,
     reviewsDelta: previous ? latest.total_reviews - previous.total_reviews : null,
     ratingDelta:
-      latestRating != null && previousRating != null ? Math.round((latestRating - previousRating) * 10) / 10 : null,
+      currentRating != null && previousRating != null ? Math.round((currentRating - previousRating) * 10) / 10 : null,
   };
 }
 

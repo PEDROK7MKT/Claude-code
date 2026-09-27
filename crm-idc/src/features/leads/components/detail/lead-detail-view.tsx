@@ -7,7 +7,8 @@ import { ArrowLeftIcon, InfoIcon } from "lucide-react";
 import { ErrorState } from "@/components/shared/error-state";
 import { Button } from "@/components/ui/button";
 import { useLead } from "@/features/leads/api/leads-queries";
-import { useAppSettings, useProfiles } from "@/features/settings/api/app-settings";
+import { useLeadListReturnHref } from "@/features/leads/components/list/list-return-href";
+import { useProfiles, useWhatsappMessage } from "@/features/settings/api/app-settings";
 import { getErrorMessage } from "@/lib/errors";
 import type { Lead } from "@/types/database";
 
@@ -21,8 +22,6 @@ import { LeadMobileActionBar } from "./lead-mobile-action-bar";
 import { LeadNotFoundState } from "./lead-not-found-state";
 import { LeadTrackingCard } from "./lead-tracking-card";
 import { LinkedLeadsCard } from "./linked-leads-card";
-
-const LEADS_PATH = "/leads";
 
 /**
  * /leads/[id] — detalhe e edição do lead (spec §4.3). Carrega pelo cache (lista,
@@ -49,15 +48,16 @@ export function LeadDetailView({ leadId }: { leadId: string }) {
 }
 
 function LeadDetail({ lead }: { lead: Lead }) {
-  const settings = useAppSettings();
   const profiles = useProfiles();
-  const whatsappMessage = settings.data?.whatsapp_message || undefined;
+  const whatsappMessage = useWhatsappMessage();
+  // volta para a lista como estava (busca, filtros, página) nesta aba
+  const backHref = useLeadListReturnHref();
 
   return (
     // pb extra no celular: a barra de ações fixa não cobre o fim da página
     <div className="space-y-6 pb-24 md:pb-0">
       <Button asChild variant="ghost" size="sm" className="text-muted-foreground -ml-2 w-fit">
-        <Link href={LEADS_PATH}>
+        <Link href={backHref}>
           <ArrowLeftIcon aria-hidden="true" />
           Voltar para leads
         </Link>

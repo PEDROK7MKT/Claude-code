@@ -8,20 +8,9 @@ import { FIELD_LIMITS, FIELD_MESSAGES, UNNAMED_LEAD } from "@/features/webhook/l
 import { cleanText, truncateText, type WebhookLeadPayload } from "@/features/webhook/lib/schema";
 import type { WebhookAuthMode, WebhookFieldError, WebhookLeadInsert } from "@/features/webhook/lib/types";
 import { LEAD_SOURCES, SERVICES } from "@/lib/constants";
-import { normalizePhone } from "@/lib/format";
+import { normalizePhone, slugify } from "@/lib/format";
 import { canonicalCampaignName, parseLeadUrl, type ParsedLeadUrl } from "@/lib/utm";
 import type { LeadSource, ServiceType } from "@/types/database";
-
-/** Minúsculo, sem acento, separadores viram "_" ("Implante Dentário" → "implante_dentario"). */
-export function slugify(value: string): string {
-  return value
-    .normalize("NFD")
-    .replace(/[̀-ͯ]/g, "")
-    .toLowerCase()
-    .trim()
-    .replace(/[^a-z0-9]+/g, "_")
-    .replace(/^_+|_+$/g, "");
-}
 
 /** Mapa slug → valor, com o próprio valor e o slug do rótulo de cada opção. */
 function buildLookup<T extends string>(

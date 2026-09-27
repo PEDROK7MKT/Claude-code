@@ -76,6 +76,8 @@ function post(body: unknown, headers: Record<string, string> = {}): Request {
 const withSecret = { authorization: `Bearer ${SECRET}` };
 const fromSite = { origin: SITE, "x-forwarded-for": "200.1.2.3" };
 const LEAD = { name: "Maria Silva", phone: "(77) 98765-4321" };
+/** Corpo único do modo público: nunca revela id nem se o telefone já existe */
+const PUBLIC_OK = { ok: true, id: null, duplicate_of: null };
 
 beforeEach(() => {
   repo = new FakeRepository();
@@ -99,6 +101,14 @@ describe("configuração", () => {
     const res = await handler().handlePost(post(LEAD, withSecret));
     expect(res.status).toBe(503);
     expect(log.lines[0]).toContain("menos de 16 caracteres");
+  });
+
+  it("segredo de exemplo do .env.example → 503", async () => {
+    config = { ...CONFIG, secret: null, secretProblem: "placeholder" };
+    const res = await handler().handlePost(post(LEAD, { authorization: "Bearer troque-por-um-valor-aleatorio-longo" }));
+    expect(res.status).toBe(503);
+    expect(getRepository).not.toHaveBeenCalled();
+    expect(log.lines[0]).toContain("valor de exemplo");
   });
 
   it("sem service role → 503", async () => {
@@ -126,6 +136,12 @@ describe("autenticação", () => {
   it("segredo via x-webhook-secret também vale", async () => {
     const res = await handler().handlePost(post(LEAD, { "x-webhook-secret": SECRET }));
     expect(res.status).toBe(201);
+  });
+
+  it("segredo válido vindo do site usa o modo integração (resposta detalhada)", async () => {
+    const res = await handler().handlePost(post(LEAD, { ...fromSite, "x-webhook-secret": SECRET }));
+    expect(res.status).toBe(201);
+    expect(await res.json()).toEqual({ ok: true, id: "novo-1", duplicate_of: null });
   });
 
   it("origem não autorizada não vira modo público", async () => {
@@ -193,10 +209,40 @@ describe("modo público (navegador do site, sem segredo)", () => {
         "content-type": "application/x-www-form-urlencoded",
       }),
     );
-    expect(res.status).toBe(201);
+    expect(res.status).toBe(200);
+    expect(await res.json()).toEqual(PUBLIC_OK);
     expect(res.headers.get("access-control-allow-origin")).toBe(SITE);
     expect(res.headers.get("vary")).toBe("Origin");
     expect(repo.inserted[0]).toMatchObject({ name: "João", source: "google_ads", service: "implante" });
+  });
+
+  it("telefone já cadastrado: grava vinculado, mas a resposta não revela o lead existente", async () => {
+    repo.leads = [
+      { id: "77987654321-antigo", name: "Maria", status: "perdido", created_at: "2025-12-01T12:00:00Z", updated_at: "2025-12-01T12:00:00Z" },
+    ];
+    const res = await handler().handlePost(post(LEAD, fromSite));
+    expect(res.status).toBe(200);
+    const text = await res.text();
+    expect(JSON.parse(text)).toEqual(PUBLIC_OK);
+    expect(text).not.toContain("antigo");
+    expect(repo.inserted[0].parent_lead_id).toBe("77987654321-antigo");
+  });
+
+  it("criado, reenvio em até 2 min e honeypot recebem exatamente a mesma resposta", async () => {
+    const h = handler();
+    const created = await h.handlePost(post(LEAD, fromSite));
+    repo.leads = [
+      { id: "77987654321-agora", name: "Maria Silva", status: "novo", created_at: "2026-03-10T14:59:30Z", updated_at: "2026-03-10T14:59:30Z" },
+    ];
+    const repeated = await h.handlePost(post(LEAD, fromSite));
+    const honeypot = await h.handlePost(post({ ...LEAD, website: "https://spam.example" }, fromSite));
+
+    const snapshot = async (res: Response) => ({ status: res.status, body: await res.text() });
+    const [a, b, c] = await Promise.all([snapshot(created), snapshot(repeated), snapshot(honeypot)]);
+    expect(a).toEqual({ status: 200, body: JSON.stringify(PUBLIC_OK) });
+    expect(b).toEqual(a);
+    expect(c).toEqual(a);
+    expect(repo.inserted).toHaveLength(1);
   });
 
   it("exige nome e telefone", async () => {
@@ -212,7 +258,7 @@ describe("modo público (navegador do site, sem segredo)", () => {
   it("honeypot preenchido: responde sucesso sem gravar", async () => {
     const res = await handler().handlePost(post({ ...LEAD, website: "https://spam.example" }, fromSite));
     expect(res.status).toBe(200);
-    expect(await res.json()).toEqual({ ok: true, id: null, duplicate_of: null });
+    expect(await res.json()).toEqual(PUBLIC_OK);
     expect(getRepository).not.toHaveBeenCalled();
     expect(log.lines.some((line) => line.startsWith("warn"))).toBe(true);
   });
@@ -221,7 +267,7 @@ describe("modo público (navegador do site, sem segredo)", () => {
     const h = handler();
     for (let i = 0; i < 10; i++) {
       const res = await h.handlePost(post({ ...LEAD, phone: `779876543${String(i).padStart(2, "0")}` }, fromSite));
-      expect(res.status).toBe(201);
+      expect(res.status).toBe(200);
     }
     const blocked = await h.handlePost(post(LEAD, fromSite));
     expect(blocked.status).toBe(429);
@@ -231,7 +277,7 @@ describe("modo público (navegador do site, sem segredo)", () => {
 
     // outro IP segue livre
     const other = await h.handlePost(post(LEAD, { ...fromSite, "x-forwarded-for": "200.9.9.9" }));
-    expect(other.status).toBe(201);
+    expect(other.status).toBe(200);
   });
 
   it("tentativas com segredo errado também contam no rate limit", async () => {
@@ -295,9 +341,19 @@ describe("duplicados (regra 4)", () => {
     repo.leads = [
       { id: `${phone}-agora`, name: "Maria Silva", status: "novo", created_at: "2026-03-10T14:59:30Z", updated_at: "2026-03-10T14:59:30Z" },
     ];
-    const res = await handler().handlePost(post(LEAD, fromSite));
+    const res = await handler().handlePost(post(LEAD, withSecret));
     expect(res.status).toBe(200);
     expect(await res.json()).toEqual({ ok: true, id: `${phone}-agora`, duplicate_of: null, repeated: true });
+    expect(repo.inserted).toHaveLength(0);
+  });
+
+  it("reenvio pelo modo público: nada é gravado e a resposta é a genérica", async () => {
+    repo.leads = [
+      { id: `${phone}-agora`, name: "Maria Silva", status: "novo", created_at: "2026-03-10T14:59:30Z", updated_at: "2026-03-10T14:59:30Z" },
+    ];
+    const res = await handler().handlePost(post(LEAD, fromSite));
+    expect(res.status).toBe(200);
+    expect(await res.json()).toEqual(PUBLIC_OK);
     expect(repo.inserted).toHaveLength(0);
   });
 

@@ -292,6 +292,16 @@ export function buildLeadListHref(params: Partial<LeadListParams> = {}, pathname
 }
 
 /**
+ * "Voltar para leads": o último endereço da lista guardado (filtros, ordem e página),
+ * relido como estado da lista — só volta para /leads, nunca para outro caminho.
+ * Ausente ou inválido → "/leads".
+ */
+export function leadListReturnHref(stored: string | null | undefined): string {
+  const match = typeof stored === "string" ? /^\/leads(?:\?(.*))?$/.exec(stored) : null;
+  return buildLeadListHref(match ? parseLeadListParams(match[1] ?? "") : {});
+}
+
+/**
  * Aplica mudanças ao estado. Qualquer mudança de busca, filtro ou ordenação
  * volta para a página 1 (a menos que o próprio patch defina a página).
  */

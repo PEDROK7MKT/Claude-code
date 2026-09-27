@@ -1,13 +1,14 @@
 import { describe, expect, it } from "vitest";
 
+import { foldText } from "@/lib/format";
 import {
   EMPTY_KANBAN_FILTERS,
   clearKanbanFilters,
   countActiveFilters,
   filterKanbanLeads,
   finalsCutoffIso,
-  foldText,
   hasActiveFilters,
+  kanbanLeadListHref,
   matchesKanbanFilters,
   matchesSearch,
   normalizeKanbanSearch,
@@ -82,6 +83,30 @@ describe("filtros ativos", () => {
   });
 });
 
+describe("kanbanLeadListHref", () => {
+  it("sem filtros → /leads", () => {
+    expect(kanbanLeadListHref(EMPTY_KANBAN_FILTERS)).toBe("/leads");
+    expect(kanbanLeadListHref({ ...EMPTY_KANBAN_FILTERS, showOldFinals: true })).toBe("/leads");
+  });
+
+  it("leva busca, fonte e serviço para a lista (mesmos parâmetros)", () => {
+    const href = kanbanLeadListHref({
+      q: "maria",
+      source: ["gmn", "google_ads"],
+      service: ["implante"],
+      showOldFinals: true,
+    });
+    expect(href).toBe("/leads?q=maria&fonte=google_ads,gmn&servico=implante");
+    // O kanban lê o mesmo endereço de volta com os mesmos filtros.
+    expect(parseKanbanParams(href.slice(href.indexOf("?")))).toEqual({
+      q: "maria",
+      source: ["google_ads", "gmn"],
+      service: ["implante"],
+      showOldFinals: false,
+    });
+  });
+});
+
 describe("matchesSearch", () => {
   const lead = makeLead({ name: "José Antônio Souza", phone: "77987654321" });
 
@@ -98,6 +123,12 @@ describe("matchesSearch", () => {
     expect(matchesSearch(lead, "+55 77 98765-4321")).toBe(true);
     expect(matchesSearch(lead, "4321")).toBe(true);
     expect(matchesSearch(lead, "1111")).toBe(false);
+  });
+
+  it("telefone completo com 0 ou prefixo de operadora acha o número salvo (igual à lista /leads)", () => {
+    expect(matchesSearch(lead, "(077) 98765-4321")).toBe(true);
+    expect(matchesSearch(lead, "0 77 98765-4321")).toBe(true);
+    expect(matchesSearch(lead, "(077) 91111-1111")).toBe(false);
   });
 });
 

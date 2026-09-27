@@ -23,6 +23,12 @@ export interface GmnComparison<T extends GmnRow = GmnRow> {
   latest: T;
   /** Registro mais recente que termina antes do início do mais recente (sem sobreposição) */
   previous: T | null;
+  /**
+   * Registro mais recente com nota média (o próprio `latest` quando ele tem nota;
+   * null se nenhum tem). A nota é opcional no formulário do GMN, então a "nota
+   * média atual" é a última informada — como na página /gmn. Ausente = `latest`.
+   */
+  latestRated?: T | null;
 }
 
 function byPeriodDesc(a: GmnRow, b: GmnRow): number {
@@ -37,7 +43,8 @@ export function pickGmnComparison<T extends GmnRow>(rows: readonly T[]): GmnComp
   const sorted = [...rows].sort(byPeriodDesc);
   const latest = sorted[0];
   const previous = sorted.slice(1).find((row) => row.period_end < latest.period_start) ?? null;
-  return { latest, previous };
+  const latestRated = sorted.find((row) => toNumber(row.average_rating) !== null) ?? null;
+  return { latest, previous, latestRated };
 }
 
 const DAY_MS = 86_400_000;
@@ -73,7 +80,14 @@ export interface GmnSummary {
    * visualizações/cliques/rotas comparam a média diária, não o total.
    */
   normalized: boolean;
-  rating: { value: number | null; /** diferença absoluta (0,1 = +0,1 estrela) */ diff: number | null };
+  rating: {
+    /** Última nota informada (pode vir de um período anterior ao mais recente) */
+    value: number | null;
+    /** Diferença absoluta (0,1 = +0,1 estrela): só quando o mais recente e o anterior têm nota */
+    diff: number | null;
+    /** Fim do período de onde veio a nota quando não é o mais recente (null = do mais recente) */
+    fromPeriodEnd: string | null;
+  };
   totalReviews: { value: number; diff: number | null; newReviews: number | null };
   searchViews: GmnFlowStat;
   websiteClicks: GmnFlowStat;
@@ -98,7 +112,9 @@ export function summarizeGmn(comparison: GmnComparison): GmnSummary {
     return { value, change };
   };
 
-  const rating = toNumber(latest.average_rating);
+  const latestRated = comparison.latestRated === undefined ? latest : comparison.latestRated;
+  const rating = latestRated ? toNumber(latestRated.average_rating) : null;
+  const latestRating = toNumber(latest.average_rating);
   const previousRating = previous ? toNumber(previous.average_rating) : null;
   const reviews = toNumber(latest.total_reviews) ?? 0;
   const previousReviews = previous ? toNumber(previous.total_reviews) : null;
@@ -110,7 +126,8 @@ export function summarizeGmn(comparison: GmnComparison): GmnSummary {
     normalized,
     rating: {
       value: rating,
-      diff: rating !== null && previousRating !== null ? round1(rating - previousRating) : null,
+      diff: latestRating !== null && previousRating !== null ? round1(latestRating - previousRating) : null,
+      fromPeriodEnd: rating !== null && latestRated && latestRated !== latest ? latestRated.period_end : null,
     },
     totalReviews: {
       value: reviews,

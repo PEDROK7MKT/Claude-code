@@ -108,8 +108,7 @@ export function KpiCardSkeleton({ className }: { className?: string }) {
   );
 }
 
-/** Título + descrição + ações, no mesmo layout do PageHeader. */
-export function PageHeaderSkeleton({ withActions = true, className }: { withActions?: boolean; className?: string }) {
+function PageHeaderBlock({ withActions, className }: { withActions: boolean; className?: string }) {
   return (
     <div className={cn("flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between", className)}>
       <div className="space-y-2">
@@ -123,6 +122,27 @@ export function PageHeaderSkeleton({ withActions = true, className }: { withActi
         </div>
       ) : null}
     </div>
+  );
+}
+
+export interface PageHeaderSkeletonProps {
+  withActions?: boolean;
+  /**
+   * Região de status própria ("Carregando…" para leitores de tela), como os demais esqueletos
+   * (padrão true). Use `false` quando ele estiver dentro de outra região de status ou ao lado de
+   * esqueletos que já anunciam o carregamento — evita anúncios repetidos.
+   */
+  announce?: boolean;
+  className?: string;
+}
+
+/** Título + descrição + ações, no mesmo layout do PageHeader. */
+export function PageHeaderSkeleton({ withActions = true, announce = true, className }: PageHeaderSkeletonProps) {
+  if (!announce) return <PageHeaderBlock withActions={withActions} className={className} />;
+  return (
+    <LoadingRegion className={className}>
+      <PageHeaderBlock withActions={withActions} />
+    </LoadingRegion>
   );
 }
 
@@ -214,7 +234,7 @@ export interface PageSkeletonProps extends React.ComponentProps<"div"> {
 export function PageSkeleton({ kpis = 4, charts = 2, tableRows = 0, className, ...props }: PageSkeletonProps) {
   return (
     <LoadingRegion className={cn("space-y-6", className)} label="Carregando página…" {...props}>
-      <PageHeaderSkeleton />
+      <PageHeaderBlock withActions />
       {kpis > 0 ? (
         <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
           {Array.from({ length: kpis }, (_, i) => (

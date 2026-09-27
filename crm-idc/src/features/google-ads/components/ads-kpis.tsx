@@ -36,6 +36,17 @@ function plural(n: number, one: string, many: string): string {
   return `${formatNumber(n)} ${n === 1 ? one : many}`;
 }
 
+/** "Fonte Google Ads · 2 sem campanha · 3 em dias sem lançamento" */
+function leadsHint(kpis: AdsKpis): string {
+  const parts = ["Fonte Google Ads"];
+  if (kpis.leadsWithoutCampaign > 0) parts.push(plural(kpis.leadsWithoutCampaign, "sem campanha", "sem campanha"));
+  // regra 7: leads de dias ainda sem lançamento (ex.: hoje) não entram no CPL real
+  if (kpis.leadsOutsideMetricDays > 0) {
+    parts.push(`${formatNumber(kpis.leadsOutsideMetricDays)} em dias sem lançamento`);
+  }
+  return parts.join(" · ");
+}
+
 /** KPIs do período: CPL real em destaque (regra 7) + desempenho do Google Ads. */
 export function AdsKpis({ kpis, changes, leadsLoading, leadsError }: AdsKpisProps) {
   const leadValue = (value: React.ReactNode) => (leadsError ? "—" : value);
@@ -51,7 +62,7 @@ export function AdsKpis({ kpis, changes, leadsLoading, leadsError }: AdsKpisProp
           title="CPL real"
           icon={TargetIcon}
           value={leadValue(formatCurrency(kpis.realCpl))}
-          hint="Investimento ÷ leads reais no CRM"
+          hint="Investimento ÷ leads dos dias com lançamento"
           change={leadsError ? undefined : changes.realCpl}
           invertChange
           loading={leadsLoading}
@@ -60,7 +71,13 @@ export function AdsKpis({ kpis, changes, leadsLoading, leadsError }: AdsKpisProp
           title="Custo por agendamento real"
           icon={CalendarCheckIcon}
           value={leadValue(formatCurrency(kpis.realCostPerScheduled))}
-          hint={leadsError ? "Leads indisponíveis" : plural(kpis.crmScheduled, "agendamento", "agendamentos")}
+          hint={
+            leadsError
+              ? "Leads indisponíveis"
+              : kpis.leadsOutsideMetricDays > 0
+                ? `${plural(kpis.scheduledOnMetricDays, "agendamento", "agendamentos")} em dias com lançamento`
+                : plural(kpis.scheduledOnMetricDays, "agendamento", "agendamentos")
+          }
           change={leadsError ? undefined : changes.realCostPerScheduled}
           invertChange
           loading={leadsLoading}
@@ -69,13 +86,7 @@ export function AdsKpis({ kpis, changes, leadsLoading, leadsError }: AdsKpisProp
           title="Leads reais no CRM"
           icon={UsersIcon}
           value={leadValue(formatNumber(kpis.crmLeads))}
-          hint={
-            leadsError
-              ? "Leads indisponíveis"
-              : kpis.leadsWithoutCampaign > 0
-                ? `Fonte Google Ads · ${plural(kpis.leadsWithoutCampaign, "sem campanha", "sem campanha")}`
-                : "Fonte Google Ads"
-          }
+          hint={leadsError ? "Leads indisponíveis" : leadsHint(kpis)}
           change={leadsError ? undefined : changes.crmLeads}
           loading={leadsLoading}
         />

@@ -18,7 +18,6 @@ import {
   draftsDiffer,
   emptyCompetitorDraft,
   formatDraftField,
-  moveItem,
   sameCompetitors,
   summarizeCompetitors,
   validateCompetitorDrafts,
@@ -27,14 +26,14 @@ import {
   type CompetitorField,
 } from "../../lib/competitors";
 import { useUnsavedChanges } from "../use-unsaved-changes";
-import { CompetitorRow, type RowMove } from "./competitor-row";
+import { CompetitorRow } from "./competitor-row";
 
 export interface CompetitorsEditorProps {
   initialSettings: AppSettings;
   onDirtyChange?: (dirty: boolean) => void;
 }
 
-/** Elemento visível (os botões de ação existem em dois layouts: celular e desktop). */
+/** Foca o primeiro elemento visível e habilitado que casa com o seletor (há controles em dois layouts: celular e desktop). */
 function focusVisible(root: HTMLElement | null, selector: string): boolean {
   const target = Array.from(root?.querySelectorAll<HTMLElement>(selector) ?? []).find(
     (el) => el.offsetParent !== null && !(el as HTMLButtonElement).disabled,
@@ -96,20 +95,6 @@ export function CompetitorsEditor({ initialSettings, onDirtyChange }: Competitor
     setTouched((prev) => new Set(prev).add(`${id}:${field}`));
     if (field === "name") return;
     setDrafts((list) => list.map((d) => (d.id === id ? { ...d, [field]: formatDraftField(field, d[field]) } : d)));
-  };
-
-  const move = (id: string, direction: RowMove) => {
-    const from = drafts.findIndex((d) => d.id === id);
-    const to = direction === "up" ? from - 1 : from + 1;
-    if (from < 0 || to < 0 || to >= drafts.length) return;
-    setDrafts(moveItem(drafts, from, to));
-    // mover o nó no DOM tira o foco: devolve ao mesmo botão (ou ao oposto, se chegou na ponta)
-    requestAnimationFrame(() => {
-      const root = listRef.current;
-      if (!focusVisible(root, `[data-row="${id}"] [data-action="${direction}"]`)) {
-        focusVisible(root, `[data-row="${id}"] [data-action="${direction === "up" ? "down" : "up"}"]`);
-      }
-    });
   };
 
   const add = () => {
@@ -190,26 +175,24 @@ export function CompetitorsEditor({ initialSettings, onDirtyChange }: Competitor
           <div className="md:rounded-lg md:border">
             <div
               aria-hidden="true"
-              className="text-muted-foreground bg-muted/40 hidden gap-3 border-b px-2 py-2 text-xs font-medium md:grid md:grid-cols-[2.25rem_minmax(0,1fr)_7rem_8rem_7.5rem]"
+              className="text-muted-foreground bg-muted/40 hidden gap-3 border-b px-2 py-2 text-xs font-medium md:grid md:grid-cols-[2.25rem_minmax(0,1fr)_7rem_8rem_2rem]"
             >
               <span className="text-center">#</span>
               <span>Nome</span>
               <span className="text-right">Nota (0–5)</span>
               <span className="text-right">Avaliações</span>
-              <span className="text-right">Ordem</span>
+              <span />
             </div>
-            <ol ref={listRef} className="space-y-3 md:space-y-0" aria-label="Concorrentes, na ordem de exibição">
+            <ol ref={listRef} className="space-y-3 md:space-y-0" aria-label="Concorrentes">
               {drafts.map((draft, index) => (
                 <CompetitorRow
                   key={draft.id}
                   draft={draft}
                   index={index}
-                  total={drafts.length}
                   errors={visibleErrors(draft)}
                   disabled={saving}
                   onChange={change}
                   onBlur={blur}
-                  onMove={move}
                   onRemove={remove}
                 />
               ))}

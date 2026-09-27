@@ -32,6 +32,14 @@ describe("readWebhookConfig", () => {
     expect(config.secretProblem).toBe("too_short");
   });
 
+  it("segredo de exemplo do .env.example é tratado como ausente (valor público)", () => {
+    for (const value of ["troque-por-um-valor-aleatorio-longo", "  TROQUE-POR-UM-VALOR-ALEATORIO-LONGO "]) {
+      const config = readWebhookConfig({ ...DB, WEBHOOK_SECRET: value });
+      expect(config.secret).toBeNull();
+      expect(config.secretProblem).toBe("placeholder");
+    }
+  });
+
   it("sem service role → banco não configurado", () => {
     expect(readWebhookConfig({ WEBHOOK_SECRET: "0123456789abcdef" }).databaseConfigured).toBe(false);
     expect(readWebhookConfig({ ...DB, SUPABASE_SERVICE_ROLE_KEY: " " }).databaseConfigured).toBe(false);

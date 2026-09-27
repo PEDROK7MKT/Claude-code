@@ -17,7 +17,7 @@ CREATE TABLE IF NOT EXISTS public.profiles (
   full_name TEXT NOT NULL,
   email TEXT,
   role TEXT NOT NULL CHECK (role IN ('admin', 'dentist')),
-  active BOOLEAN NOT NULL DEFAULT TRUE,   -- FALSE = usuário desativado (também banido no Auth)
+  active BOOLEAN NOT NULL DEFAULT TRUE,   -- FALSE = usuário desativado (também banido no Auth) ou conta ainda não liberada pelo admin
   avatar_url TEXT,
   created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
   updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
@@ -549,25 +549,32 @@ CREATE TRIGGER daily_metrics_fill_leads
   FOR EACH ROW EXECUTE FUNCTION public.daily_metrics_fill_leads();
 
 -- Criar profile automaticamente ao registrar usuário (contas criadas só pelo admin).
--- Papel: app_metadata.role (só a service role grava) ou user_metadata.role;
--- qualquer valor diferente de admin/dentist vira dentist.
+-- Papel: só app_metadata.role (gravável apenas pela service role/SQL); qualquer
+-- outro valor vira dentist. user_metadata é controlado pelo próprio usuário
+-- (supabase.auth.signUp({ options: { data } }) com a anon key) e NUNCA define papel.
+-- O profile só nasce ativo se app_metadata já traz o papel no INSERT (SQL direto).
+-- Cadastro público, "Add user"/convite do painel e até auth.admin.createUser (o
+-- GoTrue grava app_metadata num UPDATE logo após o INSERT) nascem INATIVOS:
+-- is_active_user() bloqueia todo acesso via RLS até o admin ativar. A action
+-- createUser do CRM completa o profile (papel, nome, active = true) com a service role.
 CREATE OR REPLACE FUNCTION public.handle_new_user()
 RETURNS TRIGGER
 LANGUAGE plpgsql SECURITY DEFINER
 SET search_path = public
 AS $$
 DECLARE
-  v_role TEXT := COALESCE(NEW.raw_app_meta_data->>'role', NEW.raw_user_meta_data->>'role');
+  v_role TEXT := NEW.raw_app_meta_data->>'role';
 BEGIN
   IF v_role IS NULL OR v_role NOT IN ('admin', 'dentist') THEN
     v_role := 'dentist';
   END IF;
-  INSERT INTO public.profiles (id, full_name, email, role)
+  INSERT INTO public.profiles (id, full_name, email, role, active)
   VALUES (
     NEW.id,
     COALESCE(NULLIF(btrim(NEW.raw_user_meta_data->>'full_name'), ''), NEW.email, 'Usuário'),
     NEW.email,
-    v_role
+    v_role,
+    COALESCE(NEW.raw_app_meta_data ? 'role', FALSE)
   )
   ON CONFLICT (id) DO NOTHING;
   RETURN NEW;

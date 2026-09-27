@@ -9,6 +9,13 @@ export const MAX_BODY_BYTES = 16 * 1024;
 /** Segredo mínimo aceito — gere com `openssl rand -hex 32`. */
 export const MIN_SECRET_LENGTH = 16;
 
+/**
+ * Valores de exemplo publicados no repositório (.env.example). São públicos: se
+ * alguém copiar o exemplo sem trocar, o webhook fica desligado (503) em vez de
+ * aceitar qualquer um que conheça o valor.
+ */
+export const PLACEHOLDER_SECRETS: readonly string[] = ["troque-por-um-valor-aleatorio-longo"];
+
 /** Envios sem segredo (site/navegador): limite por IP. */
 export const PUBLIC_RATE_LIMIT = { limit: 10, windowMs: 60_000 } as const;
 

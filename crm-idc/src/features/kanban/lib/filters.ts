@@ -5,8 +5,10 @@
  */
 import { subDays } from "date-fns";
 
+import { buildLeadListHref } from "@/features/leads/lib/list-params";
 import { LEAD_SOURCES, SERVICES } from "@/lib/constants";
 import { startOfDateKey, toBahia, toDateKey, type DateInput } from "@/lib/dates";
+import { foldText, searchPhoneDigits } from "@/lib/format";
 import type { Lead, LeadSource, ServiceType } from "@/types/database";
 
 import { FINALS_WINDOW_DAYS } from "./columns";
@@ -100,31 +102,26 @@ export function clearKanbanFilters(filters: KanbanFilters): KanbanFilters {
   return { ...EMPTY_KANBAN_FILTERS, showOldFinals: filters.showOldFinals };
 }
 
+/**
+ * "Ver lista": abre /leads com a mesma busca, fonte e serviço do quadro
+ * (parâmetros compartilhados). O toggle de finalizados antigos é só do kanban.
+ */
+export function kanbanLeadListHref(filters: KanbanFilters): string {
+  return buildLeadListHref({ q: filters.q, source: filters.source, service: filters.service });
+}
+
 // -----------------------------------------------------------------------------
 // Aplicação no cliente
 // -----------------------------------------------------------------------------
 
-/** Minúsculas e sem acentos ("João" → "joao"). */
-export function foldText(value: string): string {
-  return value.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase();
-}
-
-/** Dígitos do termo quando ele parece um telefone ("(77) 98765", "+55 77…"); null caso contrário. */
-function phoneDigits(term: string): string | null {
-  if (!/^[\d\s()+.-]+$/.test(term)) return null;
-  let digits = term.replace(/\D/g, "");
-  if (digits.length >= 12 && digits.startsWith("55")) digits = digits.slice(2);
-  return digits.length >= 2 ? digits : null;
-}
-
 /**
- * Busca do kanban: todas as palavras no nome (sem acento/caixa) OU, se o termo
- * parece telefone, os dígitos contidos no telefone.
+ * Busca do kanban (mesma regra da lista /leads): todas as palavras no nome (sem
+ * acento/caixa) OU, se o termo parece telefone, os dígitos contidos no telefone.
  */
 export function matchesSearch(lead: Pick<Lead, "name" | "phone">, search: string): boolean {
   const term = normalizeKanbanSearch(search);
   if (!term) return true;
-  const digits = phoneDigits(term);
+  const digits = searchPhoneDigits(term);
   if (digits && lead.phone.includes(digits)) return true;
   const name = foldText(lead.name);
   return foldText(term)

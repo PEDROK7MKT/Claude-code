@@ -4,7 +4,7 @@ import { CardGridSkeleton, ChartSkeleton, PageHeaderSkeleton } from "@/component
 export function DashboardSkeleton() {
   return (
     <div className="space-y-6">
-      <PageHeaderSkeleton />
+      <PageHeaderSkeleton announce={false} />
       <CardGridSkeleton count={5} className="sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5" />
       <div className="grid gap-4 xl:grid-cols-[minmax(0,1fr)_20rem] 2xl:grid-cols-[minmax(0,1fr)_22rem]">
         <div className="grid min-w-0 content-start gap-4 lg:grid-cols-2">

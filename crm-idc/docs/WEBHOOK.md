@@ -29,7 +29,7 @@ POST https://crm.institutodeciocarrilho.com.br/api/webhook/lead
 
 | Variável | Obrigatória | Descrição |
 | --- | --- | --- |
-| `WEBHOOK_SECRET` | **sim** | Segredo compartilhado, com **no mínimo 16 caracteres**. Gere com `openssl rand -hex 32`. Sem ele (ou curto demais) o webhook responde `503` a tudo — **nunca** aceita gravação sem autenticação. |
+| `WEBHOOK_SECRET` | **sim** | Segredo compartilhado, com **no mínimo 16 caracteres**. Gere com `openssl rand -hex 32`. Sem ele, curto demais ou igual ao valor de exemplo do `.env.example`, o webhook responde `503` a tudo — **nunca** aceita gravação sem autenticação. |
 | `WEBHOOK_ALLOWED_ORIGINS` | não | Origens que podem chamar o webhook **direto do navegador**, separadas por vírgula. Ex.: `https://institutodeciocarrilho.com.br,https://www.institutodeciocarrilho.com.br`. `*` é ignorado de propósito. Vazio = modo público desligado. |
 | `SUPABASE_SERVICE_ROLE_KEY` + `NEXT_PUBLIC_SUPABASE_URL` | **sim** | O webhook grava com a service role (sem sessão de usuário). Sem elas → `503`. |
 
@@ -64,9 +64,10 @@ cabeçalho `Origin` está em `WEBHOOK_ALLOWED_ORIGINS`, e com restrições:
 | Restrição | Detalhe |
 | --- | --- |
 | Rate limit | 10 envios por minuto **por IP** (`429` + `Retry-After`). Também vale para tentativas com segredo errado. |
-| Honeypot | O campo `website` deve chegar vazio. Preenchido = robô: responde `200 { ok: true, id: null }` e **não grava nada** (o robô não percebe). |
+| Honeypot | O campo `website` deve chegar vazio. Preenchido = robô: responde `200 { ok: true, id: null, duplicate_of: null }`, a mesma resposta de um envio aceito, e **não grava nada** (o robô não percebe). |
 | Campos obrigatórios | `name` **e** `phone`. |
 | CORS | `Access-Control-Allow-Origin` só para a origem autorizada; o preflight libera apenas `Content-Type` — o navegador **não consegue** enviar `Authorization`/`x-webhook-secret`, então o segredo nunca vai parar no site por engano. |
+| Resposta | Sempre `200 { ok: true, id: null, duplicate_of: null }` — sem `id`, `duplicate_of` nem `repeated`, para que quem forja o `Origin` não descubra se um telefone já é lead/paciente (LGPD). |
 
 **Trade-off (leia antes de ativar):** o cabeçalho `Origin` protege contra *outros sites*
 usando o navegador dos visitantes, mas **não** contra quem monta a requisição à mão
@@ -128,20 +129,22 @@ vence o apelido.
 - **Telefone já cadastrado:** o lead **é criado mesmo assim** (status `novo`), vinculado
   ao lead mais recente com o mesmo telefone (`parent_lead_id`) e com a nota
   `Possível duplicado de <nome> (<dd/MM/aaaa>)` no início. A resposta traz
-  `duplicate_of` com o id desse lead. Na tela do lead, a recepção decide se segue com o
+  `duplicate_of` com o id desse lead (só no modo integração; no modo público a resposta é
+  sempre a genérica da seção 6). Na tela do lead, a recepção decide se segue com o
   novo ou marca como perdido.
 - **Reenvio (clique duplo, nova tentativa após timeout):** se o lead mais recente com o
   mesmo telefone foi criado **há menos de 2 minutos** e ainda está `novo`, nada é
-  gravado e a resposta é `200 { ok: true, id: <lead existente>, duplicate_of: null, repeated: true }`.
+  gravado e a resposta é `200 { ok: true, id: <lead existente>, duplicate_of: null, repeated: true }`
+  (modo integração; no modo público, a genérica).
   Assim um robô que repete a chamada não duplica o funil.
 
 ## 6. Respostas
 
 | Status | Quando | Corpo |
 | --- | --- | --- |
-| `201` | Lead criado | `{ "ok": true, "id": "<uuid>", "duplicate_of": "<uuid>" \| null }` |
-| `200` | Reenvio em até 2 min | `{ "ok": true, "id": "<uuid>", "duplicate_of": null, "repeated": true }` |
-| `200` | Honeypot preenchido (modo público) | `{ "ok": true, "id": null, "duplicate_of": null }` |
+| `201` | Lead criado (modo integração) | `{ "ok": true, "id": "<uuid>", "duplicate_of": "<uuid>" \| null }` |
+| `200` | Reenvio em até 2 min (modo integração) | `{ "ok": true, "id": "<uuid>", "duplicate_of": null, "repeated": true }` |
+| `200` | Modo público: lead criado, reenvio em até 2 min ou honeypot | `{ "ok": true, "id": null, "duplicate_of": null }` — sempre igual, não revela se o telefone já está cadastrado |
 | `204` | `OPTIONS` (preflight) | — |
 | `400` | Validação, JSON malformado, corpo vazio | `{ "ok": false, "error": "...", "fields": [{ "field": "phone", "message": "..." }] }` |
 | `401` | Segredo ausente (e origem não autorizada) ou errado | `{ "ok": false, "error": "Não autorizado: ..." }` + `WWW-Authenticate: Bearer` |
@@ -313,7 +316,7 @@ API do script:
 
 | Função | Descrição |
 | --- | --- |
-| `IDCLeads.submit({ name, phone, service?, service_detail?, message?, website? })` | Envia ao webhook junto com a origem guardada (formulário urlencoded, sem preflight, `keepalive`). Resolve com `{ ok, id, duplicate_of }`; rejeita com `Error` (mensagem pt-BR, `status`, `fields`). |
+| `IDCLeads.submit({ name, phone, service?, service_detail?, message?, website? })` | Envia ao webhook junto com a origem guardada (formulário urlencoded, sem preflight, `keepalive`). Resolve com `{ ok: true, id: null, duplicate_of: null }` (o modo público não devolve id nem informa duplicado); rejeita com `Error` (mensagem pt-BR, `status`, `fields`). |
 | `IDCLeads.whatsappUrl(telefone, mensagem)` | Link `wa.me` com o código `[ref: ...]` já incluído. |
 | `IDCLeads.refCode()` | Código atual, ex. `gads-urgencia`. |
 | `IDCLeads.getTracking()` | Dados de origem guardados (para depuração). |
@@ -337,15 +340,17 @@ cookies de marketing.
 
 ## 10. Segurança — resumo
 
-- Sem `WEBHOOK_SECRET` válido (≥ 16 caracteres) o endpoint fica **desligado** (`503`).
+- Sem `WEBHOOK_SECRET` válido (≥ 16 caracteres e diferente do valor de exemplo do `.env.example`) o endpoint fica **desligado** (`503`).
 - O segredo **nunca** vai para o navegador: o preflight CORS nem permite o cabeçalho.
   Rotação: gere um novo valor, atualize a integração e a variável na Vercel e faça
   redeploy (há uma janela curta em que o valor antigo deixa de valer).
 - A service role só existe no servidor e só é usada **depois** da autenticação e da
   validação. Mesmo com ela, os triggers do banco garantem status inicial `novo`,
   histórico e a proibição de excluir leads.
-- O webhook só **cria** leads: não lê, altera nem apaga dados existentes (a busca por
-  telefone é interna e a resposta só devolve ids).
+- O webhook só **cria** leads: não lê, altera nem apaga dados existentes. A busca por
+  telefone é interna; só o modo integração (com segredo) recebe `id`/`duplicate_of`/`repeated`
+  na resposta. O modo público responde sempre `200 { ok: true, id: null, duplicate_of: null }`,
+  sem revelar se o telefone já é lead/paciente.
 - Corpo limitado a 16 KB, textos cortados nos limites, campos desconhecidos ignorados.
 - Logs do servidor (`[webhook/lead]`) contêm apenas ids de lead e códigos de erro —
   nunca nome, telefone ou mensagem.
@@ -375,7 +380,7 @@ vinculadas ao lead anterior.
 
 | Sintoma | Causa provável |
 | --- | --- |
-| `503` em tudo | `WEBHOOK_SECRET` ausente/curto ou service role não configurada na Vercel. |
+| `503` em tudo | `WEBHOOK_SECRET` ausente, curto ou igual ao exemplo do `.env.example`, ou service role não configurada na Vercel. |
 | `401` vindo do site | Domínio fora de `WEBHOOK_ALLOWED_ORIGINS` (confira `www.` e `https://`). |
 | Erro de CORS no console do navegador | Mesmo caso acima, ou o código tentou enviar `Authorization` pelo navegador (não permitido). |
 | `429` em testes | Mais de 10 envios/min do mesmo IP sem segredo — aguarde o `Retry-After`. |

@@ -2,6 +2,7 @@
  * Abas de Configurações (spec §4.8), com link direto via `?aba=`.
  * Funções puras — usadas pela página (servidor) e pela view (cliente).
  */
+import { foldText } from "@/lib/format";
 
 export const SETTINGS_TAB_PARAM = "aba";
 
@@ -19,13 +20,9 @@ export function isSettingsTab(value: unknown): value is SettingsTab {
   return typeof value === "string" && SETTINGS_TABS.some((tab) => tab.value === value);
 }
 
-/** Remove acentos e espaços: "Personalização" → "personalizacao". */
+/** Remove acentos, caixa e espaços das pontas: "Personalização" → "personalizacao". */
 function slug(value: string): string {
-  return value
-    .normalize("NFD")
-    .replace(/[̀-ͯ]/g, "")
-    .trim()
-    .toLowerCase();
+  return foldText(value).trim();
 }
 
 /** Valor de `?aba=` (string, lista ou ausente) → aba válida; desconhecida cai em "usuarios". */

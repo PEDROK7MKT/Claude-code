@@ -14,7 +14,7 @@ export function LeadDetailSkeleton() {
       <Skeleton className="h-8 w-40" />
       <Card>
         <CardContent className="grid gap-4">
-          <PageHeaderSkeleton />
+          <PageHeaderSkeleton announce={false} />
           <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
             {Array.from({ length: 4 }, (_, index) => (
               <Skeleton key={index} className="h-5 w-3/4" />

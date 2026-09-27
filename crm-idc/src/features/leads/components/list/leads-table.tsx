@@ -31,11 +31,22 @@ export interface LeadsTableProps {
   freshIds: ReadonlySet<string>;
   /** Próxima página/filtro carregando (mantém a anterior esmaecida) */
   busy?: boolean;
+  /** Modelo da mensagem do WhatsApp (Configurações); padrão: DEFAULT_WHATSAPP_MESSAGE */
+  whatsappMessage?: string;
   className?: string;
 }
 
 /** Tabela de leads (≥ md): colunas ordenáveis e linha inteira clicável → detalhe. */
-export function LeadsTable({ rows, sort, onSort, now, freshIds, busy = false, className }: LeadsTableProps) {
+export function LeadsTable({
+  rows,
+  sort,
+  onSort,
+  now,
+  freshIds,
+  busy = false,
+  whatsappMessage,
+  className,
+}: LeadsTableProps) {
   return (
     <div
       aria-busy={busy}
@@ -62,7 +73,13 @@ export function LeadsTable({ rows, sort, onSort, now, freshIds, busy = false, cl
         </TableHeader>
         <TableBody>
           {rows.map((lead) => (
-            <LeadTableRow key={lead.id} lead={lead} now={now} fresh={freshIds.has(lead.id)} />
+            <LeadTableRow
+              key={lead.id}
+              lead={lead}
+              now={now}
+              fresh={freshIds.has(lead.id)}
+              whatsappMessage={whatsappMessage}
+            />
           ))}
         </TableBody>
       </Table>
@@ -70,7 +87,14 @@ export function LeadsTable({ rows, sort, onSort, now, freshIds, busy = false, cl
   );
 }
 
-function LeadTableRow({ lead, now, fresh }: { lead: Lead; now: number; fresh: boolean }) {
+interface LeadTableRowProps {
+  lead: Lead;
+  now: number;
+  fresh: boolean;
+  whatsappMessage?: string;
+}
+
+function LeadTableRow({ lead, now, fresh, whatsappMessage }: LeadTableRowProps) {
   const router = useRouter();
   const href = leadDetailHref(lead.id);
 
@@ -112,7 +136,7 @@ function LeadTableRow({ lead, now, fresh }: { lead: Lead; now: number; fresh: bo
         ) : null}
       </TableCell>
       <TableCell className="px-3">
-        <PhoneLink phone={lead.phone} name={lead.name} />
+        <PhoneLink phone={lead.phone} name={lead.name} message={whatsappMessage} />
       </TableCell>
       <TableCell className="max-w-48 px-3">
         <SourceBadge source={lead.source} variant="plain" className="text-foreground" />

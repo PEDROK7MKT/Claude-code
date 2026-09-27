@@ -3,7 +3,7 @@
  * (aceitando "4,9" e "1.234"), validação e conversão para a lista salva em
  * app_settings.competitors. Funções puras.
  */
-import { formatDecimal, formatNumber } from "@/lib/format";
+import { foldText, formatDecimal, formatNumber } from "@/lib/format";
 import type { Competitor } from "@/types/database";
 
 export const MAX_COMPETITORS = 20;
@@ -26,12 +26,7 @@ const SELF_NAMES = new Set(["idc", "instituto decio carrilho", "idc instituto de
 
 /** Nome para comparação: sem acentos, minúsculo, espaços simples. */
 export function normalizeCompetitorName(name: string): string {
-  return name
-    .normalize("NFD")
-    .replace(/[̀-ͯ]/g, "")
-    .trim()
-    .toLowerCase()
-    .replace(/\s+/g, " ");
+  return foldText(name).trim().replace(/\s+/g, " ");
 }
 
 export function isSelfName(name: string): boolean {
@@ -140,15 +135,6 @@ export function validateCompetitorDrafts(drafts: readonly CompetitorDraft[]): Co
     drafts.length > MAX_COMPETITORS ? `Cadastre no máximo ${MAX_COMPETITORS} concorrentes.` : null;
   const valid = errorCount === 0 && !formError;
   return { competitors: valid ? competitors : null, errors, formError, errorCount };
-}
-
-/** Move um item de posição (reordenação da lista). Índices fora do limite devolvem a lista inalterada. */
-export function moveItem<T>(list: readonly T[], from: number, to: number): T[] {
-  if (from === to || from < 0 || to < 0 || from >= list.length || to >= list.length) return [...list];
-  const next = [...list];
-  const [item] = next.splice(from, 1);
-  next.splice(to, 0, item);
-  return next;
 }
 
 export function sameCompetitors(a: readonly Competitor[], b: readonly Competitor[]): boolean {

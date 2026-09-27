@@ -70,7 +70,7 @@ export function KanbanSkeleton() {
   return (
     <div role="status" aria-busy="true" className="space-y-4">
       <span className="sr-only">Carregando o kanban…</span>
-      <PageHeaderSkeleton />
+      <PageHeaderSkeleton announce={false} />
       <div aria-hidden="true" className="flex flex-col gap-2 lg:flex-row lg:items-center">
         <Skeleton className="h-10 w-full rounded-md md:h-9 lg:w-80" />
         <div className="flex gap-2">

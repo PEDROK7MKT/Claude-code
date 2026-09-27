@@ -40,37 +40,52 @@ Mudança de status pelo app: `supabase.rpc('change_lead_status', { p_lead_id, p_
 - **Authentication → Sign In / Providers**: deixe só **Email** habilitado.
 - **Desative "Allow new users to sign up"** (cadastro público). O sistema não tem
   cadastro público: sem isso, qualquer pessoa com a anon key (que é pública no
-  navegador) conseguiria criar uma conta e ver os dados dos pacientes.
+  navegador) conseguiria criar uma conta. Como defesa extra, o banco ignora o papel
+  enviado pelo próprio usuário (`user_metadata`) e toda conta criada fora do CRM
+  nasce **inativa** (sem acesso a nenhum dado pela RLS) até um admin liberá-la.
 
 ## 3. Criar o primeiro admin
 
 O profile (`public.profiles`) é criado automaticamente quando o usuário nasce em
-`auth.users`. O papel vem de `app_metadata.role` ou `user_metadata.role`
-(`admin` ou `dentist`; qualquer outro valor vira `dentist`) e o nome de
-`user_metadata.full_name` (se faltar, usa o email).
+`auth.users`. O papel vem **só** de `app_metadata.role` (que apenas a service role
+grava; `admin` ou `dentist`, qualquer outro valor vira `dentist`) e o nome de
+`user_metadata.full_name` (se faltar, usa o email). `user_metadata.role` é
+ignorado: o próprio usuário controla esse campo pelo `signUp` com a anon key.
+
+O profile só nasce **ativo** se `app_metadata.role` já vier no INSERT (SQL direto).
+Contas do cadastro público, do **Add user**/convite do painel e da API admin (o
+GoTrue grava `app_metadata` num UPDATE logo depois do INSERT) nascem com
+`active = false` — sem acesso a nenhum dado — até serem liberadas. A tela
+**Configurações → Usuários** do CRM já faz isso ao criar a conta.
 
 **Opção A — pelo painel (mais simples):**
 
 1. **Authentication → Users → Add user → Create new user**, com email e senha,
    marcando **Auto Confirm User**.
-2. No **SQL Editor**, promova o usuário e ajuste o nome:
+2. No **SQL Editor**, promova e ative o usuário e ajuste o nome:
 
    ```sql
    UPDATE public.profiles
-   SET role = 'admin', full_name = 'Nome do Gestor'
+   SET role = 'admin', active = true, full_name = 'Nome do Gestor'
    WHERE email = 'gestor@institutodeciocarrilho.com.br';
    ```
 
-**Opção B — pela API admin (service role, ex. num script):**
+**Opção B — pela API admin (service role, ex. num script), como o CRM faz:**
 
 ```ts
-await supabaseAdmin.auth.admin.createUser({
+const { data, error } = await supabaseAdmin.auth.admin.createUser({
   email: "gestor@institutodeciocarrilho.com.br",
   password: "senha-forte",
   email_confirm: true,
-  user_metadata: { full_name: "Nome do Gestor", role: "admin" },
+  user_metadata: { full_name: "Nome do Gestor" },
   app_metadata: { role: "admin" }, // só a service role grava app_metadata
 });
+if (error) throw error;
+// o profile nasce inativo: libere-o (service role ignora a RLS)
+await supabaseAdmin
+  .from("profiles")
+  .update({ role: "admin", active: true, full_name: "Nome do Gestor" })
+  .eq("id", data.user.id);
 ```
 
 Depois, entre no CRM como admin e crie a conta do Dr. Décio em **Configurações**.
