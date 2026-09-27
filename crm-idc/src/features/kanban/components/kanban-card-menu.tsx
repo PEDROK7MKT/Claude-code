@@ -14,7 +14,11 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { describeAllowedTransitions, getStatusChangeOptions, type StatusAction } from "@/features/leads/components/status";
+import {
+  describeAllowedTransitions,
+  getStatusChangeOptions,
+  type StatusAction,
+} from "@/features/leads/components/status";
 import { EventBoundary, StatusActionIcon, useMenuStatusSelect } from "@/features/leads/components/status/status-ui";
 import { leadDetailHref } from "@/features/leads/lib/list-display";
 import { STATUS_META } from "@/lib/constants";
@@ -59,7 +63,9 @@ export function KanbanCardMenu({ lead, onMove, disabled = false, whatsappMessage
           <DropdownMenuContent align="end" className="w-64" onCloseAutoFocus={onCloseAutoFocus}>
             <DropdownMenuLabel className="text-muted-foreground text-xs font-normal">Mover para…</DropdownMenuLabel>
             {options.length === 0 ? (
-              <p className="text-muted-foreground px-2 py-1.5 text-sm text-pretty">{describeAllowedTransitions(lead.status)}</p>
+              <p className="text-muted-foreground px-2 py-1.5 text-sm text-pretty">
+                {describeAllowedTransitions(lead.status)}
+              </p>
             ) : null}
             {funnel.length ? (
               <DropdownMenuGroup>

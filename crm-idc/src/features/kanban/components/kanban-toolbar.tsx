@@ -31,11 +31,7 @@ export function KanbanToolbar({ filters, update, onClear, className }: KanbanToo
       aria-label="Busca e filtros"
       className={cn("flex flex-col gap-2 lg:flex-row lg:flex-wrap lg:items-center", className)}
     >
-      <LeadSearchInput
-        value={filters.q}
-        onSearch={(q) => update({ q })}
-        className="min-w-0 lg:w-80 lg:flex-none"
-      />
+      <LeadSearchInput value={filters.q} onSearch={(q) => update({ q })} className="min-w-0 lg:w-80 lg:flex-none" />
       <div role="group" aria-label="Filtros" className="flex flex-wrap items-center gap-2">
         <MultiSelectFilter
           label="Fonte"

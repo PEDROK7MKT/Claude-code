@@ -100,7 +100,7 @@ export function KanbanBoard({
   const reduceMotion = useMediaQuery("(prefers-reduced-motion: reduce)");
   const sensors = useKanbanSensors();
   const { requestChange, dialogs } = useStatusChange();
-  const pending = usePendingMoves(leads, now);
+  const pending = usePendingMoves(leads);
   const { beginMove, endMove, markSaved } = pending;
   const [activeLead, setActiveLead] = React.useState<Lead | null>(null);
 
@@ -259,10 +259,7 @@ function BoardGroup({ label, children }: { label: string; children: React.ReactN
   const headingId = React.useId();
   return (
     <section aria-labelledby={headingId} className="flex flex-col gap-2">
-      <h2
-        id={headingId}
-        className="text-muted-foreground px-1 text-[11px] font-semibold tracking-wider uppercase"
-      >
+      <h2 id={headingId} className="text-muted-foreground px-1 text-[11px] font-semibold tracking-wider uppercase">
         {label}
       </h2>
       <div className="flex flex-1 items-stretch gap-3">{children}</div>

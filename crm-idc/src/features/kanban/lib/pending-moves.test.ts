@@ -1,7 +1,6 @@
 import { describe, expect, it } from "vitest";
 
 import {
-  SAVED_MOVE_TTL_MS,
   addAwaitingMove,
   addSavedMove,
   applyLeadOverlays,
@@ -62,17 +61,21 @@ describe("movimentos salvos", () => {
     expect(isSavedMoveConfirmed(saved, makeLead({ updated_at: "2026-03-12T12:30:00Z" }))).toBe(true);
   });
 
-  it("deixam de valer depois do TTL", () => {
-    const moves: SavedMove[] = [{ lead: saved, savedAt: NOW - SAVED_MOVE_TTL_MS - 1 }];
-    expect(liveSavedMoves(moves, new Map(), NOW)).toEqual([]);
-    expect(liveSavedMoves([{ lead: saved, savedAt: NOW }], new Map(), NOW)).toHaveLength(1);
+  it("valem até os dados confirmarem (refetch atrasado ou que falhou)", () => {
+    const moves: SavedMove[] = [{ lead: saved }];
+    expect(liveSavedMoves(moves, new Map())).toEqual(moves);
+    const stale = makeLead({ id: "a", status: "novo", updated_at: "2026-03-10T10:00:00Z" });
+    expect(liveSavedMoves(moves, new Map([["a", stale]]))).toEqual(moves);
+    const refetched = { ...saved };
+    expect(liveSavedMoves(moves, new Map([["a", refetched]]))).toEqual([]);
   });
 
-  it("addSavedMove substitui o do mesmo lead e descarta vencidos", () => {
-    const old: SavedMove = { lead: makeLead({ id: "old" }), savedAt: NOW - SAVED_MOVE_TTL_MS - 5 };
-    const previous: SavedMove = { lead: makeLead({ id: "a", status: "novo" }), savedAt: NOW - 1000 };
-    const next = addSavedMove([old, previous], saved, NOW);
-    expect(next).toEqual([{ lead: saved, savedAt: NOW }]);
+  it("addSavedMove substitui o do mesmo lead e descarta os já confirmados", () => {
+    const confirmed: SavedMove = { lead: makeLead({ id: "old", updated_at: "2026-03-01T10:00:00Z" }) };
+    const previous: SavedMove = { lead: makeLead({ id: "a", status: "novo" }) };
+    const data = [makeLead({ id: "old", updated_at: "2026-03-02T10:00:00Z" })];
+    expect(addSavedMove([confirmed, previous], saved, data)).toEqual([{ lead: saved }]);
+    expect(addSavedMove([confirmed], saved)).toEqual([confirmed, { lead: saved }]);
   });
 });
 
@@ -95,7 +98,6 @@ describe("buildLeadOverlays / applyLeadOverlays", () => {
     const overlays = buildLeadOverlays(
       { awaiting: [{ lead: novo, to: "perdido", startedAt: NOW }], saving: [], saved: [] },
       [novo, other],
-      NOW,
     );
     const overlay = overlays.get("a");
     expect(overlay?.kind).toBe("awaiting");
@@ -115,7 +117,6 @@ describe("buildLeadOverlays / applyLeadOverlays", () => {
         saved: [],
       },
       [novo],
-      NOW,
     );
     expect(overlays.get("a")?.kind).toBe("saving");
     expect(overlays.get("a")?.lead.scheduled_at).toBe("2026-03-20T13:00:00.000Z");
@@ -123,7 +124,7 @@ describe("buildLeadOverlays / applyLeadOverlays", () => {
 
   it("inclui o lead que a atualização otimista tirou da consulta", () => {
     const serverLead = makeLead({ id: "a", status: "perdido", updated_at: "2026-03-12T11:59:59Z" });
-    const overlays = buildLeadOverlays({ awaiting: [], saving: [], saved: [{ lead: serverLead, savedAt: NOW }] }, [other], NOW);
+    const overlays = buildLeadOverlays({ awaiting: [], saving: [], saved: [{ lead: serverLead }] }, [other]);
     expect(applyLeadOverlays([other], overlays).map((l) => [l.id, l.status])).toEqual([
       ["b", "novo"],
       ["a", "perdido"],
@@ -133,7 +134,7 @@ describe("buildLeadOverlays / applyLeadOverlays", () => {
   it("salvo e já confirmado pelos dados não sobrepõe nada", () => {
     const serverLead = makeLead({ id: "a", status: "perdido", updated_at: "2026-03-12T11:59:59Z" });
     const refetched = { ...serverLead };
-    const overlays = buildLeadOverlays({ awaiting: [], saving: [], saved: [{ lead: serverLead, savedAt: NOW }] }, [refetched], NOW);
+    const overlays = buildLeadOverlays({ awaiting: [], saving: [], saved: [{ lead: serverLead }] }, [refetched]);
     expect(overlays.size).toBe(0);
     expect(applyLeadOverlays([refetched], overlays)).toEqual([refetched]);
   });

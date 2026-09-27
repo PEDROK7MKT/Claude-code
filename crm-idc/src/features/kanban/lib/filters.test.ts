@@ -50,7 +50,12 @@ describe("parseKanbanParams / serializeKanbanParams", () => {
     };
     const query = serializeKanbanParams(filters);
     expect(query).toBe("q=jo%C3%A3o&fonte=google_ads%2Cgmn&servico=implante%2Ccanal&antigos=1");
-    expect(parseKanbanParams(query)).toEqual({ ...filters, q: "joão", source: ["google_ads", "gmn"], service: ["implante", "canal"] });
+    expect(parseKanbanParams(query)).toEqual({
+      ...filters,
+      q: "joão",
+      source: ["google_ads", "gmn"],
+      service: ["implante", "canal"],
+    });
     expect(serializeKanbanParams(EMPTY_KANBAN_FILTERS)).toBe("");
   });
 
@@ -64,7 +69,9 @@ describe("filtros ativos", () => {
   it("conta busca, fonte e serviço, mas não o toggle de antigos", () => {
     expect(countActiveFilters({ ...EMPTY_KANBAN_FILTERS, showOldFinals: true })).toBe(0);
     expect(hasActiveFilters({ ...EMPTY_KANBAN_FILTERS, q: "  " })).toBe(false);
-    expect(countActiveFilters({ q: "ana", source: ["gmn"], service: ["canal", "implante"], showOldFinals: false })).toBe(3);
+    expect(
+      countActiveFilters({ q: "ana", source: ["gmn"], service: ["canal", "implante"], showOldFinals: false }),
+    ).toBe(3);
   });
 
   it("limpar mantém a preferência de finalizados antigos", () => {

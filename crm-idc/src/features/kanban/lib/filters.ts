@@ -86,7 +86,9 @@ export function patchKanbanFilters(filters: KanbanFilters, patch: Partial<Kanban
 
 /** Quantos filtros de conteúdo estão ativos (busca, fonte, serviço) — o toggle de antigos não conta. */
 export function countActiveFilters(filters: KanbanFilters): number {
-  return (normalizeKanbanSearch(filters.q) ? 1 : 0) + (filters.source.length ? 1 : 0) + (filters.service.length ? 1 : 0);
+  return (
+    (normalizeKanbanSearch(filters.q) ? 1 : 0) + (filters.source.length ? 1 : 0) + (filters.service.length ? 1 : 0)
+  );
 }
 
 export function hasActiveFilters(filters: KanbanFilters): boolean {

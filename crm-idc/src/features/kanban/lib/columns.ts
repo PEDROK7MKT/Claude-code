@@ -115,8 +115,7 @@ const COMPARATORS: Record<KanbanColumnSort, (a: SortableLead, b: SortableLead) =
     compareAsc(toTime(a.created_at), toTime(b.created_at)) ||
     compareId(a, b),
   // movimentação mais recente primeiro
-  updated_desc: (a, b) =>
-    compareAsc(toTime(b.updated_at), toTime(a.updated_at)) || compareId(a, b),
+  updated_desc: (a, b) => compareAsc(toTime(b.updated_at), toTime(a.updated_at)) || compareId(a, b),
 };
 
 /** Ordena os cards de uma coluna conforme o critério dela (não altera o array recebido). */
@@ -158,9 +157,10 @@ export function getDropTargetState(from: LeadStatus | null | undefined, column: 
 
 /** Estado de todas as colunas para um arraste a partir de `from`. */
 export function getDropTargets(from: LeadStatus | null | undefined): Record<LeadStatus, DropTargetState> {
-  return Object.fromEntries(
-    LEAD_STATUSES.map((status) => [status, getDropTargetState(from, status)]),
-  ) as Record<LeadStatus, DropTargetState>;
+  return Object.fromEntries(LEAD_STATUSES.map((status) => [status, getDropTargetState(from, status)])) as Record<
+    LeadStatus,
+    DropTargetState
+  >;
 }
 
 /** O card pode ser arrastado? (compareceu é final: não há para onde ir) */

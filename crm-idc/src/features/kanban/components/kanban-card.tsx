@@ -120,9 +120,7 @@ export const KanbanCard = React.memo(function KanbanCard({
             <PhoneLink phone={lead.phone} name={lead.name} message={whatsappMessage} showIcon={false} />
           </span>
         }
-        actions={
-          <KanbanCardMenu lead={lead} onMove={onMove} disabled={busy} whatsappMessage={whatsappMessage} />
-        }
+        actions={<KanbanCardMenu lead={lead} onMove={onMove} disabled={busy} whatsappMessage={whatsappMessage} />}
       />
     </article>
   );
@@ -165,7 +163,16 @@ interface KanbanCardContentProps {
 }
 
 /** Conteúdo do card: nome, telefone, serviço, tempo desde a entrada e fonte (spec §12). */
-function KanbanCardContent({ lead, now, pending, muted = false, nameId, title, phone, actions }: KanbanCardContentProps) {
+function KanbanCardContent({
+  lead,
+  now,
+  pending,
+  muted = false,
+  nameId,
+  title,
+  phone,
+  actions,
+}: KanbanCardContentProps) {
   const service = cardServiceLabel(lead);
 
   return (
@@ -180,7 +187,9 @@ function KanbanCardContent({ lead, now, pending, muted = false, nameId, title, p
         <div className="-mt-0.5 -mr-1.5">{actions}</div>
       </div>
 
-      {showsAppointment(lead.status) ? <CardAppointment lead={lead} now={now} awaiting={pending === "awaiting"} /> : null}
+      {showsAppointment(lead.status) ? (
+        <CardAppointment lead={lead} now={now} awaiting={pending === "awaiting"} />
+      ) : null}
 
       <ul className="text-muted-foreground mt-2 space-y-1.5 text-[13px] leading-tight">
         <li className="flex min-w-0 items-center gap-2">
@@ -199,7 +208,11 @@ function KanbanCardContent({ lead, now, pending, muted = false, nameId, title, p
         <li className="flex min-w-0 items-center gap-2">
           <Clock3Icon aria-hidden="true" className="size-3.5 shrink-0" />
           <span className="sr-only">Entrou </span>
-          <time dateTime={lead.created_at} title={`Entrou em ${formatDateTime(lead.created_at)}`} className="tabular-nums">
+          <time
+            dateTime={lead.created_at}
+            title={`Entrou em ${formatDateTime(lead.created_at)}`}
+            className="tabular-nums"
+          >
             {formatEntryAge(lead.created_at, now)}
           </time>
         </li>

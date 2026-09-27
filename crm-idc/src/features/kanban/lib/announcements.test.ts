@@ -27,7 +27,9 @@ describe("anúncios do arraste", () => {
     expect(announceDragOver({ name: "Maria", from: "novo", over: "novo" })).toBe(
       'Maria sobre a coluna de origem, "Novo".',
     );
-    expect(announceDragOver({ name: "Maria", from: "novo", over: "em_contato" })).toBe('Maria sobre a coluna "Em contato".');
+    expect(announceDragOver({ name: "Maria", from: "novo", over: "em_contato" })).toBe(
+      'Maria sobre a coluna "Em contato".',
+    );
     expect(announceDragOver({ name: "Maria", from: "novo", over: "agendado" })).toBe(
       'Maria sobre a coluna "Agendado": movimento não permitido.',
     );
@@ -35,7 +37,9 @@ describe("anúncios do arraste", () => {
   });
 
   it("fim e cancelamento", () => {
-    expect(announceDragEnd({ name: "Maria", from: "novo", over: "em_contato" })).toBe('Maria solto na coluna "Em contato".');
+    expect(announceDragEnd({ name: "Maria", from: "novo", over: "em_contato" })).toBe(
+      'Maria solto na coluna "Em contato".',
+    );
     expect(announceDragEnd({ name: "Maria", from: "novo", over: "confirmado" })).toBe(
       'Movimento não permitido de "Novo" para "Confirmado". Maria voltou para "Novo".',
     );

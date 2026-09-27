@@ -32,19 +32,14 @@ export interface SavingChange {
 }
 
 export interface SavedMove {
-  /** Lead devolvido pela RPC change_lead_status */
+  /** Lead devolvido pela RPC change_lead_status (a verdade do servidor) */
   lead: Lead;
-  /** ms */
-  savedAt: number;
 }
 
 export interface LeadOverlay {
   lead: Lead;
   kind: PendingMoveKind;
 }
-
-/** Depois disso um movimento salvo deixa de sobrepor os dados (proteção contra refetch que nunca chega). */
-export const SAVED_MOVE_TTL_MS = 60_000;
 
 function isoAt(ms: number): string {
   return new Date(Number.isFinite(ms) && ms > 0 ? ms : 0).toISOString();
@@ -80,21 +75,21 @@ export function mergeLeadLists(...lists: ReadonlyArray<readonly Lead[] | null | 
 }
 
 /** Os dados do servidor já refletem (ou superaram) o movimento salvo? */
-export function isSavedMoveConfirmed(saved: Pick<Lead, "updated_at">, current: Pick<Lead, "updated_at"> | undefined): boolean {
+export function isSavedMoveConfirmed(
+  saved: Pick<Lead, "updated_at">,
+  current: Pick<Lead, "updated_at"> | undefined,
+): boolean {
   if (!current) return false;
   return timeOf(current.updated_at) >= timeOf(saved.updated_at);
 }
 
-/** Movimentos salvos que ainda precisam sobrepor os dados (não confirmados e dentro do TTL). */
-export function liveSavedMoves(
-  saved: readonly SavedMove[],
-  dataById: ReadonlyMap<string, Lead>,
-  nowMs: number,
-  ttlMs = SAVED_MOVE_TTL_MS,
-): SavedMove[] {
-  return saved.filter(
-    (move) => nowMs - move.savedAt <= ttlMs && !isSavedMoveConfirmed(move.lead, dataById.get(move.lead.id)),
-  );
+/**
+ * Movimentos salvos que ainda precisam sobrepor os dados: o servidor confirmou
+ * a mudança, mas o refetch ainda não trouxe (ou falhou, ex.: conexão caiu logo
+ * depois). Valem até os dados alcançarem o `updated_at` salvo.
+ */
+export function liveSavedMoves(saved: readonly SavedMove[], dataById: ReadonlyMap<string, Lead>): SavedMove[] {
+  return saved.filter((move) => !isSavedMoveConfirmed(move.lead, dataById.get(move.lead.id)));
 }
 
 export interface PendingMovesInput {
@@ -110,12 +105,11 @@ export interface PendingMovesInput {
 export function buildLeadOverlays(
   { awaiting, saving, saved }: PendingMovesInput,
   data: readonly Lead[],
-  nowMs: number,
 ): Map<string, LeadOverlay> {
   const dataById = new Map(data.map((lead) => [lead.id, lead]));
   const overlays = new Map<string, LeadOverlay>();
 
-  for (const move of liveSavedMoves(saved, dataById, nowMs)) {
+  for (const move of liveSavedMoves(saved, dataById)) {
     overlays.set(move.lead.id, { lead: move.lead, kind: "saved" });
   }
   for (const move of awaiting) {
@@ -157,12 +151,10 @@ export function visiblePendingKind(overlay: LeadOverlay | undefined): Exclude<Pe
   return overlay.kind;
 }
 
-/** Acrescenta/substitui um movimento salvo e descarta os vencidos. */
-export function addSavedMove(saved: readonly SavedMove[], lead: Lead, nowMs: number, ttlMs = SAVED_MOVE_TTL_MS): SavedMove[] {
-  return [
-    ...saved.filter((move) => move.lead.id !== lead.id && nowMs - move.savedAt <= ttlMs),
-    { lead, savedAt: nowMs },
-  ];
+/** Acrescenta/substitui um movimento salvo e descarta os já confirmados pelos dados. */
+export function addSavedMove(saved: readonly SavedMove[], lead: Lead, data: readonly Lead[] = []): SavedMove[] {
+  const dataById = new Map(data.map((item) => [item.id, item]));
+  return [...liveSavedMoves(saved, dataById).filter((move) => move.lead.id !== lead.id), { lead }];
 }
 
 /** Acrescenta/substitui o movimento aguardando diálogo de um lead. */

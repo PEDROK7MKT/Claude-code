@@ -68,7 +68,8 @@ export function KanbanBoardSkeleton({ announce = true, className }: { announce?:
 /** Página do kanban carregando (loading.tsx e fallback do Suspense). */
 export function KanbanSkeleton() {
   return (
-    <div className="space-y-4">
+    <div role="status" aria-busy="true" className="space-y-4">
+      <span className="sr-only">Carregando o kanban…</span>
       <PageHeaderSkeleton />
       <div aria-hidden="true" className="flex flex-col gap-2 lg:flex-row lg:items-center">
         <Skeleton className="h-10 w-full rounded-md md:h-9 lg:w-80" />

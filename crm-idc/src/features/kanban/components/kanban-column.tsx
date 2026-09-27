@@ -73,7 +73,8 @@ export function KanbanColumn({
       data-over={isOver || undefined}
       style={{ backgroundColor: laneBackground(meta.color, column, dropState, isOver) }}
       className={cn(
-        "relative flex w-[280px] shrink-0 snap-start flex-col rounded-xl border transition-[box-shadow,background-color,border-color] duration-200",
+        // bg-zinc-200/50: reserva para navegadores sem color-mix
+        "relative flex w-[280px] shrink-0 snap-start flex-col rounded-xl border bg-zinc-200/50 transition-[box-shadow,background-color,border-color] duration-200",
         muted && "border-dashed",
         dropState === "valid" && "border-primary/40 ring-primary/25 ring-2",
         dropState === "valid" && isOver && "ring-primary shadow-lg",
@@ -85,71 +86,74 @@ export function KanbanColumn({
           dropState === "invalid" && "opacity-50 saturate-50",
         )}
       >
-      <span
-        aria-hidden="true"
-        className={cn("absolute inset-x-0 top-0 h-1 rounded-t-xl", muted && "opacity-50")}
-        style={{ backgroundColor: meta.color }}
-      />
-      <header className="flex items-start gap-2 px-3 pt-3.5 pb-2">
         <span
           aria-hidden="true"
-          className="mt-1.5 size-2.5 shrink-0 rounded-full ring-2 ring-white"
+          className={cn("absolute inset-x-0 top-0 h-1 rounded-t-xl", muted && "opacity-50")}
           style={{ backgroundColor: meta.color }}
         />
-        <div className="min-w-0 flex-1">
-          <h3 id={headingId} className={cn("text-sm leading-6 font-semibold", muted && "text-foreground/75")}>
-            {meta.title}
-          </h3>
-          {caption ? <p className="text-muted-foreground -mt-0.5 text-[11px] leading-4">{caption}</p> : null}
-        </div>
-        <span
-          className={cn(
-            "bg-card inline-flex h-6 min-w-7 items-center justify-center rounded-full border px-2 text-xs font-semibold tabular-nums",
-            muted && "text-muted-foreground",
-          )}
-          aria-label={loading ? "Carregando" : columnCountLabel(count)}
-          title={loading ? undefined : columnCountLabel(count)}
-        >
-          {loading ? "…" : count}
-        </span>
-      </header>
+        <header className="flex items-start gap-2 px-3 pt-3.5 pb-2">
+          <span
+            aria-hidden="true"
+            className="mt-1.5 size-2.5 shrink-0 rounded-full ring-2 ring-white"
+            style={{ backgroundColor: meta.color }}
+          />
+          <div className="min-w-0 flex-1">
+            <h3 id={headingId} className={cn("text-sm leading-6 font-semibold", muted && "text-foreground/75")}>
+              {meta.title}
+              <span className="sr-only">, {loading ? "carregando" : columnCountLabel(count)}</span>
+            </h3>
+            {caption ? <p className="text-muted-foreground -mt-0.5 text-[11px] leading-4">{caption}</p> : null}
+          </div>
+          <span
+            className={cn(
+              "bg-card inline-flex h-6 min-w-7 items-center justify-center rounded-full border px-2 text-xs font-semibold tabular-nums",
+              muted && "text-muted-foreground",
+            )}
+            aria-hidden="true"
+            title={loading ? undefined : columnCountLabel(count)}
+          >
+            {loading ? "…" : count}
+          </span>
+        </header>
 
-      <ul
-        aria-labelledby={headingId}
-        className="flex min-h-28 flex-1 flex-col gap-2 overflow-y-auto overscroll-y-contain px-2 pb-2 [scrollbar-width:thin] max-md:max-h-[62dvh] md:max-h-[calc(100dvh-19rem)] md:min-h-40"
-      >
-        {loading ? (
-          <ColumnSkeletonCards />
-        ) : error ? (
-          <li className="list-none">
-            <ErrorState
-              size="sm"
-              title="Não foi possível carregar"
-              message="Verifique a conexão."
-              onRetry={error.onRetry}
-              retrying={error.retrying}
-              className="bg-card/70 rounded-lg px-2 py-4"
-            />
-          </li>
-        ) : count === 0 ? (
-          <li className="text-muted-foreground flex h-20 list-none items-center justify-center rounded-lg border-2 border-dashed border-black/10 text-xs">
-            Nenhum lead
-          </li>
-        ) : (
-          leads.map((lead) => (
-            <li key={lead.id} className="list-none">
-              <KanbanCard
-                lead={lead}
-                now={now}
-                pending={visiblePendingKind(overlays.get(lead.id))}
-                muted={muted}
-                onMove={onMove}
-                whatsappMessage={whatsappMessage}
+        <ul
+          role="list"
+          aria-labelledby={headingId}
+          aria-busy={loading || undefined}
+          className="flex min-h-28 flex-1 flex-col gap-2 overflow-y-auto px-2 pb-2 [scrollbar-width:thin] max-md:max-h-[62dvh] md:max-h-[calc(100dvh-24rem)] md:min-h-40 lg:max-h-[calc(100dvh-22rem)]"
+        >
+          {loading ? (
+            <ColumnSkeletonCards />
+          ) : error ? (
+            <li>
+              <ErrorState
+                size="sm"
+                title="Não foi possível carregar"
+                message="Verifique a conexão."
+                onRetry={error.onRetry}
+                retrying={error.retrying}
+                className="bg-card/70 rounded-lg px-2 py-4"
               />
             </li>
-          ))
-        )}
-      </ul>
+          ) : count === 0 ? (
+            <li className="text-muted-foreground flex h-20 items-center justify-center rounded-lg border-2 border-dashed border-black/10 text-xs">
+              Nenhum lead
+            </li>
+          ) : (
+            leads.map((lead) => (
+              <li key={lead.id}>
+                <KanbanCard
+                  lead={lead}
+                  now={now}
+                  pending={visiblePendingKind(overlays.get(lead.id))}
+                  muted={muted}
+                  onMove={onMove}
+                  whatsappMessage={whatsappMessage}
+                />
+              </li>
+            ))
+          )}
+        </ul>
       </div>
 
       <DropHint dropState={dropState} isOver={isOver} />
@@ -186,7 +190,7 @@ function ColumnSkeletonCards() {
   return (
     <>
       {[0, 1].map((index) => (
-        <li key={index} className="bg-card list-none space-y-2.5 rounded-lg border p-3" aria-hidden="true">
+        <li key={index} className="bg-card space-y-2.5 rounded-lg border p-3" aria-hidden="true">
           <Skeleton className="h-4 w-3/4" />
           <Skeleton className="h-3 w-1/2" />
           <Skeleton className="h-3 w-2/3" />

@@ -40,7 +40,7 @@ function isSavingChange(value: SavingChange | null): value is SavingChange {
  * salvas em qualquer tela (cache de mutations do TanStack) e mudanças salvas
  * ainda não refletidas pelo refetch. Cancelou ou falhou → o card volta sozinho.
  */
-export function usePendingMoves(data: readonly Lead[], now: number): UsePendingMovesResult {
+export function usePendingMoves(data: readonly Lead[]): UsePendingMovesResult {
   const [awaiting, setAwaiting] = React.useState<readonly AwaitingMove[]>([]);
   const [saved, setSaved] = React.useState<readonly SavedMove[]>([]);
 
@@ -51,8 +51,8 @@ export function usePendingMoves(data: readonly Lead[], now: number): UsePendingM
   const saving = React.useMemo(() => savingRaw.filter(isSavingChange), [savingRaw]);
 
   const overlays = React.useMemo(
-    () => buildLeadOverlays({ awaiting, saving, saved }, data, now),
-    [awaiting, saving, saved, data, now],
+    () => buildLeadOverlays({ awaiting, saving, saved }, data),
+    [awaiting, saving, saved, data],
   );
   const leads = React.useMemo(() => applyLeadOverlays(data, overlays), [data, overlays]);
 
@@ -65,9 +65,14 @@ export function usePendingMoves(data: readonly Lead[], now: number): UsePendingM
     setAwaiting((current) => removeAwaitingMove(current, leadId));
   }, []);
 
+  // dados mais recentes para descartar movimentos já confirmados ao registrar um novo
+  const dataRef = React.useRef(data);
+  React.useEffect(() => {
+    dataRef.current = data;
+  }, [data]);
+
   const markSaved = React.useCallback((lead: Lead) => {
-    const savedAt = Date.now();
-    setSaved((current) => addSavedMove(current, lead, savedAt));
+    setSaved((current) => addSavedMove(current, lead, dataRef.current));
   }, []);
 
   return { leads, overlays, beginMove, endMove, markSaved };
