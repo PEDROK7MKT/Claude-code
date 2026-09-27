@@ -276,6 +276,15 @@ describe("parseGoogleAdsCsv", () => {
     expect(errors[3]).toMatch(/Cliques: valor inválido/);
     expect(errors[4]).toMatch(/inteiro/);
     expect(errors[5]).toMatch(/futuro/);
+    expect(result.rows.map((r) => r.invalidFields)).toEqual([
+      ["date"],
+      ["campaign"],
+      ["impressions"],
+      ["clicks"],
+      ["impressions"],
+      ["date"],
+      [],
+    ]);
     expect(toImportInputs(result)).toHaveLength(1);
     expect(toImportInputs(result)[0].date).toBe("2026-09-06");
   });

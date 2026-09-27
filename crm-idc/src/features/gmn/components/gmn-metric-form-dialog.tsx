@@ -174,7 +174,7 @@ function GmnMetricForm({ metric, rows, saving, onSubmit, onCancel, onEditExistin
                 className="w-full sm:w-fit"
               >
                 {PERIOD_PRESETS.map((p) => (
-                  <ToggleGroupItem key={p.value} value={p.value} className="px-3 text-xs sm:text-sm">
+                  <ToggleGroupItem key={p.value} value={p.value} className="px-1.5 text-xs sm:px-3 sm:text-sm">
                     {p.label}
                   </ToggleGroupItem>
                 ))}

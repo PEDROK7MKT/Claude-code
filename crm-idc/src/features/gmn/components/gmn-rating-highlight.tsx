@@ -1,5 +1,4 @@
-import * as React from "react";
-import { ArrowDownIcon, ArrowUpIcon, MinusIcon, StoreIcon, TrophyIcon } from "lucide-react";
+import { ArrowDownIcon, ArrowUpIcon, MinusIcon, StoreIcon, TrophyIcon, type LucideIcon } from "lucide-react";
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
@@ -147,7 +146,7 @@ function formatRatingDelta(delta: number | null): string {
 
 /** Pílula de variação sobre o fundo teal (seta + texto; nunca só cor). */
 function DeltaPill({ value, text }: { value: number | null; text: string }) {
-  const Icon: React.ElementType = value == null || value === 0 ? MinusIcon : value > 0 ? ArrowUpIcon : ArrowDownIcon;
+  const Icon: LucideIcon = value == null || value === 0 ? MinusIcon : value > 0 ? ArrowUpIcon : ArrowDownIcon;
   return (
     <span className="inline-flex items-center gap-1 rounded-full bg-white/15 px-2.5 py-1 text-xs font-semibold text-white tabular-nums">
       <Icon aria-hidden="true" className="size-3.5" />

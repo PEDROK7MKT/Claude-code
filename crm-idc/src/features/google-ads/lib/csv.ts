@@ -75,6 +75,8 @@ export interface CsvPreviewRow {
   status: "valid" | "invalid" | "duplicate";
   errors: string[];
   warnings: string[];
+  /** Campos com erro (para destacar a célula na prévia) */
+  invalidFields: CsvField[];
   /** Já existe lançamento para o dia/campanha (o import atualiza) */
   replacesExisting: boolean;
 }
@@ -514,16 +516,21 @@ function buildRow({
 }: BuildRowArgs): CsvPreviewRow {
   const errors: string[] = [];
   const warnings: string[] = [];
+  const invalidFields = new Set<CsvField>();
+  const fail = (field: CsvField, message: string) => {
+    errors.push(message);
+    invalidFields.add(field);
+  };
 
-  if (!rawDate) errors.push("Data não informada.");
-  else if (!date) errors.push(`Data inválida: “${rawDate}”. Use dd/mm/aaaa ou aaaa-mm-dd.`);
-  else if (options.todayKey && date > options.todayKey) errors.push(`Data no futuro: ${formatDateKey(date)}.`);
+  if (!rawDate) fail("date", "Data não informada.");
+  else if (!date) fail("date", `Data inválida: “${rawDate}”. Use dd/mm/aaaa ou aaaa-mm-dd.`);
+  else if (options.todayKey && date > options.todayKey) fail("date", `Data no futuro: ${formatDateKey(date)}.`);
 
   const campaignCell = columns.campaign !== undefined ? (cells[columns.campaign] ?? "").trim() : "";
   const campaignText = campaignCell || defaultCampaign;
   const campaign = campaignText ? matchKnownCampaign(campaignText, known) : null;
-  if (!campaign) errors.push(columns.campaign === undefined ? "Escolha a campanha do arquivo." : "Campanha não informada.");
-  else if (campaign.length > 120) errors.push("Nome da campanha muito longo (máx. 120 caracteres).");
+  if (!campaign) fail("campaign", columns.campaign === undefined ? "Escolha a campanha do arquivo." : "Campanha não informada.");
+  else if (campaign.length > 120) fail("campaign", "Nome da campanha muito longo (máx. 120 caracteres).");
 
   const values: Record<MetricField, number | null> = { impressions: 0, clicks: 0, cost: 0, conversions: 0 };
   for (const field of METRIC_FIELDS) {
@@ -533,16 +540,16 @@ function buildRow({
     const n = parseCsvNumber(raw, numberFormat);
     const label = CSV_FIELD_LABEL[field];
     if (n === null) {
-      errors.push(`${label}: valor inválido “${raw}”.`);
+      fail(field, `${label}: valor inválido “${raw}”.`);
       values[field] = null;
     } else if (n < 0) {
-      errors.push(`${label}: o valor não pode ser negativo.`);
+      fail(field, `${label}: o valor não pode ser negativo.`);
       values[field] = n;
     } else if ((field === "impressions" || field === "clicks") && !Number.isInteger(n)) {
-      errors.push(`${label}: deve ser um número inteiro (“${raw}”).`);
+      fail(field, `${label}: deve ser um número inteiro (“${raw}”).`);
       values[field] = n;
     } else if (n > (field === "cost" ? MAX_COST : MAX_INTEGER)) {
-      errors.push(`${label}: valor acima do permitido.`);
+      fail(field, `${label}: valor acima do permitido.`);
       values[field] = n;
     } else {
       values[field] = field === "cost" ? Math.round(n * 100) / 100 : n;
@@ -581,6 +588,7 @@ function buildRow({
     status: errors.length ? "invalid" : "valid",
     errors,
     warnings,
+    invalidFields: [...invalidFields],
     replacesExisting,
   };
 }

@@ -6,6 +6,7 @@ import {
   findComparablePrevious,
   ratingAxisDomain,
   ratingAxisTicks,
+  reviewsAxis,
   sortByPeriodDesc,
   starFills,
   toRating,
@@ -158,6 +159,21 @@ describe("eixo da nota e estrelas", () => {
     expect(ratingAxisTicks([4, 5])).toEqual([4, 4.5, 5]);
     expect(ratingAxisTicks([3.5, 5])).toEqual([3.5, 4, 4.5, 5]);
     expect(ratingAxisTicks([0, 5])).toEqual([0, 1, 2, 3, 4, 5]);
+  });
+
+  it("eixo das avaliações com folga e marcas redondas", () => {
+    expect(reviewsAxis([153, 197])).toEqual({ domain: [0, 300], ticks: [0, 100, 200, 300] });
+    expect(reviewsAxis([62])).toEqual({ domain: [0, 100], ticks: [0, 25, 50, 75, 100] });
+    expect(reviewsAxis([1500])).toEqual({ domain: [0, 2000], ticks: [0, 500, 1000, 1500, 2000] });
+    expect(reviewsAxis([])).toEqual({ domain: [0, 4], ticks: [0, 1, 2, 3, 4] });
+    expect(reviewsAxis([0, 3])).toEqual({ domain: [0, 4], ticks: [0, 1, 2, 3, 4] });
+    // o topo sempre deixa a barra mais alta abaixo de ~77% da altura
+    for (const max of [9, 48, 130, 313, 999, 4321]) {
+      const { domain, ticks } = reviewsAxis([max]);
+      expect(domain[1]).toBeGreaterThanOrEqual(max * 1.3);
+      expect(ticks.at(-1)).toBe(domain[1]);
+      expect(ticks.every((t) => Number.isInteger(t))).toBe(true);
+    }
   });
 
   it("preenchimento parcial das estrelas", () => {

@@ -5,7 +5,7 @@ import { KpiCard } from "@/components/shared/kpi-card";
 import { formatNumber } from "@/lib/format";
 import { cn } from "@/lib/utils";
 import type { GmnMetric } from "@/types/database";
-import { formatPeriod, formatPeriodShort } from "../lib/periods";
+import { formatPeriod } from "../lib/periods";
 import type { GmnComparison, GmnKpiKey } from "../lib/summary";
 
 const KPI_META: Record<GmnKpiKey, { title: string; icon: LucideIcon }> = {
@@ -26,9 +26,6 @@ export interface GmnKpiCardsProps {
 /** KPIs do último período vs o período anterior equivalente (mesma duração). */
 export function GmnKpiCards({ comparison, className }: GmnKpiCardsProps) {
   const { latest, previous, kpis } = comparison;
-  const changeLabel = previous
-    ? `vs ${formatPeriodShort(previous.period_start, previous.period_end)}`
-    : "vs período anterior";
 
   const hints: Partial<Record<GmnKpiKey, string>> = {
     totalViews: `Busca ${formatNumber(latest.search_views)} · Maps ${formatNumber(latest.maps_views)}`,
@@ -59,7 +56,6 @@ export function GmnKpiCards({ comparison, className }: GmnKpiCardsProps) {
               value={formatNumber(kpis[key].current)}
               hint={hints[key]}
               change={kpis[key].change}
-              changeLabel={changeLabel}
             />
           );
         })}

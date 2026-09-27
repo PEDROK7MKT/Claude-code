@@ -11,7 +11,7 @@ import {
   type ChartConfig,
 } from "@/components/ui/chart";
 import { formatDecimal, formatNumber } from "@/lib/format";
-import { ratingAxisDomain, ratingAxisTicks, type GmnSeriesPoint } from "../lib/summary";
+import { ratingAxisDomain, ratingAxisTicks, reviewsAxis, type GmnSeriesPoint } from "../lib/summary";
 import {
   CHART_CLASS,
   GMN_COLORS,
@@ -31,6 +31,8 @@ const config = {
 
 /** Avaliações: total acumulado (barras, eixo esquerdo) e nota média (linha, eixo direito). */
 export function GmnReviewsChart({ data, className }: { data: GmnSeriesPoint[]; className?: string }) {
+  // folga acima das barras: a linha da nota (perto de 5,0) não se mistura com elas
+  const reviews = reviewsAxis(data.map((p) => p.totalReviews));
   const domain = ratingAxisDomain(data.map((p) => p.averageRating));
   const ticks = ratingAxisTicks(domain);
   const last = data.at(-1);
@@ -52,7 +54,14 @@ export function GmnReviewsChart({ data, className }: { data: GmnSeriesPoint[]; c
         <ComposedChart data={data} margin={{ top: 8, right: 4, left: 0, bottom: 0 }}>
           <CartesianGrid vertical={false} stroke={GRID_COLOR} yAxisId="reviews" />
           <XAxis {...X_AXIS_PROPS} />
-          <YAxis {...Y_AXIS_PROPS} yAxisId="reviews" width={40} tickFormatter={axisNumber} />
+          <YAxis
+            {...Y_AXIS_PROPS}
+            yAxisId="reviews"
+            width={40}
+            domain={reviews.domain}
+            ticks={reviews.ticks}
+            tickFormatter={axisNumber}
+          />
           <YAxis
             {...Y_AXIS_PROPS}
             yAxisId="rating"

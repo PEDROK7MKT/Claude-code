@@ -97,6 +97,28 @@ export function ratingAxisDomain(values: ReadonlyArray<number | null>): [number,
   return [lower, 5];
 }
 
+/**
+ * Eixo das barras de avaliações com folga no topo (a linha da nota fica acima das barras)
+ * e marcas redondas: 197 → 0/100/200/300. Escolhe o menor máximo "redondo" com 3 a 5 intervalos.
+ */
+export function reviewsAxis(values: readonly number[], headroom = 1.3): { domain: [number, number]; ticks: number[] } {
+  const dataMax = values.reduce((max, v) => (Number.isFinite(v) ? Math.max(max, v) : max), 0);
+  const target = Math.max(4, dataMax * headroom);
+  let best: { top: number; step: number; count: number } | null = null;
+  for (const count of [4, 5, 3]) {
+    const raw = target / count;
+    const magnitude = 10 ** Math.floor(Math.log10(raw));
+    const step = [1, 2, 2.5, 5, 10]
+      .map((m) => m * magnitude)
+      .find((s) => s >= raw - 1e-9 && Number.isInteger(s));
+    if (step == null) continue;
+    const top = step * count;
+    if (!best || top < best.top) best = { top, step, count };
+  }
+  const { top, step, count } = best ?? { top: 4, step: 1, count: 4 };
+  return { domain: [0, top], ticks: Array.from({ length: count + 1 }, (_, i) => i * step) };
+}
+
 /** Marcas do eixo da nota (passo 0,5 até 2 pontos de amplitude; senão 1). */
 export function ratingAxisTicks([lower, upper]: [number, number]): number[] {
   const step = upper - lower <= 2 ? 0.5 : 1;

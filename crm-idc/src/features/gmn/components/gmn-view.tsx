@@ -64,7 +64,18 @@ export function GmnView({ initialSettings }: GmnViewProps) {
   const openEdit = (metric: GmnMetric) => setDialog({ open: true, metric });
 
   let content: React.ReactNode;
-  if (metricsQuery.isPending) {
+  if (metricsQuery.isPending && metricsQuery.fetchStatus === "paused") {
+    // offline e nada salvo neste aparelho ainda: a consulta fica pausada até reconectar
+    content = (
+      <Card>
+        <ErrorState
+          title="Sem conexão com o servidor"
+          message="As métricas do Google Meu Negócio ainda não foram salvas neste aparelho. Conecte-se à internet para carregá-las."
+          onRetry={() => void metricsQuery.refetch()}
+        />
+      </Card>
+    );
+  } else if (metricsQuery.isPending) {
     content = <GmnPageSkeleton withHeader={false} />;
   } else if (metricsQuery.isError && !metricsQuery.data) {
     content = (
