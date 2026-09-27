@@ -51,7 +51,7 @@ export function formatTime(input: DateInput | null | undefined): string {
   return format(toBahia(input), "HH:mm");
 }
 
-/** "ter, 12/03 às 14:30" — útil em listas de agenda */
+/** "terça, 12/03 às 14:30" — útil em listas de agenda */
 export function formatAppointment(input: DateInput | null | undefined): string {
   if (input == null || input === "") return "—";
   return format(toBahia(input), "EEE, dd/MM 'às' HH:mm", { locale: ptBR });

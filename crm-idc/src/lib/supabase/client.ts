@@ -12,7 +12,8 @@ let browserClient: TypedSupabaseClient | undefined;
 /** Cliente Supabase do navegador (singleton). Respeita RLS com a sessão do usuário. */
 export function createClient(): TypedSupabaseClient {
   if (!browserClient) {
-    browserClient = createBrowserClient<Database>(SUPABASE_URL, SUPABASE_ANON_KEY);
+    // retry: false — o TanStack Query já faz as novas tentativas; evita ~7s extras antes do erro offline
+    browserClient = createBrowserClient<Database>(SUPABASE_URL, SUPABASE_ANON_KEY, { db: { retry: false } });
   }
   return browserClient;
 }

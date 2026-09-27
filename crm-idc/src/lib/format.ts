@@ -59,8 +59,13 @@ export function parseBRNumber(input: string | number | null | undefined): number
     s = s.replace(/\./g, "").replace(",", ".");
   } else if (lastDot > -1) {
     // "1.234" (milhar pt-BR) vs "12.5" (decimal): 3 dígitos após o ponto único → milhar
+    // (exceto "0.123"/"-0.500": zero à esquerda não é grupo de milhar)
     const parts = s.split(".");
-    if (parts.length > 2 || (parts.length === 2 && parts[1].length === 3 && parts[0].length <= 3)) {
+    const intPart = parts[0].replace(/^[-+]/, "");
+    if (
+      parts.length > 2 ||
+      (parts.length === 2 && parts[1].length === 3 && intPart.length >= 1 && intPart.length <= 3 && intPart !== "0")
+    ) {
       s = s.replace(/\./g, "");
     }
   }
@@ -120,7 +125,11 @@ export function firstName(name: string | null | undefined): string {
  */
 export function whatsappUrl(phone: string, leadName?: string | null, template: string = DEFAULT_WHATSAPP_MESSAGE): string {
   const digits = normalizePhone(phone) ?? phone.replace(/\D/g, "");
-  const text = template.replaceAll("{nome}", firstName(leadName) || "").replace(/\s+!/g, "!").trim();
+  // sem nome: "Olá {nome}! ..." → "Olá! ..." (remove espaço antes de pontuação)
+  const text = template
+    .replaceAll("{nome}", firstName(leadName) || "")
+    .replace(/[ \t]+([!?,.;:])/g, "$1")
+    .trim();
   return `https://wa.me/55${digits}${text ? `?text=${encodeURIComponent(text)}` : ""}`;
 }
 

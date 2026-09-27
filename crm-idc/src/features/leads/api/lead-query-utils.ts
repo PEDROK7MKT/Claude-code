@@ -193,18 +193,17 @@ export function buildLeadSearchFilter(search: string | null | undefined): string
 // -----------------------------------------------------------------------------
 
 /** Campos que o cliente nunca envia: status só muda pela RPC; datas do funil e autoria são do banco. */
-const DB_CONTROLLED_FIELDS = [
-  "id",
-  "status",
-  "created_by",
-  "created_at",
-  "updated_at",
-  "contacted_at",
-  "confirmed_at",
-  "attended_at",
-] as const;
+type DbControlledLeadField =
+  | "id"
+  | "status"
+  | "created_by"
+  | "created_at"
+  | "updated_at"
+  | "contacted_at"
+  | "confirmed_at"
+  | "attended_at";
 
-export type LeadEditableFields = Omit<LeadInsert, (typeof DB_CONTROLLED_FIELDS)[number]>;
+export type LeadEditableFields = Omit<LeadInsert, DbControlledLeadField>;
 
 const OPTIONAL_TEXT_FIELDS = [
   "notes",

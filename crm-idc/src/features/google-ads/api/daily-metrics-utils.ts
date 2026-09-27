@@ -9,7 +9,7 @@ import type { DailyMetric } from "@/types/database";
 /** Dados de uma linha de métrica (formulário/CSV). `id` presente = edição de linha existente. */
 export interface DailyMetricInput {
   id?: string;
-  /** yyyy-MM-dd */
+  /** yyyy-MM-dd (também aceita dd/MM/yyyy) */
   date: string;
   campaign: string;
   impressions?: number | null;
@@ -30,11 +30,32 @@ export function isValidDateKey(value: string): boolean {
   return date.getUTCFullYear() === y && date.getUTCMonth() === m - 1 && date.getUTCDate() === d;
 }
 
+/**
+ * Converte datas digitadas/importadas em yyyy-MM-dd: aceita "2026-03-05", "05/03/2026",
+ * "5/3/2026", "05-03-2026" e "05.03.2026" (dia/mês/ano, padrão brasileiro). Inválida → null.
+ */
+export function parseDateKey(value: string | null | undefined): string | null {
+  const v = (value ?? "").trim();
+  let y: number;
+  let m: number;
+  let d: number;
+  let match = /^(\d{4})-(\d{1,2})-(\d{1,2})(?:[T\s].*)?$/.exec(v);
+  if (match) {
+    [y, m, d] = [Number(match[1]), Number(match[2]), Number(match[3])];
+  } else {
+    match = /^(\d{1,2})[/.-](\d{1,2})[/.-](\d{4})$/.exec(v);
+    if (!match) return null;
+    [d, m, y] = [Number(match[1]), Number(match[2]), Number(match[3])];
+  }
+  const key = `${String(y).padStart(4, "0")}-${String(m).padStart(2, "0")}-${String(d).padStart(2, "0")}`;
+  return isValidDateKey(key) ? key : null;
+}
+
 function nonNegative(value: number | null | undefined, label: string, decimals: number): number {
   if (value == null) return 0;
   const n = Number(value);
-  if (!Number.isFinite(n)) throw new AppError(`${label} inválido.`);
-  if (n < 0) throw new AppError(`${label} não pode ser negativo.`);
+  if (!Number.isFinite(n)) throw new AppError(`${label}: valor inválido.`);
+  if (n < 0) throw new AppError(`${label}: o valor não pode ser negativo.`);
   const factor = 10 ** decimals;
   return Math.round(n * factor) / factor;
 }
@@ -45,8 +66,8 @@ function nonNegative(value: number | null | undefined, label: string, decimals: 
  * e custo ≥ 0 com 2 casas. Lança AppError (pt-BR).
  */
 export function sanitizeDailyMetric(input: DailyMetricInput): SanitizedDailyMetric {
-  const date = (input.date ?? "").trim().slice(0, 10);
-  if (!isValidDateKey(date)) throw new AppError(`Data inválida${input.date ? `: "${input.date}"` : ""}. Use o formato dd/mm/aaaa.`);
+  const date = parseDateKey(input.date);
+  if (!date) throw new AppError(`Data inválida${input.date ? `: "${input.date}"` : ""}. Use dd/mm/aaaa ou aaaa-mm-dd.`);
   const campaign = canonicalCampaignName(input.campaign);
   if (!campaign) throw new AppError("Informe a campanha.");
   return {

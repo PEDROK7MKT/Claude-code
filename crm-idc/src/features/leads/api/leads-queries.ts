@@ -67,7 +67,12 @@ export async function fetchLeadsPage(
   };
 
   try {
-    return await runPage(f.page);
+    const result = await runPage(f.page);
+    // página vazia além do fim (sem erro 416): volta para a última página com dados
+    if (result.rows.length === 0 && f.page > 1 && result.total > 0 && result.pageCount < f.page) {
+      return await runPage(result.pageCount);
+    }
+    return result;
   } catch (err) {
     // PGRST103: offset além do total (416 Range Not Satisfiable)
     if (errorCode(err) !== "PGRST103" || f.page === 1) throw err;

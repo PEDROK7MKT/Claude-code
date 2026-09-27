@@ -2,13 +2,13 @@ import { useMutation, useQuery, useQueryClient, type UseMutationResult, type Use
 import { toast } from "sonner";
 import { chunk, fetchInBatches, requireUserId } from "@/features/leads/api/supabase-helpers";
 import { QUERY_KEYS } from "@/lib/constants";
-import { AppError, NOT_FOUND_MESSAGE, PERMISSION_ERROR_MESSAGE, getErrorMessage } from "@/lib/errors";
+import { AppError, NOT_FOUND_MESSAGE, getErrorMessage } from "@/lib/errors";
 import { createClient, type TypedSupabaseClient } from "@/lib/supabase/client";
 import type { DailyMetric } from "@/types/database";
 import { dedupeDailyMetrics, sanitizeDailyMetric, type DailyMetricInput } from "./daily-metrics-utils";
 
 export type { DailyMetricInput } from "./daily-metrics-utils";
-export { dedupeDailyMetrics, isValidDateKey, sanitizeDailyMetric } from "./daily-metrics-utils";
+export { dedupeDailyMetrics, isValidDateKey, parseDateKey, sanitizeDailyMetric } from "./daily-metrics-utils";
 
 /** Intervalo de datas-calendário (yyyy-MM-dd), ambos inclusivos. */
 export interface DailyMetricsRange {
@@ -180,7 +180,7 @@ export function useDeleteDailyMetric(): UseMutationResult<void, Error, string> {
     mutationFn: async (id: string) => {
       const { data } = await createClient().from("daily_metrics").delete().eq("id", id).select("id").throwOnError();
       // RLS não gera erro no DELETE: 0 linhas = sem permissão (ou já excluída)
-      if (!data.length) throw new AppError(PERMISSION_ERROR_MESSAGE);
+      if (!data.length) throw new AppError(NOT_FOUND_MESSAGE);
     },
     onSuccess: () => {
       toast.success("Métrica excluída");
