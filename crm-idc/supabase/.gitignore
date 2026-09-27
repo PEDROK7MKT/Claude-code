@@ -1,0 +1,2 @@
+# clusters PostgreSQL descartáveis criados por tests/run.sh
+.tmp/
