@@ -456,10 +456,15 @@ page({
 </div>
 
 <section class="manifesto dark" aria-label="Por que a Viva existe">
-  <div class="wrap">
+  <div class="wrap manifesto-grid">
+    <div>
     <span class="label" data-rise>Por que a gente existe</span>
     <p>Tem empresa boa demais em Barreiras que ninguém encontra no Google. Tem loja linda postando foto torta. Tem clínica cheia de indicação sumida do Instagram. A gente existe pra <span class="s">resolver isso.</span></p>
     <span class="sign" data-rise>— equipe Viva</span>
+    </div>
+    <ul class="searches" aria-label="Exemplos de buscas feitas por clientes da região">
+      ${['pizzaria em Barreiras', 'dentista perto de mim', 'loja de roupa LEM', 'revenda agrícola Barreiras', 'salão de beleza aberto agora', 'academia São Desidério'].map((q, i) => `<li data-rise="${(i * 0.08).toFixed(2)}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M20 20l-4.8-4.8"/></svg><span>${q}</span><em>sua empresa aparece?</em></li>`).join('')}
+    </ul>
   </div>
 </section>
 

@@ -218,6 +218,13 @@ body::before {
 .manifesto { padding: clamp(110px, 14vw, 200px) 0; }
 .manifesto p { font-size: clamp(32px, 4.3vw, 64px); line-height: 1.08; font-weight: 700; font-stretch: 85%; letter-spacing: -0.02em; max-width: 21ch; margin: 30px 0 0; }
 .manifesto p .s { font-weight: 400; }
+.manifesto-grid { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 0.75fr); gap: 60px; align-items: center; }
+@media (max-width: 900px) { .manifesto-grid { grid-template-columns: 1fr; } }
+.searches { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; }
+.searches li { display: grid; grid-template-columns: 22px 1fr; column-gap: 12px; align-items: center; padding: 14px 18px; border-radius: 999px; background: #161616; border: 1.5px solid rgba(243, 242, 238, 0.18); font-size: 17px; }
+.searches li:nth-child(odd) { margin-left: 26px; }
+.searches svg { width: 20px; height: 20px; color: #8f8b84; }
+.searches em { grid-column: 2; font: 600 20px/1 var(--hand); color: #8f8b84; margin-top: 4px; }
 .manifesto .sign { margin-top: 44px; font: 600 32px/1 var(--hand); rotate: -3deg; display: inline-block; }
 
 /* ─── seções ─── */
@@ -578,6 +585,8 @@ body::before {
 .checklist li { display: grid; grid-template-columns: 30px 1fr; gap: 12px; font-size: 18px; line-height: 1.45; }
 .checklist li::before { content: ''; width: 26px; height: 26px; margin-top: 1px; border-radius: 7px; background: var(--black) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23f3f2ee' stroke-width='3.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12.5l4.5 4.5L19 7'/%3E%3C/svg%3E") center / 16px no-repeat; }
 .aside { position: sticky; top: 110px; padding: 34px; }
+.checklist.paper, .aside.paper, .step.paper { box-shadow: none; border-width: 1.5px; border-radius: 18px; }
+.step.paper:nth-child(even) { box-shadow: none; }
 .aside h2 { font-size: 40px; margin-bottom: 14px; }
 .aside p { color: var(--muted); font-size: 17px; }
 .aside .btn { width: 100%; margin-top: 8px; }
