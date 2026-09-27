@@ -17,6 +17,8 @@ const TZ = 'America/Sao_Paulo';
 const LAUNCH = Date.parse(CONFIG.launchISO);
 const UA = navigator.userAgent || '';
 const IN_APP = /Instagram|FBAN|FBAV|FB_IAB/i.test(UA);
+// dentro de uma moldura (iframe, prévias): downloads e Web Share costumam ser bloqueados
+const IN_FRAME = (() => { try { return window.self !== window.top; } catch (e) { return true; } })();
 
 // ?slow=5 deixa as animações 5× mais lentas (só para conferir a coreografia)
 const SLOW = Math.max(1, Number(new URLSearchParams(location.search).get('slow')) || 1);
@@ -660,7 +662,7 @@ function waLink(text) {
 }
 
 function calendarLink() {
-  const useGoogle = IN_APP || /Android/i.test(UA);
+  const useGoogle = IN_APP || IN_FRAME || /Android/i.test(UA);
   if (!useGoogle) return { href: 'assets/lancamento.ics', download: true };
   const f = (d) => d.toISOString().replace(/[-:]/g, '').replace(/\.\d{3}/, '');
   const start = new Date(LAUNCH);
@@ -886,17 +888,26 @@ function waitlist() {
     document.dispatchEvent(new CustomEvent('valora:left'));
   });
 
-  $('#done-share').addEventListener('click', async () => {
+  // Compartilhar: é um link de verdade para o WhatsApp (funciona em qualquer navegador);
+  // onde o Web Share existir de fato, abre a folha de compartilhar do aparelho.
+  const share = $('#done-share');
+  const SHARE_TEXT = 'Um convite da Valora Suisse: a nova coleção, em zircônia e moissanite.';
+  const shareUrl = () => {
     const url = new URL(location.href.split('#')[0]);
     url.search = '';
     url.searchParams.set('utm_source', 'share');
-    const text = 'Um convite da Valora Suisse: a nova coleção, em zircônia e moissanite.';
+    return url.toString();
+  };
+  share.href = `https://wa.me/?text=${encodeURIComponent(`${SHARE_TEXT} ${shareUrl()}`)}`;
+  share.addEventListener('click', async (e) => {
     track('share', {});
-    if (navigator.share) {
-      try { await navigator.share({ title: 'Valora Suisse', text, url: url.toString() }); } catch (e) { /* cancelado */ }
-      return;
+    if (!navigator.share || IN_FRAME) return; // segue o link
+    e.preventDefault();
+    try {
+      await navigator.share({ title: 'Valora Suisse', text: SHARE_TEXT, url: shareUrl() });
+    } catch (err) {
+      if (err && err.name !== 'AbortError') window.location.href = share.href;
     }
-    window.open(`https://wa.me/?text=${encodeURIComponent(`${text} ${url.toString()}`)}`, '_blank', 'noopener');
   });
 
   // CTAs levam direto ao campo (o teclado só abre no iOS se o foco vier do toque)

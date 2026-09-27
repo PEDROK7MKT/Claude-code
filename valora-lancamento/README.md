@@ -22,7 +22,7 @@ Parâmetros úteis na URL:
 
 | Parâmetro | Efeito |
 |---|---|
-| `?intro=1` | força a abertura completa (mesmo para quem já viu) |
+| `?intro=1` ou `#abertura` | força a abertura completa (mesmo para quem já viu) |
 | `?intro=0` | pula a abertura |
 | `#lista` | pula a abertura e vai direto ao formulário (use nos stories "entre na lista") |
 | botão "voltar" | quem volta de outra página (ex.: política de privacidade) não vê a abertura de novo |

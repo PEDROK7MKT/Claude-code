@@ -26,16 +26,17 @@
     // Roda antes de tudo (menos de 1 KB). Decide se o envelope aparece:
     //  1ª visita → abertura completa · volta em até 7 dias → versão curta
     //  link com #âncora, ?intro=0 ou botão "voltar" do navegador → sem abertura
-    //  ?intro=1 → força a completa
+    //  ?intro=1 ou #abertura → força a completa
     (function () {
-      var d = document.documentElement, q = location.search, mode = 'full', seen = 0, nav;
-      d.className = d.className.replace('no-js', 'js');
+      var d = document.documentElement, q = location.search, h = location.hash, mode = 'full', seen = 0, nav;
+      d.classList.remove('no-js');
+      d.classList.add('js');
       document.addEventListener('touchstart', function () {}, { passive: true }); // :active no iOS
       try { seen = +localStorage.getItem('valora:intro') || 0; } catch (e) {}
       if (seen && Date.now() - seen < 6048e5) mode = 'short';
-      if (/[?&]intro=1/.test(q)) mode = 'full';
       try { nav = performance.getEntriesByType('navigation')[0]; } catch (e) {}
-      if (/[?&]intro=0/.test(q) || location.hash.length > 1 || (nav && nav.type === 'back_forward')) mode = 'off';
+      if (/[?&]intro=0/.test(q) || (h.length > 1 && h !== '#abertura') || (nav && nav.type === 'back_forward')) mode = 'off';
+      if (/[?&]intro=1/.test(q) || h === '#abertura') mode = 'full';
       if (mode === 'off') return;
       d.classList.add('intro-on');
       d.setAttribute('data-intro', mode);
@@ -309,7 +310,7 @@
         <div class="done-actions">
           <a class="btn btn-primary" id="done-wa" href="#" target="_blank" rel="noopener" hidden>Confirmar pelo WhatsApp</a>
           <a class="btn btn-ghost" id="done-cal" href="#" target="_blank" rel="noopener">Salvar na agenda</a>
-          <button class="link" type="button" id="done-share">Compartilhar o convite</button>
+          <a class="link" id="done-share" href="#" target="_blank" rel="noopener">Compartilhar o convite</a>
         </div>
         <p class="done-bye">Até lá.</p>
       </div>
