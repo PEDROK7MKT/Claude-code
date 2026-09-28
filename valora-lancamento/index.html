@@ -1,0 +1,372 @@
+<!doctype html>
+<html lang="pt-BR" class="no-js">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="color-scheme" content="only light" />
+  <meta name="theme-color" content="#032D1F" />
+  <meta name="format-detection" content="telephone=no" />
+  <title>Valora Suisse · Nova coleção em 10 de outubro</title>
+  <meta name="description" content="A nova coleção Valora Suisse, em zircônia e moissanite. Entre na lista e receba o aviso da abertura, em 10 de outubro." />
+
+  <!-- Prévia do link (Instagram, WhatsApp). Depois de publicar, troque os caminhos
+       por endereços absolutos (https://seu-dominio/...): as prévias não leem caminho relativo. -->
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="pt_BR" />
+  <meta property="og:site_name" content="Valora Suisse" />
+  <meta property="og:title" content="Nova coleção Valora Suisse" />
+  <meta property="og:description" content="Zircônia e moissanite. Entre na lista e receba o aviso da abertura, em 10 de outubro." />
+  <meta property="og:image" content="assets/og-image.jpg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+  <script>
+    // Roda antes de tudo (menos de 1 KB). Decide se o envelope aparece:
+    //  1ª visita → abertura completa · volta em até 7 dias → versão curta
+    //  link com #âncora, ?intro=0 ou botão "voltar" do navegador → sem abertura
+    //  ?intro=1 ou #abertura → força a completa
+    (function () {
+      var d = document.documentElement, q = location.search, h = location.hash, mode = 'full', seen = 0, nav;
+      d.classList.remove('no-js');
+      d.classList.add('js');
+      document.addEventListener('touchstart', function () {}, { passive: true }); // :active no iOS
+      try { seen = +localStorage.getItem('valora:intro') || 0; } catch (e) {}
+      if (seen && Date.now() - seen < 6048e5) mode = 'short';
+      try { nav = performance.getEntriesByType('navigation')[0]; } catch (e) {}
+      if (/[?&]intro=0/.test(q) || (h.length > 1 && h !== '#abertura') || (nav && nav.type === 'back_forward')) mode = 'off';
+      if (/[?&]intro=1/.test(q) || h === '#abertura') mode = 'full';
+      if (mode === 'off') return;
+      d.classList.add('intro-on');
+      d.setAttribute('data-intro', mode);
+      // o lacre só é baixado quando o envelope vai mesmo aparecer (e bem cedo)
+      ['lacre.webp', 'lacre-topo.webp', 'lacre-base.webp'].forEach(function (f, i) {
+        var l = document.createElement('link');
+        l.rel = 'preload'; l.as = 'image'; l.type = 'image/webp'; l.href = 'assets/' + f;
+        if (!i) l.setAttribute('fetchpriority', 'high');
+        document.head.appendChild(l);
+      });
+    })();
+  </script>
+  <link rel="preload" href="assets/fonts/cormorant-garamond-italic-latin.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="assets/fonts/cormorant-garamond-latin.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="assets/fonts/montserrat-latin.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="stylesheet" href="css/style.css" />
+  <script>
+    // Rede de segurança (conta a partir da chegada do CSS):
+    //  · se o JS principal não assumiu em 2,5 s, o envelope sai e a página aparece;
+    //  · se o módulo falhar de vez (erro no config.js, arquivo que não chega),
+    //    a página passa ao modo sem JS, com o formulário alternativo.
+    (function () {
+      var d = document.documentElement;
+      setTimeout(function () { if (!window.__mainOk) d.classList.remove('intro-on'); }, 2500);
+      document.addEventListener('DOMContentLoaded', function () {
+        if (!window.__mainOk) { d.classList.remove('intro-on'); d.classList.replace('js', 'no-js'); }
+      });
+    })();
+  </script>
+
+  <link rel="modulepreload" href="js/config.js" />
+  <script type="module" src="js/main.js"></script>
+</head>
+<body>
+
+<svg class="sprite" aria-hidden="true" focusable="false">
+  <symbol id="i-star" viewBox="0 0 24 24">
+    <path d="M12 0C12.9 7.6 16.4 11.1 24 12C16.4 12.9 12.9 16.4 12 24C11.1 16.4 7.6 12.9 0 12C7.6 11.1 11.1 7.6 12 0Z" fill="currentColor" />
+  </symbol>
+  <symbol id="i-star-line" viewBox="0 0 24 24">
+    <path d="M12 1.5C12.8 7.9 16.1 11.2 22.5 12C16.1 12.8 12.8 16.1 12 22.5C11.2 16.1 7.9 12.8 1.5 12C7.9 11.2 11.2 7.9 12 1.5Z" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linejoin="round" />
+  </symbol>
+  <symbol id="i-instagram" viewBox="0 0 24 24">
+    <rect x="3" y="3" width="18" height="18" rx="5.2" fill="none" stroke="currentColor" stroke-width="1.5" />
+    <circle cx="12" cy="12" r="4.1" fill="none" stroke="currentColor" stroke-width="1.5" />
+    <circle cx="17.3" cy="6.7" r="1.05" fill="currentColor" />
+  </symbol>
+</svg>
+
+<!-- =================== ABERTURA · o lacre =================== -->
+<div class="intro" id="intro">
+  <div class="env" aria-hidden="true">
+    <div class="env-body" id="env-body">
+      <svg class="env-art" id="env-art" preserveAspectRatio="none">
+        <defs>
+          <pattern id="p-forro" width="46" height="46" patternUnits="userSpaceOnUse">
+            <rect width="46" height="46" fill="#384937" />
+            <path transform="translate(6 6) scale(.38)" d="M12 0C12.9 7.6 16.4 11.1 24 12C16.4 12.9 12.9 16.4 12 24C11.1 16.4 7.6 12.9 0 12C7.6 11.1 11.1 7.6 12 0Z" fill="#CFA35C" fill-opacity=".55" />
+            <path transform="translate(29 29) scale(.26)" d="M12 0C12.9 7.6 16.4 11.1 24 12C16.4 12.9 12.9 16.4 12 24C11.1 16.4 7.6 12.9 0 12C7.6 11.1 11.1 7.6 12 0Z" fill="#CFA35C" fill-opacity=".35" />
+          </pattern>
+          <filter id="f-sombra-aba" x="-10%" y="-10%" width="120%" height="140%"><feGaussianBlur stdDeviation="7" /></filter>
+        </defs>
+        <!-- forro do envelope: aparece quando a aba levanta -->
+        <path class="env-lining" id="env-lining" fill="url(#p-forro)" />
+        <!-- dobras da aba de baixo -->
+        <path class="env-folds" id="env-folds" />
+        <!-- sombra que a aba projeta no corpo -->
+        <path class="env-flap-shadow" id="env-flap-shadow" filter="url(#f-sombra-aba)" />
+      </svg>
+      <img class="seal-piece seal-base" src="assets/lacre-base.webp" alt="" width="680" height="680" loading="lazy" decoding="async" />
+      <div class="intro-copy">
+        <p class="intro-line">Um convite da Valora Suisse</p>
+        <p class="seal-label" aria-hidden="true">Abrir o convite</p>
+      </div>
+    </div>
+
+    <div class="env-flap" id="env-flap">
+      <svg class="flap-art" id="flap-art" preserveAspectRatio="none">
+        <defs>
+          <pattern id="p-aba" width="160" height="160" patternUnits="userSpaceOnUse">
+            <rect width="160" height="160" fill="#063826" />
+            <image href="assets/papel-aba.webp" width="160" height="160" />
+          </pattern>
+        </defs>
+        <path class="flap-face" id="flap-face" fill="url(#p-aba)" />
+        <path class="flap-edge" id="flap-edge" />
+        <path class="flap-dark" id="flap-dark" />
+      </svg>
+      <img class="seal-piece seal-top" src="assets/lacre-topo.webp" alt="" width="680" height="680" loading="lazy" decoding="async" />
+    </div>
+  </div>
+
+  <button class="seal" id="seal" type="button" aria-label="Abrir o convite">
+    <img class="seal-whole" src="assets/lacre.webp" alt="" width="680" height="680" loading="lazy" decoding="async" fetchpriority="high" />
+    <svg class="seal-crack" viewBox="0 0 200 200" aria-hidden="true">
+      <path d="M12 43.46 L16 44.47 L20 47.97 L24 50.24 L28 54.09 L32 57.24 L36 58.57 L40 61.42 L44 62.67 L48 66.09 L52 69.72 L56 72.07 L60 75.48 L64 76.33 L68 78.79 L72 81.67 L76 84.27 L80 88.61 L84 90.23 L88 92.64 L92 94.60 L96 96.33 L100 100.58 L104 97.78 L108 95.97 L112 92.92 L116 88.78 L120 86.84 L124 83.64 L128 82.43 L132 80.34 L136 76.74 L140 74.35 L144 70.14 L148 68.31 L152 66.49 L156 63.89 L160 62.23 L164 57.86 L168 55.16 L172 52.46 L176 49.88 L180 49.06 L184 45.60 L188 43.09" />
+    </svg>
+  </button>
+</div>
+<script>
+  // Desenha o envelope antes da primeira pintura (a aba desce a 33° em qualquer tela).
+  // O js/main.js chama esta mesma função quando a tela muda de tamanho.
+  window.__valoraLayout = function (intro) {
+    var W = intro.clientWidth, H = intro.clientHeight;
+    if (!W || !H) return;
+    var K = Math.tan(33 * Math.PI / 180);
+    var tip = Math.round(H * (W > H ? 0.48 : 0.44));
+    var seal = Math.round(Math.min(W * 0.46, 210, H * 0.3));
+    intro.style.setProperty('--tip', tip + 'px');
+    intro.style.setProperty('--seal', seal + 'px');
+    var cx = W / 2, side = tip - K * cx, flap, edge, f = function (n) { return n.toFixed(1); };
+    if (side >= 0) {
+      flap = 'M0 0H' + W + 'V' + f(side) + 'L' + cx + ' ' + tip + 'L0 ' + f(side) + 'Z';
+      edge = 'M0 ' + f(side) + 'L' + cx + ' ' + tip + 'L' + W + ' ' + f(side);
+    } else { // tela larga: a aba vira um triângulo que começa no topo
+      var dx = tip / K;
+      flap = 'M' + f(cx - dx) + ' 0H' + f(cx + dx) + 'L' + cx + ' ' + tip + 'Z';
+      edge = 'M' + f(cx - dx) + ' 0L' + cx + ' ' + tip + 'L' + f(cx + dx) + ' 0';
+    }
+    var q = function (id) { return document.getElementById(id); };
+    q('flap-art').setAttribute('viewBox', '0 0 ' + W + ' ' + tip);
+    q('flap-face').setAttribute('d', flap);
+    q('flap-dark').setAttribute('d', flap);
+    q('flap-edge').setAttribute('d', edge);
+    q('env-art').setAttribute('viewBox', '0 0 ' + W + ' ' + H);
+    q('env-lining').setAttribute('d', flap);
+    q('env-flap-shadow').setAttribute('d', flap);
+    q('env-flap-shadow').setAttribute('transform', 'translate(0 7)');
+    // as dobras da aba de baixo passam sempre abaixo do texto do convite
+    var copy = intro.querySelector('.intro-copy');
+    var below = copy ? copy.getBoundingClientRect().bottom - intro.getBoundingClientRect().top + 22 : 0;
+    var foldY = Math.min(H - 8, Math.max(tip + (H - tip) * 0.46, below));
+    q('env-folds').setAttribute('d', 'M0 ' + H + 'L' + cx + ' ' + f(foldY) + 'L' + W + ' ' + H);
+  };
+  (function () {
+    var intro = document.getElementById('intro');
+    if (!intro || getComputedStyle(intro).display === 'none') return;
+    window.__valoraLayout(intro);
+    // o envelope vai aparecer: as imagens do lacre (lazy no HTML) carregam já
+    Array.prototype.forEach.call(intro.querySelectorAll('img'), function (i) { i.loading = 'eager'; });
+  })();
+</script>
+
+<!-- =================== PÁGINA =================== -->
+<main id="main">
+
+  <!-- HERO -->
+  <header class="hero" id="topo">
+    <div class="hero-media">
+      <picture>
+        <source type="image/avif" srcset="assets/img/produto-2-480.avif 480w, assets/img/produto-2-800.avif 800w, assets/img/produto-2-1254.avif 1254w" sizes="(min-width: 900px) 50vw, 100vw" />
+        <source type="image/webp" srcset="assets/img/produto-2-480.webp 480w, assets/img/produto-2-800.webp 800w, assets/img/produto-2-1254.webp 1254w" sizes="(min-width: 900px) 50vw, 100vw" />
+        <img src="assets/img/produto-2-800.jpg" srcset="assets/img/produto-2-480.jpg 480w, assets/img/produto-2-800.jpg 800w, assets/img/produto-2-1254.jpg 1254w" sizes="(min-width: 900px) 50vw, 100vw"
+             width="1254" height="1254" fetchpriority="high" decoding="async"
+             alt="Anel solitário de seis garras com uma pedra redonda, sobre papel claro, com um envelope verde ao canto." />
+      </picture>
+    </div>
+
+    <a class="brand brand--hero" href="#topo" aria-label="Valora Suisse">
+      <svg class="brand-star" aria-hidden="true"><use href="#i-star-line" /></svg>
+      <span class="brand-name">Valora</span>
+      <span class="brand-sub">Suisse</span>
+    </a>
+
+    <div class="hero-copy">
+      <h1 id="hero-title" tabindex="-1">Zircônia<br /> ou moissanite.</h1>
+      <p class="hero-sub">Cada uma com a sua luz.</p>
+      <p class="hero-date" id="hero-date">A nova coleção Valora Suisse abre em <time class="launch-date" datetime="2026-10-10T20:00:00-03:00">10 de outubro, às 20h</time> (horário de Brasília).</p>
+      <a class="btn btn-primary hero-cta" id="hero-cta" href="#lista" data-cta="hero">Entrar na lista</a>
+    </div>
+  </header>
+
+  <!-- CONTAGEM -->
+  <section class="countdown" id="contagem" aria-labelledby="cd-title">
+    <h2 class="cd-title" id="cd-title">Até a abertura</h2>
+    <p class="sr-only" id="cd-sr"></p>
+    <div class="cd-grid" id="cd" aria-hidden="true">
+      <div class="cd-unit"><span class="cd-num" data-u="d">—</span><span class="cd-label" data-l="d">dias</span></div>
+      <div class="cd-unit"><span class="cd-num" data-u="h">—</span><span class="cd-label" data-l="h">horas</span></div>
+      <div class="cd-unit"><span class="cd-num" data-u="m">—</span><span class="cd-label" data-l="m">minutos</span></div>
+      <div class="cd-unit cd-unit--s" hidden><span class="cd-num" data-u="s">—</span><span class="cd-label" data-l="s">segundos</span></div>
+    </div>
+    <p class="cd-open" id="cd-open" hidden><a href="#" id="cd-shop">Conhecer as peças</a></p>
+  </section>
+
+  <!-- ESCOLHA SUA PEDRA -->
+  <section class="stones" id="pedras" data-active="zirconia" aria-labelledby="stones-legend">
+    <fieldset class="stone-pick">
+      <legend class="stone-legend" id="stones-legend">Escolha sua pedra</legend>
+      <div class="stone-options">
+        <label class="stone-opt"><input type="radio" name="pedra" value="zirconia" checked /><span>Zircônia</span></label>
+        <label class="stone-opt"><input type="radio" name="pedra" value="moissanite" /><span>Moissanite</span></label>
+      </div>
+    </fieldset>
+
+    <div class="stone-texts">
+      <div class="stone-text" data-stone="zirconia">
+        <p class="stone-desc">Uma pedra criada, com brilho delicado e aparência cristalina.</p>
+        <p class="stone-fact">Zircônia cúbica · dureza 8 a 8,5 na escala&nbsp;Mohs</p>
+      </div>
+      <div class="stone-text" data-stone="moissanite">
+        <p class="stone-desc">Uma pedra de brilho intenso, que ganha vida a cada movimento.</p>
+        <p class="stone-fact">Moissanite · dureza 9,25 na escala&nbsp;Mohs</p>
+      </div>
+    </div>
+
+    <div class="stone-stage" id="stone-stage">
+      <div class="stone-layer" data-stone="zirconia">
+        <picture>
+          <source type="image/avif" srcset="assets/img/pedra-zirconia-480.avif 480w, assets/img/pedra-zirconia-800.avif 800w, assets/img/pedra-zirconia-1003.avif 1003w" sizes="(min-width: 900px) 40vw, 90vw" />
+          <source type="image/webp" srcset="assets/img/pedra-zirconia-480.webp 480w, assets/img/pedra-zirconia-800.webp 800w, assets/img/pedra-zirconia-1003.webp 1003w" sizes="(min-width: 900px) 40vw, 90vw" />
+          <img src="assets/img/pedra-zirconia-800.jpg" width="1003" height="1254" loading="lazy" decoding="async" draggable="false"
+               alt="Pulseira riviera com uma fileira contínua de pedras redondas, sobre um estojo de veludo verde com o logo Valora Suisse." />
+        </picture>
+      </div>
+      <div class="stone-layer" data-stone="moissanite">
+        <picture>
+          <source type="image/avif" srcset="assets/img/pedra-moissanite-480.avif 480w, assets/img/pedra-moissanite-800.avif 800w, assets/img/pedra-moissanite-1003.avif 1003w" sizes="(min-width: 900px) 40vw, 90vw" />
+          <source type="image/webp" srcset="assets/img/pedra-moissanite-480.webp 480w, assets/img/pedra-moissanite-800.webp 800w, assets/img/pedra-moissanite-1003.webp 1003w" sizes="(min-width: 900px) 40vw, 90vw" />
+          <img src="assets/img/pedra-moissanite-800.jpg" width="1003" height="1254" loading="lazy" decoding="async" draggable="false"
+               alt="Anel solitário de seis garras com uma pedra redonda, sobre papel claro." />
+        </picture>
+      </div>
+      <span class="stone-edge" id="stone-edge" aria-hidden="true"></span>
+    </div>
+
+    <p class="stone-caption" id="stone-caption">Imagem ilustrativa.</p>
+    <p class="stone-note">Zircônia e moissanite: as duas são pedras criadas em laboratório.</p>
+    <a class="btn btn-ghost stones-cta" href="#lista" data-cta="pedra">Receber o aviso da abertura</a>
+  </section>
+
+  <!-- LISTA DE CONVIDADOS -->
+  <section class="waitlist" id="lista" aria-labelledby="wl-title">
+    <div class="invite" id="invite">
+      <div class="invite-form" id="invite-form">
+        <h2 id="wl-title">Lista de convidados</h2>
+        <p class="wl-text" id="wl-text">Deixe seu WhatsApp e avisamos você no dia da abertura.</p>
+
+        <p class="wl-text wl-nojs">Para entrar na lista, fale com a Valora Suisse pelo Instagram <a href="https://www.instagram.com/valorasuisse/">@valorasuisse</a>.</p>
+
+        <form id="wl-form" novalidate hidden>
+          <div class="field" id="field-whatsapp">
+            <label class="field-label" for="wl-phone">Seu WhatsApp</label>
+            <input class="field-input" id="wl-phone" name="whatsapp" type="tel" inputmode="tel" autocomplete="tel"
+                   placeholder="DDD + número" enterkeyhint="send" aria-describedby="wl-error wl-consent" />
+          </div>
+          <div class="field" id="field-email" hidden>
+            <label class="field-label" for="wl-email">Seu e-mail</label>
+            <input class="field-input" id="wl-email" name="email" type="email" inputmode="email" autocomplete="email"
+                   autocapitalize="off" spellcheck="false" placeholder="nome@email.com" enterkeyhint="send" aria-describedby="wl-error wl-consent" />
+          </div>
+          <p class="field-error" id="wl-error" hidden></p>
+          <button class="link link--muted wl-switch" type="button" id="wl-switch">Prefiro receber por e-mail</button>
+
+          <!-- armadilha anti-robô: pessoas não veem este campo -->
+          <div class="hp" aria-hidden="true"><label>Não preencha<input type="text" name="website" tabindex="-1" autocomplete="off" /></label></div>
+
+          <p class="consent" id="wl-consent"></p>
+          <button class="btn btn-primary btn-block" type="submit" id="wl-submit"><span class="btn-label">Entrar na lista</span></button>
+        </form>
+      </div>
+
+      <div class="invite-done" id="invite-done" hidden>
+        <div class="done-seal" aria-hidden="true">
+          <span class="done-ripple"></span>
+          <img src="assets/lacre-sm.webp" alt="" width="340" height="340" loading="lazy" decoding="async" />
+        </div>
+        <h3 id="done-title" tabindex="-1">Você está na lista.</h3>
+        <p class="done-text" id="done-text"></p>
+        <button class="link link--muted" type="button" id="done-fix">Corrigir contato</button>
+        <div class="done-actions">
+          <a class="btn btn-primary" id="done-wa" href="#" target="_blank" rel="noopener" hidden>Confirmar pelo WhatsApp</a>
+          <a class="btn btn-ghost" id="done-cal" href="#" target="_blank" rel="noopener">Salvar na agenda</a>
+          <a class="link" id="done-share" href="#" target="_blank" rel="noopener">Compartilhar o convite</a>
+        </div>
+        <p class="done-bye">Até lá.</p>
+      </div>
+      <p class="sr-only" role="status" id="wl-status"></p>
+    </div>
+  </section>
+
+  <!-- GALERIA -->
+  <section class="gallery" id="pecas" aria-labelledby="gallery-title">
+    <h2 class="sr-only" id="gallery-title">Peças da coleção</h2>
+
+    <figure class="piece piece--1">
+      <picture>
+        <source type="image/avif" srcset="assets/img/produto-1-480.avif 480w, assets/img/produto-1-800.avif 800w, assets/img/produto-1-1254.avif 1254w" sizes="(min-width: 900px) 34vw, 100vw" />
+        <source type="image/webp" srcset="assets/img/produto-1-480.webp 480w, assets/img/produto-1-800.webp 800w, assets/img/produto-1-1254.webp 1254w" sizes="(min-width: 900px) 34vw, 100vw" />
+        <img src="assets/img/produto-1-800.jpg" width="1254" height="1254" loading="lazy" decoding="async"
+             alt="Bracelete aberto de linhas orgânicas e acabamento polido, apoiado em um estojo de veludo verde com o logo Valora Suisse." />
+      </picture>
+      <figcaption><b>Bracelete aberto</b><span>Uma curva, um gesto.</span></figcaption>
+    </figure>
+
+    <figure class="piece piece--2">
+      <picture>
+        <source type="image/avif" srcset="assets/img/produto-3-480.avif 480w, assets/img/produto-3-800.avif 800w, assets/img/produto-3-1254.avif 1254w" sizes="(min-width: 900px) 28vw, 78vw" />
+        <source type="image/webp" srcset="assets/img/produto-3-480.webp 480w, assets/img/produto-3-800.webp 800w, assets/img/produto-3-1254.webp 1254w" sizes="(min-width: 900px) 28vw, 78vw" />
+        <img src="assets/img/produto-3-800.jpg" width="1254" height="1254" loading="lazy" decoding="async"
+             alt="Pulseira riviera aberta, com o fecho à mostra, sobre um estojo de veludo verde." />
+      </picture>
+      <figcaption><b>Pulseira riviera</b><span>Uma linha contínua de luz.</span></figcaption>
+    </figure>
+
+    <figure class="piece piece--3">
+      <picture>
+        <source type="image/avif" srcset="assets/img/anel-galeria-480.avif 480w, assets/img/anel-galeria-800.avif 800w" sizes="(min-width: 900px) 22vw, 56vw" />
+        <source type="image/webp" srcset="assets/img/anel-galeria-480.webp 480w, assets/img/anel-galeria-800.webp 800w" sizes="(min-width: 900px) 22vw, 56vw" />
+        <img src="assets/img/anel-galeria-480.jpg" srcset="assets/img/anel-galeria-480.jpg 480w, assets/img/anel-galeria-800.jpg 800w" sizes="(min-width: 900px) 22vw, 56vw" width="1020" height="1020" loading="lazy" decoding="async"
+             alt="Anel solitário de seis garras, sobre papel claro." />
+      </picture>
+      <figcaption><b>Anel solitário</b><span>Seis garras, uma só pedra.</span></figcaption>
+    </figure>
+  </section>
+</main>
+
+<!-- RODAPÉ -->
+<footer class="footer">
+  <a class="brand brand--footer" href="#topo" aria-label="Valora Suisse, voltar ao início">
+    <svg class="brand-star" aria-hidden="true"><use href="#i-star-line" /></svg>
+    <span class="brand-name">Valora</span>
+    <span class="brand-sub">Suisse</span>
+  </a>
+  <p class="tagline"><span class="tagline-fr" lang="fr">Ce qui a de la valeur demeure.</span><span class="tagline-pt">O que tem valor permanece.</span></p>
+  <a class="ig" id="ig-link" href="https://www.instagram.com/valorasuisse/" target="_blank" rel="noopener">
+    <svg aria-hidden="true"><use href="#i-instagram" /></svg><span id="ig-handle">@valorasuisse</span>
+  </a>
+  <p class="legal"><a href="privacidade.html">Política de privacidade</a><span aria-hidden="true"> · </span>© 2026 Valora Suisse</p>
+</footer>
+
+</body>
+</html>
