@@ -46,8 +46,17 @@ def main():
     if len(arqs) == 1:
         x = ler(arqs[0])
         ini, fim, ps = pausas(x)
-        trechos = fronteiras(ini, fim, ps, [f['texto'] for f in frases], nucleos(x))
-        partes = [x[int(a * SR):int(b * SR)] for a, b in trechos]
+        # divide em orações (a voz pausa em '?', ':' e '.' dentro da frase) e depois junta as de cada frase
+        import re
+        oracoes, dono = [], []
+        for k, f in enumerate(frases):
+            for o in [o for o in re.split(r'(?<=[?:.!])\s+', f['texto'].strip()) if o]:
+                oracoes.append(o); dono.append(k)
+        trechos = fronteiras(ini, fim, ps, oracoes, nucleos(x))
+        partes = []
+        for k in range(len(frases)):
+            idx = [i for i, d in enumerate(dono) if d == k]
+            partes.append(x[int(trechos[idx[0]][0] * SR):int(trechos[idx[-1]][1] * SR)])
     elif len(arqs) == len(frases):
         partes = [ler(a) for a in arqs]
     else:
