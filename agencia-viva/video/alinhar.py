@@ -102,10 +102,20 @@ def main():
     x = ler(voz_arq)
     cenas = json.load(open(cenas_arq))
     ini, fim, ps = pausas(x)
-    trechos = fronteiras(ini, fim, ps, [c['texto'] for c in cenas], nucleos(x))
+    # divide em orações (a voz pausa em '?', ':' e '.' dentro da cena) e junta as de cada cena
+    oracoes, dono = [], []
+    for k, c in enumerate(cenas):
+        for o in [o for o in re.split(r'(?<=[?:.!…,])\s+', c['texto'].strip()) if o]:
+            oracoes.append(o); dono.append(k)
+    tr = fronteiras(ini, fim, ps, oracoes, nucleos(x))
+    trechos = []
+    for k in range(len(cenas)):
+        idx = [i for i, d in enumerate(dono) if d == k]
+        trechos.append((tr[idx[0]][0], tr[idx[-1]][1]))
     # a voz corre contínua (com as pausas naturais dela); cada cena começa um pouco antes da sua frase.
     # Cena curta demais (< 60% do tempo original) ganha um respiro: a frase seguinte espera.
-    V0, antes, fator_min, cauda = 0.2, 0.25, 0.6, 1.5
+    fator_min = float(sys.argv[sys.argv.index('--fator-min') + 1]) if '--fator-min' in sys.argv else 0.6
+    V0, antes, cauda = 0.2, 0.25, 1.5
     cortes = [0.0] + [(trechos[k][1] + trechos[k + 1][0]) / 2 for k in range(len(trechos) - 1)] + [len(x) / SR]
     atraso, novo = 0.0, []
     inicio_cena = lambda k, atr: 0.0 if k == 0 else V0 + atr + trechos[k][0] - antes

@@ -381,7 +381,7 @@ def main():
         jan = int(0.25 * SR)
         env_v = np.convolve(np.abs(voz) > 0.01, np.ones(jan) / jan, 'same')
         env_v = np.clip(env_v * 3, 0, 1)
-        duck = duck * (1 - 0.62 * env_v)
+        duck = duck * (1 - 0.45 * env_v)
         fx = fx * (1 - 0.25 * env_v)
         rv = np.sqrt(np.mean(voz[voz != 0] ** 2)) + 1e-9
         voz = voz * (10 ** (-16 / 20) / rv)

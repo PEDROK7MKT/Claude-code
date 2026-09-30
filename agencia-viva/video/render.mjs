@@ -43,7 +43,8 @@ let alin = null
 // reels/<reel>.voz.json: locução com tempos fixos (o vídeo não muda de ritmo; cada frase entra no seu instante)
 const vozFixa = join(aqui, 'reels', `${nomeVoz}.voz.json`)
 let pedacosFixos = false
-if (vozArq && existsSync(vozFixa)) {
+const vozCenas = join(aqui, 'reels', `${reel}.cenas.json`)
+if (vozArq && existsSync(vozFixa) && (tem('voz-fixa') || !existsSync(vozCenas))) {
   const arqs = readdirSync(vozDir).filter(f => /\.(mp3|wav|m4a)$/i.test(f)).sort()
   const wavs = arqs.map((f, i) => {
     const w = join(out, `voz-${String(i + 1).padStart(2, '0')}.wav`)
@@ -55,7 +56,7 @@ if (vozArq && existsSync(vozFixa)) {
   console.log(`locução (tempos fixos): ${arqs.join(', ')}`)
 } else if (vozArq) {
   execFileSync(FFMPEG, ['-y', '-hide_banner', '-loglevel', 'error', '-i', join(vozDir, vozArq), '-af', `atempo=${arg('tempo', '1.1')}`, '-ac', '1', '-ar', '48000', '-sample_fmt', 's16', join(out, 'voz.wav')])
-  execFileSync('python3', [join(aqui, 'alinhar.py'), join(out, 'voz.wav'), join(aqui, 'reels', `${reel}.cenas.json`), join(out, 'alinhamento.json')], { stdio: 'inherit' })
+  execFileSync('python3', [join(aqui, 'alinhar.py'), join(out, 'voz.wav'), vozCenas, join(out, 'alinhamento.json'), '--fator-min', arg('fator-min', '0.6')], { stdio: 'inherit' })
   alin = JSON.parse(readFileSync(join(out, 'alinhamento.json'), 'utf8'))
   console.log(`locução: ${vozArq}`)
 }
