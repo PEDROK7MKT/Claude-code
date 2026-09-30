@@ -104,6 +104,27 @@ function chat(celEl, { nome = 'Sua Empresa', status = 'online' } = {}) {
 }
 const bolha = (corpo, lado, texto, hora = '08:12', extra = '') => el(`<div class="bolha ${lado} ${extra}">${texto}<small>${hora}</small></div>`, corpo)
 
+// celular gigante (o palco): 940 px de largura, passa da borda de baixo; a tela vira o quadro todo
+function celularG(pai, { top = 600, escuro = false } = {}) {
+  const c = el(`<div class="celg" style="top:${top}px"><div class="celg__tela${escuro ? ' esc' : ''}"><div class="cel__ilha"></div></div></div>`, pai)
+  return { c, tela: $('.celg__tela', c) }
+}
+
+// linha de batimento (ECG) num trilho largo que corre pra esquerda (vai(tr, {x:0}, {x:-passo*k}, t)).
+// plano(i) = true deixa a batida i reta (coração parando); alto(i) muda a altura do pico
+function ecg(pai, estilo, { passo = 283, n = 16, larg = 7, plano = () => false, alto = () => 1 } = {}) {
+  const y0 = 70, W = passo * n
+  let d = `M0 ${y0}`
+  for (let i = 0; i < n; i++) {
+    const x = i * passo, p = f => (x + passo * f).toFixed(1)
+    if (plano(i)) { d += ` L${p(1)} ${y0}`; continue }
+    const a = alto(i)
+    d += ` L${p(0.3)} ${y0} Q${p(0.34)} ${y0 - 9 * a} ${p(0.38)} ${y0} L${p(0.44)} ${y0} L${p(0.47)} ${y0 + 12 * a} L${p(0.51)} ${y0 - 58 * a} L${p(0.55)} ${y0 + 24 * a} L${p(0.58)} ${y0} L${p(0.68)} ${y0} Q${p(0.75)} ${y0 - 15 * a} ${p(0.82)} ${y0} L${p(1)} ${y0}`
+  }
+  const e = el(`<div class="ecg" style="${estilo}"><svg class="ecg__tr" viewBox="0 0 ${W} 110" style="width:${W}px;height:110px"><path d="${d}" fill="none" stroke="currentColor" stroke-width="${larg}" stroke-linecap="round" stroke-linejoin="round"/></svg></div>`, pai)
+  return { e, tr: $('.ecg__tr', e), passo }
+}
+
 // selo girando "FEITO NO OESTE DA BAHIA · DESDE 2016" (devolve o anel de texto, pra girar)
 let nSelo = 0
 function selo(pai, estilo, cor = 'var(--black)') {

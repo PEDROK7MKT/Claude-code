@@ -152,3 +152,10 @@ body { font-family: var(--sans); color: var(--black); -webkit-font-smoothing: an
 .selog { position: absolute; width: 520px; height: 520px; }
 .selog svg { width: 100%; height: 100%; overflow: visible; }
 .selog text { font: 800 11.4px var(--sans); letter-spacing: .1em; fill: var(--paper); }
+
+/* celular gigante (palco) e linha de batimento */
+.celg { position: absolute; left: 70px; width: 940px; height: 1700px; border-radius: 120px; background: #111; padding: 22px; box-shadow: 0 50px 120px rgba(0, 0, 0, .35), inset 0 0 0 3px #333; }
+.celg__tela { position: relative; width: 100%; height: 100%; border-radius: 100px; overflow: hidden; background: var(--white); color: var(--black); }
+.celg__tela.esc { background: linear-gradient(#4a4a4a, #151515 60%); color: var(--paper); }
+.ecg { position: absolute; height: 110px; overflow: hidden; }
+.ecg__tr { position: absolute; left: 0; top: 0; overflow: visible; }

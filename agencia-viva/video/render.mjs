@@ -52,7 +52,7 @@ const paraOrig = T => interp(T, nos.map(n => n[1]), nos.map(n => n[0]))
 if (alin) {
   info.cues = info.cues.map(c => ({ ...c, t: +paraNovo(c.t).toFixed(3) }))
   const m = info.musica
-  info.musica = { ...m, drop: paraNovo(m.drop), fim: paraNovo(m.fim), calmo: (m.calmo || []).map(([a, b]) => [paraNovo(a), paraNovo(b)]) }
+  info.musica = { ...m, drop: paraNovo(m.drop), fim: paraNovo(m.fim), calmo: (m.calmo || []).map(([a, b]) => [paraNovo(a), paraNovo(b)]), mudo: (m.mudo || []).map(([a, b]) => [paraNovo(a), paraNovo(b)]) }
   info.dur = alin.dur
 }
 const de = +arg('de', 0), ate = Math.min(+arg('ate', info.dur), info.dur)
@@ -78,6 +78,7 @@ const cfg = { dur: info.dur, ...info.musica, cues: info.cues.filter(c => c.t >= 
 if (cfg.drop != null) cfg.drop -= de
 if (cfg.fim != null) cfg.fim -= de
 cfg.calmo = (cfg.calmo || []).map(([a, b]) => [a - de, b - de])
+cfg.mudo = (cfg.mudo || []).map(([a, b]) => [a - de, b - de])
 cfg.dur = ate - de
 writeFileSync(join(out, 'cues.json'), JSON.stringify(cfg, null, 1))
 const nome = arg('nome', de === 0 && ate === info.dur ? 'viva-reel' : `trecho-${de}-${ate}`)

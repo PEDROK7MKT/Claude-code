@@ -215,15 +215,43 @@ def fx_tique():
     return np.sin(2 * np.pi * 2400 * t) * env(len(t), 0.0005, 0.02, 5) * 0.25
 
 
+def fx_coracao():
+    """lub-dub: dois bumbos graves abafados (0,16 s entre eles)"""
+    # grave + "corpo" em 150–400 Hz, senão some no alto-falante do celular
+    def lub(g):
+        t = t_(0.2)
+        f = 60 + 90 * np.exp(-t * 35)
+        s = np.sin(2 * np.pi * np.cumsum(f) / SR) * env(len(t), 0.002, 0.1, 4)
+        n = bp_fast(ruido(0.2), 150, 400) * env(len(t), 0.001, 0.05, 5) * 0.5
+        return (s + n) * g
+    out = np.zeros(int(0.42 * SR))
+    for dt, g in ((0, 1.0), (0.16, 0.6)):
+        s = lub(g); i = int(dt * SR); out[i:i + len(s)] += s
+    out = lp_fast(out, 420)
+    return out * (0.8 / (np.abs(out).max() + 1e-9))
+
+
+def fx_bip():
+    t = t_(0.09)
+    return np.sin(2 * np.pi * 1000 * t) * env(len(t), 0.002, 0.09, 1.5) * 0.3
+
+
+def fx_flatline(d=0.7):
+    t = t_(d)
+    e = np.ones(len(t)); n = int(0.005 * SR); e[:n] = np.linspace(0, 1, n); e[-n:] = np.linspace(1, 0, n)
+    return np.sin(2 * np.pi * 1000 * t) * e * 0.26
+
+
 FX = {
     'impacto': fx_impacto, 'whoosh': fx_whoosh, 'whoosh_desce': lambda: fx_whoosh(0.5, False), 'pop': fx_pop,
     'ding': fx_ding, 'vibra': fx_vibra, 'digita': fx_digita, 'glitch': fx_glitch, 'erro': fx_erro,
     'carimbo': fx_carimbo, 'camera': fx_camera, 'riser': fx_riser, 'caixa': fx_caixa, 'tique': fx_tique,
+    'coracao': fx_coracao, 'bip': fx_bip, 'flatline': fx_flatline,
 }
 
 
 # ─── música ─────────────────────────────────────────────────
-def musica(dur, bpm, drop, calmos, fim):
+def musica(dur, bpm, drop, calmos, fim, pre='tensao'):
     L = int((dur + 2) * SR)
     mix = np.zeros(L)
     beat = 60 / bpm
@@ -254,6 +282,8 @@ def musica(dur, bpm, drop, calmos, fim):
             e = np.minimum(1, np.linspace(0, 6, len(pad))) * np.minimum(1, np.linspace(6, 0, len(pad)))
             put(pad * e, tt, 0.13 if antes else 0.1)
         if antes:
+            if pre == 'pad':  # só o pad grave: o pulso fica por conta dos efeitos
+                continue
             # tensão: batida de coração + relógio
             if b % 2 == 0:
                 put(kick(0.55), tt)
@@ -337,7 +367,13 @@ def main():
         if c['tipo'] in ('impacto', 'carimbo'):
             k = min(L, i + int(0.5 * SR))
             duck[i:k] = np.minimum(duck[i:k], 0.45 + 0.55 * np.linspace(0, 1, k - i))
-    mus = np.zeros(L) if sem_musica else musica(dur, cfg.get('bpm', 120), cfg['drop'], cfg.get('calmo', []), cfg.get('fim', dur - 3))[:L]
+    mus = np.zeros(L) if sem_musica else musica(dur, cfg.get('bpm', 120), cfg['drop'], cfg.get('calmo', []), cfg.get('fim', dur - 3), cfg.get('pre', 'tensao'))[:L]
+    # janelas em que a música some de vez (ex.: o flatline antes da virada)
+    for a, b in cfg.get('mudo', []):
+        i, j, n = int(a * SR), min(L, int(b * SR)), int(0.02 * SR)
+        mus[i:j] = 0
+        if i - n >= 0:
+            mus[i - n:i] *= np.linspace(1, 0, n)
     voz = np.zeros(L)
     if '--voz' in sys.argv:
         voz = encaixa_voz(sys.argv[sys.argv.index('--voz') + 1], json.load(open(sys.argv[sys.argv.index('--pedacos') + 1])), L)
