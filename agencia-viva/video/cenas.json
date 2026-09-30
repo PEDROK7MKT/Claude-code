@@ -1,87 +1,97 @@
 [
  {
-  "t": 0.2,
-  "cena": "Gancho",
+  "a": 0,
+  "b": 4,
   "texto": "Você paga agência todo mês… e as vendas? Cadê?"
  },
  {
-  "t": 4.2,
-  "cena": "Recibo",
+  "a": 4,
+  "b": 8,
   "texto": "Doze posts, relatório de curtida… e nenhum cliente novo."
  },
  {
-  "t": 8.2,
-  "cena": "Pacote pronto",
+  "a": 8,
+  "b": 11.5,
   "texto": "Pacote pronto, igual pra todo mundo."
  },
  {
-  "t": 11.6,
-  "cena": "Sem diagnóstico",
+  "a": 11.5,
+  "b": 14.5,
   "texto": "Marketing sem diagnóstico é chute. Com o seu dinheiro."
  },
  {
-  "t": 14.8,
-  "cena": "Virada",
+  "a": 14.5,
+  "b": 17,
   "texto": "Na Viva, a gente não chuta."
  },
  {
-  "t": 17.2,
-  "cena": "Diagnóstico",
+  "a": 17,
+  "b": 20.5,
   "texto": "Primeiro, o diagnóstico: quem compra de você e onde a venda trava."
  },
  {
-  "t": 21.0,
-  "cena": "Agência × Viva",
+  "a": 20.5,
+  "b": 25,
   "texto": "Depois, um plano com meta de venda. E relatório todo mês, com ajuste."
  },
  {
-  "t": 25.1,
-  "cena": "A máquina",
+  "a": 25,
+  "b": 27,
   "texto": "Não é só social media: é máquina de vendas."
  },
  {
-  "t": 27.2,
-  "cena": "IA no WhatsApp",
+  "a": 27,
+  "b": 30,
   "texto": "IA no WhatsApp, respondendo até de madrugada."
  },
  {
-  "t": 30.2,
-  "cena": "Tráfego pago",
+  "a": 30,
+  "b": 33,
   "texto": "Tráfego pago com gestores que já têm case de sucesso."
  },
  {
-  "t": 33.2,
-  "cena": "Site, marca, vídeo",
-  "texto": "Site que vende. Marca com cara própria. Vídeo que prende."
+  "a": 33,
+  "b": 35,
+  "texto": "Site que vende."
  },
  {
-  "t": 39.3,
-  "cena": "Google e IAs",
+  "a": 35,
+  "b": 37,
+  "texto": "Marca com cara própria."
+ },
+ {
+  "a": 37,
+  "b": 39,
+  "texto": "Vídeo que prende."
+ },
+ {
+  "a": 39,
+  "b": 44.5,
   "texto": "E a sua empresa vira referência no Google… e é recomendada pelas IAs."
  },
  {
-  "t": 44.7,
-  "cena": "Notificações",
+  "a": 44.5,
+  "b": 49.5,
   "texto": "Resultado? O celular não para."
  },
  {
-  "t": 49.7,
-  "cena": "Pequeno, médio, grande",
+  "a": 49.5,
+  "b": 53,
   "texto": "Do pequeno comércio à grande empresa, em todo o Oeste da Bahia."
  },
  {
-  "t": 53.2,
-  "cena": "Missão",
+  "a": 53,
+  "b": 56.5,
   "texto": "Agência comum empurra serviço. A Viva constrói o seu case de sucesso."
  },
  {
-  "t": 56.8,
-  "cena": "Logo",
+  "a": 56.5,
+  "b": 59,
   "texto": "Viva. Máquina de vendas e crescimento."
  },
  {
-  "t": 59.2,
-  "cena": "Chamada",
+  "a": 59,
+  "b": 62.5,
   "texto": "Chega de marketing no chute. Chama a gente e peça o seu diagnóstico."
  }
 ]

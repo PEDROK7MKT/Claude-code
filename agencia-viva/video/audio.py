@@ -1,7 +1,7 @@
 """Trilha e efeitos do Reels da Viva, sintetizados do zero (sem música de terceiros).
 
-uso: python3 audio.py cues.json saida.wav [--sem-musica] [--voz locucao.wav --falas falas.json]
-falas.json = [{"t": 0.2, "texto": "..."}, ...]: cada frase da locução é encaixada no seu tempo
+uso: python3 audio.py cues.json saida.wav [--sem-musica] [--voz locucao.wav --pedacos pedacos.json]
+pedacos.json = [{"s": 0.0, "e": 3.4, "t": 0.2}, ...]: trecho [s,e] da locução tocado no instante t do vídeo (ver alinhar.py)
 cues.json = { "dur": 60.0, "bpm": 120, "drop": 12.0, "calmo": [[a, b]], "fim": 57.0,
               "cues": [{"t": 1.2, "tipo": "whoosh"}, ...] }
 """
@@ -301,47 +301,18 @@ def ler_wav(caminho):
         return x.reshape(-1, w.getnchannels()).mean(1)
 
 
-def frases(voz, n_esperado, silencio=0.28):
-    """acha as frases pelos silêncios; junta/parte até bater com o número de falas do roteiro"""
-    jan = int(0.02 * SR)
-    rms = np.sqrt(np.convolve(voz ** 2, np.ones(jan) / jan, 'same'))
-    lim = max(rms.max() * 0.04, 1e-4)
-    fala = rms > lim
-    trechos, i, n = [], 0, len(fala)
-    while i < n:
-        if fala[i]:
-            j = i
-            while j < n and (fala[j] or (j + int(silencio * SR) < n and fala[j:j + int(silencio * SR)].any())):
-                j += 1
-            trechos.append([i, j])
-            i = j
-        else:
-            i += 1
-    trechos = [t for t in trechos if t[1] - t[0] > 0.12 * SR]
-    # silêncios maiores separam frases: se sobrar trecho, junta os de menor pausa entre si
-    while len(trechos) > n_esperado:
-        k = min(range(len(trechos) - 1), key=lambda k: trechos[k + 1][0] - trechos[k][1])
-        trechos[k][1] = trechos[k + 1][1]
-        del trechos[k + 1]
-    return trechos
-
-
-def encaixa_voz(voz_path, falas, L):
+def encaixa_voz(voz_path, pedacos, L):
+    """coloca cada pedaço da locução ({s, e} no arquivo, em s) no instante t do vídeo, com micro-fades pra não estalar"""
     voz = ler_wav(voz_path)
-    tr = frases(voz, len(falas))
-    if len(tr) != len(falas):
-        print(f'aviso: achei {len(tr)} frases na locução e o roteiro tem {len(falas)}; encaixando em ordem')
     out = np.zeros(L)
-    fim_ant = 0.0
-    for k, (a, b) in enumerate(tr):
-        pedaco = voz[max(0, a - int(0.03 * SR)): b + int(0.06 * SR)]
-        t = falas[k]['t'] if k < len(falas) else fim_ant + 0.2
-        t = max(t, fim_ant + 0.12)
-        i = int(t * SR)
-        j = min(L, i + len(pedaco))
+    for p in pedacos:
+        a, b = int(p['s'] * SR), int(p['e'] * SR)
+        pedaco = voz[a:b].copy()
+        nf = min(int(0.01 * SR), len(pedaco) // 2)
+        if nf:
+            pedaco[:nf] *= np.linspace(0, 1, nf); pedaco[-nf:] *= np.linspace(1, 0, nf)
+        i = int(p['t'] * SR); j = min(L, i + len(pedaco))
         out[i:j] += pedaco[: j - i]
-        fim_ant = j / SR
-        print(f'  fala {k + 1:2d}: {t:5.2f}–{fim_ant:5.2f} s')
     return out
 
 
@@ -369,7 +340,7 @@ def main():
     mus = np.zeros(L) if sem_musica else musica(dur, cfg.get('bpm', 120), cfg['drop'], cfg.get('calmo', []), cfg.get('fim', dur - 3))[:L]
     voz = np.zeros(L)
     if '--voz' in sys.argv:
-        voz = encaixa_voz(sys.argv[sys.argv.index('--voz') + 1], json.load(open(sys.argv[sys.argv.index('--falas') + 1])), L)
+        voz = encaixa_voz(sys.argv[sys.argv.index('--voz') + 1], json.load(open(sys.argv[sys.argv.index('--pedacos') + 1])), L)
         # trilha abaixa suave embaixo da voz (e efeitos um pouco)
         jan = int(0.25 * SR)
         env_v = np.convolve(np.abs(voz) > 0.01, np.ones(jan) / jan, 'same')

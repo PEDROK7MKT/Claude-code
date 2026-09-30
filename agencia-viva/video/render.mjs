@@ -3,7 +3,7 @@
 //   node render.mjs --de 10 --ate 20   → só um trecho (pra revisar rápido)
 //   node render.mjs --folha            → também gera folhas de contato (1 quadro a cada 0,5 s) em out/folhas
 import { execFileSync } from 'node:child_process'
-import { mkdirSync, rmSync, writeFileSync, existsSync, readdirSync } from 'node:fs'
+import { mkdirSync, rmSync, writeFileSync, existsSync, readdirSync, readFileSync } from 'node:fs'
 import { dirname, join } from 'node:path'
 import { fileURLToPath, pathToFileURL } from 'node:url'
 import { cpus } from 'node:os'
@@ -31,6 +31,28 @@ const abrir = async () => {
 }
 const p0 = await abrir()
 const info = await p0.evaluate(() => ({ dur: window.REEL.dur, musica: window.REEL.musica, cues: window.REEL.cues }))
+
+// locução (ElevenLabs) em video/voz/: acelera um pouco (--tempo, padrão 1.1), acha cada frase e faz o vídeo seguir a voz.
+// Cada cena é esticada/encolhida pra começar logo antes da sua frase (alinhar.py → alinhamento.json).
+const vozDir = join(aqui, 'voz'), vozArq = !tem('sem-voz') && existsSync(vozDir) && readdirSync(vozDir).find(f => /\.(mp3|wav|m4a)$/i.test(f))
+let alin = null
+if (vozArq) {
+  execFileSync(FFMPEG, ['-y', '-hide_banner', '-loglevel', 'error', '-i', join(vozDir, vozArq), '-af', `atempo=${arg('tempo', '1.1')}`, '-ac', '1', '-ar', '48000', '-sample_fmt', 's16', join(out, 'voz.wav')])
+  execFileSync('python3', [join(aqui, 'alinhar.py'), join(out, 'voz.wav'), join(aqui, 'cenas.json'), join(out, 'alinhamento.json')], { stdio: 'inherit' })
+  alin = JSON.parse(readFileSync(join(out, 'alinhamento.json'), 'utf8'))
+  console.log(`locução: ${vozArq}`)
+}
+// mapa de tempo: original (roteiro) ↔ novo (vídeo final), linear dentro de cada cena
+const nos = alin ? [...alin.cenas.map(c => [c.a, c.A]), [alin.cenas.at(-1).b, alin.cenas.at(-1).B]] : [[0, 0], [info.dur, info.dur]]
+const interp = (x, xs, ys) => { if (x <= xs[0]) return ys[0] + (x - xs[0]); for (let i = 1; i < xs.length; i++) if (x <= xs[i]) return ys[i - 1] + (x - xs[i - 1]) * (ys[i] - ys[i - 1]) / (xs[i] - xs[i - 1]); return ys.at(-1) + (x - xs.at(-1)) }
+const paraNovo = t => interp(t, nos.map(n => n[0]), nos.map(n => n[1]))
+const paraOrig = T => interp(T, nos.map(n => n[1]), nos.map(n => n[0]))
+if (alin) {
+  info.cues = info.cues.map(c => ({ ...c, t: +paraNovo(c.t).toFixed(3) }))
+  const m = info.musica
+  info.musica = { ...m, drop: paraNovo(m.drop), fim: paraNovo(m.fim), calmo: (m.calmo || []).map(([a, b]) => [paraNovo(a), paraNovo(b)]) }
+  info.dur = alin.dur
+}
 const de = +arg('de', 0), ate = Math.min(+arg('ate', info.dur), info.dur)
 const f0 = Math.round(de * FPS), f1 = Math.round(ate * FPS)
 console.log(`duração ${info.dur.toFixed(2)} s · quadros ${f0}–${f1 - 1} · ${info.cues.length} efeitos sonoros`)
@@ -42,7 +64,7 @@ let feitos = 0
 const t0 = Date.now()
 await Promise.all(abas.map(async (p, k) => {
   for (let f = f0 + k; f < f1; f += N) {
-    await p.evaluate(t => { window.REEL.seek(t) }, f / FPS)
+    await p.evaluate(t => { window.REEL.seek(t) }, paraOrig(f / FPS))
     await p.screenshot({ path: join(tmp, `${String(f - f0).padStart(5, '0')}.jpg`), type: 'jpeg', quality: 93 })
     if (++feitos % 150 === 0) console.log(`  ${feitos}/${f1 - f0} quadros (${((Date.now() - t0) / 1000).toFixed(0)} s)`)
   }
@@ -57,13 +79,10 @@ cfg.calmo = (cfg.calmo || []).map(([a, b]) => [a - de, b - de])
 cfg.dur = ate - de
 writeFileSync(join(out, 'cues.json'), JSON.stringify(cfg, null, 1))
 const nome = arg('nome', de === 0 && ate === info.dur ? 'viva-reel' : `trecho-${de}-${ate}`)
-// locução (ElevenLabs): coloque o arquivo em video/voz/ (mp3 ou wav); cada frase é encaixada no tempo de falas.json
-const vozDir = join(aqui, 'voz'), vozArq = existsSync(vozDir) && readdirSync(vozDir).find(f => /\.(mp3|wav|m4a)$/i.test(f))
 const extraVoz = []
-if (vozArq && de === 0) {
-  execFileSync(FFMPEG, ['-y', '-hide_banner', '-loglevel', 'error', '-i', join(vozDir, vozArq), '-ac', '1', '-ar', '48000', '-sample_fmt', 's16', join(out, 'voz.wav')])
-  extraVoz.push('--voz', join(out, 'voz.wav'), '--falas', join(aqui, 'falas.json'))
-  console.log(`locução: ${vozArq}`)
+if (alin && de === 0) {
+  writeFileSync(join(out, 'pedacos.json'), JSON.stringify(alin.cenas.map(c => ({ s: c.voz[0], e: c.voz[1], t: c.t }))))
+  extraVoz.push('--voz', join(out, 'voz.wav'), '--pedacos', join(out, 'pedacos.json'))
 }
 execFileSync('python3', [join(aqui, 'audio.py'), join(out, 'cues.json'), join(out, 'audio.wav'), ...extraVoz], { stdio: 'inherit' })
 execFileSync('python3', [join(aqui, 'audio.py'), join(out, 'cues.json'), join(out, 'audio-fx.wav'), '--sem-musica', ...extraVoz], { stdio: 'inherit' })
