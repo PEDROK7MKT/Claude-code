@@ -1,5 +1,6 @@
 // Renderiza o Reels da Viva quadro a quadro (1080x1920, 30 fps) e monta o MP4 com trilha e efeitos.
-//   node render.mjs                    → out/viva-reel.mp4 (+ versão só com efeitos, pra usar música do Instagram)
+//   node render.mjs --reel ideal       → out/ideal/viva-reel.mp4 (+ versão só com efeitos, pra usar música do Instagram)
+//   (sem --reel usa reels/v1.js; locução opcional em voz/<reel>/, frases em reels/<reel>.cenas.json)
 //   node render.mjs --de 10 --ate 20   → só um trecho (pra revisar rápido)
 //   node render.mjs --folha            → também gera folhas de contato (1 quadro a cada 0,5 s) em out/folhas
 import { execFileSync } from 'node:child_process'
@@ -16,8 +17,9 @@ const FFMPEG = process.env.FFMPEG || (existsSync('/root/bin/ffmpeg') ? '/root/bi
 const PW = process.env.PLAYWRIGHT || '/opt/node22/lib/node_modules/playwright/index.mjs'
 const { chromium } = await import(PW)
 
-execFileSync('node', [join(aqui, 'build-reel.mjs')], { stdio: 'inherit' })
-const out = join(aqui, 'out'), tmp = arg('tmp', join(out, 'quadros'))
+const reel = arg('reel', 'v1')
+execFileSync('node', [join(aqui, 'build-reel.mjs'), '--reel', reel], { stdio: 'inherit' })
+const out = join(aqui, 'out', reel), tmp = arg('tmp', join(out, 'quadros'))
 mkdirSync(out, { recursive: true }); rmSync(tmp, { recursive: true, force: true }); mkdirSync(tmp, { recursive: true })
 
 const browser = await chromium.launch()
@@ -34,11 +36,11 @@ const info = await p0.evaluate(() => ({ dur: window.REEL.dur, musica: window.REE
 
 // locução (ElevenLabs) em video/voz/: acelera um pouco (--tempo, padrão 1.1), acha cada frase e faz o vídeo seguir a voz.
 // Cada cena é esticada/encolhida pra começar logo antes da sua frase (alinhar.py → alinhamento.json).
-const vozDir = join(aqui, 'voz'), vozArq = !tem('sem-voz') && existsSync(vozDir) && readdirSync(vozDir).find(f => /\.(mp3|wav|m4a)$/i.test(f))
+const vozDir = join(aqui, 'voz', reel), vozArq = !tem('sem-voz') && existsSync(vozDir) && readdirSync(vozDir).find(f => /\.(mp3|wav|m4a)$/i.test(f))
 let alin = null
 if (vozArq) {
   execFileSync(FFMPEG, ['-y', '-hide_banner', '-loglevel', 'error', '-i', join(vozDir, vozArq), '-af', `atempo=${arg('tempo', '1.1')}`, '-ac', '1', '-ar', '48000', '-sample_fmt', 's16', join(out, 'voz.wav')])
-  execFileSync('python3', [join(aqui, 'alinhar.py'), join(out, 'voz.wav'), join(aqui, 'cenas.json'), join(out, 'alinhamento.json')], { stdio: 'inherit' })
+  execFileSync('python3', [join(aqui, 'alinhar.py'), join(out, 'voz.wav'), join(aqui, 'reels', `${reel}.cenas.json`), join(out, 'alinhamento.json')], { stdio: 'inherit' })
   alin = JSON.parse(readFileSync(join(out, 'alinhamento.json'), 'utf8'))
   console.log(`locução: ${vozArq}`)
 }

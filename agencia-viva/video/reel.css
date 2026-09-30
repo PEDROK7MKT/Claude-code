@@ -23,7 +23,7 @@ body { font-family: var(--sans); color: var(--black); -webkit-font-smoothing: an
 .t { position: absolute; left: 80px; right: 150px; font-weight: 900; font-stretch: 72%; line-height: .9; letter-spacing: -.02em; text-wrap: balance; }
 .t .s { font-family: var(--serif); font-style: italic; font-weight: 400; font-stretch: 100%; letter-spacing: -.01em; }
 .xl { font-size: 170px; } .l { font-size: 132px; } .m { font-size: 96px; } .sm { font-size: 64px; } .xs { font-size: 44px; }
-.linha { display: block; overflow: hidden; padding-bottom: .08em; margin-bottom: -.08em; }
+.linha { display: block; overflow: hidden; padding: .16em 0 .08em; margin: -.16em 0 -.08em; }
 .linha > span { display: inline-block; }
 .mao { position: absolute; font-family: var(--hand); font-weight: 700; font-size: 64px; line-height: 1; color: currentColor; }
 .label { position: absolute; font: 800 30px/1 var(--sans); letter-spacing: .18em; text-transform: uppercase; }
@@ -97,3 +97,58 @@ body { font-family: var(--sans); color: var(--black); -webkit-font-smoothing: an
 
 /* barra de progresso do vídeo (sutil, dentro da zona segura) */
 .logo-viva { position: absolute; }
+
+/* cartões de papel no fundo preto: sombra dura em cinza (igual ao site no escuro) */
+.cena.preta .obj { box-shadow: 14px 14px 0 #55524d; }
+
+/* notificação grande, legível no celular */
+.ng { position: absolute; width: 860px; display: grid; grid-template-columns: 110px 1fr; gap: 6px 26px; padding: 30px 34px; border-radius: 44px; background: rgba(245, 245, 243, .97); color: var(--black); box-shadow: 0 18px 44px rgba(0, 0, 0, .35); }
+.ng .logo-ic { grid-row: span 2; width: 110px; height: 110px; border-radius: 28px; box-shadow: none; }
+.ng__topo { display: flex; justify-content: space-between; align-items: baseline; font: 600 30px var(--sans); color: #6b6964; }
+.ng__topo b { font: 800 40px var(--sans); color: var(--black); }
+.ng__txt { font: 500 40px/1.2 var(--sans); }
+
+/* ingresso de serviço (a roda do site) */
+.ing { position: absolute; width: 660px; height: 820px; padding: 48px 46px; background: var(--white); color: var(--black); border: 4px solid var(--black); border-radius: 30px; box-shadow: 14px 14px 0 var(--black); display: flex; flex-direction: column; }
+.cena.preta .ing { box-shadow: 14px 14px 0 #55524d; }
+.ing::before { content: ''; position: absolute; top: -22px; left: 50%; width: 190px; height: 50px; translate: -50% 0; rotate: -4deg; background: rgba(210, 206, 198, .8); clip-path: polygon(3% 0, 97% 4%, 100% 45%, 96% 100%, 2% 96%, 0 50%); }
+.ing__logos { position: absolute; right: 36px; top: 36px; display: flex; }
+.ing__logos .logo-ic { width: 96px; height: 96px; border-radius: 24px; margin-left: -14px; box-shadow: 0 0 0 5px var(--white), 0 0 0 8px var(--black); }
+.ing__tag { font: 700 56px/1 var(--hand); }
+.ing h3 { font: 900 108px/.88 var(--sans); font-stretch: 70%; letter-spacing: -.02em; margin: 26px 0 20px; }
+.ing h3 .s, .ing p .s { font-family: var(--serif); font-style: italic; font-weight: 400; font-stretch: 100%; }
+.ing p { font: 500 40px/1.25 var(--sans); color: var(--muted); }
+.ing__arte { margin-top: auto; }
+
+/* mapa do Oeste (mesmo desenho do site) */
+.mapa { position: absolute; border: 4px solid #3a3a3a; border-radius: 40px; background: #121212; overflow: hidden; }
+.mapa svg { width: 100%; height: 100%; display: block; }
+.mapa .grid path { stroke: rgba(243, 242, 238, .06); stroke-width: 1; }
+.mapa .river { fill: none; stroke: #5e5e5e; stroke-width: 7; stroke-linecap: round; }
+.mapa .river--thin { stroke-width: 4; }
+.mapa .road { fill: none; stroke: rgba(243, 242, 238, .35); stroke-width: 1.6; stroke-dasharray: 2 9; stroke-linecap: round; }
+.mapa .route { display: none; }
+.mapa .pin path { fill: var(--paper); stroke: var(--black); stroke-width: 2.5; }
+.mapa .pin circle { fill: var(--black); }
+.mapa .pulse { fill: none; stroke: var(--paper); stroke-width: 2.5; }
+.mapa text { font: 800 26px var(--sans); font-stretch: 90%; fill: var(--paper); paint-order: stroke; stroke: #121212; stroke-width: 7px; stroke-linejoin: round; }
+.mapa text.main { font-size: 36px; }
+.mapa .hand-t { font: 700 34px var(--hand); stroke-width: 0; }
+.mapa .compass { font: 700 22px var(--sans); fill: #8a8680; stroke-width: 0; }
+
+/* método em trilha (painéis alternando papel e preto, como no site) */
+.mp { position: absolute; width: 760px; height: 900px; padding: 56px 52px; border: 4px solid var(--black); border-radius: 36px; background: var(--white); color: var(--black); box-shadow: 14px 14px 0 var(--black); display: flex; flex-direction: column; }
+.mp.escuro { background: var(--black); color: var(--paper); border-color: var(--paper); box-shadow: 14px 14px 0 #55524d; }
+.mp__num { font: 400 200px/.8 var(--serif); font-style: italic; }
+.mp h3 { font: 900 112px/.9 var(--sans); font-stretch: 70%; letter-spacing: -.02em; margin: 40px 0 22px; }
+.mp p { font: 500 42px/1.25 var(--sans); opacity: .85; }
+.mp .mao { position: static; margin-top: auto; font-size: 62px; rotate: -2deg; }
+
+/* botão principal do site: preto com texto papel */
+.botao { position: absolute; display: flex; align-items: center; justify-content: center; gap: 22px; padding: 38px 56px; border-radius: 99px; background: var(--black); color: var(--paper); font: 900 58px var(--sans); font-stretch: 80%; box-shadow: 10px 10px 0 var(--gray); }
+.cena.preta .botao { background: var(--paper); color: var(--black); box-shadow: 10px 10px 0 #55524d; }
+
+/* selo grande legível: disco preto, anel de texto e "desde 2016" parado no centro */
+.selog { position: absolute; width: 520px; height: 520px; }
+.selog svg { width: 100%; height: 100%; overflow: visible; }
+.selog text { font: 800 11.4px var(--sans); letter-spacing: .1em; fill: var(--paper); }

@@ -9,10 +9,18 @@ const el = (html, pai = stage) => { const d = document.createElement('div'); d.i
 const $ = (sel, raiz = stage) => raiz.querySelector(sel)
 const $$ = (sel, raiz = stage) => [...raiz.querySelectorAll(sel)]
 
+// como cada cena entra: 'corte' (aparece no t0) ou 'empurra' (desliza por cima da anterior e fica inteira no t0).
+// O Reels escolhe o padrão com KIT.entrada = 'empurra'.
+const KIT = { entrada: 'corte', dEntrada: 0.3 }
 // cena visível só entre t0 e t1
-function cena(cls, t0, t1) {
+function cena(cls, t0, t1, { entra = KIT.entrada, dir = 1, d = KIT.dEntrada } = {}) {
   const c = el(`<section class="cena ${cls}"></section>`)
-  if (t0 <= 0) gsap.set(c, { visibility: 'visible' }); else TL.set(c, { visibility: 'visible' }, t0)
+  if (t0 <= 0) gsap.set(c, { visibility: 'visible' })
+  else if (entra === 'empurra') {
+    TL.set(c, { visibility: 'visible' }, t0 - d)
+    vai(c, { xPercent: 100 * dir }, { xPercent: 0, duration: d, ease: 'power3.inOut' }, t0 - d)
+    cue(t0 - d, 'whoosh', 0.45)
+  } else TL.set(c, { visibility: 'visible' }, t0)
   if (t1 != null) TL.set(c, { visibility: 'hidden' }, t1)
   return c
 }
@@ -34,10 +42,10 @@ function titulo(pai, linhas, { cls = 'l', top = 400, left, align, cor } = {}) {
   return { t, linhas: $$('.linha > span', t) }
 }
 function sobeLinhas(linhas, t, { stagger = 0.09, dur = 0.7, ease = 'power4.out' } = {}) {
-  linhas.forEach((l, i) => vai(l, { yPercent: 115, rotate: 3 }, { yPercent: 0, rotate: 0, duration: dur, ease }, t + i * stagger))
+  linhas.forEach((l, i) => vai(l, { yPercent: 135, rotate: 3 }, { yPercent: 0, rotate: 0, duration: dur, ease }, t + i * stagger))
 }
 function desceLinhas(linhas, t, { stagger = 0.05, dur = 0.4 } = {}) {
-  linhas.forEach((l, i) => vai(l, { yPercent: 0 }, { yPercent: -115, duration: dur, ease: 'power3.in' }, t + i * stagger))
+  linhas.forEach((l, i) => vai(l, { yPercent: 0 }, { yPercent: -135, duration: dur, ease: 'power3.in' }, t + i * stagger))
 }
 
 const logo = (n, cls = '') => `<span class="logo-ic ${cls}">${LOGOS[n]}</span>`
@@ -251,4 +259,55 @@ function peca(c, n, nome, linhas, t, { cor } = {}) {
   sobeLinhas(a.linhas, t + 0.08)
   cue(t, 'whoosh', 0.55)
   return a
+}
+
+// ─── peças tiradas do site ───────────────────────────────────
+const fmt = s => s.replace(/\*([^*]+)\*/g, '<span class="s">$1</span>')
+// notificação grande (legível no celular)
+const notifGrande = (pai, { logo: lg, titulo, texto, quando = 'agora' }, estilo = '') =>
+  el(`<div class="ng" style="${estilo}">${logo(lg)}<div class="ng__topo"><b>${titulo}</b><span>${quando}</span></div><div class="ng__txt">${texto}</div></div>`, pai)
+
+// ingresso de serviço (igual aos cartões da roda do site)
+const ingresso = (pai, { tag = '', titulo, texto = '', logos: ls = [], arte = '' }, estilo = '') =>
+  el(`<div class="ing" style="${estilo}">${ls.length ? `<div class="ing__logos">${ls.map(n => logo(n, n === 'tiktok' || n === 'instagram' ? 'cheio' : '')).join('')}</div>` : ''}<div class="ing__tag">${tag}</div><h3>${fmt(titulo)}</h3><p>${fmt(texto)}</p><div class="ing__arte">${arte}</div></div>`, pai)
+
+// roda de ingressos: giram em volta de um pivô bem abaixo da tela; gira(i, t) traz o ingresso i pra frente
+function roda(pai, itens, { cx = 540, cy = 1060, raio = 1500, passo = 30 } = {}) {
+  const r = el(`<div style="position:absolute;left:${cx}px;top:${cy + raio}px;width:0;height:0"></div>`, pai)
+  const ings = itens.map((it, i) => {
+    const g = el(`<div style="position:absolute;left:0;top:0;width:0;height:0;transform:rotate(${i * passo}deg)"></div>`, r)
+    return ingresso(g, it, `left:-330px;top:${-raio - 410}px`)
+  })
+  let atual = 0
+  gsap.set(r, { rotate: 0 })
+  return { r, ings, gira: (i, t, dur = 0.55) => { vai(r, { rotate: -atual * passo }, { rotate: -i * passo, duration: dur, ease: 'back.inOut(1.2)' }, t); cue(t, 'whoosh', 0.4); atual = i } }
+}
+
+// mapa do Oeste (desenho do site); devolve os pinos por cidade
+function mapaOeste(pai, estilo) {
+  const m = el(`<div class="mapa" style="${estilo}">${MAPA}</div>`, pai)
+  const pinos = Object.fromEntries($$('a[data-city]', m).map(a => [a.dataset.city, a]))
+  $$('.pin', m).forEach(p => gsap.set(p, { transformOrigin: '0 0' }))
+  return { m, pinos }
+}
+
+// painel do método (01 Diagnóstico...)
+const painel = (pai, { num, titulo, texto, mao = '', escuro = false }, estilo = '') =>
+  el(`<div class="mp${escuro ? ' escuro' : ''}" style="${estilo}"><div class="mp__num">${num}</div><h3>${fmt(titulo)}</h3><p>${texto}</p>${mao ? `<div class="mao">${mao}</div>` : ''}</div>`, pai)
+
+// botão principal do site (preto, texto papel, ícone do WhatsApp)
+const botaoSite = (pai, texto, estilo = '') =>
+  el(`<div class="botao" style="${estilo}">${LOGOS.whatsapp.replace('fill="#25d366"', 'fill="currentColor"').replace('<svg', '<svg width="64" height="64"')}${texto}</div>`, pai)
+
+// selo grande e legível: anel "FEITO NO OESTE DA BAHIA" girando + "DESDE 2016" parado no centro
+function seloGrande(pai, estilo) {
+  const id = 'anelg' + ++nSelo
+  const s = el(`<div class="selog" style="${estilo}"><svg viewBox="0 0 120 120"><defs><path id="${id}" d="M60 60m-47 0a47 47 0 1 1 94 0a47 47 0 1 1-94 0"/></defs>
+    <circle cx="60" cy="60" r="58" fill="#0b0b0b" stroke="#f3f2ee" stroke-width="1.5"/><circle cx="60" cy="60" r="38" fill="none" stroke="#f3f2ee" stroke-width=".8" stroke-dasharray="1.5 2.5"/>
+    <g class="anel"><text><textPath href="#${id}" textLength="290" lengthAdjust="spacing">FEITO NO OESTE DA BAHIA · 8 CIDADES ·</textPath></text></g>
+    <text x="60" y="50" text-anchor="middle" style="font:800 7px Archivo;letter-spacing:.3em">DESDE</text>
+    <text x="60" y="74" text-anchor="middle" style="font:900 26px Archivo;font-stretch:72%;letter-spacing:0">2016</text>
+    <image href="${LOGO_VIVA}" x="44" y="79" width="32" height="15"/></svg></div>`, pai)
+  const anel = $('.anel', s); gsap.set(anel, { transformOrigin: '60px 60px' })
+  return { s, anel }
 }

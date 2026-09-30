@@ -1,5 +1,4 @@
 out/
 reel.html
 __pycache__/
-voz/*
-!voz/.gitkeep
+voz/
