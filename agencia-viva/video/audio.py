@@ -1,6 +1,7 @@
 """Trilha e efeitos do Reels da Viva, sintetizados do zero (sem música de terceiros).
 
-uso: python3 audio.py cues.json saida.wav [--sem-musica]
+uso: python3 audio.py cues.json saida.wav [--sem-musica] [--voz locucao.wav --falas falas.json]
+falas.json = [{"t": 0.2, "texto": "..."}, ...]: cada frase da locução é encaixada no seu tempo
 cues.json = { "dur": 60.0, "bpm": 120, "drop": 12.0, "calmo": [[a, b]], "fim": 57.0,
               "cues": [{"t": 1.2, "tipo": "whoosh"}, ...] }
 """
@@ -291,6 +292,59 @@ def musica(dur, bpm, drop, calmos, fim):
     return mix
 
 
+# ─── locução ────────────────────────────────────────────────
+def ler_wav(caminho):
+    import wave
+    with wave.open(caminho) as w:
+        assert w.getframerate() == SR and w.getsampwidth() == 2, 'converta pra 48 kHz / 16 bits antes'
+        x = np.frombuffer(w.readframes(w.getnframes()), '<i2').astype(float) / 32768
+        return x.reshape(-1, w.getnchannels()).mean(1)
+
+
+def frases(voz, n_esperado, silencio=0.28):
+    """acha as frases pelos silêncios; junta/parte até bater com o número de falas do roteiro"""
+    jan = int(0.02 * SR)
+    rms = np.sqrt(np.convolve(voz ** 2, np.ones(jan) / jan, 'same'))
+    lim = max(rms.max() * 0.04, 1e-4)
+    fala = rms > lim
+    trechos, i, n = [], 0, len(fala)
+    while i < n:
+        if fala[i]:
+            j = i
+            while j < n and (fala[j] or (j + int(silencio * SR) < n and fala[j:j + int(silencio * SR)].any())):
+                j += 1
+            trechos.append([i, j])
+            i = j
+        else:
+            i += 1
+    trechos = [t for t in trechos if t[1] - t[0] > 0.12 * SR]
+    # silêncios maiores separam frases: se sobrar trecho, junta os de menor pausa entre si
+    while len(trechos) > n_esperado:
+        k = min(range(len(trechos) - 1), key=lambda k: trechos[k + 1][0] - trechos[k][1])
+        trechos[k][1] = trechos[k + 1][1]
+        del trechos[k + 1]
+    return trechos
+
+
+def encaixa_voz(voz_path, falas, L):
+    voz = ler_wav(voz_path)
+    tr = frases(voz, len(falas))
+    if len(tr) != len(falas):
+        print(f'aviso: achei {len(tr)} frases na locução e o roteiro tem {len(falas)}; encaixando em ordem')
+    out = np.zeros(L)
+    fim_ant = 0.0
+    for k, (a, b) in enumerate(tr):
+        pedaco = voz[max(0, a - int(0.03 * SR)): b + int(0.06 * SR)]
+        t = falas[k]['t'] if k < len(falas) else fim_ant + 0.2
+        t = max(t, fim_ant + 0.12)
+        i = int(t * SR)
+        j = min(L, i + len(pedaco))
+        out[i:j] += pedaco[: j - i]
+        fim_ant = j / SR
+        print(f'  fala {k + 1:2d}: {t:5.2f}–{fim_ant:5.2f} s')
+    return out
+
+
 def comprime(x, lim=0.92):
     return np.tanh(x / lim) * lim
 
@@ -313,7 +367,18 @@ def main():
             k = min(L, i + int(0.5 * SR))
             duck[i:k] = np.minimum(duck[i:k], 0.45 + 0.55 * np.linspace(0, 1, k - i))
     mus = np.zeros(L) if sem_musica else musica(dur, cfg.get('bpm', 120), cfg['drop'], cfg.get('calmo', []), cfg.get('fim', dur - 3))[:L]
-    mix = mus * duck * 0.9 + fx * 0.8
+    voz = np.zeros(L)
+    if '--voz' in sys.argv:
+        voz = encaixa_voz(sys.argv[sys.argv.index('--voz') + 1], json.load(open(sys.argv[sys.argv.index('--falas') + 1])), L)
+        # trilha abaixa suave embaixo da voz (e efeitos um pouco)
+        jan = int(0.25 * SR)
+        env_v = np.convolve(np.abs(voz) > 0.01, np.ones(jan) / jan, 'same')
+        env_v = np.clip(env_v * 3, 0, 1)
+        duck = duck * (1 - 0.62 * env_v)
+        fx = fx * (1 - 0.25 * env_v)
+        rv = np.sqrt(np.mean(voz[voz != 0] ** 2)) + 1e-9
+        voz = voz * (10 ** (-16 / 20) / rv)
+    mix = mus * duck * 0.9 + fx * 0.8 + voz * 1.25
     mix = mix[: int(dur * SR)]
     # fade de saída
     nf = int(0.6 * SR)

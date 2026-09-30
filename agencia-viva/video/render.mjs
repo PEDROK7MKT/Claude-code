@@ -57,8 +57,16 @@ cfg.calmo = (cfg.calmo || []).map(([a, b]) => [a - de, b - de])
 cfg.dur = ate - de
 writeFileSync(join(out, 'cues.json'), JSON.stringify(cfg, null, 1))
 const nome = arg('nome', de === 0 && ate === info.dur ? 'viva-reel' : `trecho-${de}-${ate}`)
-execFileSync('python3', [join(aqui, 'audio.py'), join(out, 'cues.json'), join(out, 'audio.wav')], { stdio: 'inherit' })
-execFileSync('python3', [join(aqui, 'audio.py'), join(out, 'cues.json'), join(out, 'audio-fx.wav'), '--sem-musica'], { stdio: 'inherit' })
+// locução (ElevenLabs): coloque o arquivo em video/voz/ (mp3 ou wav); cada frase é encaixada no tempo de falas.json
+const vozDir = join(aqui, 'voz'), vozArq = existsSync(vozDir) && readdirSync(vozDir).find(f => /\.(mp3|wav|m4a)$/i.test(f))
+const extraVoz = []
+if (vozArq && de === 0) {
+  execFileSync(FFMPEG, ['-y', '-hide_banner', '-loglevel', 'error', '-i', join(vozDir, vozArq), '-ac', '1', '-ar', '48000', '-sample_fmt', 's16', join(out, 'voz.wav')])
+  extraVoz.push('--voz', join(out, 'voz.wav'), '--falas', join(aqui, 'falas.json'))
+  console.log(`locução: ${vozArq}`)
+}
+execFileSync('python3', [join(aqui, 'audio.py'), join(out, 'cues.json'), join(out, 'audio.wav'), ...extraVoz], { stdio: 'inherit' })
+execFileSync('python3', [join(aqui, 'audio.py'), join(out, 'cues.json'), join(out, 'audio-fx.wav'), '--sem-musica', ...extraVoz], { stdio: 'inherit' })
 
 const video = (wav, arq) => execFileSync(FFMPEG, ['-y', '-hide_banner', '-loglevel', 'error', '-framerate', String(FPS), '-i', join(tmp, '%05d.jpg'), '-i', wav,
   '-c:v', 'libx264', '-preset', 'slow', '-crf', '17', '-pix_fmt', 'yuv420p', '-profile:v', 'high', '-level', '4.2', '-r', String(FPS),
