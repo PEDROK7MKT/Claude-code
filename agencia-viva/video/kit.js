@@ -13,12 +13,13 @@ const $$ = (sel, raiz = stage) => [...raiz.querySelectorAll(sel)]
 // O Reels escolhe o padrão com KIT.entrada = 'empurra'.
 const KIT = { entrada: 'corte', dEntrada: 0.3 }
 // cena visível só entre t0 e t1
-function cena(cls, t0, t1, { entra = KIT.entrada, dir = 1, d = KIT.dEntrada } = {}) {
+function cena(cls, t0, t1, { entra = KIT.entrada, dir = 1, d = KIT.dEntrada, eixo = 'x' } = {}) {
   const c = el(`<section class="cena ${cls}"></section>`)
   if (t0 <= 0) gsap.set(c, { visibility: 'visible' })
   else if (entra === 'empurra') {
     TL.set(c, { visibility: 'visible' }, t0 - d)
-    vai(c, { xPercent: 100 * dir }, { xPercent: 0, duration: d, ease: 'power3.inOut' }, t0 - d)
+    const k = eixo === 'y' ? 'yPercent' : 'xPercent'
+    vai(c, { [k]: 100 * dir }, { [k]: 0, duration: d, ease: 'power3.inOut' }, t0 - d)
     cue(t0 - d, 'whoosh', 0.45)
   } else TL.set(c, { visibility: 'visible' }, t0)
   if (t1 != null) TL.set(c, { visibility: 'hidden' }, t1)
