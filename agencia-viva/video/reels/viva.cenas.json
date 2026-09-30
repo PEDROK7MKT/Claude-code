@@ -1,0 +1,16 @@
+[
+ {"a": 0, "b": 4.3, "texto": "Sua empresa tá viva no celular de quem compra?"},
+ {"a": 4.3, "b": 7.1, "texto": "Só aparece o concorrente."},
+ {"a": 7.1, "b": 9.7, "texto": "Último post? Quatro meses atrás."},
+ {"a": 9.7, "b": 13, "texto": "Respondeu dois dias depois. Venda perdida."},
+ {"a": 13, "b": 16, "texto": "A Viva deixa a sua empresa viva."},
+ {"a": 16, "b": 18.5, "texto": "Procurou no Google? Achou você."},
+ {"a": 18.5, "b": 21.5, "texto": "Rolou o feed? Viu o seu anúncio."},
+ {"a": 21.5, "b": 24.5, "texto": "Chamou? A IA responde na hora."},
+ {"a": 24.5, "b": 27.5, "texto": "Perguntou pra IA? Aparece você."},
+ {"a": 27.5, "b": 31.5, "texto": "Só o que a sua empresa precisa."},
+ {"a": 31.5, "b": 36.5, "texto": "Pacote pronto? Aqui não. Raio-x, plano, mão na massa e relatório."},
+ {"a": 36.5, "b": 40.5, "texto": "Desde dois mil e dezesseis, em oito cidades do Oeste."},
+ {"a": 40.5, "b": 45, "texto": "Cliente chamando, ligando… até de Luís Eduardo. Isso é empresa viva."},
+ {"a": 45, "b": 50, "texto": "Sua empresa viva no celular de quem compra. Link na bio."}
+]

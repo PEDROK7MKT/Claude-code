@@ -38,7 +38,20 @@ const info = await p0.evaluate(() => ({ dur: window.REEL.dur, musica: window.REE
 // Cada cena é esticada/encolhida pra começar logo antes da sua frase (alinhar.py → alinhamento.json).
 const vozDir = join(aqui, 'voz', reel), vozArq = !tem('sem-voz') && existsSync(vozDir) && readdirSync(vozDir).find(f => /\.(mp3|wav|m4a)$/i.test(f))
 let alin = null
-if (vozArq) {
+// reels/<reel>.voz.json: locução com tempos fixos (o vídeo não muda de ritmo; cada frase entra no seu instante)
+const vozFixa = join(aqui, 'reels', `${reel}.voz.json`)
+let pedacosFixos = false
+if (vozArq && existsSync(vozFixa)) {
+  const arqs = readdirSync(vozDir).filter(f => /\.(mp3|wav|m4a)$/i.test(f)).sort()
+  const wavs = arqs.map((f, i) => {
+    const w = join(out, `voz-${String(i + 1).padStart(2, '0')}.wav`)
+    execFileSync(FFMPEG, ['-y', '-hide_banner', '-loglevel', 'error', '-i', join(vozDir, f), '-af', `atempo=${arg('tempo', '1.0')}`, '-ac', '1', '-ar', '48000', '-sample_fmt', 's16', w])
+    return w
+  })
+  execFileSync('python3', [join(aqui, 'voz_fixa.py'), vozFixa, out, ...wavs], { stdio: 'inherit' })
+  pedacosFixos = true
+  console.log(`locução (tempos fixos): ${arqs.join(', ')}`)
+} else if (vozArq) {
   execFileSync(FFMPEG, ['-y', '-hide_banner', '-loglevel', 'error', '-i', join(vozDir, vozArq), '-af', `atempo=${arg('tempo', '1.1')}`, '-ac', '1', '-ar', '48000', '-sample_fmt', 's16', join(out, 'voz.wav')])
   execFileSync('python3', [join(aqui, 'alinhar.py'), join(out, 'voz.wav'), join(aqui, 'reels', `${reel}.cenas.json`), join(out, 'alinhamento.json')], { stdio: 'inherit' })
   alin = JSON.parse(readFileSync(join(out, 'alinhamento.json'), 'utf8'))
@@ -83,10 +96,8 @@ cfg.dur = ate - de
 writeFileSync(join(out, 'cues.json'), JSON.stringify(cfg, null, 1))
 const nome = arg('nome', de === 0 && ate === info.dur ? 'viva-reel' : `trecho-${de}-${ate}`)
 const extraVoz = []
-if (alin && de === 0) {
-  writeFileSync(join(out, 'pedacos.json'), JSON.stringify(alin.cenas.map(c => ({ s: c.voz[0], e: c.voz[1], t: c.t }))))
-  extraVoz.push('--voz', join(out, 'voz.wav'), '--pedacos', join(out, 'pedacos.json'))
-}
+if (alin && de === 0) writeFileSync(join(out, 'pedacos.json'), JSON.stringify(alin.cenas.map(c => ({ s: c.voz[0], e: c.voz[1], t: c.t }))))
+if ((alin || pedacosFixos) && de === 0) extraVoz.push('--voz', join(out, 'voz.wav'), '--pedacos', join(out, 'pedacos.json'))
 execFileSync('python3', [join(aqui, 'audio.py'), join(out, 'cues.json'), join(out, 'audio.wav'), ...extraVoz], { stdio: 'inherit' })
 execFileSync('python3', [join(aqui, 'audio.py'), join(out, 'cues.json'), join(out, 'audio-fx.wav'), '--sem-musica', ...extraVoz], { stdio: 'inherit' })
 
