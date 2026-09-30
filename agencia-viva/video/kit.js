@@ -12,7 +12,7 @@ const $$ = (sel, raiz = stage) => [...raiz.querySelectorAll(sel)]
 // cena visível só entre t0 e t1
 function cena(cls, t0, t1) {
   const c = el(`<section class="cena ${cls}"></section>`)
-  TL.set(c, { visibility: 'visible' }, t0)
+  if (t0 <= 0) gsap.set(c, { visibility: 'visible' }); else TL.set(c, { visibility: 'visible' }, t0)
   if (t1 != null) TL.set(c, { visibility: 'hidden' }, t1)
   return c
 }
@@ -113,8 +113,9 @@ function conta(alvo, de, ate, t, dur, fmt = n => Math.round(n).toLocaleString('p
 
 // transição: cortina preta/papel varrendo a tela
 function cortina(t, { cor = 'var(--black)', dir = 'cima', dur = 0.5 } = {}) {
-  const c = el(`<div class="cena" style="background:${cor};visibility:visible;z-index:50;transform:translateY(100%)"></div>`)
+  const c = el(`<div class="cena" style="background:${cor};visibility:visible;z-index:50"></div>`)
   const de = dir === 'cima' ? 100 : -100
+  gsap.set(c, { yPercent: de })
   vai(c, { yPercent: de }, { yPercent: 0, duration: dur / 2, ease: 'power3.in' }, t - dur / 2)
   vai(c, { yPercent: 0 }, { yPercent: -de, duration: dur / 2, ease: 'power3.out' }, t)
   cue(t - dur / 2, 'whoosh', 0.8)
