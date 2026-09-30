@@ -1,0 +1,54 @@
+LOCUÇÃO DO REELS "SUA EMPRESA TÁ VIVA?" (ElevenLabs, voz Will)
+
+Jeito mais fácil: cole o texto abaixo inteiro (uma frase por parágrafo) e gere UM arquivo só.
+O sistema acha cada frase e encaixa no tempo certo do vídeo, sem mudar o ritmo das cenas.
+Se preferir, gere um arquivo por frase com os nomes 01, 02, 03, 04a, 04b... (mesma ordem).
+
+Ajustes: modelo multilíngue, velocidade ~1,1, estabilidade ~40%, similaridade ~75%, estilo ~30%, speaker boost ligado.
+Voz próxima, sem tom de rádio. Algumas frases têm pouco tempo (ex.: "Venda perdida." tem 0,9 s), então a fala precisa ser ágil.
+
+--- TEXTO PRA COLAR ---
+
+Sua empresa tá viva no celular de quem compra?
+
+Só aparece o concorrente.
+
+Último post: há quatro meses.
+
+Respondeu dois dias depois.
+
+Venda perdida.
+
+A Viva deixa sua empresa viva.
+
+Procurou? Achou você.
+
+Rolou o feed? Viu seu anúncio.
+
+Chamou? Resposta na hora.
+
+Perguntou pra IA? Aparece você.
+
+Só o que a sua empresa precisa.
+
+Pacote pronto? Aqui não.
+
+Aqui a meta é o seu case de sucesso.
+
+Desde dois mil e dezesseis, pra todo o Oeste.
+
+Até de Luís Eduardo.
+
+Isso é empresa viva.
+
+Chama no WhatsApp e conta o que vende.
+
+Link na bio.
+
+--- ONDE CADA FRASE ENTRA (segundos) ---
+01 0,2 | 02 4,6 | 03 7,2 | 04a 10,05 | 04b 12,0 | 05 13,7 | 06 17,1 | 07 19,6 | 08 23,1 | 09 26,6
+10 29,6 | 11a 33,6 | 11b 36,0 | 12 40,7 | 13a 45,75 | 13b 47,65 | 14a 49,6 | 14b 53,05
+
+Versão pra impulsionar (botão "Enviar mensagem" do anúncio): troque as duas últimas por
+"Chama e conta o que você vende." e "Toca no botão aqui embaixo."
+Versão sem WhatsApp (direct): troque as duas últimas por "Manda VIVA no direct e conta o que vende."

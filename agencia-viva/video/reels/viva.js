@@ -675,13 +675,12 @@ recua(Gc, T14)
   btn.style.overflow = 'hidden'
   vai(btn, { scale: 1 }, { scale: 1.04, duration: 0.15, yoyo: true, repeat: 1 }, T + 0.9); cue(T + 0.9, 'pop', 0.5)
   vai($('.brilho', btn), { x: 0 }, { x: 1100, duration: 0.5, ease: 'power2.inOut' }, T + 0.9)
-  if (VAR === 'anuncio') {
-    risca(Hc, 'M540 1090 C 560 1200, 520 1320, 540 1440 M 516 1412 L 540 1446 L 566 1414', T + 1.3, 0.4, { larg: 7 }); cue(T + 1.3, 'tique', 0.3)
-  } else {
-    const n = el('<div class="mao" style="left:110px;top:1100px;font-size:56px;line-height:1.05;rotate:-3deg">conta o que vende.<br>a gente diz por onde<br>começar.</div>', Hc)
-    escreve(n, T + 0.4, 0.4); cue(T + 0.4, 'tique', 0.4)
-    risca(Hc, 'M170 1300 C 150 1350, 128 1400, 112 1450 M 96 1420 L 110 1454 L 140 1432', T + 1.3, 0.4, { larg: 7 }); cue(T + 1.3, 'tique', 0.3)
-  }
+  const n = el('<div class="mao" style="left:110px;top:1100px;font-size:56px;line-height:1.05;rotate:-3deg">conta o que vende.<br>a gente diz por onde<br>começar.</div>', Hc)
+  escreve(n, T + 0.4, 0.4); cue(T + 0.4, 'tique', 0.4)
+  // orgânico: seta pro nome do perfil (embaixo à esquerda); anúncio: seta descendo até o botão nativo 'Enviar mensagem'
+  if (VAR === 'anuncio') risca(Hc, 'M522 1075 C 532 1180, 512 1320, 522 1440 M 500 1410 L 522 1446 L 544 1414', T + 1.3, 0.4, { larg: 7 })
+  else risca(Hc, 'M170 1300 C 150 1350, 128 1400, 112 1450 M 96 1420 L 110 1454 L 140 1432', T + 1.3, 0.4, { larg: 7 })
+  cue(T + 1.3, 'tique', 0.3)
   // selo do site: anel 'FEITO NO OESTE DA BAHIA ·' girando e o centro parado com o logo e DESDE 2016
   const s = el(`<div class="selog" style="left:550px;top:1085px;width:380px;height:380px"><svg viewBox="0 0 120 120"><defs><path id="anelv" d="M60 60m-47 0a47 47 0 1 1 94 0a47 47 0 1 1-94 0"/></defs>
     <circle cx="60" cy="60" r="58" fill="#0b0b0b" stroke="#f3f2ee" stroke-width="1.5"/><circle cx="60" cy="60" r="37" fill="none" stroke="#f3f2ee" stroke-width=".8" stroke-dasharray="1.5 2.5"/>
