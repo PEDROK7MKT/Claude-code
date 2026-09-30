@@ -360,7 +360,7 @@ def main():
     duck = np.ones(L)
     for c in cfg['cues']:
         f = FX[c['tipo']]
-        s = f() * c.get('g', 1.0)
+        s = (f(c['d']) if 'd' in c else f()) * c.get('g', 1.0)
         i = int(c['t'] * SR)
         j = min(L, i + len(s))
         fx[i:j] += s[: j - i]

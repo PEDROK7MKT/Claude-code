@@ -8,6 +8,8 @@ import { cities } from '../src/data.mjs'
 const aqui = dirname(fileURLToPath(import.meta.url))
 // qual Reels montar: reels/<nome>.js (node build-reel.mjs --reel ideal)
 const iReel = process.argv.indexOf('--reel'), reel = iReel > 0 ? process.argv[iReel + 1] : 'v1'
+// variante do fim (ex.: --variante anuncio), lida pelo reel em window.VARIANTE
+const iVar = process.argv.indexOf('--variante'), variante = iVar > 0 ? process.argv[iVar + 1] : ''
 const ler = f => readFileSync(join(aqui, f), 'utf8')
 const logos = Object.fromEntries(Object.keys(brandSvg).map(k => [k, brandSvg[k]()]))
 // mapa do Oeste igual ao do site (tirado do site gerado: rode node build.mjs antes)
@@ -26,9 +28,9 @@ ${ler('reel.css')}
 ${brandDefs}
 <div id="stage"></div>
 <script src="../public/assets/vendor/gsap.min.js"></script>
-<script>window.LOGOS = ${JSON.stringify(logos)}; window.CIDADES = ${JSON.stringify(cities.map(c => c.name))}; window.MAPA = ${JSON.stringify(mapa)};</script>
+<script>window.VARIANTE = ${JSON.stringify(variante)}; window.LOGOS = ${JSON.stringify(logos)}; window.CIDADES = ${JSON.stringify(cities.map(c => c.name))}; window.MAPA = ${JSON.stringify(mapa)};</script>
 <script>${ler('kit.js')}</script>
 <script>${ler(`reels/${reel}.js`)}</script>
 </body></html>`
 writeFileSync(join(aqui, 'reel.html'), html)
-console.log(`✓ reel.html (${reel})`)
+console.log(`✓ reel.html (${reel}${variante ? ' · ' + variante : ''})`)

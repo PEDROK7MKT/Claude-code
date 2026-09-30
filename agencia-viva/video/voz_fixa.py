@@ -1,10 +1,10 @@
 """Locução com tempos fixos: cada frase entra num instante do roteiro e o vídeo NÃO muda de ritmo.
 
-uso: python3 voz_fixa.py frases.json pasta_saida voz1.wav [voz2.wav ...]
+uso: python3 voz_fixa.py frases.json pasta_saida voz1.wav [voz2.wav ...] [--forca]
 frases.json = [{"t": 0.2, "ate": 4.0, "texto": "..."}, ...]  (t = onde a frase entra; ate = até quando ela pode ir)
 - um arquivo só: acha as frases nas pausas da fala (mesma divisão do alinhar.py);
 - um arquivo por frase (na ordem): corta o silêncio das pontas de cada um.
-Frase que não cabe na janela é acelerada (até 1,25×, sem mudar o tom, com o atempo do ffmpeg); se nem assim couber, avisa.
+Frase que não cabe na janela é acelerada (até 1,25×, sem mudar o tom, com o atempo do ffmpeg); se nem assim couber, para com erro (--forca deixa passar).
 Grava pasta_saida/voz.wav e pasta_saida/pedacos.json ([{s, e, t}] para o audio.py).
 """
 import json, os, subprocess, sys, tempfile, wave
@@ -42,7 +42,7 @@ def grava(caminho, x):
 
 def main():
     frases = json.load(open(sys.argv[1]))
-    saida, arqs = sys.argv[2], sys.argv[3:]
+    saida, arqs = sys.argv[2], [a for a in sys.argv[3:] if not a.startswith("--")]
     if len(arqs) == 1:
         x = ler(arqs[0])
         ini, fim, ps = pausas(x)
@@ -68,6 +68,9 @@ def main():
             print(msg)
         pedacos.append({'s': round(pos / SR, 4), 'e': round((pos + len(p)) / SR, 4), 't': f['t']})
         blocos.append(p); pos += len(p)
+    if avisos and '--forca' not in sys.argv:
+        nomes = ', '.join(f'{k + 1} ("{frases[k]["texto"]}")' for k in avisos)
+        sys.exit(f'✗ não cabem no tempo nem a 1,25×: {nomes}. Regrave essas frases mais rápidas (ou rode com --forca).')
     os.makedirs(saida, exist_ok=True)
     grava(os.path.join(saida, 'voz.wav'), np.concatenate(blocos))
     json.dump(pedacos, open(os.path.join(saida, 'pedacos.json'), 'w'), indent=1)

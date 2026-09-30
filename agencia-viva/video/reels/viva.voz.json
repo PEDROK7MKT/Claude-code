@@ -1,0 +1,110 @@
+[
+ {
+  "arquivo": "01",
+  "t": 0.2,
+  "ate": 4.2,
+  "texto": "Sua empresa tá viva no celular de quem compra?"
+ },
+ {
+  "arquivo": "02",
+  "t": 4.6,
+  "ate": 6.8,
+  "texto": "Só aparece o concorrente."
+ },
+ {
+  "arquivo": "03",
+  "t": 7.2,
+  "ate": 9.7,
+  "texto": "Último post: há quatro meses."
+ },
+ {
+  "arquivo": "04a",
+  "t": 10.05,
+  "ate": 11.65,
+  "texto": "Respondeu dois dias depois."
+ },
+ {
+  "arquivo": "04b",
+  "t": 12.0,
+  "ate": 12.9,
+  "texto": "Venda perdida."
+ },
+ {
+  "arquivo": "05",
+  "t": 13.7,
+  "ate": 16.7,
+  "texto": "A Viva deixa sua empresa viva."
+ },
+ {
+  "arquivo": "06",
+  "t": 17.1,
+  "ate": 19.2,
+  "texto": "Procurou? Achou você."
+ },
+ {
+  "arquivo": "07",
+  "t": 19.6,
+  "ate": 22.7,
+  "texto": "Rolou o feed? Viu seu anúncio."
+ },
+ {
+  "arquivo": "08",
+  "t": 23.1,
+  "ate": 26.2,
+  "texto": "Chamou? Resposta na hora."
+ },
+ {
+  "arquivo": "09",
+  "t": 26.6,
+  "ate": 29.2,
+  "texto": "Perguntou pra IA? Aparece você."
+ },
+ {
+  "arquivo": "10",
+  "t": 29.6,
+  "ate": 33.2,
+  "texto": "Só o que a sua empresa precisa."
+ },
+ {
+  "arquivo": "11a",
+  "t": 33.6,
+  "ate": 35.65,
+  "texto": "Pacote pronto? Aqui não."
+ },
+ {
+  "arquivo": "11b",
+  "t": 36.0,
+  "ate": 40.2,
+  "texto": "Aqui a meta é o seu case de sucesso."
+ },
+ {
+  "arquivo": "12",
+  "t": 40.7,
+  "ate": 44.7,
+  "texto": "Desde dois mil e dezesseis, pra todo o Oeste."
+ },
+ {
+  "arquivo": "13a",
+  "t": 45.75,
+  "ate": 47.3,
+  "texto": "Até de Luís Eduardo."
+ },
+ {
+  "arquivo": "13b",
+  "t": 47.65,
+  "ate": 49.2,
+  "texto": "Isso é empresa viva."
+ },
+ {
+  "arquivo": "14a",
+  "t": 49.6,
+  "ate": 52.7,
+  "texto": "Chama no WhatsApp e conta o que vende."
+ },
+ {
+  "arquivo": "14b",
+  "t": 53.05,
+  "ate": 54.4,
+  "texto": "Link na bio."
+ }
+]

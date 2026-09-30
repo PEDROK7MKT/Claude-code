@@ -51,7 +51,8 @@ function desceLinhas(linhas, t, { stagger = 0.05, dur = 0.4 } = {}) {
 
 const logo = (n, cls = '') => `<span class="logo-ic ${cls}">${LOGOS[n]}</span>`
 const icone = {
-  ia: '<svg viewBox="0 0 24 24"><rect width="24" height="24" rx="6" fill="#0b0b0b"/><path d="M12 4.5l1.6 4.4 4.4 1.6-4.4 1.6L12 16.5l-1.6-4.4L6 10.5l4.4-1.6z" fill="#fff"/><path d="M17.5 14.5l.7 1.8 1.8.7-1.8.7-.7 1.8-.7-1.8-1.8-.7 1.8-.7z" fill="#fff"/></svg>',
+  // ícone de IA sem dono (as letras IA num quadrado preto), pra não lembrar a marca de nenhuma IA real
+  ia: '<svg viewBox="0 0 24 24"><rect width="24" height="24" rx="6" fill="#0b0b0b"/><text x="12" y="16.6" text-anchor="middle" font-family="Archivo, Arial, sans-serif" font-weight="900" font-size="12" font-stretch="75%" fill="#f3f2ee">IA</text></svg>',
   check: '<svg viewBox="0 0 24 24"><path d="M5 12.5l4.2 4.2L19 7" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/></svg>',
   x: '<svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round"/></svg>',
   lupa: '<svg viewBox="0 0 24 24" width="40" height="40"><circle cx="10.5" cy="10.5" r="6.5" fill="none" stroke="#5f6368" stroke-width="2.4"/><path d="M15.5 15.5L21 21" stroke="#5f6368" stroke-width="2.4" stroke-linecap="round"/></svg>',

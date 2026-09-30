@@ -18,8 +18,9 @@ const PW = process.env.PLAYWRIGHT || '/opt/node22/lib/node_modules/playwright/in
 const { chromium } = await import(PW)
 
 const reel = arg('reel', 'v1')
-execFileSync('node', [join(aqui, 'build-reel.mjs'), '--reel', reel], { stdio: 'inherit' })
-const out = join(aqui, 'out', reel), tmp = arg('tmp', join(out, 'quadros'))
+const variante = arg('variante', '')
+execFileSync('node', [join(aqui, 'build-reel.mjs'), '--reel', reel, ...(variante ? ['--variante', variante] : [])], { stdio: 'inherit' })
+const out = join(aqui, 'out', variante ? `${reel}-${variante}` : reel), tmp = arg('tmp', join(out, 'quadros'))
 mkdirSync(out, { recursive: true }); rmSync(tmp, { recursive: true, force: true }); mkdirSync(tmp, { recursive: true })
 
 const browser = await chromium.launch()
@@ -36,10 +37,11 @@ const info = await p0.evaluate(() => ({ dur: window.REEL.dur, musica: window.REE
 
 // locução (ElevenLabs) em video/voz/: acelera um pouco (--tempo, padrão 1.1), acha cada frase e faz o vídeo seguir a voz.
 // Cada cena é esticada/encolhida pra começar logo antes da sua frase (alinhar.py → alinhamento.json).
-const vozDir = join(aqui, 'voz', reel), vozArq = !tem('sem-voz') && existsSync(vozDir) && readdirSync(vozDir).find(f => /\.(mp3|wav|m4a)$/i.test(f))
+const nomeVoz = variante && existsSync(join(aqui, 'voz', `${reel}-${variante}`)) ? `${reel}-${variante}` : reel
+const vozDir = join(aqui, 'voz', nomeVoz), vozArq = !tem('sem-voz') && existsSync(vozDir) && readdirSync(vozDir).find(f => /\.(mp3|wav|m4a)$/i.test(f))
 let alin = null
 // reels/<reel>.voz.json: locução com tempos fixos (o vídeo não muda de ritmo; cada frase entra no seu instante)
-const vozFixa = join(aqui, 'reels', `${reel}.voz.json`)
+const vozFixa = join(aqui, 'reels', `${nomeVoz}.voz.json`)
 let pedacosFixos = false
 if (vozArq && existsSync(vozFixa)) {
   const arqs = readdirSync(vozDir).filter(f => /\.(mp3|wav|m4a)$/i.test(f)).sort()
