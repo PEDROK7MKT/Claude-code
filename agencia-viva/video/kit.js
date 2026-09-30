@@ -16,8 +16,16 @@ function cena(cls, t0, t1) {
   if (t1 != null) TL.set(c, { visibility: 'hidden' }, t1)
   return c
 }
-// tween que funciona fora de ordem
-const vai = (alvo, de, para, t) => TL.fromTo(alvo, de, { ...para, immediateRender: false }, t)
+// tween que funciona fora de ordem. O estado inicial ("de") do PRIMEIRO tween de cada elemento já é aplicado
+// na montagem: sem isso, o que entra no meio da cena aparece antes da hora.
+const primeiro = new WeakMap()
+const vai = (alvo, de, para, t) => {
+  for (const a of (Array.isArray(alvo) ? alvo : [alvo])) {
+    const antes = primeiro.get(a)
+    if (antes == null || t < antes) { gsap.set(a, de); primeiro.set(a, t) }
+  }
+  return TL.fromTo(alvo, de, { ...para, immediateRender: false }, t)
+}
 
 // título em linhas mascaradas: linhas = ['Você contratou', '*marketing*'] (asteriscos = serifa itálica)
 function titulo(pai, linhas, { cls = 'l', top = 400, left, align, cor } = {}) {
@@ -55,8 +63,9 @@ function traco(pai, tipo, estilo, t, dur = 0.5) {
   const [vb, d] = TRACOS[tipo]
   const s = el(`<svg class="traco" viewBox="${vb}" preserveAspectRatio="none" style="${estilo}"><path d="${d}"/></svg>`, pai)
   const p = s.querySelector('path'), L = p.getTotalLength()
-  gsap.set(p, { strokeDasharray: L, strokeDashoffset: L })
-  vai(p, { strokeDashoffset: L }, { strokeDashoffset: 0, duration: dur, ease: 'power2.inOut' }, t)
+  // folga no traço: esconde também a ponta arredondada antes de começar a desenhar
+  gsap.set(p, { strokeDasharray: `${L} ${L + 40}`, strokeDashoffset: L + 20 })
+  vai(p, { strokeDashoffset: L + 20 }, { strokeDashoffset: 0, duration: dur, ease: 'power2.inOut' }, t)
   return s
 }
 
@@ -124,7 +133,8 @@ function cortina(t, { cor = 'var(--black)', dir = 'cima', dur = 0.5 } = {}) {
 // flash de impacto
 function flash(t, cor = '#fff', forca = 0.8) {
   const f = el(`<div class="cena" style="background:${cor};visibility:visible;z-index:60;opacity:0"></div>`)
-  vai(f, { opacity: forca }, { opacity: 0, duration: 0.35, ease: 'power2.out' }, t)
+  vai(f, { opacity: 0 }, { opacity: forca, duration: 0.02, ease: 'none' }, t)
+  vai(f, { opacity: forca }, { opacity: 0, duration: 0.35, ease: 'power2.out' }, t + 0.02)
 }
 // tremida de câmera na cena
 function treme(alvo, t, forca = 14, dur = 0.35) {
@@ -181,12 +191,12 @@ function graficoSobe(pai, { left = 110, top = 1000, largura = 820, altura = 360,
   const pts = [[0, 300], [110, 280], [220, 290], [330, 230], [440, 210], [550, 150], [660, 110], [760, 40]]
   const d = 'M' + pts.map(p => p.join(',')).join(' L')
   const g = el(`<div class="obj" style="left:${left}px;top:${top}px;width:${largura}px;padding:28px 30px">
-    <div style="display:flex;justify-content:space-between;align-items:baseline;font:800 30px var(--sans)"><span>${titulo}</span><span class="pill" style="font-size:28px;padding:10px 18px">▲ <span class="num">0</span>%</span></div>
+    <div style="display:flex;justify-content:space-between;align-items:baseline;font:800 30px var(--sans)"><span>${titulo}</span><span class="pill" style="font-size:28px;padding:10px 18px">▲ subindo</span></div>
     <svg viewBox="-10 0 780 ${altura - 40}" style="width:100%;height:${altura - 80}px;overflow:visible;margin-top:14px"><path d="M0,300 H760" stroke="#ddd" stroke-width="3"/><path class="linha-g" d="${d}" fill="none" stroke="var(--black)" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/><circle class="ponto" cx="760" cy="40" r="16" fill="var(--black)"/></svg></div>`, pai)
   const p = $('.linha-g', g), L = p.getTotalLength()
   gsap.set(p, { strokeDasharray: L, strokeDashoffset: L })
   gsap.set($('.ponto', g), { scale: 0, transformOrigin: '50% 50%' })
-  return { g, desenha: (t, dur = 1.1, pct = 38) => { vai(p, { strokeDashoffset: L }, { strokeDashoffset: 0, duration: dur, ease: 'power2.inOut' }, t); vai($('.ponto', g), { scale: 0 }, { scale: 1, duration: 0.3, ease: 'back.out(3)' }, t + dur - 0.1); conta($('.num', g), 0, pct, t, dur) } }
+  return { g, desenha: (t, dur = 1.1, pct = 38) => { vai(p, { strokeDashoffset: L }, { strokeDashoffset: 0, duration: dur, ease: 'power2.inOut' }, t); vai($('.ponto', g), { scale: 0 }, { scale: 1, duration: 0.3, ease: 'back.out(3)' }, t + dur - 0.1); } }
 }
 // prancheta de diagnóstico com itens que vão sendo marcados
 function prancheta(pai, itens, { left = 150, top = 560, largura = 780, titulo = 'Diagnóstico Viva' } = {}) {
@@ -220,4 +230,25 @@ function marcaBoard(pai, { left = 120, top = 560, largura = 840 } = {}) {
     <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px">${[['#0b0b0b', '#fff', 'Preto'], ['#fff', '#0b0b0b', 'Branco'], ['#c9c6bf', '#0b0b0b', 'Cinza'], ['#f3f2ee', '#0b0b0b', 'Papel']].map(([bg, c, n]) => `<div class="mb" style="height:170px;border-radius:16px;border:4px solid var(--black);background:${bg};color:${c};display:flex;align-items:flex-end;padding:14px;font:800 26px var(--sans)">${n}</div>`).join('')}</div>
     <div class="mb" style="display:flex;align-items:baseline;gap:30px;border-top:3px solid var(--black);padding-top:24px"><b style="font:900 150px/.8 var(--sans);font-stretch:70%">Aa</b><span style="font:400 150px/.8 var(--serif);font-style:italic">Aa</span><small style="font:600 28px/1.2 var(--sans);color:var(--muted)">título forte<br>+ assinatura</small></div>
     <div class="mb" style="display:grid;place-items:center;height:210px;border-radius:18px;background:var(--black);color:var(--paper);font:900 110px/.85 var(--sans);font-stretch:70%;letter-spacing:-.02em">SUA MARCA</div></div>`, pai)
+}
+
+// engrenagem (contorno) pra cena da "máquina"
+function engrenagem(pai, { r = 300, dentes = 14, estilo = '', cor = '#2a2a2a', larg = 10 } = {}) {
+  const pts = []
+  for (let i = 0; i < dentes; i++) {
+    const a0 = (i / dentes) * Math.PI * 2, w = Math.PI / dentes
+    for (const [a, rr] of [[a0 - w * 0.55, r * 0.84], [a0 - w * 0.35, r], [a0 + w * 0.35, r], [a0 + w * 0.55, r * 0.84]]) pts.push([Math.cos(a) * rr, Math.sin(a) * rr])
+  }
+  const d = 'M' + pts.map(p => p.map(v => v.toFixed(1)).join(',')).join('L') + 'Z'
+  const g = el(`<svg style="position:absolute;overflow:visible;${estilo}" width="${r * 2}" height="${r * 2}" viewBox="${-r} ${-r} ${r * 2} ${r * 2}"><path d="${d}" fill="none" stroke="${cor}" stroke-width="${larg}" stroke-linejoin="round"/><circle r="${r * 0.32}" fill="none" stroke="${cor}" stroke-width="${larg}"/></svg>`, pai)
+  return g
+}
+// cabeçalho de cada peça da máquina: "PEÇA 1/6 · NOME" + título
+function peca(c, n, nome, linhas, t, { cor } = {}) {
+  const lab = el(`<div class="label" style="left:80px;top:250px;display:flex;align-items:center;gap:18px${cor ? ';color:' + cor : ''}"><span class="pill" style="font-size:28px;padding:10px 20px;${cor ? 'background:var(--paper);color:var(--black)' : ''}">${n}/6</span>${nome}</div>`, c)
+  pula(lab, t, { y: 30 })
+  const a = titulo(c, linhas, { cls: 'm', top: 320, cor })
+  sobeLinhas(a.linhas, t + 0.08)
+  cue(t, 'whoosh', 0.55)
+  return a
 }
