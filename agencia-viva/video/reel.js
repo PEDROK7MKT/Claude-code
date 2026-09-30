@@ -1,0 +1,16 @@
+// cena de teste do pipeline (substituída pelo roteiro final)
+{
+  const c = cena('papel grao', 0, 4)
+  const { linhas } = titulo(c, ['Sua empresa', '*viva* no celular', 'de quem compra.'], { cls: 'l', top: 420 })
+  sobeLinhas(linhas, 0.2)
+  const { s, anel } = selo(c, 'left:640px;top:1150px')
+  vai(anel, { rotate: 0 }, { rotate: 90, duration: 4, ease: 'none' }, 0)
+  const cel = celular(c, { left: 120, top: 1000 })
+  gsap.set(cel, { scale: 0.5, transformOrigin: '0 0' })
+  const lista = $('.lock__lista', cel)
+  const n1 = notificacao(lista, { logo: 'whatsapp', titulo: 'Cliente novo', texto: 'Oi! Vim pelo anúncio, queria um orçamento' })
+  pula(n1, 1.2); cue(1.2, 'ding')
+  el(`<div style="position:absolute;left:80px;top:250px;display:flex;gap:20px">${logo('google')}${logo('meta')}${logo('instagram')}${logo('whatsapp')}${logo('tiktok')}</div>`, c)
+  cue(0.2, 'whoosh')
+}
+pronto(4, { bpm: 120, drop: 1, calmo: [], fim: 3.5 })
