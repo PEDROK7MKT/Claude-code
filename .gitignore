@@ -2,3 +2,7 @@ node_modules
 dist
 *.log
 .DS_Store
+
+# PK7 video renders (delivered separately; large binaries)
+pk7-video/*.mp4
+pk7-video/*.wav

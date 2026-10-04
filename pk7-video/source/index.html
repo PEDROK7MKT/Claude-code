@@ -1,0 +1,320 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8">
+<link rel="stylesheet" href="fonts/fonts.css">
+<style>
+:root{--navy:#0A0F2C;--blue:#1E50E6;--lime:#B7E400;--bg:#F4F6FF;--grey:#52566E;--red:#FF4D5E}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:1080px;height:1920px;overflow:hidden;background:#000}
+#stage{position:relative;width:1080px;height:1920px;overflow:hidden;background:var(--navy);font-family:"Plus Jakarta Sans",sans-serif;color:var(--navy)}
+.sc{position:absolute;inset:0;opacity:0;will-change:opacity,transform}
+.h{font-family:"Space Grotesk",sans-serif;font-weight:700;text-transform:uppercase;letter-spacing:-.02em;line-height:.98}
+.abs{position:absolute}
+.glow{position:absolute;border-radius:50%;filter:blur(120px);pointer-events:none}
+.lime{color:var(--lime)} .blue{color:var(--blue)} .white{color:#fff}
+.chip{display:inline-flex;align-items:center;gap:14px;padding:16px 28px;border-radius:999px;font-family:"Space Grotesk";font-weight:700;font-size:30px;text-transform:uppercase;letter-spacing:.02em}
+.card{background:#fff;border-radius:40px;box-shadow:0 40px 90px -30px rgba(10,15,44,.45)}
+/* progress bar (always on top) */
+#bar{position:absolute;left:0;top:0;height:10px;background:var(--lime);z-index:50}
+#wm{position:absolute;left:60px;top:70px;z-index:49;font-family:"Space Grotesk";font-weight:700;font-size:30px;letter-spacing:.04em}
+/* S1 */
+.notif{position:absolute;left:70px;right:70px;display:flex;gap:26px;align-items:center;padding:30px 34px;border-radius:34px;background:rgba(255,255,255,.08);border:2px solid rgba(255,255,255,.12);color:#fff;backdrop-filter:blur(8px)}
+.notif .ic{width:84px;height:84px;border-radius:24px;display:flex;align-items:center;justify-content:center;font-size:46px;flex:none}
+.notif b{display:block;font-size:30px;opacity:.6;font-weight:600;margin-bottom:6px}
+.notif span{font-size:38px;font-weight:600;line-height:1.2}
+/* S2 */
+.org{position:absolute;display:flex;align-items:center;justify-content:center;border-radius:22px;font-family:"Space Grotesk";font-weight:700;text-transform:uppercase}
+.seller{width:200px;height:84px;background:rgba(255,77,94,.16);border:2px solid rgba(255,77,94,.6);color:#FF8A95;font-size:26px}
+.analyst{width:300px;height:110px;background:rgba(255,255,255,.08);border:2px dashed rgba(255,255,255,.4);color:#fff;font-size:28px;flex-direction:column}
+/* S4 search */
+.search{position:absolute;left:60px;right:60px;height:150px;border-radius:999px;background:#fff;display:flex;align-items:center;gap:26px;padding:0 44px;box-shadow:0 30px 80px -30px rgba(30,80,230,.45);border:3px solid #E4E9FF}
+.search .txt{font-size:42px;color:var(--navy);white-space:nowrap;overflow:hidden}
+.caret{display:inline-block;width:4px;height:48px;background:var(--blue);vertical-align:middle;margin-left:4px}
+.shot{position:absolute;left:60px;right:60px;border-radius:36px;overflow:hidden;background:#fff;box-shadow:0 50px 100px -30px rgba(10,15,44,.5)}
+.shot img{display:block;width:100%}
+.hl{position:absolute;border:6px solid var(--lime);border-radius:20px;box-shadow:0 0 0 9999px rgba(10,15,44,.0)}
+.tag{position:absolute;padding:14px 26px;border-radius:999px;background:var(--navy);color:#fff;font-family:"Space Grotesk";font-weight:700;font-size:26px;letter-spacing:.06em;text-transform:uppercase;display:flex;gap:12px;align-items:center}
+.tag i{width:14px;height:14px;border-radius:50%;background:#FF3B3B;display:inline-block}
+/* S6 */
+.rail{position:absolute;left:60px;right:60px;top:200px;display:flex;gap:12px}
+.rail div{flex:1;height:96px;border-radius:24px;background:#E4E9FF;color:#9DB1F5;font-family:"Space Grotesk";font-weight:700;font-size:22px;text-transform:uppercase;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;text-align:center;line-height:1.05}
+.rail div b{font-size:30px}
+.rail div.on{background:var(--navy);color:#fff}.rail div.done{background:var(--lime);color:var(--navy)}
+.step{position:absolute;left:0;right:0;top:340px;bottom:0;opacity:0}
+.st-title{position:absolute;left:60px;right:60px;top:40px;font-size:96px}
+.st-sub{position:absolute;left:60px;right:60px;top:250px;font-size:38px;color:var(--grey);line-height:1.35}
+.fun{position:absolute;left:120px;right:120px;height:150px;border-radius:30px;display:flex;align-items:center;justify-content:center;color:#fff;font-family:"Space Grotesk";font-weight:700;font-size:44px;text-transform:uppercase}
+.rcard{position:absolute;left:60px;right:60px;height:250px;padding:36px 40px}
+.rcard .t{font-family:"Space Grotesk";font-weight:700;font-size:40px;text-transform:uppercase;display:flex;align-items:center;gap:20px}
+.rcard .bar{height:26px;border-radius:13px;background:#E4E9FF;margin-top:34px;overflow:hidden}
+.rcard .bar i{display:block;height:100%;background:linear-gradient(90deg,var(--blue),#5B86FF);border-radius:13px}
+.rcard .note{margin-top:22px;font-size:30px;color:var(--grey)}
+.phone{position:absolute;width:520px;height:960px;left:280px;border-radius:70px;background:var(--navy);padding:22px;box-shadow:0 60px 120px -40px rgba(10,15,44,.6)}
+.phone .scr{width:100%;height:100%;border-radius:52px;background:#fff;overflow:hidden;position:relative}
+.blk{position:absolute;left:28px;right:28px;border-radius:22px}
+.bubble{position:absolute;max-width:380px;padding:24px 28px;border-radius:30px;font-size:30px;line-height:1.3}
+.kpi{position:absolute;width:465px;height:250px;padding:34px 36px}
+.kpi small{display:block;font-family:"Space Grotesk";font-weight:700;font-size:28px;text-transform:uppercase;color:var(--grey);letter-spacing:.04em}
+.kpi b{display:block;font-family:"Space Grotesk";font-weight:700;font-size:96px;color:var(--blue);margin-top:18px;letter-spacing:-.03em}
+.disc{position:absolute;left:0;right:0;bottom:60px;text-align:center;font-size:24px;color:#9AA0B8;letter-spacing:.04em}
+/* S7 */
+.stat{position:absolute;left:60px;right:60px;height:170px;border-radius:34px;display:flex;align-items:center;gap:34px;padding:0 44px;background:rgba(255,255,255,.07);border:2px solid rgba(255,255,255,.12)}
+.stat b{font-family:"Space Grotesk";font-weight:700;font-size:72px;color:var(--lime);letter-spacing:-.03em;min-width:430px;white-space:nowrap}
+.stat span{font-size:36px;color:#fff;line-height:1.2;font-weight:500}
+.logos{position:absolute;left:0;bottom:120px;display:flex;gap:90px;align-items:center;white-space:nowrap}
+.logos img{height:64px;filter:brightness(0) invert(1);opacity:.75}
+.logos span{font-family:"Space Grotesk";font-weight:700;font-size:36px;color:#fff;opacity:.75;text-transform:uppercase}
+/* S9 */
+.qw{display:inline-block;margin-right:22px;opacity:0}
+/* CTA */
+.cta-btn{position:absolute;left:120px;right:120px;height:180px;border-radius:999px;background:var(--lime);display:flex;align-items:center;justify-content:center;gap:28px;font-family:"Space Grotesk";font-weight:700;font-size:64px;color:var(--navy);text-transform:lowercase;box-shadow:0 30px 80px -20px rgba(183,228,0,.7)}
+</style></head>
+<body><div id="stage">
+
+<!-- S1 HOOK -->
+<section class="sc" id="s1" style="background:var(--navy)">
+  <div class="glow" style="width:900px;height:900px;left:-300px;top:-200px;background:#FF4D5E;opacity:.25"></div>
+  <div class="notif" id="n1" style="top:260px"><div class="ic" style="background:#FF4D5E">📢</div><div><b>Agência · agora</b><span>Últimas vagas no pacote OURO! 🔥</span></div></div>
+  <div class="notif" id="n2" style="top:470px"><div class="ic" style="background:#F2A100">📞</div><div><b>Comercial · 3ª ligação hoje</b><span>“Vamos fechar o upgrade?”</span></div></div>
+  <div class="notif" id="n3" style="top:680px"><div class="ic" style="background:#1E50E6">📊</div><div><b>Relatório do mês</b><span>+2.340 curtidas · alcance 98 mil</span></div></div>
+  <div class="notif" id="n4" style="top:890px"><div class="ic" style="background:#2B2F47">💸</div><div><b>Seu caixa</b><span>Vendas geradas: <b style="display:inline;font-size:38px;color:#FF6B78;opacity:1">0</b></span></div></div>
+  <div class="abs h white" id="s1a" style="left:60px;right:60px;top:1200px;font-size:112px">Você contratou uma agência…</div>
+  <div class="abs h lime" id="s1b" style="left:60px;right:60px;top:1480px;font-size:112px">e ganhou um vendedor.</div>
+</section>
+
+<!-- S2 PAIN -->
+<section class="sc" id="s2" style="background:var(--navy)">
+  <div class="abs h white" id="s2t" style="left:60px;right:60px;top:200px;font-size:84px">Muito comercial.<br><span style="color:#FF6B78">Pouca entrega.</span></div>
+  <div class="org" id="ag" style="left:390px;top:500px;width:300px;height:110px;background:#fff;color:var(--navy);font-size:40px">Agência</div>
+  <div id="sellers"></div>
+  <div class="org analyst" id="an" style="left:390px;top:1010px">Analista<small style="font-size:24px;opacity:.7;margin-top:4px">47 contas · sobrecarregado</small></div>
+  <div class="abs" id="chart" style="left:60px;right:60px;top:1230px;height:440px;border-radius:36px;background:rgba(255,255,255,.06);border:2px solid rgba(255,255,255,.1)">
+    <svg width="960" height="440" viewBox="0 0 960 440" style="position:absolute;inset:0">
+      <path id="pLikes" d="M60 360 C 260 330, 420 230, 560 180 S 820 70, 900 50" stroke="#1E50E6" stroke-width="10" fill="none" stroke-linecap="round"/>
+      <path id="pSales" d="M60 380 L 900 380" stroke="#FF4D5E" stroke-width="10" fill="none" stroke-linecap="round"/>
+    </svg>
+    <div class="abs h" style="left:40px;top:30px;font-size:30px;color:#7C9BFF">↗ Curtidas e alcance</div>
+    <div class="abs h" style="right:40px;bottom:96px;font-size:30px;color:#FF6B78">→ Vendas</div>
+  </div>
+  <div class="abs h" id="s2b" style="left:60px;right:60px;top:1720px;font-size:56px;color:#fff;text-align:center">Relatório bonito. <span style="color:#FF6B78">Prejuízo real.</span></div>
+</section>
+
+<!-- S3 TURN -->
+<section class="sc" id="s3" style="background:var(--bg)">
+  <div class="glow" style="width:900px;height:900px;left:90px;top:500px;background:#9DB1F5;opacity:.55"></div>
+  <div class="abs h" id="s3a" style="left:60px;right:60px;top:640px;font-size:104px;text-align:center">Antes de contratar de novo…</div>
+  <div class="abs h blue" id="s3b" style="left:60px;right:60px;top:1000px;font-size:104px;text-align:center">pergunte à IA do Google.</div>
+</section>
+
+<!-- S4 GOOGLE AI -->
+<section class="sc" id="s4" style="background:var(--bg)">
+  <div class="search" id="sb" style="top:240px">
+    <svg width="56" height="56" viewBox="0 0 24 24"><path d="M12 2l2.2 6.8L21 11l-6.8 2.2L12 20l-2.2-6.8L3 11l6.8-2.2z" fill="#1E50E6"/></svg>
+    <div class="txt"><span id="q1"></span><span class="caret" id="c1"></span></div>
+  </div>
+  <div class="tag" id="tg1" style="left:60px;top:440px"><i></i>Print real · IA do Google</div>
+  <div class="shot" id="sh1" style="top:540px"><img src="a/g_agencia.jpg"><div class="hl" id="hl1" style="left:2%;top:26.5%;width:96%;height:24.5%"></div></div>
+  <div class="shot" id="sh2" style="top:540px"><img src="a/g_quando.jpg"><div class="hl" id="hl2" style="left:7%;top:21%;width:91%;height:18%"></div></div>
+</section>
+
+<!-- S5 BRAND -->
+<section class="sc" id="s5" style="background:var(--navy)">
+  <div class="glow" id="s5g" style="width:1100px;height:1100px;left:-10px;top:300px;background:#1E50E6;opacity:.6"></div>
+  <div class="glow" style="width:600px;height:600px;left:520px;top:1100px;background:#B7E400;opacity:.25"></div>
+  <img class="abs" id="s5av" src="a/hero-present.webp" style="width:760px;left:160px;top:720px">
+  <div class="abs h" id="s5pk" style="left:0;right:0;top:250px;text-align:center;font-size:330px;color:#fff;letter-spacing:-.04em">PK<span class="lime">7</span></div>
+  <div class="abs h white" id="s5nm" style="left:0;right:0;top:600px;text-align:center;font-size:70px;letter-spacing:.06em">Pedro R Gomes</div>
+  <div class="abs" id="s5c" style="left:60px;right:60px;top:1500px;display:flex;flex-wrap:wrap;gap:20px;justify-content:center">
+    <div class="chip" style="background:var(--lime);color:var(--navy)">Não é agência</div>
+    <div class="chip" style="background:#fff;color:var(--navy)">Time de elite</div>
+    <div class="chip" style="background:#fff;color:var(--navy)">Direto comigo</div>
+    <div class="chip" style="background:#fff;color:var(--navy)">Sob medida</div>
+  </div>
+</section>
+
+<!-- S6 BUILD -->
+<section class="sc" id="s6" style="background:var(--bg)">
+  <div class="abs h" id="s6h" style="left:60px;top:110px;font-size:40px;letter-spacing:.06em">Método PK7 · ao vivo</div>
+  <div class="rail" id="rail"><div><b>1</b>Diagnóstico</div><div><b>2</b>Pesquisa</div><div><b>3</b>Site</div><div><b>4</b>Tráfego+IA</div><div><b>5</b>Painel</div></div>
+  <!-- 6a diagnostico -->
+  <div class="step" id="st1">
+    <div class="st-title h">Diagnóstico</div>
+    <div class="st-sub">Primeiro, achar onde o seu cliente está sendo perdido.</div>
+    <div class="fun" id="f1" style="top:430px;background:#1E50E6">Anúncio</div>
+    <div class="fun" id="f2" style="top:620px;left:170px;right:170px;background:#3D6BF0">Lead chega</div>
+    <div class="fun" id="f3" style="top:810px;left:220px;right:220px;background:#FF4D5E">Espera 4h…</div>
+    <div class="fun" id="f4" style="top:1000px;left:270px;right:270px;background:#C9CFE6;color:#8A90A8">Venda?</div>
+    <div class="abs card" id="f5" style="left:110px;right:110px;top:1220px;padding:34px 40px;display:flex;gap:26px;align-items:center"><div style="font-size:64px">🎯</div><div style="font-size:36px;font-weight:600;line-height:1.3">O lead morre aqui. <span class="blue">É isso que a gente resolve.</span></div></div>
+  </div>
+  <!-- 6b pesquisa -->
+  <div class="step" id="st2">
+    <div class="st-title h">Pesquisa de mercado</div>
+    <div class="st-sub">Quem compra, quem concorre e qual oferta vence.</div>
+    <div class="rcard card" id="r1" style="top:420px"><div class="t">👥 Público ideal</div><div class="bar"><i id="b1"></i></div><div class="note">Mulheres 25–44 · alta intenção de compra</div></div>
+    <div class="rcard card" id="r2" style="top:710px"><div class="t">🔍 Concorrentes</div><div class="bar"><i id="b2"></i></div><div class="note">12 analisados · 3 brechas encontradas</div></div>
+    <div class="rcard card" id="r3" style="top:1000px"><div class="t">💡 Oferta campeã</div><div class="bar"><i id="b3"></i></div><div class="note">Kit + frete grátis · validada em teste A/B</div></div>
+  </div>
+  <!-- 6c site -->
+  <div class="step" id="st3">
+    <div class="st-title h">Site & loja</div>
+    <div class="st-sub">Rápido, bonito e feito pra converter.</div>
+    <div class="phone" id="ph" style="top:370px"><div class="scr">
+      <div class="blk" id="k1" style="top:40px;height:70px;background:var(--navy)"></div>
+      <div class="blk" id="k2" style="top:130px;height:270px;background:linear-gradient(135deg,#1E50E6,#7C9BFF)"><div class="h" style="color:#fff;font-size:44px;padding:36px">Nova coleção</div></div>
+      <div class="blk" id="k3" style="top:420px;height:180px;right:248px;background:#E4E9FF"></div>
+      <div class="blk" id="k4" style="top:420px;height:180px;left:248px;background:#E9F6BC"></div>
+      <div class="blk" id="k5" style="top:620px;height:180px;right:248px;background:#E9F6BC"></div>
+      <div class="blk" id="k6" style="top:620px;height:180px;left:248px;background:#E4E9FF"></div>
+      <div class="blk" id="k7" style="top:820px;height:70px;background:var(--lime);display:flex;align-items:center;justify-content:center" class="h"><span class="h" style="font-size:30px">Comprar agora</span></div>
+    </div></div>
+    <div class="chip abs" id="live" style="left:350px;top:1360px;background:var(--navy);color:#fff">✓ Loja no ar</div>
+  </div>
+  <!-- 6d trafego + IA -->
+  <div class="step" id="st4">
+    <div class="st-title h">Tráfego + IA</div>
+    <div class="st-sub">Anúncio atrai. A IA responde, qualifica e agenda.</div>
+    <div class="phone" style="top:370px;background:#0B7A5A"><div class="scr" style="background:#ECE5DD">
+      <div style="height:120px;background:#075E54;color:#fff;display:flex;align-items:center;padding:0 34px;font-size:32px;font-weight:700;gap:18px"><div style="width:62px;height:62px;border-radius:50%;background:var(--lime)"></div>Loja · IA 24h</div>
+      <div class="bubble" id="w1" style="left:24px;top:170px;background:#fff">Oi! Vi o anúncio. Quanto custa o kit? 👀</div>
+      <div class="bubble" id="w2" style="right:24px;top:330px;background:#DCF8C6">Oi, Ana! O kit sai R$ 189 com frete grátis hoje 🎁</div>
+      <div class="bubble" id="w3" style="left:24px;top:510px;background:#fff">Perfeito, quero!</div>
+      <div class="bubble" id="w4" style="right:24px;top:640px;background:#DCF8C6">Pedido confirmado ✅ Link de pagamento enviado.</div>
+    </div></div>
+    <div class="chip abs" id="resp" style="left:250px;top:1360px;background:var(--navy);color:#fff">⚡ Resposta: <span id="rt">4h</span></div>
+  </div>
+  <!-- 6e painel -->
+  <div class="step" id="st5">
+    <div class="st-title h">Painel</div>
+    <div class="st-sub">Do anúncio ao contrato, num número só.</div>
+    <div class="kpi card" style="left:60px;top:400px"><small>Leads</small><b id="v1">0</b></div>
+    <div class="kpi card" style="left:555px;top:400px"><small>Vendas</small><b id="v2">0</b></div>
+    <div class="kpi card" style="left:60px;top:690px"><small>Retorno</small><b id="v3">0x</b></div>
+    <div class="kpi card" style="left:555px;top:690px"><small>Custo/venda</small><b id="v4">R$0</b></div>
+    <div class="abs card" style="left:60px;right:60px;top:980px;height:420px;overflow:hidden">
+      <svg width="960" height="420" viewBox="0 0 960 420" style="position:absolute;inset:0"><path id="pUp" d="M40 380 C 200 360, 280 300, 400 270 S 640 160, 720 120 S 880 50, 920 40" stroke="#1E50E6" stroke-width="12" fill="none" stroke-linecap="round"/></svg>
+    </div>
+  </div>
+  <div class="disc">Simulação ilustrativa do Método PK7</div>
+</section>
+
+<!-- S7 RESULTS -->
+<section class="sc" id="s7" style="background:var(--navy)">
+  <div class="glow" style="width:900px;height:900px;left:100px;top:200px;background:#1E50E6;opacity:.45"></div>
+  <div class="abs h lime" id="s7t" style="left:60px;right:60px;top:180px;font-size:100px">Resultado real.</div>
+  <div class="abs" id="s7img" style="left:200px;width:680px;top:380px;border-radius:40px;overflow:hidden;box-shadow:0 50px 100px -30px #000"><img src="a/appmax.jpg" style="display:block;width:100%"></div>
+  <div class="tag" id="s7tag" style="left:230px;top:410px;background:var(--lime);color:var(--navy)">Placa Appmax · R$ 100 mil</div>
+  <div class="stat" id="st_a" style="top:1240px"><b id="c1v">+R$ 0</b><span>faturados em e-commerce próprio</span></div>
+  <div class="stat" id="st_b" style="top:1430px"><b id="c2v">+0</b><span>clientes atendidos</span></div>
+  <div class="stat" id="st_c" style="top:1620px"><b id="c3v">0</b><span>continentes com clientes</span></div>
+</section>
+
+<!-- S8 GOOGLE AGAIN -->
+<section class="sc" id="s8" style="background:var(--bg)">
+  <div class="abs h" id="s8t" style="left:60px;right:60px;top:220px;font-size:88px">E a própria IA do Google <span class="blue">descreve:</span></div>
+  <div class="tag" id="tg2" style="left:60px;top:560px"><i></i>Print real · IA do Google</div>
+  <div class="shot" id="sh3" style="top:660px"><img src="a/g_quando.jpg"><div class="hl" id="hl3" style="left:7%;top:21%;width:91%;height:18%"></div></div>
+  <div class="abs h" id="s8b" style="left:60px;right:60px;top:1640px;font-size:58px;text-align:center">Vendas e escala? <span class="blue">Pedro e a PK7.</span></div>
+</section>
+
+<!-- S9 MESSAGE -->
+<section class="sc" id="s9" style="background:var(--navy)">
+  <div class="glow" style="width:1000px;height:1000px;left:40px;top:460px;background:#1E50E6;opacity:.5"></div>
+  <div class="abs" style="left:60px;top:330px;font-family:'Space Grotesk';font-size:260px;color:var(--lime);line-height:1">“</div>
+  <div class="abs h white" id="qt" style="left:60px;right:60px;top:600px;font-size:118px;line-height:1.02"></div>
+</section>
+
+<!-- S10 CTA -->
+<section class="sc" id="s10" style="background:var(--bg)">
+  <div class="glow" style="width:1000px;height:1000px;left:40px;top:700px;background:#9DB1F5;opacity:.6"></div>
+  <div class="abs h" id="ct1" style="left:60px;right:60px;top:210px;font-size:110px">Faça você mesmo <span class="blue">o teste.</span></div>
+  <div class="search" id="sb2" style="top:560px">
+    <svg width="56" height="56" viewBox="0 0 24 24"><path d="M12 2l2.2 6.8L21 11l-6.8 2.2L12 20l-2.2-6.8L3 11l6.8-2.2z" fill="#1E50E6"/></svg>
+    <div class="txt"><span id="q2"></span><span class="caret" id="c2"></span></div>
+  </div>
+  <div class="abs" id="ct2" style="left:60px;right:60px;top:790px;font-size:50px;line-height:1.3;font-weight:600;text-align:center">Pergunte ao Google.<br>Depois fale com quem <span class="blue">entrega.</span></div>
+  <img class="abs" id="ctav" src="a/pose-point.webp" style="width:430px;left:325px;top:1000px">
+  <div class="cta-btn" id="ctb" style="top:1450px">pk7.com.br</div>
+  <div class="abs h" id="ct3" style="left:0;right:0;top:1690px;text-align:center;font-size:40px;letter-spacing:.05em">Pedro R Gomes <span class="blue">|</span> PK7 · @pedrok.ads</div>
+</section>
+
+<div id="bar"></div>
+</div>
+<script>
+const $=id=>document.getElementById(id);
+const cl=(v,a=0,b=1)=>Math.max(a,Math.min(b,v));
+const P=(t,a,b)=>cl((t-a)/(b-a));
+const eo=t=>1-Math.pow(1-t,3), eio=t=>t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2;
+const eb=t=>{const c1=1.70158,c3=c1+1;return 1+c3*Math.pow(t-1,3)+c1*Math.pow(t-1,2)};
+function st(el,o){if(typeof el==='string')el=$(el);if(!el)return;const s=el.style;
+ if(o.o!==undefined)s.opacity=o.o;
+ s.transform=`translate(${o.x||0}px,${o.y||0}px) scale(${o.s===undefined?1:o.s}) rotate(${o.r||0}deg)`;
+ if(o.b!==undefined)s.filter=o.b?`blur(${o.b}px)`:'none';}
+// enter helper: fade+slide in over [a,a+d]
+function inn(el,t,a,d=.5,dy=60,sc=1){const p=eo(P(t,a,a+d));st(el,{o:p,y:(1-p)*dy,s:sc+(1-sc)*p});}
+const SC=[ // id, start, end
+ ['s1',0,6.2],['s2',6.0,13.2],['s3',13.0,17.2],['s4',17.0,28.2],['s5',28.0,34.4],['s6',34.2,58.2],['s7',58.0,65.2],['s8',65.0,69.4],['s9',69.2,73.8],['s10',73.6,80]];
+const TOTAL=80;
+// sellers
+(function(){const box=$('sellers');const pos=[[60,690],[290,690],[530,690],[770,690],[60,800],[290,800],[530,800],[770,800]];
+ pos.forEach((p,i)=>{const d=document.createElement('div');d.className='org seller';d.id='sl'+i;d.style.left=p[0]+'px';d.style.top=p[1]+'px';d.textContent='Vendedor';box.appendChild(d);});})();
+// quote words
+const QUOTE='Realmente achei um marketing que dá resultado e não prejuízo!';
+(function(){$('qt').innerHTML=QUOTE.split(' ').map((w,i)=>{let c='';if(/resultado/i.test(w))c='color:var(--lime)';if(/prejuízo/i.test(w))c='color:#FF6B78;text-decoration:line-through;text-decoration-thickness:10px';return `<span class="qw" id="w_${i}" style="${c}">${w}</span>`}).join(' ');})();
+function typeTo(el,text,t,a,cps=18){const n=cl(Math.floor((t-a)*cps),0,text.length);$(el).textContent=text.slice(0,n);return n>=text.length;}
+function dash(path,p){const el=$(path);const L=el.getTotalLength();el.style.strokeDasharray=L;el.style.strokeDashoffset=L*(1-p);}
+function fmt(n){return Math.round(n).toLocaleString('pt-BR');}
+
+window.render=function(t){
+ $('bar').style.width=(t/TOTAL*1080)+'px';
+ for(const [id,a,b] of SC){const el=$(id);let o=0;if(t>=a&&t<=b){o=Math.min(P(t,a,a+.35),1-P(t,b-.35,b));}
+   el.style.opacity=o;el.style.display=o>0.001?'block':'none';}
+ // ---- S1
+ if(t<6.3){['n1','n2','n3','n4'].forEach((n,i)=>{const a=.25+i*.75;const p=eb(P(t,a,a+.45));st(n,{o:P(t,a,a+.25),x:(1-p)*-500,s:.9+.1*p});});
+  inn('s1a',t,3.3,.5,80);inn('s1b',t,4.4,.45,80,1.15);
+  const sh=t>4.4&&t<4.7?Math.sin(t*120)*8:0; st('s1b',{o:eo(P(t,4.4,4.85)),x:sh,y:(1-eo(P(t,4.4,4.85)))*80});}
+ // ---- S2
+ if(t>5.9&&t<13.3){const l=t-6;inn('s2t',l,0,.5);inn('ag',l,.5,.4,-40);
+  for(let i=0;i<8;i++)inn('sl'+i,l,.8+i*.12,.35,40,.6);
+  inn('an',l,2.0,.4,40);const wob=l>2.4?Math.sin(l*9)*6:0; if(l>2.4)st('an',{o:1,r:wob*.4,x:wob});
+  inn('chart',l,2.8,.5,60);dash('pLikes',eio(P(l,3.2,5.0)));dash('pSales',eio(P(l,3.2,5.0)));
+  inn('s2b',l,5.2,.5,40);}
+ // ---- S3
+ if(t>12.9&&t<17.3){const l=t-13;inn('s3a',l,.2,.6,60);inn('s3b',l,1.3,.6,60,1.1);}
+ // ---- S4
+ if(t>16.9&&t<28.3){const l=t-17;inn('sb',l,0,.5,-60);
+  typeTo('q1','o que é melhor: ele ou uma agência?',l,.6,17);$('c1').style.opacity=(Math.floor(l*2.2)%2)?1:0;
+  const r1=eo(P(l,3.3,3.9));st('sh1',{o:r1,y:(1-r1)*300,s:.92+.08*r1});st('tg1',{o:P(l,3.6,3.9)});
+  st('hl1',{o:P(l,4.4,4.7),s:1+.04*Math.sin(l*5)*P(l,4.4,4.7)});
+  // swap to second print
+  const r2=eo(P(l,7.4,8.0));if(l>7.3){st('sh1',{o:1-r2,y:-r2*200,s:1-.05*r2});st('sh2',{o:r2,y:(1-r2)*300});}else st('sh2',{o:0});
+  st('hl2',{o:P(l,8.4,8.7),s:1+.04*Math.sin(l*5)*P(l,8.4,8.7)});}
+ // ---- S5
+ if(t>27.9&&t<34.5){const l=t-28;const p=eb(P(l,.3,1.0));st('s5pk',{o:P(l,.3,.6),s:.4+.6*p});
+  st('s5g',{o:.6,s:.7+.3*eo(P(l,0,1.5))});inn('s5nm',l,1.0,.5,40);
+  const a=eo(P(l,1.4,2.1));st('s5av',{o:a,y:(1-a)*400+Math.sin(l*2)*10});inn('s5c',l,2.6,.5,60);}
+ // ---- S6
+ if(t>34.1&&t<58.3){const l=t-34.2;inn('s6h',l,0,.4,-30);inn('rail',l,.1,.4,-30);
+  const B=[0,4.4,8.8,13.2,17.8,23.8];const rd=$('rail').children;
+  for(let i=0;i<5;i++){rd[i].className=l>=B[i+1]?'done':(l>=B[i]?'on':'');
+   const sEl=$('st'+(i+1));let o=Math.min(P(l,B[i]+.1,B[i]+.45),1-P(l,B[i+1]-.3,B[i+1]));if(i===4)o=P(l,B[i]+.1,B[i]+.45);sEl.style.opacity=o;sEl.style.display=o>0?'block':'none';
+   const sx=(1-eo(P(l,B[i]+.1,B[i]+.5)))*120;sEl.style.transform=`translateX(${sx}px)`;}
+  let L=l; // 6a
+  ['f1','f2','f3','f4'].forEach((f,i)=>inn(f,L,.4+i*.35,.35,-40));const sh=L>2.0?Math.sin(L*30)*4*(1-P(L,2.0,2.6)):0;if(L>2.0)st('f3',{o:1,x:sh});inn('f5',L,2.4,.45,60);
+  L=l-4.4; ['r1','r2','r3'].forEach((r,i)=>{inn(r,L,.3+i*.35,.4,60);$('b'+(i+1)).style.width=(eo(P(L,.6+i*.35,1.8+i*.35))*[86,72,94][i])+'%';});
+  L=l-8.8; const ph=eo(P(L,.2,.7));st('ph',{o:ph,y:(1-ph)*200});['k1','k2','k3','k4','k5','k6','k7'].forEach((k,i)=>{const p=eb(P(L,.6+i*.28,.95+i*.28));st(k,{o:P(L,.6+i*.28,.8+i*.28),s:.6+.4*p});});inn('live',L,3.0,.4,40,1.2);
+  L=l-13.2; ['w1','w2','w3','w4'].forEach((w,i)=>inn(w,L,.5+i*.9,.35,30,.8));inn('resp',L,.4,.4,40);$('rt').textContent=L<1.3?'4h':'5s ⚡';
+  L=l-17.8; const k=eo(P(L,.4,3.2));$('v1').textContent=fmt(312*k);$('v2').textContent=fmt(48*k);$('v3').textContent=(6.2*k).toFixed(1).replace('.',',')+'x';$('v4').textContent='R$'+fmt(180-(180-38)*k);dash('pUp',eio(P(L,.4,3.0)));}
+ // ---- S7
+ if(t>57.9&&t<65.3){const l=t-58;inn('s7t',l,.1,.5,-40);const a=eo(P(l,.4,1.1));st('s7img',{o:a,y:(1-a)*200,s:1+.06*P(l,1.1,7)});inn('s7tag',l,1.2,.4,-20,1.2);
+  inn('st_a',l,2.0,.4,60);inn('st_b',l,2.6,.4,60);inn('st_c',l,3.2,.4,60);
+  $('c1v').textContent='+R$ '+fmt(500*eo(P(l,2.1,3.6)))+' mil';$('c2v').textContent='+'+fmt(40*eo(P(l,2.7,3.9)));$('c3v').textContent=fmt(3*eo(P(l,3.3,4.2)));}
+ // ---- S8
+ if(t>64.9&&t<69.5){const l=t-65;inn('s8t',l,.1,.5,60);const a=eo(P(l,.6,1.2));st('sh3',{o:a,y:(1-a)*300});st('tg2',{o:P(l,.9,1.2)});st('hl3',{o:P(l,1.4,1.7),s:1+.04*Math.sin(l*5)});inn('s8b',l,2.4,.5,40,1.1);}
+ // ---- S9
+ if(t>69.1&&t<73.9){const l=t-69.2;const W=QUOTE.split(' ');W.forEach((w,i)=>{const a=.3+i*.27;const p=eb(P(l,a,a+.3));st('w_'+i,{o:P(l,a,a+.15),y:(1-p)*50,s:.8+.2*p});});}
+ // ---- S10
+ if(t>73.5){const l=t-73.6;inn('ct1',l,.1,.5,60);inn('sb2',l,.6,.4,40);typeTo('q2','Pedro R Gomes PK7',l,1.0,16);$('c2').style.opacity=(Math.floor(l*2.2)%2)?1:0;
+  inn('ct2',l,2.3,.5,40);const av=eo(P(l,2.6,3.2));st('ctav',{o:av,y:(1-av)*200});const b=eb(P(l,3.2,3.7));st('ctb',{o:P(l,3.2,3.4),s:(.6+.4*b)*(1+.03*Math.sin(l*6)*P(l,3.8,4))});inn('ct3',l,3.8,.4,30);}
+};
+window.render(0);
+</script>
+</body></html>
