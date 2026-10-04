@@ -1,5 +1,5 @@
 import numpy as np, wave, os
-SR = 48000; DUR = 80.0; N = int(SR * DUR)
+SR = 48000; DUR = 83.0; N = int(SR * DUR)
 rng = np.random.default_rng(7)
 OUT = os.path.dirname(os.path.abspath(__file__))
 
@@ -10,7 +10,9 @@ def lp(x, a):  # one-pole lowpass, a in (0,1)
     y = np.empty_like(x); s = 0.0
     for i in range(len(x)): s += a * (x[i] - s); y[i] = s
     return y
-def add(buf, x, t0, g=1.0, pan=0.0):
+SHIFT = True
+def add(buf, x, t0, g=1.0, pan=0.0, raw=False):
+    if SHIFT and not raw and t0 >= 26.5: t0 += 3.0
     i = int(t0 * SR); j = min(N, i + len(x))
     if j <= i: return
     l = np.sqrt((1 - pan) / 2); r = np.sqrt((1 + pan) / 2)
@@ -68,13 +70,16 @@ add(sfx, buzz(), 8.05, .35); add(sfx, buzz(), 8.45, .3)
 add(sfx, riser(1.8), 9.2, .35); add(sfx, thud(), 11.2, .9); add(sfx, glitch(), 11.25, .35)
 # S3
 add(sfx, whoosh(.9, False), 12.9, .8); add(sfx, ding(1760), 13.3, .35); add(sfx, ding(2349), 14.3, .4)
-# S4
-add(sfx, whoosh(.5), 16.9, .5)
-q = 'o que é melhor: ele ou uma agência?'
-for i, ch in enumerate(q):
-    if ch != ' ': add(sfx, key(), 17.6 + i / 17, .55, pan=rng.uniform(-.3, .3))
-add(sfx, click(), 20.05, .9); add(sfx, whoosh(.6), 20.2, .55); add(sfx, ding(1568), 21.4, .45)
-add(sfx, whoosh(.6), 24.35, .55); add(sfx, ding(1760), 25.4, .45)
+# S4 (new: prints "pedro R GOMES PK7", 17.0-31.2, raw times)
+add(sfx, whoosh(.5), 16.9, .5, raw=True)
+for i, ch in enumerate('pedro R GOMES PK7'):
+    if ch != ' ': add(sfx, key(), 17.6 + i / 14, .55, pan=rng.uniform(-.3, .3), raw=True)
+add(sfx, click(), 19.0, .9, raw=True); add(sfx, whoosh(.6), 19.15, .55, raw=True); add(sfx, ding(1568), 20.0, .45, raw=True)
+add(sfx, whoosh(.9, False), 21.6, .35, raw=True); add(sfx, ding(1760), 23.0, .45, raw=True)
+for i, ch in enumerate('vantagem: PK7 ou agência?'):
+    if ch != ' ': add(sfx, key(), 24.6 + i / 20, .5, pan=rng.uniform(-.3, .3), raw=True)
+add(sfx, whoosh(.6), 25.2, .55, raw=True); add(sfx, ding(1568), 26.1, .45, raw=True)
+add(sfx, whoosh(.9, False), 27.8, .35, raw=True); add(sfx, ding(1976), 29.0, .5, raw=True)
 # S5
 add(sfx, riser(1.5), 26.8, .6); add(sfx, impact(), 28.3, 1.0); add(sfx, chime(), 28.35, .3)
 add(sfx, whoosh(.5), 28.95, .4); add(sfx, whoosh(.6), 29.4, .35)
@@ -115,6 +120,7 @@ for i, ch in enumerate('Pedro R Gomes PK7'):
 add(sfx, whoosh(.5), 75.9, .4); add(sfx, riser(.8), 76.0, .35)
 add(sfx, impact(), 76.8, .8); add(sfx, chime(), 76.85, .45); add(sfx, ding(2637), 77.4, .3)
 
+SHIFT = False
 # ---------- MUSIC (synth)
 mus = np.zeros((2, N)); BPM = 112; beat = 60 / BPM
 def note(f, d, kind='pad'):
@@ -148,22 +154,23 @@ def section_pad(t0, t1, chords, g=1.0):
 section_pad(0, 13.0, tense, .9)
 for b in np.arange(0, 13, beat * 2): add(mus, kick(), b, .45); add(mus, kick(), b + .22, .25)
 # 13-28: hopeful build (pads only + plucks)
-section_pad(13.0, 28.3, prog, .8)
-for i, b in enumerate(np.arange(17.0, 28.2, beat / 2)):
+SHIFT = False
+section_pad(13.0, 31.3, prog, .8)
+for i, b in enumerate(np.arange(17.0, 31.2, beat / 2)):
     ch = prog[int((b - 13) // bar) % 4]; add(mus, note(hz(ch[1 + i % 3] + 12), .3, 'pluck'), b, .6, pan=.3 if i % 2 else -.3)
 # 28.3-69: full groove
-section_pad(28.3, 69.0, prog, 1.0)
-for b in np.arange(28.3, 69.0, beat):
+section_pad(31.3, 72.0, prog, 1.0)
+for b in np.arange(31.3, 72.0, beat):
     add(mus, kick(), b, .8)
     add(mus, hat(), b + beat / 2, .7, pan=.25)
-for b in np.arange(28.3 + beat, 69.0, beat * 2): add(mus, clap(), b, .6)
-for i, b in enumerate(np.arange(34.2, 69.0, beat / 2)):
-    ch = prog[int((b - 28.3) // bar) % 4]; add(mus, note(hz(ch[1 + (i * 2) % 3] + 12), .25, 'pluck'), b, .45, pan=.35 if i % 2 else -.35)
+for b in np.arange(31.3 + beat, 72.0, beat * 2): add(mus, clap(), b, .6)
+for i, b in enumerate(np.arange(37.2, 72.0, beat / 2)):
+    ch = prog[int((b - 31.3) // bar) % 4]; add(mus, note(hz(ch[1 + (i * 2) % 3] + 12), .25, 'pluck'), b, .45, pan=.35 if i % 2 else -.35)
 # 69-73.6 breakdown (pads only, swell)
-section_pad(69.0, 73.6, [prog[0], prog[2]], .9)
+section_pad(72.0, 76.6, [prog[0], prog[2]], .9)
 # 73.6-80 finale
-section_pad(73.6, 80.0, prog, 1.0)
-for b in np.arange(73.6, 79.0, beat): add(mus, kick(), b, .8); add(mus, hat(), b + beat / 2, .7)
+section_pad(76.6, 83.0, prog, 1.0)
+for b in np.arange(76.6, 82.0, beat): add(mus, kick(), b, .8); add(mus, hat(), b + beat / 2, .7)
 fade = np.ones(N); fl = int(SR * 2.5); fade[-fl:] = np.linspace(1, 0, fl); mus *= fade
 
 def norm(x, peak=.89):

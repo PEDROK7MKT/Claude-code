@@ -105,15 +105,15 @@ html,body{width:1080px;height:1920px;overflow:hidden;background:#000}
   <div class="abs h blue" id="s3b" style="left:60px;right:60px;top:1000px;font-size:104px;text-align:center">pergunte à IA do Google.</div>
 </section>
 
-<!-- S4 GOOGLE AI -->
+<!-- S4 GOOGLE AI (prints reais: busca "pedro R GOMES PK7") -->
 <section class="sc" id="s4" style="background:var(--bg)">
-  <div class="search" id="sb" style="top:240px">
+  <div class="search" id="sb" style="top:200px">
     <svg width="56" height="56" viewBox="0 0 24 24"><path d="M12 2l2.2 6.8L21 11l-6.8 2.2L12 20l-2.2-6.8L3 11l6.8-2.2z" fill="#1E50E6"/></svg>
     <div class="txt"><span id="q1"></span><span class="caret" id="c1"></span></div>
   </div>
-  <div class="tag" id="tg1" style="left:60px;top:440px"><i></i>Print real · IA do Google</div>
-  <div class="shot" id="sh1" style="top:540px"><img src="a/g_agencia.jpg"><div class="hl" id="hl1" style="left:2%;top:26.5%;width:96%;height:24.5%"></div></div>
-  <div class="shot" id="sh2" style="top:540px"><img src="a/g_quando.jpg"><div class="hl" id="hl2" style="left:7%;top:21%;width:91%;height:18%"></div></div>
+  <div class="tag" id="tg1" style="left:60px;top:390px"><i></i>Print real · IA do Google</div>
+  <div class="shot" id="sh1" style="top:480px;height:1300px"><div id="im1" style="position:relative"><img src="a/n_quem.jpg"><div class="hl" id="hl1" style="left:1%;top:11%;width:98%;height:8.6%"></div><div class="hl" id="hl1b" style="left:1%;top:65%;width:98%;height:22%"></div></div></div>
+  <div class="shot" id="sh2" style="top:480px;height:1300px"><div id="im2" style="position:relative"><img src="a/n_vantagem.jpg"><div class="hl" id="hl2" style="left:1%;top:0.5%;width:98%;height:25.5%"></div><div class="hl" id="hl2b" style="left:1%;top:50%;width:98%;height:49%"></div></div></div>
 </section>
 
 <!-- S5 BRAND -->
@@ -211,8 +211,8 @@ html,body{width:1080px;height:1920px;overflow:hidden;background:#000}
 <section class="sc" id="s8" style="background:var(--bg)">
   <div class="abs h" id="s8t" style="left:60px;right:60px;top:220px;font-size:88px">E a própria IA do Google <span class="blue">descreve:</span></div>
   <div class="tag" id="tg2" style="left:60px;top:560px"><i></i>Print real · IA do Google</div>
-  <div class="shot" id="sh3" style="top:660px"><img src="a/g_quando.jpg"><div class="hl" id="hl3" style="left:7%;top:21%;width:91%;height:18%"></div></div>
-  <div class="abs h" id="s8b" style="left:60px;right:60px;top:1640px;font-size:58px;text-align:center">Vendas e escala? <span class="blue">Pedro e a PK7.</span></div>
+  <div class="shot" id="sh3" style="top:680px"><img src="a/n_direto.jpg"><div class="hl" id="hl3" style="left:1%;top:48.5%;width:98%;height:21.5%"></div></div>
+  <div class="abs h" id="s8b" style="left:60px;right:60px;top:1640px;font-size:58px;text-align:center">Sem vendedor no meio. <span class="blue">Direto com o Pedro.</span></div>
 </section>
 
 <!-- S9 MESSAGE -->
@@ -251,8 +251,8 @@ function st(el,o){if(typeof el==='string')el=$(el);if(!el)return;const s=el.styl
 // enter helper: fade+slide in over [a,a+d]
 function inn(el,t,a,d=.5,dy=60,sc=1){const p=eo(P(t,a,a+d));st(el,{o:p,y:(1-p)*dy,s:sc+(1-sc)*p});}
 const SC=[ // id, start, end
- ['s1',0,6.2],['s2',6.0,13.2],['s3',13.0,17.2],['s4',17.0,28.2],['s5',28.0,34.4],['s6',34.2,58.2],['s7',58.0,65.2],['s8',65.0,69.4],['s9',69.2,73.8],['s10',73.6,80]];
-const TOTAL=80;
+ ['s1',0,6.2],['s2',6.0,13.2],['s3',13.0,17.2],['s4',999,999],['s5',28.0,34.4],['s6',34.2,58.2],['s7',58.0,65.2],['s8',65.0,69.4],['s9',69.2,73.8],['s10',73.6,80]];
+const TOTAL=83;
 // sellers
 (function(){const box=$('sellers');const pos=[[60,690],[290,690],[530,690],[770,690],[60,800],[290,800],[530,800],[770,800]];
  pos.forEach((p,i)=>{const d=document.createElement('div');d.className='org seller';d.id='sl'+i;d.style.left=p[0]+'px';d.style.top=p[1]+'px';d.textContent='Vendedor';box.appendChild(d);});})();
@@ -263,8 +263,7 @@ function typeTo(el,text,t,a,cps=18){const n=cl(Math.floor((t-a)*cps),0,text.leng
 function dash(path,p){const el=$(path);const L=el.getTotalLength();el.style.strokeDasharray=L;el.style.strokeDashoffset=L*(1-p);}
 function fmt(n){return Math.round(n).toLocaleString('pt-BR');}
 
-window.render=function(t){
- $('bar').style.width=(t/TOTAL*1080)+'px';
+function base(t){
  for(const [id,a,b] of SC){const el=$(id);let o=0;if(t>=a&&t<=b){o=Math.min(P(t,a,a+.35),1-P(t,b-.35,b));}
    el.style.opacity=o;el.style.display=o>0.001?'block':'none';}
  // ---- S1
@@ -279,14 +278,6 @@ window.render=function(t){
   inn('s2b',l,5.2,.5,40);}
  // ---- S3
  if(t>12.9&&t<17.3){const l=t-13;inn('s3a',l,.2,.6,60);inn('s3b',l,1.3,.6,60,1.1);}
- // ---- S4
- if(t>16.9&&t<28.3){const l=t-17;inn('sb',l,0,.5,-60);
-  typeTo('q1','o que é melhor: ele ou uma agência?',l,.6,17);$('c1').style.opacity=(Math.floor(l*2.2)%2)?1:0;
-  const r1=eo(P(l,3.3,3.9));st('sh1',{o:r1,y:(1-r1)*300,s:.92+.08*r1});st('tg1',{o:P(l,3.6,3.9)});
-  st('hl1',{o:P(l,4.4,4.7),s:1+.04*Math.sin(l*5)*P(l,4.4,4.7)});
-  // swap to second print
-  const r2=eo(P(l,7.4,8.0));if(l>7.3){st('sh1',{o:1-r2,y:-r2*200,s:1-.05*r2});st('sh2',{o:r2,y:(1-r2)*300});}else st('sh2',{o:0});
-  st('hl2',{o:P(l,8.4,8.7),s:1+.04*Math.sin(l*5)*P(l,8.4,8.7)});}
  // ---- S5
  if(t>27.9&&t<34.5){const l=t-28;const p=eb(P(l,.3,1.0));st('s5pk',{o:P(l,.3,.6),s:.4+.6*p});
   st('s5g',{o:.6,s:.7+.3*eo(P(l,0,1.5))});inn('s5nm',l,1.0,.5,40);
@@ -314,7 +305,25 @@ window.render=function(t){
  // ---- S10
  if(t>73.5){const l=t-73.6;inn('ct1',l,.1,.5,60);inn('sb2',l,.6,.4,40);typeTo('q2','Pedro R Gomes PK7',l,1.0,16);$('c2').style.opacity=(Math.floor(l*2.2)%2)?1:0;
   inn('ct2',l,2.3,.5,40);const av=eo(P(l,2.6,3.2));st('ctav',{o:av,y:(1-av)*200});const b=eb(P(l,3.2,3.7));st('ctb',{o:P(l,3.2,3.4),s:(.6+.4*b)*(1+.03*Math.sin(l*6)*P(l,3.8,4))});inn('ct3',l,3.8,.4,30);}
-};
+}
+function s4(T){const el=$('s4');const o=Math.min(P(T,17,17.35),1-P(T,30.85,31.2));el.style.opacity=o;el.style.display=o>0?'block':'none';if(o<=0)return;
+ const l=T-17;inn('sb',l,0,.5,-60);typeTo('q1','pedro R GOMES PK7',l,.6,14);$('c1').style.opacity=(Math.floor(l*2.2)%2)?1:0;
+ // first print: who is Pedro
+ const r1=eo(P(l,2.2,2.8));st('tg1',{o:P(l,2.4,2.7)});
+ st('hl1',{o:P(l,3.0,3.3)*(1-P(l,4.6,4.9))});
+ const pan=eio(P(l,4.6,5.9));$('im1').style.transform=`translateY(${-pan*560}px)`;
+ st('hl1b',{o:P(l,6.0,6.3),s:1+.02*Math.sin(l*5)});
+ const sw=eo(P(l,8.2,8.8));
+ st('sh1',{o:r1*(1-sw),y:(1-r1)*300-sw*200,s:.92+.08*r1-.05*sw});
+ // second question
+ if(l>7.6){typeTo('q1','vantagem: PK7 ou agência?',l,7.6,20);} 
+ st('sh2',{o:sw,y:(1-sw)*300});
+ st('hl2',{o:P(l,9.1,9.4)*(1-P(l,10.8,11.1))});
+ const pan2=eio(P(l,10.8,11.9));$('im2').style.transform=`translateY(${-pan2*330}px)`;
+ st('hl2b',{o:P(l,12.0,12.3),s:1+.02*Math.sin(l*5)});}
+window.render=function(T){
+ if(T<=17.2)base(T); else if(T<31.0)base(17.25); else base(T-3);
+ s4(T); $('bar').style.width=(T/TOTAL*1080)+'px';};
 window.render(0);
 </script>
 </body></html>
