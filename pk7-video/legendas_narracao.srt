@@ -1,43 +1,83 @@
 1
-00:00:00,400 --> 00:00:05,600
-Você contratou uma agência de marketing… e ganhou um vendedor.
+00:00:00,200 --> 00:00:04,300
+Você contratou uma agência… e ganhou um vendedor.
 
 2
-00:00:06,200 --> 00:00:12,600
-Muito comercial, pacote pronto, relatório bonito. E no fim do mês? Nenhuma venda. Só prejuízo.
+00:00:04,600 --> 00:00:06,600
+Muito comercial. Pouca entrega.
 
 3
-00:00:13,200 --> 00:00:16,800
-Antes de contratar de novo, faz um teste: pergunta pra IA do Google.
+00:00:06,900 --> 00:00:08,700
+A curtida sobe… a venda, não.
 
 4
-00:00:17,300 --> 00:00:23,900
-Pesquisei "Pedro R Gomes PK7". Olha a resposta: fundador da PK7. Modelo especialista independente: recusa o formato de agência com pacote padronizado.
+00:00:08,850 --> 00:00:10,900
+Relatório bonito. Prejuízo real.
 
 5
-00:00:24,300 --> 00:00:30,800
-E quando perguntei a vantagem de contratar ele e a equipe em vez de uma agência: foco em vendas e resultado. Sem relatório bonito.
+00:00:11,100 --> 00:00:15,200
+Não acredite em mim. Dê um Google: Pedro R Gomes PK7.
 
 6
-00:00:31,400 --> 00:00:37,000
-Prazer: Pedro R Gomes, da PK7. Não sou agência. Lidero um time de elite, direto com você, tudo sob medida.
+00:00:15,600 --> 00:00:19,300
+O Google responde: Pedro R Gomes, fundador da PK7.
 
 7
-00:00:37,400 --> 00:01:00,800
-Olha como a gente monta a máquina. Primeiro, o diagnóstico: achar onde o seu cliente está sendo perdido. Depois, pesquisa de mercado: quem compra, quem concorre e qual oferta vence. Aí vem o site, rápido e feito pra vender. Tráfego trazendo o cliente certo, e a IA respondendo em segundos, qualificando e fechando. E um painel que mostra tudo, do anúncio ao contrato.
+00:00:19,500 --> 00:00:22,550
+Especialista independente. Não agência.
 
 8
-00:01:01,200 --> 00:01:07,800
-E isso não é promessa. É resultado real: mais de quinhentos mil reais em e-commerce próprio, mais de quarenta clientes, em três continentes.
+00:00:22,800 --> 00:00:24,600
+E o próprio Google já diz:
 
 9
-00:01:08,200 --> 00:01:12,200
-E a IA do Google ainda descreve: na agência, você fala com um vendedor. Na PK7, direto com o Pedro.
+00:00:24,750 --> 00:00:32,500
+A principal vantagem de contratar o Pedro e a PK7, em vez de uma agência, é o modelo de incentivo e a personalização do serviço.
 
 10
-00:01:12,500 --> 00:01:16,500
-Realmente achei um marketing que dá resultado… e não prejuízo.
+00:00:32,800 --> 00:00:37,600
+O foco é vender e fazer a sua empresa crescer. Não é relatório bonito.
 
 11
-00:01:16,900 --> 00:01:22,600
-Faça você mesmo o teste. Pergunte ao Google, e venha falar com quem entrega. pk7 ponto com ponto br.
+00:00:38,600 --> 00:00:45,800
+Prazer, Pedro R Gomes, da PK7. Não sou agência: lidero um time de elite. E o Google confirma.
+
+12
+00:00:46,600 --> 00:00:49,300
+Diagnóstico: onde o seu cliente se perde.
+
+13
+00:00:49,600 --> 00:00:51,900
+Pesquisa: quem compra e qual oferta vence.
+
+14
+00:00:52,100 --> 00:00:54,400
+Site e loja, feitos para vender.
+
+15
+00:00:54,600 --> 00:00:57,400
+Tráfego com IA: resposta em segundos.
+
+16
+00:00:57,600 --> 00:00:59,900
+Um painel do anúncio à venda.
+
+17
+00:01:00,100 --> 00:01:06,200
+Números reais: primeiro marco, cem mil na Appmax. Hoje, mais de quinhentos mil em e-commerce próprio.
+
+18
+00:01:06,450 --> 00:01:09,700
+Mais de quarenta clientes, em três continentes.
+
+19
+00:01:10,100 --> 00:01:13,200
+Sem vendedor no meio: você fala direto comigo.
+
+20
+00:01:14,600 --> 00:01:18,300
+Realmente achei um marketing que dá resultado… e não prejuízo!
+
+21
+00:01:19,600 --> 00:01:26,400
+Faça você mesmo o teste! Dê um Google, Pedro R Gomes PK7, e venha falar com o melhor para a sua empresa.
