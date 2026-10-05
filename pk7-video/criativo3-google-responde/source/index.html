@@ -1,0 +1,303 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8">
+<link rel="stylesheet" href="fonts/fonts.css">
+<style>
+:root{--navy:#0A0F2C;--blue:#1E50E6;--lime:#B7E400;--light:#F4F6FF;--card:#121A3A;--muted:#8A93B8;--read:#4F7DFF;--loss:#FF4D5E}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:1080px;height:1920px;overflow:hidden;background:#000}
+#stage{position:relative;width:1080px;height:1920px;overflow:hidden;font-family:"Plus Jakarta Sans","Noto Color Emoji",sans-serif;color:var(--light);background:var(--navy)}
+.scene{position:absolute;inset:0;display:none;transform-origin:50% 40%;
+ background:radial-gradient(900px 900px at 50% 45%,#142463 0%,rgba(10,15,44,0) 70%),radial-gradient(rgba(255,255,255,.06) 1.6px,transparent 1.8px) 0 0/40px 40px,var(--navy)}
+.scene.lb{background:radial-gradient(1000px 1000px at 50% 40%,#C9F01A 0%,rgba(183,228,0,0) 70%),var(--lime);color:var(--navy)}
+.a{position:absolute;will-change:transform,opacity}
+.H{font-family:"Space Grotesk",sans-serif;font-weight:700;text-transform:uppercase;letter-spacing:-.01em;line-height:1.0}
+.hl{left:60px;width:880px;text-align:center;transform-origin:50% 50%}
+.L{color:var(--lime)}.R{color:var(--loss)}
+.ln{display:block;overflow:hidden;padding:.3em .14em .24em;margin:-.3em -.14em -.24em}
+.ml{display:flex;flex-direction:column;align-items:center}.ml:not(.hl){align-items:flex-start}
+.li{display:inline-block;will-change:transform;white-space:nowrap;vertical-align:top}
+.chat{position:absolute;background:var(--card);border-radius:36px;overflow:hidden;box-shadow:0 50px 110px -40px rgba(0,0,0,.8);border:2px solid rgba(255,255,255,.06)}
+.chat .hd{position:absolute;left:0;right:0;top:0;height:120px;display:flex;align-items:center;gap:22px;padding:0 30px;border-bottom:2px solid rgba(255,255,255,.07);background:rgba(255,255,255,.03)}
+.av{width:72px;height:72px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:40px;flex:none;background-size:cover}
+.chat .nm{font-size:40px;font-weight:700;color:var(--light);line-height:1.1;white-space:nowrap}
+.chat .st{font-size:26px;font-weight:600;color:var(--lime);margin-top:2px;white-space:nowrap}
+.bs,.bi{position:absolute;max-width:640px;padding:18px 26px 14px;border-radius:28px;font-size:38px;font-weight:600;line-height:1.25;transform-origin:100% 100%}
+.bs{right:30px;background:var(--lime);color:var(--navy);border-bottom-right-radius:8px}
+.bi{left:30px;background:var(--light);color:var(--navy);border-bottom-left-radius:8px;transform-origin:0 100%}
+.fl .bs,.fl .bi{position:relative;left:auto;right:auto}
+.fl{position:absolute;left:30px;right:30px;top:0;display:flex;flex-direction:column;gap:14px}
+.fl .bs{align-self:flex-end}.fl .bi{align-self:flex-start}
+.bs .tm,.bi .tm{display:block;text-align:right;font-size:24px;font-weight:700;opacity:.65;margin-top:4px}
+.ck{letter-spacing:-.18em;margin-left:10px;font-size:30px}
+.iab{background:var(--navy);color:var(--lime);font-size:24px;font-weight:800;border-radius:6px;padding:2px 9px;margin-right:10px;vertical-align:3px}
+.tagi{position:absolute;left:30px;bottom:16px;font-size:30px;font-weight:600;color:rgba(244,246,255,.8);letter-spacing:.01em;white-space:nowrap}
+.chip{display:inline-flex;align-items:center;gap:12px;padding:14px 26px;border-radius:999px;font-family:"Space Grotesk";font-weight:700;font-size:30px;text-transform:uppercase;letter-spacing:.02em;white-space:nowrap}
+.stamp{position:absolute;padding:14px 30px;border:7px solid currentColor;border-radius:16px;font-family:"Space Grotesk";font-weight:700;text-transform:uppercase;letter-spacing:.02em;white-space:nowrap;transform-origin:50% 50%;line-height:1.05;text-align:center}
+.mst{position:absolute;left:30px;top:138px;padding:10px 22px;border-radius:12px;background:var(--lime);color:var(--navy);font-family:"Space Grotesk";font-weight:700;font-size:36px;text-transform:uppercase;transform-origin:0 50%;white-space:nowrap}
+.dot{display:inline-block;width:18px;height:18px;border-radius:50%;background:#8A93B8;margin:0 5px}
+.swc{position:absolute;right:30px;top:30px;height:60px;padding:0 22px;border-radius:999px;display:flex;align-items:center;gap:10px;font-family:"Space Grotesk";font-weight:700;font-size:30px;font-variant-numeric:tabular-nums;transform-origin:100% 50%;white-space:nowrap}
+.row{position:absolute;left:0;right:0;height:140px;display:flex;align-items:center;gap:24px;padding:0 30px;border-bottom:2px solid rgba(255,255,255,.06)}
+.row .nm{font-size:36px;font-weight:700}.row .pv{font-size:28px;color:var(--muted);margin-top:4px}.row .tt{margin-left:auto;font-size:26px;color:var(--muted)}
+.pan{position:absolute;top:530px;width:430px;height:668px;border-radius:30px;background:#111A40;overflow:hidden;border:2px solid rgba(255,255,255,.07)}
+.card{position:absolute;background:#fff;color:var(--navy);border-radius:30px;box-shadow:0 40px 90px -30px rgba(0,0,0,.7)}
+.tog{display:inline-block;position:relative;border-radius:999px;vertical-align:middle;flex:none}
+.tog i{position:absolute;border-radius:50%;background:#fff;box-shadow:0 4px 10px rgba(0,0,0,.3)}
+.coin{position:absolute;width:44px;height:44px;margin:-22px 0 0 -22px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#F2FF9A,#C8EE1A 55%,#86A800);border:3px solid #6E8C00;color:#3C4C00;font:800 24px "Space Grotesk";display:flex;align-items:center;justify-content:center;box-shadow:0 4px 10px rgba(0,0,0,.35)}
+.kc{position:absolute;top:0;width:280px;height:100%;border-radius:22px;background:rgba(255,255,255,.05);padding:16px 18px}
+.kc b{display:block;font-family:"Space Grotesk";font-size:28px;letter-spacing:.04em;color:var(--muted)}
+.node{height:68px;padding:0 22px;border-radius:999px;display:flex;align-items:center;font-family:"Space Grotesk";font-weight:700;font-size:28px;background:#1A2350;color:var(--muted);border:2px solid rgba(255,255,255,.14);position:relative;z-index:2;white-space:nowrap}
+.lgc{display:inline-flex;align-items:center;justify-content:center;width:190px;height:80px;border-radius:18px;background:#fff;vertical-align:top}
+.lgc img{max-width:150px;max-height:58px}
+.avm{-webkit-mask-image:linear-gradient(#000 78%,transparent 99%);mask-image:linear-gradient(#000 78%,transparent 99%)}
+.cell{position:absolute;width:60px;height:60px;border-radius:14px;border:3px solid rgba(255,255,255,.16);background:rgba(255,255,255,.03);display:flex;align-items:center;justify-content:center;font:700 30px "Space Grotesk";color:transparent}
+.cell.on{background:var(--loss);border-color:var(--loss);color:#fff}
+.trow{position:absolute;left:0;right:0;height:110px;display:flex;align-items:center;padding:0 34px;border-bottom:2px solid rgba(255,255,255,.07)}
+.trow .tl{font-size:40px;font-weight:800;line-height:1.05}.trow .tl small{display:block;font-size:28px;font-weight:600;color:var(--muted);margin-top:4px}
+.trow .tv{margin-left:auto;font-family:"Space Grotesk";font-weight:700;font-size:58px;color:var(--loss);font-variant-numeric:tabular-nums;white-space:nowrap}.trow .tv small{font-size:30px;color:#FF8D98}
+.phn{position:absolute;left:65px;top:450px;width:300px;height:300px;border-radius:34px;background:#05081A;border:6px solid #2C3870;overflow:hidden}
+.phn .scr{position:absolute;inset:8px;border-radius:24px;background:#151E48;overflow:hidden}
+.phn .pb{position:absolute;padding:8px 14px 6px;border-radius:16px;font-size:24px;font-weight:700;line-height:1.2;white-space:nowrap}
+#cur{position:absolute;top:-200px;height:2320px;left:0;width:340px;z-index:40;display:none;transform-origin:50% 50%}
+#cur .s{position:absolute;left:0;top:0;bottom:0;width:300px;background:var(--lime)}
+#cur .s2{position:absolute;left:300px;top:0;bottom:0;width:40px;background:var(--blue)}
+#grain{position:absolute;inset:-40px;z-index:60;background:url(a/noise.png);background-size:540px 960px;opacity:.05;mix-blend-mode:overlay;pointer-events:none}
+#vig{position:absolute;inset:0;z-index:59;pointer-events:none;background:radial-gradient(ellipse at 50% 45%,rgba(0,0,0,0) 55%,rgba(0,0,0,.32) 100%)}
+.srch{position:absolute;left:60px;width:880px;height:270px;border-radius:30px;background:#fff;color:#1F1F1F;box-shadow:0 40px 90px -30px rgba(0,0,0,.75);overflow:hidden}
+.srch .tabs{position:absolute;left:34px;top:26px;display:flex;gap:40px;font:500 34px 'Plus Jakarta Sans';color:#5F6368;white-space:nowrap}
+.srch .tabs b{color:#1F1F1F;font-weight:700;position:relative}.srch .tabs b:after{content:'';position:absolute;left:0;right:0;bottom:-14px;height:5px;border-radius:3px;background:#1F1F1F}
+.srch .bar{position:absolute;left:30px;right:30px;top:118px;height:112px;border-radius:999px;background:#F1F3F4;display:flex;align-items:center;padding:0 34px;font:600 44px 'Plus Jakarta Sans';color:#1F1F1F;white-space:nowrap}
+.srch .bar .cr{display:inline-block;width:4px;height:52px;background:#1E50E6;margin-left:4px}
+.srch .go{position:absolute;right:46px;top:134px;width:80px;height:80px;border-radius:50%;background:#1F1F1F;color:#fff;display:flex;align-items:center;justify-content:center;font:700 40px 'Space Grotesk'}
+.pc{position:absolute;left:60px;top:546px;width:876px;border-radius:26px;background:#fff;overflow:hidden;box-shadow:0 50px 110px -40px rgba(0,0,0,.85)}
+.pc .ph{height:52px;display:flex;align-items:center;gap:12px;padding:0 24px;background:#F1F3F4;font:700 24px 'Plus Jakarta Sans';color:#5F6368;white-space:nowrap}
+.pc .ph i{font-style:normal;color:#1E50E6}
+.pc .pb{position:relative;overflow:hidden;background:#fff}
+.pc .pb img{position:absolute;display:block}
+.mk{position:absolute;background:rgba(206,255,0,.62);mix-blend-mode:multiply;border-radius:6px;transform-origin:0 50%}
+.qchip{display:inline-flex;align-items:center;gap:10px;padding:10px 22px;border-radius:999px;background:var(--lime);color:var(--navy);font:700 32px 'Space Grotesk';text-transform:uppercase;white-space:nowrap}
+#hud{position:absolute;left:60px;width:880px;top:252px;z-index:41;display:none;justify-content:center;align-items:center;gap:22px}
+#hud .dots{display:flex;gap:12px}
+#hud .dt{width:40px;height:40px;border-radius:50%;border:3px solid rgba(255,255,255,.35);display:flex;align-items:center;justify-content:center;font:800 24px 'Space Grotesk';color:transparent}
+#hud .dt.on{background:var(--lime);border-color:var(--lime);color:var(--navy)}
+.stw{position:absolute;left:60px;width:880px;top:1132px;text-align:center}
+.st2{display:inline-block;padding:14px 34px;border-radius:16px;background:var(--lime);color:var(--navy);font:700 56px 'Space Grotesk';text-transform:uppercase;white-space:nowrap;transform:rotate(-2.5deg);box-shadow:0 20px 40px -12px rgba(0,0,0,.7)}
+</style></head>
+<body><div id="stage">
+<!-- ===== H · HOOK ===== -->
+<section class="scene" id="h">
+  <div class="a H hl ml" id="h0a" style="top:264px;font-size:84px">Antes de contratar<br>um gestor<br>de tráfego,</div>
+  <div class="a H hl ml" id="h0b" style="top:300px;font-size:120px">Pergunte<br>pro <span class="L">Google.</span></div>
+  <div class="srch a" id="s0" style="top:660px">
+    <div class="tabs"><b>Modo IA</b><span>Tudo</span><span>Imagens</span><span>Vídeos</span></div>
+    <div class="bar"><span id="s0t"></span><span class="cr" id="s0c"></span></div>
+    <div class="go a" id="s0g">→</div>
+  </div>
+  <div class="a" id="s0r" style="left:806px;top:794px;width:80px;height:80px;border-radius:50%;background:rgba(183,228,0,.6);transform-origin:50% 50%"></div>
+  <div class="a" id="h0n" style="left:60px;width:880px;top:960px;text-align:center;font:700 36px 'Plus Jakarta Sans';color:#fff">a mesma pesquisa no Modo IA do Google</div>
+</section>
+<section class="scene" id="d1">
+  <div class="a H hl ml" id="d1_q" style="top:322px;font-size:80px">Quem é esse<br><span class="L">Pedro R Gomes?</span></div>
+  <div class="pc a" id="d1_card"><div class="ph"><i>●</i> Google · Modo IA · resposta real</div><div class="pb" style="height:520px"><img src="a/doc1.jpg" style="left:1.2px;top:-312.0px;width:877.5px"><div class="mk" id="d1_m0" style="left:27.2px;top:133.5px;width:811.4px;height:52.8px"></div><div class="mk" id="d1_m1" style="left:25.9px;top:185.5px;width:673.6px;height:54.1px"></div></div></div>
+  <div class="stw a" id="d1_st"><span class="st2">Fundador da PK7</span></div>
+</section>
+<section class="scene" id="d2">
+  <div class="a H hl ml" id="d2_q" style="top:322px;font-size:80px">É só mais uma<br><span class="L">agência?</span></div>
+  <div class="pc a" id="d2_card"><div class="ph"><i>●</i> Google · Modo IA · resposta real</div><div class="pb" style="height:520px"><img src="a/doc1.jpg" style="left:1.2px;top:-1222.0px;width:877.5px"><div class="mk" id="d2_m0" style="left:74.0px;top:10.0px;width:749.0px;height:56.7px"></div><div class="mk" id="d2_m1" style="left:74.0px;top:63.3px;width:634.6px;height:58.0px"></div><div class="mk" id="d2_m2" style="left:75.2px;top:116.6px;width:383.7px;height:56.7px"></div></div></div>
+  <div class="stw a" id="d2_st"><span class="st2">Não é agência.</span></div>
+</section>
+<section class="scene" id="d3">
+  <div class="a H hl ml" id="d3_q" style="top:322px;font-size:80px">Qual a vantagem<br><span class="L">de contratar ele?</span></div>
+  <div class="pc a" id="d3_card"><div class="ph"><i>●</i> Google · Modo IA · trecho da mesma conversa</div><div class="pb" style="height:520px"><img src="a/doc4.jpg" style="left:0.0px;top:0.0px;width:880.2px"><div class="mk" id="d3_m0" style="left:30.4px;top:21.6px;width:748.0px;height:57.6px"></div><div class="mk" id="d3_m1" style="left:30.4px;top:75.7px;width:809.5px;height:56.4px"></div><div class="mk" id="d3_m2" style="left:30.4px;top:129.8px;width:692.7px;height:56.4px"></div><div class="mk" id="d3_m3" style="left:30.4px;top:182.6px;width:762.8px;height:58.9px"></div><div class="mk" id="d3_m4" style="left:30.4px;top:236.7px;width:199.8px;height:57.6px"></div></div></div>
+  <div class="stw a" id="d3_st"><span class="st2">Feito sob medida.</span></div>
+</section>
+<section class="scene" id="d4">
+  <div class="a H hl ml" id="d4_q" style="top:322px;font-size:80px">Vai me entregar<br><span class="L">relatório bonito?</span></div>
+  <div class="pc a" id="d4_card"><div class="ph"><i>●</i> Google · Modo IA · trecho da mesma conversa</div><div class="pb" style="height:520px"><img src="a/doc4.jpg" style="left:52.2px;top:-465.8px;width:775.7px"><div class="mk" id="d4_m0" style="left:79.6px;top:12.2px;width:707.8px;height:53.7px"></div><div class="mk" id="d4_m1" style="left:79.6px;top:63.1px;width:395.8px;height:54.8px"></div><div class="mk" id="d4_m2" style="left:249.7px;top:280.8px;width:400.2px;height:50.4px"></div><div class="mk" id="d4_m3" style="left:78.5px;top:328.5px;width:610.3px;height:50.4px"></div></div></div>
+  <div class="stw a" id="d4_st"><span class="st2">Foco: faturar.</span></div>
+</section>
+<section class="scene" id="d5">
+  <div class="a H hl ml" id="d5_q" style="top:322px;font-size:80px">Vou falar com<br><span class="L">estagiário?</span></div>
+  <div class="pc a" id="d5_card"><div class="ph"><i>●</i> Google · Modo IA · trecho da mesma conversa</div><div class="pb" style="height:520px"><img src="a/doc4.jpg" style="left:16.9px;top:-1110.9px;width:846.2px"><div class="mk" id="d5_m0" style="left:365.1px;top:252.3px;width:296.4px;height:54.5px"></div><div class="mk" id="d5_m1" style="left:46.0px;top:304.3px;width:448.8px;height:54.5px"></div></div></div>
+  <div class="stw a" id="d5_st"><span class="st2">Direto com o Pedro.</span></div>
+</section>
+<!-- ===== P · PROVA ===== -->
+<section class="scene" id="p">
+  <div class="a H hl ml" id="pq" style="top:264px;font-size:96px">E fora do<br><span class="L">Google?</span></div>
+  <div class="a" id="plq" style="left:60px;top:496px;width:400px;padding:14px;background:#15171F;border-radius:20px;box-shadow:0 50px 100px -30px #000,inset 0 0 0 3px #2A2E3D;transform-origin:50% 50%"><img src="a/plaque2.jpg" style="display:block;width:100%;border-radius:6px"></div>
+  <div class="a" id="pm" style="left:500px;top:520px;width:440px">
+    <span class="qchip" style="font-size:28px">Prêmio Appmax</span>
+    <div class="H L" style="font-size:78px;margin-top:16px;white-space:nowrap">R$ 100 mil</div>
+    <div style="font:700 32px 'Plus Jakarta Sans';color:rgba(244,246,255,.85);margin-top:8px">faturados como<br>parceiro Appmax</div>
+  </div>
+  <div class="a H ml" id="pn" style="left:500px;top:850px;font-size:58px;line-height:1.08"><span class="L">+40</span> clientes<br><span class="L">3</span> continentes</div>
+  <div class="a" id="lgg" style="left:182px;top:1108px;width:636px;height:140px"><span class="lgc a" id="lg0" style="position:absolute;left:0px;top:0px;width:150px;height:64px"><img src="a/cafe-fafa.webp" style="max-width:120px;max-height:46px"></span><span class="lgc a" id="lg1" style="position:absolute;left:162px;top:0px;width:150px;height:64px"><img src="a/idc.webp" style="max-width:120px;max-height:46px"></span><span class="lgc a" id="lg2" style="position:absolute;left:324px;top:0px;width:150px;height:64px"><img src="a/hebreus-barbershop.webp" style="max-width:120px;max-height:46px"></span><span class="lgc a" id="lg3" style="position:absolute;left:486px;top:0px;width:150px;height:64px"><img src="a/sandubao-goiano.webp" style="max-width:120px;max-height:46px"></span><span class="lgc a" id="lg4" style="position:absolute;left:81px;top:74px;width:150px;height:64px"><img src="a/top-fachadas.webp" style="max-width:120px;max-height:46px"></span><span class="lgc a" id="lg5" style="position:absolute;left:243px;top:74px;width:150px;height:64px"><img src="a/luanne-trotta.webp" style="max-width:120px;max-height:46px"></span><span class="lgc a" id="lg6" style="position:absolute;left:405px;top:74px;width:150px;height:64px"><img src="a/delicias-da-roca.webp" style="max-width:120px;max-height:58px"></span></div>
+</section>
+<!-- ===== C · CTA ===== -->
+<section class="scene" id="c">
+  <div class="a H hl ml" id="ca" style="top:264px;font-size:104px">Não acredite<br><span class="L">na gente.</span></div>
+  <div class="a H hl ml" id="cb" style="top:264px;font-size:104px">Pesquise<br><span class="L">você mesmo:</span></div>
+  <div class="srch a" id="s1" style="top:520px">
+    <div class="tabs"><b>Modo IA</b><span>Tudo</span><span>Imagens</span><span>Vídeos</span></div>
+    <div class="bar"><span id="s1t"></span><span class="cr" id="s1c"></span></div>
+    <div class="go">→</div>
+  </div>
+  <div class="a" id="cn" style="left:60px;width:880px;top:830px;text-align:center;font:700 40px 'Plus Jakarta Sans';line-height:1.25;color:var(--light)">Depois, fale <span style="color:var(--lime)">direto com o Pedro.</span></div>
+  <div class="a" id="btn" style="left:104px;top:910px;width:792px;height:104px;border-radius:999px;background:var(--lime);color:var(--navy);display:flex;align-items:center;justify-content:center;gap:18px;font-family:'Space Grotesk';font-weight:700;font-size:46px;box-shadow:0 26px 60px -20px rgba(183,228,0,.7);transform-origin:50% 50%;white-space:nowrap">💬 Chamar no WhatsApp →</div>
+  <div class="a" id="eln" style="left:60px;width:880px;top:1040px;text-align:center;font-size:30px;font-weight:700;color:rgba(244,246,255,.8);white-space:nowrap">WhatsApp no link da bio · pk7.com.br · @pedrok.ads</div>
+</section>
+<div id="hud"><span class="qchip" id="hudc">Dúvida 1/5</span><span class="dots"><span class="dt" id="dt0">✓</span><span class="dt" id="dt1">✓</span><span class="dt" id="dt2">✓</span><span class="dt" id="dt3">✓</span><span class="dt" id="dt4">✓</span></span></div>
+<div id="cur"><div class="s"></div><div class="s2"></div></div>
+<div id="vig"></div><div id="grain"></div>
+</div>
+<script>
+const Q=new URLSearchParams(location.search), VAR=Q.get('v')||'org';   // org | ad
+const $=id=>document.getElementById(id);
+const cl=(v,a=0,b=1)=>Math.max(a,Math.min(b,v)), P=(t,a,b)=>cl((t-a)/(b-a));
+const eo=t=>1-Math.pow(1-t,3), eio=t=>t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2;
+const eb=t=>{const c1=1.5,c3=c1+1;return 1+c3*Math.pow(t-1,3)+c1*Math.pow(t-1,2)};
+const lerp=(a,b,p)=>a+(b-a)*p;
+const B=60/112, TOTAL=43.2, EPS=1e-6;
+// scene ranges [id,start,end,z] on the 112 BPM grid
+const SC=[['h',0,8*B+.12,2],['d1',8*B-.12,18*B+.12,3],['d2',18*B-.12,28*B,2],['d3',28*B-.45,40*B+.12,4],['d4',40*B-.12,50*B+.12,2],['d5',50*B-.12,60*B,3],['p',60*B,70*B,2],['c',70*B-.45,TOTAL+1,4]];
+const CW=.45;
+const TR=[{t:28*B,out:'d2',inc:'d3'},{t:70*B,out:'p',inc:'c'}];
+const CUES=[]; const S=(t,n,v=1,p=0,d)=>CUES.push(Object.assign({t:+(+t).toFixed(3),n,v,p},d!==undefined?{d:+(+d).toFixed(3)}:{}));
+(function(){
+ document.querySelectorAll('.ml').forEach(el=>{el.innerHTML=el.innerHTML.split(/<br\s*\/?>/i).map((h,i)=>`<span class="ln"><span class="li" id="${el.id}_l${i}">${h}</span></span>`).join('');});
+ if(VAR==='ad'){const b=$('btn');b.style.background='transparent';b.style.border='4px solid var(--lime)';b.style.color='var(--lime)';b.style.boxShadow='none';b.textContent='👇 Toque em “Enviar mensagem”';$('eln').textContent='pk7.com.br · @pedrok.ads';}
+})();
+// ---------- timeline helpers
+const EV=[]; const ev=(id,t,a,d=.5,o={})=>{EV.push(Object.assign({id,t,a,d},o));};
+const TX=[]; const txt=(id,t,s)=>TX.push({id,t,s});
+const fsz=el=>{let f=parseFloat(getComputedStyle(el).fontSize);const c=el.firstElementChild;if(c){const g=parseFloat(getComputedStyle(c).fontSize);if(g>f)f=g;}return f;};
+const lis=id=>[...document.querySelectorAll(`#${id} .li`)];
+const lin=(id,t,d=.42,st=.07)=>{lis(id).forEach((el,i)=>ev(el.id,t+i*st,'maskUp',d,{h:fsz(el)*1.62,fs:fsz(el)}));};
+// exits drop downward with the BOTTOM line first, so lines only ever move apart (never onto each other)
+const linOut=(id,t,d=.27)=>{const L=lis(id);L.forEach((el,i)=>ev(el.id,t+(L.length-1-i)*.03,'maskOut',d,{h:fsz(el)*1.62,fs:fsz(el)}));};
+// frame on which the last (top) line of an exit is cut: the next headline starts right after it
+const linEnd=(id,t,d=.27)=>t+(lis(id).length-1)*.03+.53*d-.04;
+const DOTT=[];
+
+// ---- HOOK (0-8B): headline at frame 0, the real search is typed, enter
+const Q0='pedro R GOMES PK7';S(.62,'typing',.6,0,1.25);
+ev('s0r',3.62,'ripple',.35);ev('s0g',3.62,'pulse1',.25);S(3.62,'tap',.9);
+linOut('h0a',2.30);lin('h0b',linEnd('h0a',2.30)+.02,.40,.08);S(linEnd('h0a',2.30)+.06,'thock',.8);
+
+ev('h',(8*B)-.10,'whipOutL',.20);ev('d1',(8*B)-.10,'whipInL',.20);S((8*B)-.12,'whoosh',.8,-0.5);
+txt('hudc',(8*B),'Dúvida 1/5');lin('d1_q',(8*B)-.04,.40,.07);S((8*B)+.04,'tap',.6);
+ev('d1_card',(8*B)+.30,'rise',.40,{dy:720});S((8*B)+.30,'paper',.8);
+for(let k=0;k<2;k++){ev('d1_m'+k,(8*B)+1.30+k*0.24,'grow',0.22);}S((8*B)+1.30,'marker',.8,0,0.48);
+ev('d1_st',(8*B)+1.30+2*0.24+.30,'stamp',.3);S((8*B)+1.30+2*0.24+.30,'stamp',1);DOTT[0]=(8*B)+1.30+2*0.24+.30+.05;ev('dt0',(8*B)+1.30+2*0.24+.30+.05,'pulse1',.3);S((8*B)+1.30+2*0.24+.30+.12,'pop',.7,.4,2);
+ev('d1',(18*B)-.10,'whipOutR',.20);ev('d2',(18*B)-.10,'whipInR',.20);S((18*B)-.12,'whoosh',.8,0.5);
+txt('hudc',(18*B),'Dúvida 2/5');lin('d2_q',(18*B)-.04,.40,.07);S((18*B)+.04,'tap',.6);
+ev('d2_card',(18*B)+.30,'rise',.40,{dy:720});S((18*B)+.30,'paper',.8);
+for(let k=0;k<3;k++){ev('d2_m'+k,(18*B)+1.30+k*0.24,'grow',0.22);}S((18*B)+1.30,'marker',.8,0,0.72);
+ev('d2_st',(18*B)+1.30+3*0.24+.30,'stamp',.3);S((18*B)+1.30+3*0.24+.30,'stamp',1);DOTT[1]=(18*B)+1.30+3*0.24+.30+.05;ev('dt1',(18*B)+1.30+3*0.24+.30+.05,'pulse1',.3);S((18*B)+1.30+3*0.24+.30+.12,'pop',.7,.4,3);
+S((28*B)-.25,'swoosh',1,.5);
+txt('hudc',(28*B),'Dúvida 3/5');lin('d3_q',(28*B)-.15,.40,.07);S((28*B)+.04,'tap',.6);
+ev('d3_card',(28*B)+.10,'rise',.40,{dy:720});S((28*B)+.10,'paper',.8);
+for(let k=0;k<5;k++){ev('d3_m'+k,(28*B)+1.30+k*0.24,'grow',0.22);}S((28*B)+1.30,'marker',.8,0,1.20);
+ev('d3_st',(28*B)+1.30+5*0.24+.30,'stamp',.3);S((28*B)+1.30+5*0.24+.30,'stamp',1);DOTT[2]=(28*B)+1.30+5*0.24+.30+.05;ev('dt2',(28*B)+1.30+5*0.24+.30+.05,'pulse1',.3);S((28*B)+1.30+5*0.24+.30+.12,'pop',.7,.4,4);
+ev('d3',(40*B)-.10,'whipOutL',.20);ev('d4',(40*B)-.10,'whipInL',.20);S((40*B)-.12,'whoosh',.8,-0.5);
+txt('hudc',(40*B),'Dúvida 4/5');lin('d4_q',(40*B)-.04,.40,.07);S((40*B)+.04,'tap',.6);
+ev('d4_card',(40*B)+.30,'rise',.40,{dy:720});S((40*B)+.30,'paper',.8);
+for(let k=0;k<4;k++){ev('d4_m'+k,(40*B)+1.30+k*0.24,'grow',0.22);}S((40*B)+1.30,'marker',.8,0,0.96);
+ev('d4_st',(40*B)+1.30+4*0.24+.30,'stamp',.3);S((40*B)+1.30+4*0.24+.30,'stamp',1);DOTT[3]=(40*B)+1.30+4*0.24+.30+.05;ev('dt3',(40*B)+1.30+4*0.24+.30+.05,'pulse1',.3);S((40*B)+1.30+4*0.24+.30+.12,'pop',.7,.4,5);
+ev('d4',(50*B)-.10,'whipOutR',.20);ev('d5',(50*B)-.10,'whipInR',.20);S((50*B)-.12,'whoosh',.8,0.5);
+txt('hudc',(50*B),'Dúvida 5/5');lin('d5_q',(50*B)-.04,.40,.07);S((50*B)+.04,'tap',.6);
+ev('d5_card',(50*B)+.30,'rise',.40,{dy:720});S((50*B)+.30,'paper',.8);
+for(let k=0;k<2;k++){ev('d5_m'+k,(50*B)+1.30+k*0.24,'grow',0.22);}S((50*B)+1.30,'marker',.8,0,0.48);
+ev('d5_st',(50*B)+1.30+2*0.24+.30,'stamp',.3);S((50*B)+1.30+2*0.24+.30,'stamp',1);DOTT[4]=(50*B)+1.30+2*0.24+.30+.05;ev('dt4',(50*B)+1.30+2*0.24+.30+.05,'pulse1',.3);S((50*B)+1.30+2*0.24+.30+.12,'pop',.7,.4,6);
+// ---- PROVA (60B): hard cut on the hit
+S(60*B,'impact',.9);S(60*B,'shimmer',.5);ev('pq',60*B,'slamIn',.16);
+ev('plq',60*B+.10,'rise',.42,{dy:700});S(60*B+.30,'whoosh',.5,-.4);
+ev('pm',60*B+.70,'pop',.30);S(60*B+.72,'pop',.8,.3,4);
+lin('pn',60*B+1.60,.40,.08);S(60*B+1.62,'count',.8,.3,.3);
+for(let i=0;i<7;i++)ev('lg'+i,60*B+2.40+i*.05,'pop',.25);S(60*B+2.40,'swipe',.4);
+S(70*B-.25,'swoosh',1,.5);
+// ---- CTA (70B)
+lin('ca',70*B-.15,.40,.08);
+ev('s1',70*B+.05,'rise',.36,{dy:520});S(70*B+.05,'whoosh',.5);
+const Q1='Pedro R Gomes PK7';S(70*B+.75,'typing',.6,0,1.2);
+linOut('ca',70*B+2.05);lin('cb',linEnd('ca',70*B+2.05)+.02,.40,.08);S(linEnd('ca',70*B+2.05)+.06,'tap',.6);
+ev('cn',70*B+2.35,'fadeUp',.3);
+ev('btn',70*B+2.70,'rise',.35,{dy:240});S(70*B+2.70,'whoosh',.5);S(70*B+3.05,'sent',.8);ev('btn',70*B+3.10,'pulse',2.2);
+ev('eln',70*B+2.95,'fadeUp',.3);
+
+CUES.sort((a,b)=>a.t-b.t);
+// ---------- animation library
+const AN={
+ fadeUp:(p,s)=>{const q=eo(p);if(p<=0)s.o=0;s.y+=(1-q)*50;},
+ fadeIn:(p,s)=>{s.o*=p;},
+ fadeOut:(p,s)=>{s.o*=1-p;},
+ maskUp:(p,s,e,pf)=>{s.y+=(1-eo(p))*e.h;if((1-eo(pf))*e.h>e.fs*.98)s.o=0;},   // rises from below; hidden until the letters (not just accents) are inside
+ maskOut:(p,s,e,pf)=>{s.y+=eio(p)*e.h;if(eio(pf)*e.h>e.fs*.95)s.o=0;},  // drops out downward; cut before only accents remain
+ pop:(p,s)=>{const q=eb(p);if(p<=0)s.o=0;s.s*=.5+.5*q;},
+ sout:(p,s)=>{s.s*=1-eio(p);if(p>=1)s.o=0;},
+ stamp:(p,s)=>{const q=eo(p);if(p<=0)s.o=0;s.s*=1.35-.35*q;if(p>0&&p<1)s.x+=Math.sin(p*60)*6*(1-p);},
+ slamIn:(p,s)=>{s.s*=1+.18*(1-eo(p));},
+ rise:(p,s,e)=>{const q=eo(p);if(p<=0)s.o=0;s.y+=(1-q)*(e.dy||400);},
+ riseO:(p,s,e)=>{const q=eo(p);s.y+=(1-q)*(e.dy||400);},
+ zoomIn:(p,s)=>{const q=eo(p);s.o*=cl(p*6);s.s*=1.4-.4*q;},
+ pkIn:(p,s)=>{s.s*=2.25-.25*eo(p);s.y+=470;},
+ pkUp:(p,s)=>{const q=eo(p);s.s*=1-.5*q;s.y-=470*q;},
+ shake:(p,s,e)=>{if(p>0&&p<1)s.x+=Math.sin(p*70)*(e.amp||10)*(1-p);},
+ desat:(p,s,e)=>{s.sat=1-(1-e.to)*eio(p);},
+ dock:(p,s)=>{const q=eio(p);s.x+=q*DOCK.dx;s.y+=q*DOCK.dy;s.s*=1-(1-DOCK.s)*q;},
+ settle:(p,s,e)=>{s.s*=1+e.k*(1-eo(p));},
+ whipOutR:(p,s)=>{s.x+=eio(p)*1150;}, whipInR:(p,s)=>{s.x-=(1-eio(p))*1150;},
+ whipOutL:(p,s)=>{s.x-=eio(p)*1150;}, whipInL:(p,s)=>{s.x+=(1-eio(p))*1150;},
+ whipOutU:(p,s)=>{s.y-=eio(p)*1300;if(p>=1)s.o=0;}, whipInU:(p,s)=>{s.y+=(1-eio(p))*1300;},
+ ripple:(p,s)=>{s.s*=1+p*5;s.o*=1-p;},
+ openFrom:(p,s)=>{const q=eo(p);s.s*=.15+.85*q;},
+ zoomTo:(p,s,e)=>{const q=Math.pow(p,2.2);s.s*=1+q*(e.k-1);},
+ arc:(p,s,e)=>{const q=eio(p);s.x+=(1-q)*e.dx;s.y+=(1-q)*e.dy-Math.sin(q*Math.PI)*(e.lift===undefined?120:e.lift);s.o*=cl(p*10);s.s*=.6+.4*q;s.r+=(1-q)*40;},
+ squash:(p,s)=>{if(p>0&&p<1){const w=Math.sin(p*Math.PI);s.s*=1+.12*w*(1-p);}},
+ kmove:(p,s,e)=>{s.x+=eio(p)*e.dx;},
+ scroll:(p,s,e)=>{s.y-=eio(p)*(SCR[e.key]||0);},
+ pulse:(p,s)=>{if(p>0)s.s*=1+.02*Math.max(0,Math.sin(p*Math.PI*2*2.4));},
+ pulse1:(p,s)=>{if(p>0&&p<1)s.s*=1+.12*Math.sin(p*Math.PI);},
+ cellOn:(p,s)=>{if(p>0){const q=eb(p);s.s*=.6+.4*q;}},
+ rowIn:(p,s)=>{const q=eo(p);s.x+=(1-q)*-60;if(p<=0)s.o=0;},
+ hold:(p,s,e)=>{const a=eo(cl(p/.15))*(1-eio(cl((p-.8)/.2)));s.s*=1+e.k*a;},
+ grow:(p,s)=>{s.sx=eo(p);},
+ zoomTo2:(p,s,e)=>{const q=eio(p);s.s*=1+q*(e.k-1);s.x+=q*e.dx;s.y+=q*e.dy;},
+};
+// discrete (frame-quantized) animations: evaluated on TF so motion-blur subframes never blend them
+const PERFRAME={shake:1,stamp:1};
+const DISC={hide:(p,s)=>{if(p>=1)s.o=0;},showAt:(p,s)=>{if(p<=0)s.o=0;},showAt2:(p,s)=>{if(p<1)s.o=0;}};
+const BYID={};EV.forEach(e=>{(BYID[e.id]=BYID[e.id]||[]).push(e);});Object.values(BYID).forEach(a=>a.sort((x,y)=>x.t-y.t));
+let SCR={};
+function apply(id,T,TF){const el=$(id);if(!el)return;const st={o:1,x:0,y:0,s:CAM[id]||1,r:0,b:0,sat:1,sx:1};const evs=BYID[id]||[];
+ for(const e of evs){if(DISC[e.a])DISC[e.a](P(TF,e.t-EPS,e.t+e.d),st,e);else if(e.a==='maskUp'||e.a==='maskOut')AN[e.a](P(T,e.t,e.t+e.d),st,e,P(TF,e.t,e.t+e.d));else if(PERFRAME[e.a])AN[e.a](P(TF,e.t,e.t+e.d),st,e);else AN[e.a](P(T,e.t,e.t+e.d),st,e);}
+ el.style.opacity=st.o;el.style.transform=`translate(${st.x}px,${st.y}px) scale(${st.s}) rotate(${st.r}deg)`+(st.sx!==1?` scaleX(${st.sx})`:'');
+ const f=[];if(st.b>.05)f.push(`blur(${st.b}px)`);if(st.sat<.999)f.push(`saturate(${st.sat})`);el.style.filter=f.length?f.join(' '):'none';}
+const mmss=s=>{s=Math.max(0,Math.floor(s+1e-6));return String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0');};
+const TXI={};TX.forEach(x=>{if(!(x.id in TXI))TXI[x.id]=$(x.id).textContent;});
+const fmt=n=>Math.round(n).toLocaleString('pt-BR');
+let CAM={};
+const typed=(q,t0,t1,T)=>q.slice(0,Math.round(q.length*cl((T-t0)/(t1-t0))));
+window.render=function(T){
+ const TF=Math.round(T*30)/30;
+ CAM={};
+ for(const s of SC)$(s[0]).style.display='none';
+ for(const [id,a,b,z] of SC){const el=$(id);if(TF>=a-EPS&&TF<b-EPS){el.style.display='block';el.style.zIndex=z;el.style.clipPath='';CAM[id]=1+.015*cl((T-a)/(b-a));}}
+ for(const [id] of SC)if(!BYID[id]&&$(id).style.display==='block')$(id).style.transform=`scale(${CAM[id]})`;
+ const cur=$('cur');cur.style.display='none';
+ for(const x of TR){if(T>=x.t+CW)continue;if(T<x.t-CW){if($(x.inc).style.display==='block')$(x.inc).style.clipPath='inset(0 0 0 100%)';continue;}const p=eio(P(T,x.t-CW,x.t+CW)),Xc=lerp(1300,-560,p),Xt=Xc+150;
+   $(x.inc).style.clipPath=`polygon(${Xt+204}px 0,1500px 0,1500px 1920px,${Xt-204}px 1920px)`;$(x.inc).style.zIndex=9;
+   cur.style.display='block';cur.style.transform=`translateX(${Xc}px) skewX(-12deg)`;}
+ for(const id in BYID)apply(id,T,TF);
+ for(const id in TXI){let s=TXI[id];for(const x of TX)if(x.id===id&&TF>=x.t-EPS)s=x.s;$(id).textContent=s;}
+ // search bars: typed per frame, blinking caret
+ $('s0t').textContent=typed('pedro R GOMES PK7',.62,1.85,TF);$('s0c').style.opacity=(Math.floor(TF*2.2)%2===0||TF<1.95)?1:0;
+ $('s1t').textContent=typed('Pedro R Gomes PK7',70*B+.75,70*B+1.90,TF);$('s1c').style.opacity=(Math.floor(TF*2.2)%2===0||TF<70*B+2)?1:0;
+ // HUD across the five doubts
+ for(let i=0;i<5;i++)$('dt'+i).classList.toggle('on',TF>=DOTT[i]-EPS);
+ const hud=$('hud');hud.style.display=(TF>=8*B-EPS&&TF<60*B-EPS)?'flex':'none';
+ $('grain').style.backgroundPosition=`${(Math.round(T*30)*137)%540}px ${(Math.round(T*30)*251)%960}px`;
+};
+window.CUES=CUES; window.TOTAL=TOTAL;
+window.render(0);
+</script>
+</body></html>
