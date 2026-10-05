@@ -1,0 +1,600 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8">
+<link rel="stylesheet" href="fonts/fonts.css">
+<style>
+:root{--navy:#0A0F2C;--blue:#1E50E6;--lime:#B7E400;--light:#F4F6FF;--card:#121A3A;--muted:#8A93B8;--read:#4F7DFF;--loss:#FF4D5E}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:1080px;height:1920px;overflow:hidden;background:#000}
+#stage{position:relative;width:1080px;height:1920px;overflow:hidden;font-family:"Plus Jakarta Sans","Noto Color Emoji",sans-serif;color:var(--light);background:var(--navy)}
+.scene{position:absolute;inset:0;display:none;transform-origin:50% 40%;
+ background:radial-gradient(900px 900px at 50% 45%,#142463 0%,rgba(10,15,44,0) 70%),radial-gradient(rgba(255,255,255,.06) 1.6px,transparent 1.8px) 0 0/40px 40px,var(--navy)}
+.scene.lb{background:radial-gradient(1000px 1000px at 50% 40%,#C9F01A 0%,rgba(183,228,0,0) 70%),var(--lime);color:var(--navy)}
+.a{position:absolute;will-change:transform,opacity}
+.H{font-family:"Space Grotesk",sans-serif;font-weight:700;text-transform:uppercase;letter-spacing:-.01em;line-height:1.0}
+.hl{left:60px;width:880px;text-align:center;transform-origin:50% 50%}
+.L{color:var(--lime)}.R{color:var(--loss)}
+.ln{display:block;overflow:hidden;padding:.3em .14em .24em;margin:-.3em -.14em -.24em}
+.ml{display:flex;flex-direction:column;align-items:center}.ml:not(.hl){align-items:flex-start}
+.li{display:inline-block;will-change:transform;white-space:nowrap;vertical-align:top}
+.chat{position:absolute;background:var(--card);border-radius:36px;overflow:hidden;box-shadow:0 50px 110px -40px rgba(0,0,0,.8);border:2px solid rgba(255,255,255,.06)}
+.chat .hd{position:absolute;left:0;right:0;top:0;height:120px;display:flex;align-items:center;gap:22px;padding:0 30px;border-bottom:2px solid rgba(255,255,255,.07);background:rgba(255,255,255,.03)}
+.av{width:72px;height:72px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:40px;flex:none;background-size:cover}
+.chat .nm{font-size:40px;font-weight:700;color:var(--light);line-height:1.1;white-space:nowrap}
+.chat .st{font-size:26px;font-weight:600;color:var(--lime);margin-top:2px;white-space:nowrap}
+.bs,.bi{position:absolute;max-width:640px;padding:18px 26px 14px;border-radius:28px;font-size:38px;font-weight:600;line-height:1.25;transform-origin:100% 100%}
+.bs{right:30px;background:var(--lime);color:var(--navy);border-bottom-right-radius:8px}
+.bi{left:30px;background:var(--light);color:var(--navy);border-bottom-left-radius:8px;transform-origin:0 100%}
+.fl .bs,.fl .bi{position:relative;left:auto;right:auto}
+.fl{position:absolute;left:30px;right:30px;top:0;display:flex;flex-direction:column;gap:14px}
+.fl .bs{align-self:flex-end}.fl .bi{align-self:flex-start}
+.bs .tm,.bi .tm{display:block;text-align:right;font-size:24px;font-weight:700;opacity:.65;margin-top:4px}
+.ck{letter-spacing:-.18em;margin-left:10px;font-size:30px}
+.iab{background:var(--navy);color:var(--lime);font-size:24px;font-weight:800;border-radius:6px;padding:2px 9px;margin-right:10px;vertical-align:3px}
+.tagi{position:absolute;left:30px;bottom:16px;font-size:30px;font-weight:600;color:rgba(244,246,255,.8);letter-spacing:.01em;white-space:nowrap}
+.chip{display:inline-flex;align-items:center;gap:12px;padding:14px 26px;border-radius:999px;font-family:"Space Grotesk";font-weight:700;font-size:30px;text-transform:uppercase;letter-spacing:.02em;white-space:nowrap}
+.stamp{position:absolute;padding:14px 30px;border:7px solid currentColor;border-radius:16px;font-family:"Space Grotesk";font-weight:700;text-transform:uppercase;letter-spacing:.02em;white-space:nowrap;transform-origin:50% 50%;line-height:1.05;text-align:center}
+.mst{position:absolute;left:30px;top:138px;padding:10px 22px;border-radius:12px;background:var(--lime);color:var(--navy);font-family:"Space Grotesk";font-weight:700;font-size:36px;text-transform:uppercase;transform-origin:0 50%;white-space:nowrap}
+.dot{display:inline-block;width:18px;height:18px;border-radius:50%;background:#8A93B8;margin:0 5px}
+.swc{position:absolute;right:30px;top:30px;height:60px;padding:0 22px;border-radius:999px;display:flex;align-items:center;gap:10px;font-family:"Space Grotesk";font-weight:700;font-size:30px;font-variant-numeric:tabular-nums;transform-origin:100% 50%;white-space:nowrap}
+.row{position:absolute;left:0;right:0;height:140px;display:flex;align-items:center;gap:24px;padding:0 30px;border-bottom:2px solid rgba(255,255,255,.06)}
+.row .nm{font-size:36px;font-weight:700}.row .pv{font-size:28px;color:var(--muted);margin-top:4px}.row .tt{margin-left:auto;font-size:26px;color:var(--muted)}
+.pan{position:absolute;top:530px;width:430px;height:668px;border-radius:30px;background:#111A40;overflow:hidden;border:2px solid rgba(255,255,255,.07)}
+.card{position:absolute;background:#fff;color:var(--navy);border-radius:30px;box-shadow:0 40px 90px -30px rgba(0,0,0,.7)}
+.tog{display:inline-block;position:relative;border-radius:999px;vertical-align:middle;flex:none}
+.tog i{position:absolute;border-radius:50%;background:#fff;box-shadow:0 4px 10px rgba(0,0,0,.3)}
+.coin{position:absolute;width:44px;height:44px;margin:-22px 0 0 -22px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#F2FF9A,#C8EE1A 55%,#86A800);border:3px solid #6E8C00;color:#3C4C00;font:800 24px "Space Grotesk";display:flex;align-items:center;justify-content:center;box-shadow:0 4px 10px rgba(0,0,0,.35)}
+.kc{position:absolute;top:0;width:280px;height:100%;border-radius:22px;background:rgba(255,255,255,.05);padding:16px 18px}
+.kc b{display:block;font-family:"Space Grotesk";font-size:28px;letter-spacing:.04em;color:var(--muted)}
+.node{height:68px;padding:0 22px;border-radius:999px;display:flex;align-items:center;font-family:"Space Grotesk";font-weight:700;font-size:28px;background:#1A2350;color:var(--muted);border:2px solid rgba(255,255,255,.14);position:relative;z-index:2;white-space:nowrap}
+.lgc{display:inline-flex;align-items:center;justify-content:center;width:190px;height:80px;border-radius:18px;background:#fff;vertical-align:top}
+.lgc img{max-width:150px;max-height:58px}
+.avm{-webkit-mask-image:linear-gradient(#000 78%,transparent 99%);mask-image:linear-gradient(#000 78%,transparent 99%)}
+.cell{position:absolute;width:60px;height:60px;border-radius:14px;border:3px solid rgba(255,255,255,.16);background:rgba(255,255,255,.03);display:flex;align-items:center;justify-content:center;font:700 30px "Space Grotesk";color:transparent}
+.cell.on{background:var(--loss);border-color:var(--loss);color:#fff}
+.trow{position:absolute;left:0;right:0;height:110px;display:flex;align-items:center;padding:0 34px;border-bottom:2px solid rgba(255,255,255,.07)}
+.trow .tl{font-size:40px;font-weight:800;line-height:1.05}.trow .tl small{display:block;font-size:28px;font-weight:600;color:var(--muted);margin-top:4px}
+.trow .tv{margin-left:auto;font-family:"Space Grotesk";font-weight:700;font-size:58px;color:var(--loss);font-variant-numeric:tabular-nums;white-space:nowrap}.trow .tv small{font-size:30px;color:#FF8D98}
+.phn{position:absolute;left:65px;top:450px;width:300px;height:300px;border-radius:34px;background:#05081A;border:6px solid #2C3870;overflow:hidden}
+.phn .scr{position:absolute;inset:8px;border-radius:24px;background:#151E48;overflow:hidden}
+.phn .pb{position:absolute;padding:8px 14px 6px;border-radius:16px;font-size:24px;font-weight:700;line-height:1.2;white-space:nowrap}
+#cur{position:absolute;top:-200px;height:2320px;left:0;width:340px;z-index:40;display:none;transform-origin:50% 50%}
+#cur .s{position:absolute;left:0;top:0;bottom:0;width:300px;background:var(--lime)}
+#cur .s2{position:absolute;left:300px;top:0;bottom:0;width:40px;background:var(--blue)}
+#morph,#morph2{position:absolute;z-index:45;display:none;align-items:center;justify-content:center;font-family:'Space Grotesk';font-weight:700;color:var(--navy);text-transform:uppercase;white-space:nowrap;overflow:hidden;background:radial-gradient(1000px 1000px at 50% 40%,#C9F01A 0%,rgba(183,228,0,0) 70%),var(--lime)}
+#grain{position:absolute;inset:-40px;z-index:60;background:url(a/noise.png);background-size:540px 960px;opacity:.05;mix-blend-mode:overlay;pointer-events:none}
+#vig{position:absolute;inset:0;z-index:59;pointer-events:none;background:radial-gradient(ellipse at 50% 45%,rgba(0,0,0,0) 55%,rgba(0,0,0,.32) 100%)}
+</style></head>
+<body><div id="stage">
+
+<!-- ===== C1 · NO VÁCUO + IRRITANTE (0-7.84) ===== -->
+<section class="scene" id="c1">
+  <div class="a H hl ml" id="h1a" style="top:264px;font-size:100px">Esse anúncio vai<br>te deixar<br><span class="L" id="jv" style="display:inline-block">no vácuo.</span></div>
+  <div class="a hl ml" id="cnt" style="top:300px;font-size:40px;z-index:5"><span class="H" style="font-size:40px;color:var(--muted);letter-spacing:.06em">Você está esperando há</span><br><span class="H" id="cntv" style="font-size:150px;font-variant-numeric:tabular-nums;line-height:1.15">00:03</span></div>
+  <div class="a H hl ml" id="h1b" style="top:330px;font-size:110px">Irritante, né?</div>
+  <div class="a H hl ml" id="h1c" style="top:264px;font-size:96px">É isso que o<br><span class="L">seu cliente</span><br>sente.</div>
+  <div class="chat a" id="k1" style="left:60px;top:694px;width:880px;height:570px;transform-origin:50% 50%">
+    <div class="hd"><div class="av" style="background:#2B3A7A;font:800 30px 'Space Grotesk';color:#fff">SE</div><div><div class="nm">Sua Empresa</div><div class="st" id="st1">online</div></div></div>
+    <div class="bs a" id="m1" style="top:226px">Oi! Quanto fica? Quero fechar hoje 🙏<span class="tm">14:02<span class="ck" id="ck1" style="color:#5D6690">✓✓</span></span></div>
+    <div class="bi a" id="ty1" style="top:404px;padding:26px 24px"><span class="dot" id="d1"></span><span class="dot" id="d2"></span><span class="dot" id="d3"></span></div>
+    <div class="bs a" id="m2" style="top:404px">Alô??<span class="tm">14:49<span class="ck" style="color:var(--read)">✓✓</span></span></div>
+    <div class="mst a" id="sv1">Visualizou.</div><div class="mst a" id="sv2">Digitando…</div><div class="mst a" id="sv3">…e nada.</div>
+    <div class="swc a" id="ch1" style="background:rgba(255,77,94,.16);border:2px solid var(--loss);color:var(--loss)">⏱ <span id="ch1v">00:04</span></div>
+    <div class="tagi">cena ilustrativa</div>
+  </div>
+  <div class="a" id="dp" style="left:520px;top:586px;transform-origin:50% 50%"><span class="chip" style="background:var(--lime);color:var(--navy);font-size:40px;padding:12px 30px;transform:rotate(-4deg);box-shadow:0 12px 30px -8px rgba(0,0,0,.6)">De propósito.</span></div>
+</section>
+
+<!-- ===== C2 · CONCORRENTE (7.60-11.20) ===== -->
+<section class="scene" id="c2">
+  <div class="a H hl ml" id="h2a" style="top:260px;font-size:100px">Ele chama o<br>concorrente.</div>
+  <div class="a H hl ml" id="h2b" style="top:260px;font-size:100px">Resposta em<br><span class="L">4 segundos.</span></div>
+  <div class="chat a" id="lst" style="left:60px;top:540px;width:880px;height:700px">
+    <div class="a" id="lsc" style="inset:0">
+      <div class="hd"><div class="nm" style="font-size:40px">Conversas</div></div>
+      <div class="row" style="top:120px;opacity:.45"><div class="av" style="background:#2B3A7A;font:800 30px 'Space Grotesk';color:#fff">SE</div><div><div class="nm">Sua Empresa</div><div class="pv">Você: Alô??</div></div><div class="tt">14:49</div></div>
+      <div class="row" style="top:260px"><div class="av" style="background:#3D6BF0;font:800 30px 'Space Grotesk';color:#fff">CO</div><div><div class="nm">Concorrente</div><div class="pv">toque para conversar</div></div><div class="tt">14:50</div></div>
+      <div class="tagi">cena ilustrativa</div>
+    </div>
+    <div class="a" id="rip" style="left:420px;top:330px;width:40px;height:40px;margin:-20px;border-radius:50%;background:rgba(183,228,0,.55);transform-origin:50% 50%"></div>
+  </div>
+  <div class="chat a" id="k2" style="left:60px;top:540px;width:880px;height:700px;transform-origin:440px 330px">
+    <div class="a" id="k2c" style="inset:0">
+      <div class="hd"><div class="av" style="background:#3D6BF0;font:800 30px 'Space Grotesk';color:#fff">CO</div><div><div class="nm">Concorrente</div><div class="st">online</div></div></div>
+      <div class="bs a" id="m3" style="top:140px">Oi! Quanto fica? Quero fechar hoje 🙏<span class="tm">14:50<span class="ck" style="color:var(--read)">✓✓</span></span></div>
+      <div class="bi a" id="m4" style="top:316px">Oi! 😊 Tenho hoje às 16h. Fecho pra você?<span class="tm">14:50</span></div>
+      <div class="bs a" id="m5" style="top:492px;font-size:34px"><b>Fechado! Pix enviado ✅</b><span style="display:block;font-size:30px;font-weight:700;opacity:.8">R$ 45,00 · para Concorrente</span><span class="tm">14:51<span class="ck" style="color:var(--read)">✓✓</span></span></div>
+      <div class="swc a" id="sw2" style="background:var(--lime);color:var(--navy)">⏱ <span id="sw2v">00:00</span></div>
+      <div class="tagi">cena ilustrativa</div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== C3 · O TWIST (10.92-15.60) ===== -->
+<section class="scene" id="c3">
+  <div class="a H hl ml" id="h3a" style="top:246px;font-size:80px">O concorrente<br>também tava<br><span class="L">com cliente.</span></div>
+  <div class="a H hl ml" id="h3b" style="top:262px;font-size:86px">Quem respondeu:<br><span class="L">uma máquina.</span></div>
+  <div class="pan" id="pL" style="left:60px"></div>
+  <div class="pan" id="pR" style="left:510px"></div>
+  <div class="tagi" style="left:60px;top:1210px;bottom:auto">cena ilustrativa</div>
+  <div class="a" id="vp" style="left:110px;top:690px"><div class="stamp" id="spv" style="position:relative;transform:rotate(-8deg);color:var(--loss);font-size:58px;background:#10163A;box-shadow:0 18px 40px -10px rgba(0,0,0,.7)">Venda<br>perdida</div></div>
+</section>
+
+<!-- ===== C4 · A CONTA (14.80-19.24) ===== -->
+<section class="scene" id="c4">
+  <div class="a" id="ex" style="left:60px;width:880px;top:258px;text-align:center"><span class="chip" style="background:var(--lime);color:var(--navy);font-size:32px;padding:10px 24px">Exemplo</span></div>
+  <div class="a H hl ml" id="b1" style="top:340px;font-size:72px">2 vendas perdidas<br><span class="R">por dia</span></div>
+  <div class="a H hl ml" id="b1b" style="top:340px;font-size:72px">Faz a conta com<br><span class="L">o seu ticket.</span></div>
+  <div class="a" id="grid" style="left:62px;top:528px;width:876px;height:128px"></div>
+  <div class="a H hl ml" id="b2" style="top:680px;font-size:48px;color:var(--muted)">× 26 dias de trabalho</div>
+  <div class="chat a" id="tb" style="left:60px;top:768px;width:880px;height:332px;border-radius:30px">
+    <div class="trow" id="tr0" style="top:0"><div class="tl">Barbearia<small>ticket R$ 45</small></div><div class="tv">−R$ <span id="tv0">2.340</span><small>/mês</small></div></div>
+    <div class="trow" id="tr1" style="top:110px"><div class="tl">Clínica<small>ticket R$ 150</small></div><div class="tv">−R$ <span id="tv1">7.800</span><small>/mês</small></div></div>
+    <div class="trow" id="tr2" style="top:220px;border-bottom:0"><div class="tl">Estética<small>ticket R$ 300</small></div><div class="tv">−R$ <span id="tv2">15.600</span><small>/mês</small></div></div>
+  </div>
+  <div class="a" id="pc" style="left:60px;width:880px;top:1124px;text-align:center"><span class="a" id="pcs" style="position:relative;display:inline-block;transform-origin:50% 50%"><span class="stamp" style="position:relative;display:inline-block;color:var(--loss);font-size:52px;background:#10163A;transform:rotate(-4deg)">→ Pro concorrente</span></span></div>
+</section>
+
+<!-- ===== C5 · CONSELHO (19.00-20.30) ===== -->
+<section class="scene" id="c5">
+  <div class="a H hl ml" id="h5" style="top:260px;font-size:76px">Conselho do Pedro,<br><span class="L">gestor de tráfego:</span></div>
+  <img class="a avm" id="av5" src="a/pose-point.webp" style="left:170px;top:430px;width:680px">
+  <div class="a" id="nt5" style="left:60px;width:880px;top:1128px;text-align:center"><span class="chip" style="background:#fff;color:var(--navy);font-size:30px;padding:12px 26px">Pedro R Gomes · fundador da <b style="color:#1E50E6">PK7</b></span></div>
+</section>
+
+<!-- ===== C5L · PARE DE ANUNCIAR (20.30-23.086) ===== -->
+<section class="scene lb" id="c5l">
+  <div class="a H hl ml" id="pa" style="top:370px;font-size:150px;color:var(--navy)">Pare de<br>anunciar.</div>
+  <div class="a" id="tgr" style="left:60px;width:880px;top:716px;display:flex;flex-direction:column;align-items:center;gap:20px">
+    <span class="tog" id="tg5" style="width:220px;height:116px;background:var(--navy)"><i id="tk5" style="top:11px;left:115px;width:94px;height:94px;background:var(--lime)"></i></span>
+    <span class="H" id="tl5" style="font-size:56px;color:var(--navy);white-space:nowrap">Anúncios: ativos</span>
+  </div>
+  <div class="a" id="as5" style="left:60px;width:880px;top:942px;text-align:center;font-size:38px;font-weight:700;font-style:italic;color:rgba(10,15,44,.72)">(sim, isso aqui é um anúncio)</div>
+  <div class="a" id="pes" style="left:60px;width:880px;top:1030px;text-align:center"><span class="a" id="pesi" style="position:relative;display:inline-block;transform-origin:50% 50%"><span class="chip" style="background:var(--navy);color:var(--lime);font-size:64px;padding:16px 40px;transform:rotate(-4deg);box-shadow:0 20px 40px -12px rgba(10,15,44,.6)">(Por enquanto.)</span></span></div>
+</section>
+
+<!-- ===== C5B · BALDE FURADO (23.086-26.12) ===== -->
+<section class="scene" id="c5b">
+  <div class="a H hl ml" id="h6" style="top:268px;font-size:78px">Anúncio com vácuo =<br><span class="L">balde furado.</span></div>
+  <div class="a H hl ml" id="h7" style="top:260px;font-size:96px">Primeiro,<br><span class="L">fecha o furo.</span></div>
+  <div class="a" id="bkg" style="left:150px;top:510px;width:700px;height:780px;transform-origin:196px 600px;will-change:auto"></div>
+</section>
+
+<!-- ===== C6 · A MÁQUINA (26.12-29.514) ===== -->
+<section class="scene" id="c6">
+  <div class="a H hl ml" id="h6c" style="top:250px;font-size:70px">Mesmo cliente.<br><span class="L">Resposta em 4<span style="text-transform:none">s</span>.</span></div>
+  <div class="a" id="qrow" style="left:60px;width:880px;top:418px;text-align:center;white-space:nowrap;font-size:0">
+    <span class="a" id="q1" style="position:relative;display:inline-block;transform-origin:50% 50%;margin:0 7px"><span class="chip" id="q1c" style="background:var(--lime);color:var(--navy);font-size:32px;padding:12px 22px">Responde na hora</span></span><span class="a" id="q2" style="position:relative;display:inline-block;transform-origin:50% 50%;margin:0 7px"><span class="chip" style="background:var(--lime);color:var(--navy);font-size:32px;padding:12px 22px">Qualifica</span></span><span class="a" id="q3" style="position:relative;display:inline-block;transform-origin:50% 50%;margin:0 7px"><span class="chip" style="background:var(--lime);color:var(--navy);font-size:32px;padding:12px 22px">Agenda</span></span>
+  </div>
+  <div class="chat a" id="k6" style="left:60px;top:516px;width:880px;height:500px">
+    <div class="hd"><div class="av" style="background:#2B3A7A;font:800 30px 'Space Grotesk';color:#fff">SE</div><div><div class="nm">Sua Empresa</div><div class="st">atendimento com IA · 24h</div></div></div>
+    <div class="a" id="k6v" style="left:0;right:0;top:120px;height:326px;overflow:hidden;-webkit-mask-image:linear-gradient(transparent 0,#000 8px,#000 calc(100% - 8px),transparent);mask-image:linear-gradient(transparent 0,#000 8px,#000 calc(100% - 8px),transparent)">
+      <div class="fl a" id="k6m" style="top:16px">
+        <div class="bs" id="n1" style="font-size:32px">Oi! Quanto fica? Quero fechar hoje 🙏<span class="tm">14:02<span class="ck" style="color:var(--read)">✓✓</span></span></div>
+        <div class="bi" id="n2" style="font-size:32px;max-width:600px"><span class="iab">IA</span>Oi! 😊 Hoje tenho 16h ou 17h30. Qual prefere?<span class="tm">14:02</span></div>
+        <div class="bs" id="n3" style="font-size:32px">16h!<span class="tm">14:02<span class="ck" style="color:var(--read)">✓✓</span></span></div>
+        <div class="bi" id="n4" style="font-size:32px"><span class="iab">IA</span>Agendado ✅ Hoje, 16h. Até já!<span class="tm">14:03</span></div>
+      </div>
+    </div>
+    <div class="swc a" id="sw6" style="background:var(--lime);color:var(--navy)">⏱ <span id="sw6v">00:00</span></div>
+    <div class="tagi">cena ilustrativa</div>
+  </div>
+  <div class="a" id="kb" style="left:60px;top:1036px;width:880px;height:204px">
+    <div class="kc" style="left:0"><b>NOVO</b></div><div class="kc" style="left:300px"><b>QUALIFICADO</b></div><div class="kc" style="left:600px"><b>AGENDADO</b></div>
+    <div class="a" id="kcard" style="left:16px;top:66px;width:248px;padding:14px 18px;border-radius:18px;background:#fff;color:var(--navy);font-size:28px;font-weight:800;line-height:1.2;box-shadow:0 14px 30px -10px rgba(0,0,0,.6)">Cliente novo<br><span style="color:#E2483A">● quente</span></div>
+  </div>
+</section>
+
+<!-- ===== C7 · AÍ SIM (29.514-30.586) ===== -->
+<section class="scene" id="c7">
+  <div class="a H hl" id="h7b" style="top:262px;font-size:96px">Aí sim: <span class="L">anúncio.</span></div>
+  <div class="a" id="bk7" style="left:150px;top:420px;width:700px;height:780px"></div>
+</section>
+
+<!-- ===== C8 · BOLETO (30.586-34.65) ===== -->
+<section class="scene" id="c8">
+  <div class="a H hl ml" id="h8a" style="top:262px;font-size:100px">Mensagem não<br>paga boleto.</div>
+  <div class="a" id="blw" style="left:100px;top:520px;width:800px;height:600px">
+    <div class="a" id="blf" style="left:0;top:0;width:800px;height:600px;transform-origin:50% 50%;backface-visibility:hidden">
+      <div style="position:absolute;inset:0;border-radius:26px;background:#FFF8E7;color:#2A2A33;padding:36px 44px;box-shadow:0 40px 90px -30px rgba(0,0,0,.8)">
+        <div style="display:flex;justify-content:space-between;align-items:baseline;font-family:'Space Grotesk';font-weight:700;font-size:52px">BOLETO <span style="font-size:30px;color:#8A8A95">vence dia 10</span></div>
+        <div style="margin-top:18px;height:96px;background:repeating-linear-gradient(90deg,#222 0 6px,transparent 6px 10px,#222 10px 12px,transparent 12px 18px,#222 18px 26px,transparent 26px 30px)"></div>
+        <div style="margin-top:24px;font-size:42px;font-weight:800">Aluguel + fornecedor</div>
+        <div style="margin-top:8px;font-size:40px;font-weight:700;color:#4A4A55">Valor: R$ ••••</div>
+        <div style="position:absolute;left:44px;right:44px;top:440px;height:120px;border-top:3px dashed #D8D0BC;display:flex;align-items:center"><span style="font-size:32px;font-weight:700;color:#8A8A95">Status:</span></div>
+      </div>
+      <div class="a" id="sbw" style="left:230px;top:462px"><div class="stamp" id="sbs" style="position:relative;transform:rotate(-6deg);color:var(--loss);font-size:60px;background:#FFF8E7">Em aberto</div></div>
+    </div>
+    <div class="a" id="blb" style="left:0;top:0;width:800px;height:600px;border-radius:26px;background:var(--lime);color:var(--navy);display:flex;flex-direction:column;align-items:center;justify-content:center;box-shadow:0 40px 90px -30px rgba(183,228,0,.5);transform-origin:50% 50%;backface-visibility:hidden">
+      <div id="blbc" class="a" style="position:relative;display:flex;flex-direction:column;align-items:center"><div class="H" style="font-size:140px">✓ Pago</div>
+      <div style="font-size:40px;font-weight:800;margin-top:20px">Pagamento recebido</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== C8B · VENDA PAGA. full-bleed lime (33.32-34.336) ===== -->
+<section class="scene lb" id="c8b">
+  <div class="a H hl ml" id="vpg" style="top:560px;font-size:210px;color:var(--navy)">Venda<br>paga.</div>
+</section>
+
+<!-- ===== C9 · QUEM (34.336-38.74) ===== -->
+<section class="scene" id="c9">
+  <div class="a H hl" id="pk" style="top:236px;font-size:170px;letter-spacing:-.04em">PK<span class="L">7</span></div>
+  <div class="a H hl ml" id="pks" style="top:424px;font-size:44px;letter-spacing:.04em">Máquina de vendas <span class="L">sob medida</span></div>
+  <div class="a" id="pp" style="left:60px;width:880px;top:500px;height:70px">
+    <div class="a" id="ppl" style="left:0;top:33px;width:10px;height:4px;background:var(--lime);transform-origin:0 50%"></div>
+    <div id="ppr" style="position:absolute;left:0;right:0;top:0;display:flex;justify-content:center;gap:16px"><div class="node" id="nd0">ANÚNCIO</div><div class="node" id="nd1">SITE</div><div class="node" id="nd2">IA</div><div class="node" id="nd3">CRM</div><div class="node" id="nd4">VENDA ✓</div></div>
+    <div class="a" id="pcoin" style="left:0;top:35px;width:30px;height:30px;margin:-15px;border-radius:50%;background:#E6FF7A;box-shadow:0 0 22px 8px rgba(183,228,0,.7);z-index:1"></div>
+  </div>
+  <img class="a avm" id="av9" src="a/hero-present.webp" style="left:70px;top:600px;width:440px">
+  <div class="a" id="cC" style="left:530px;top:640px"><span class="chip" style="background:var(--lime);color:var(--navy);font-size:34px;line-height:1.15;padding:18px 28px;white-space:nowrap">Fale direto<br>com o Pedro</span></div>
+  <div class="a" id="nt9" style="left:534px;top:790px;width:400px;font-size:30px;font-weight:700;line-height:1.3;color:rgba(244,246,255,.9)">Pedro R Gomes<br><span style="color:var(--muted)">fundador da PK7</span></div>
+  <div class="a H ml" id="nums" style="left:528px;top:906px;font-size:56px;line-height:1.08"><span class="L">+40</span> clientes<br><span class="L">3</span> continentes</div>
+  <div class="a" id="lgg" style="left:102px;top:1066px;width:796px;height:172px"></div>
+</section>
+
+<!-- ===== C10 · CTA ESPELHO (38.52-43.5) ===== -->
+<section class="scene" id="c10">
+  <div class="a H hl ml" id="ha" style="top:264px;font-size:80px">Chama no WhatsApp<br><span class="L">e cronometra.</span></div>
+  <div class="a H hl ml" id="hb" style="top:264px;font-size:96px">Aqui, ninguém<br>fica <span class="L">no vácuo.</span></div>
+  <div class="chat a" id="k10" style="left:60px;top:478px;width:880px;height:584px;transform:scale(.9);transform-origin:50% 0">
+    <div class="hd"><div class="av" style="background:#1E50E6 url(a/hero-present.webp) 50% 18%/190% no-repeat"></div><div><div class="nm">Pedro R Gomes · PK7</div><div class="st">online · assistente IA + Pedro</div></div></div>
+    <div class="bs a" id="m10" style="top:140px">Oi! Quanto fica? Quero fechar hoje 🙏<span class="tm">14:02<span class="ck" id="ck10" style="color:#5D6690">✓✓</span></span></div>
+    <div class="bi a" id="r10" style="top:316px;font-size:34px;max-width:700px">Oi! Sou a assistente do Pedro 👋 Já te ajudo, e o Pedro assume pessoalmente.<span class="tm">14:02</span></div>
+    <div class="swc a" id="sw10" style="background:var(--lime);color:var(--navy)">⏱ <span id="sw10v">00:00</span></div>
+    <div class="tagi">cena ilustrativa</div>
+  </div>
+  <div class="a" id="btn" style="left:104px;top:1022px;width:792px;height:104px;border-radius:999px;background:var(--lime);color:var(--navy);display:flex;align-items:center;justify-content:center;gap:18px;font-family:'Space Grotesk';font-weight:700;font-size:46px;box-shadow:0 26px 60px -20px rgba(183,228,0,.7);transform-origin:50% 50%;white-space:nowrap">💬 Chamar no WhatsApp →</div>
+  <div class="a" id="tmr" style="left:60px;width:880px;top:1128px;text-align:center;display:none"><span class="chip" style="background:rgba(255,255,255,.08);border:2px solid rgba(183,228,0,.6);color:var(--light);font-size:32px;padding:8px 24px;font-variant-numeric:tabular-nums">⏱ seu cronômetro: <span id="tmrv" style="color:var(--lime);margin-left:6px">00:00</span></span></div>
+  <div class="a" id="eln" style="left:60px;width:880px;top:1146px;text-align:center;font-size:30px;font-weight:700;color:rgba(244,246,255,.8);white-space:nowrap">WhatsApp no link da bio · pk7.com.br · @pedrok.ads</div>
+</section>
+
+<div id="morph"></div><div id="morph2"></div>
+<div id="cur"><div class="s"></div><div class="s2"></div></div>
+<div id="vig"></div><div id="grain"></div>
+</div>
+<script>
+const Q=new URLSearchParams(location.search), VAR=Q.get('v')||'dare';
+const HP=[];
+let DOCK={dx:341,dy:326,s:.205};   // dare | safe | ad
+const $=id=>document.getElementById(id);
+const cl=(v,a=0,b=1)=>Math.max(a,Math.min(b,v)), P=(t,a,b)=>cl((t-a)/(b-a));
+const eo=t=>1-Math.pow(1-t,3), eio=t=>t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2;
+const eb=t=>{const c1=1.5,c3=c1+1;return 1+c3*Math.pow(t-1,3)+c1*Math.pow(t-1,2)};
+const lerp=(a,b,p)=>a+(b-a)*p;
+const TOTAL=43.5, EPS=1e-6;
+// music grid (seconds): tension 100 BPM from 4.70; groove 112 BPM anchored at A
+const A=26.30, B=60/112;
+// scene ranges [id,start,end,z]
+const SC=[['c1',0,7.84,2],['c2',7.60,11.20,3],['c3',10.92,15.60,4],['c4',14.80,19.24,2],['c5',19.00,20.30,3],['c5l',20.30,A-6*B,2],['c5b',A-6*B,A,2],['c6',A,A+6*B,3],['c7',A+6*B,A+8*B,2],['c8',A+8*B,33.46,2],['c8b',33.46,A+15*B,2],['c9',A+15*B,38.74,3],['c10',38.50,TOTAL+1,2]];
+const CW=.45;
+const TR=[{t:15.20,out:'c3',inc:'c4'}];
+const CUES=[]; const S=(t,n,v=1,p=0,d)=>CUES.push(Object.assign({t:+(+t).toFixed(3),n,v,p},d!==undefined?{d:+(+d).toFixed(3)}:{}));
+
+// ---------- static builds
+(function(){
+ document.querySelectorAll('.ml').forEach(el=>{el.innerHTML=el.innerHTML.split(/<br\s*\/?>/i).map((h,i)=>`<span class="ln"><span class="li" id="${el.id}_l${i}">${h}</span></span>`).join('');});
+ // ---- twist panels: barber icon scene + phone
+ const barber=(id)=>`<svg width="430" height="260" viewBox="0 0 430 260" style="position:absolute;left:0;top:118px;overflow:visible">
+   <defs><pattern id="pole${id}" width="28" height="28" patternUnits="userSpaceOnUse" patternTransform="rotate(35)"><rect width="28" height="28" fill="#F4F6FF"/><rect width="9" height="28" fill="#FF4D5E"/><rect x="14" width="7" height="28" fill="#1E50E6"/></pattern>
+   <linearGradient id="mir${id}" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2A3A80"/><stop offset="1" stop-color="#18235A"/></linearGradient></defs>
+   <rect x="0" y="246" width="430" height="14" fill="#0B1236"/>
+   <rect x="34" y="40" width="26" height="128" rx="13" fill="url(#pole${id})"/><rect x="28" y="30" width="38" height="16" rx="8" fill="#C9D0E8"/><rect x="28" y="162" width="38" height="16" rx="8" fill="#C9D0E8"/>
+   <rect x="96" y="14" width="250" height="150" rx="22" fill="url(#mir${id})" stroke="#3A4C9A" stroke-width="4"/><path d="M120 150 L190 26 L222 26 L152 150 Z" fill="#fff" opacity=".08"/>
+   <ellipse cx="220" cy="244" rx="66" ry="10" fill="#2A3670"/><rect x="210" y="200" width="20" height="44" rx="6" fill="#56628F"/>
+   <rect x="158" y="206" width="124" height="12" rx="6" fill="#2A3670"/>
+   <rect x="166" y="92" width="108" height="104" rx="26" fill="#8E2C3A"/>
+   <path d="M150 122 Q220 104 290 122 L312 214 Q220 230 128 214 Z" fill="#F4F6FF"/>
+   <path d="M196 112 Q220 124 244 112" stroke="#C9D0E8" stroke-width="5" fill="none" stroke-linecap="round"/>
+   <rect x="134" y="182" width="26" height="40" rx="10" fill="#8E2C3A"/><rect x="280" y="182" width="26" height="40" rx="10" fill="#8E2C3A"/>
+   <circle cx="220" cy="78" r="32" fill="#E3AE86"/>
+   <path d="M188 74 Q190 40 222 42 Q254 42 254 72 Q244 56 222 58 Q200 58 188 74 Z" fill="#2E211C"/>
+   <circle cx="209" cy="80" r="3.6" fill="#1A1A22"/><circle cx="231" cy="80" r="3.6" fill="#1A1A22"/>
+   <path d="M210 93 Q220 99 230 93" stroke="#7A3F2A" stroke-width="3.2" fill="none" stroke-linecap="round"/>
+   <rect x="318" y="152" width="17" height="94" rx="6" fill="#1A2350"/><rect x="341" y="152" width="17" height="94" rx="6" fill="#1A2350"/>
+   <rect x="306" y="62" width="66" height="104" rx="24" fill="#2B3A7A"/><path d="M314 88 L364 88 L360 168 L318 168 Z" fill="#1E50E6"/><path d="M322 88 L322 70 M356 88 L356 70" stroke="#1E50E6" stroke-width="5"/><rect x="326" y="96" width="26" height="14" rx="4" fill="#B7E400"/>
+   <path d="M366 80 Q382 108 374 140" stroke="#2B3A7A" stroke-width="15" fill="none" stroke-linecap="round"/><circle cx="374" cy="144" r="8" fill="#C98E66"/>
+   <circle cx="338" cy="34" r="25" fill="#C98E66"/><path d="M313 30 Q314 4 339 5 Q364 5 363 28 Q352 16 339 17 Q324 17 313 30 Z" fill="#1F1A18"/>
+   <circle cx="${id==='L'?333:329}" cy="${id==='L'?38:37}" r="3.2" fill="#1A1A22"/><circle cx="${id==='L'?346:342}" cy="${id==='L'?38:37}" r="3.2" fill="#1A1A22"/>
+   <path d="M332 48 Q338 ${id==='L'?46:52} 345 48" stroke="#6E3626" stroke-width="3" fill="none" stroke-linecap="round"/>
+   <path d="M312 76 Q290 70 272 58" stroke="#2B3A7A" stroke-width="15" fill="none" stroke-linecap="round"/><circle cx="268" cy="54" r="8.5" fill="#C98E66"/>
+   <g id="sci${id}" transform="translate(266 46) rotate(-10)">
+     <g id="sa${id}"><path d="M0 0 L-30 -7 Q-33 -4 -30 -1 Z" fill="#E6EAF7"/><circle cx="10" cy="6" r="6" fill="none" stroke="#B7E400" stroke-width="4"/></g>
+     <g id="sb${id}"><path d="M0 0 L-30 7 Q-33 4 -30 1 Z" fill="#C9D0E8"/><circle cx="10" cy="-6" r="6" fill="none" stroke="#B7E400" stroke-width="4"/></g>
+     <circle cx="0" cy="0" r="2.6" fill="#0A0F2C"/>
+   </g>
+ </svg>`;
+ const phone=(up)=>`<div class="phn" id="ph${up?'R':'L'}" style="${up?'box-shadow:0 0 0 6px rgba(183,228,0,.25),0 0 50px 8px rgba(183,228,0,.35);border-color:#5F7A12':''}"><div class="scr" style="${up?'background:#1B2A66':''}">
+    <div style="position:absolute;left:0;right:0;top:0;height:44px;background:rgba(255,255,255,.06);font:700 20px 'Plus Jakarta Sans';color:#C9D0E8;display:flex;align-items:center;padding-left:16px">${up?'Concorrente':'Sua Empresa'}</div>
+    <div class="pb" style="right:12px;top:58px;background:var(--lime);color:var(--navy)">Quanto fica? <span style="color:#2F5BFF;letter-spacing:-.15em">✓✓</span></div>
+    ${up?`<div class="pb a" id="phTy" style="left:12px;top:120px;background:#F4F6FF;color:var(--navy);padding:10px 14px"><span class="dot" style="width:12px;height:12px;margin:0 3px"></span><span class="dot" style="width:12px;height:12px;margin:0 3px"></span><span class="dot" style="width:12px;height:12px;margin:0 3px"></span></div>
+       <div class="pb a" id="phRep" style="left:12px;top:120px;background:#F4F6FF;color:var(--navy);transform-origin:0 100%"><span class="iab" style="font-size:18px;padding:1px 6px">IA</span>Oi! Tenho 16h.<br>Fecho? 😊</div>`
+       :`<div class="a" id="phN" style="left:0;right:0;top:128px;text-align:center;font:800 24px 'Plus Jakarta Sans';color:var(--loss)">sem resposta</div>`}
+   </div></div>${up?'':`<div class="a" id="b2b" style="left:338px;top:432px;width:50px;height:50px;border-radius:50%;background:var(--loss);color:#fff;font:700 30px 'Space Grotesk';display:flex;align-items:center;justify-content:center;transform-origin:50% 50%;box-shadow:0 6px 16px rgba(0,0,0,.5)">2</div>`}`;
+ $('pL').innerHTML=`<div class="a" style="left:20px;top:18px"><span class="chip" style="background:#fff;color:var(--navy);font-size:26px;padding:8px 18px">Sua empresa</span></div>
+   <div class="a" id="bzL" style="left:20px;top:72px"><span class="chip" style="background:rgba(255,255,255,.1);color:#fff;font-size:24px;padding:7px 16px">✂️ atendendo cliente</span></div>`+barber('L')+phone(false);
+ $('pR').innerHTML=`<div class="a" style="left:20px;top:18px"><span class="chip" style="background:#fff;color:var(--navy);font-size:26px;padding:8px 18px">Concorrente</span></div>
+   <div class="a" id="bzR" style="left:20px;top:72px"><span class="chip" style="background:rgba(255,255,255,.1);color:#fff;font-size:24px;padding:7px 16px">✂️ atendendo cliente</span></div>`+barber('R')+phone(true)+
+   `<div class="a" id="iac" style="left:0;width:430px;top:392px;text-align:center"><span class="a" id="iaci" style="position:relative;display:inline-block;transform-origin:50% 50%"><span class="chip" style="background:var(--lime);color:var(--navy);font-size:26px;padding:7px 18px">Assistente de IA · 24h</span></span></div>`;
+ // ---- bucket (shared drawing). opt.c7: tap on + heap
+ const bucket=(k)=>`<svg width="700" height="780" viewBox="0 0 700 780" style="position:absolute;inset:0;overflow:visible">
+   <defs><linearGradient id="bw${k}" x1="0" x2="1"><stop offset="0" stop-color="#2B5CF0"/><stop offset=".55" stop-color="#1E50E6"/><stop offset="1" stop-color="#163FB4"/></linearGradient>
+   <linearGradient id="hp${k}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#E9FF7A"/><stop offset="1" stop-color="#9CC400"/></linearGradient></defs>
+   <rect x="232" y="0" width="236" height="58" rx="18" fill="#C9D0E8"/>
+   <text x="350" y="40" text-anchor="middle" font-family="Space Grotesk" font-weight="700" font-size="32" fill="#0A0F2C">ANÚNCIO</text>
+   <rect x="328" y="58" width="44" height="70" rx="10" fill="#AEB7D6"/><rect x="314" y="120" width="72" height="26" rx="10" fill="#8C96BE"/>
+   <path d="M140 312 Q350 150 560 312" stroke="#9AA4C8" stroke-width="12" fill="none" stroke-linecap="round"/>
+   <ellipse cx="350" cy="312" rx="232" ry="40" fill="#0B1440"/>
+   <g id="heap${k}" style="display:${k==='7'?'block':'none'}"><path id="heapP${k}" d="M126 312 Q350 312 574 312 Z" fill="url(#hp${k})" stroke="#6E8C00" stroke-width="4"/></g>
+   <path d="M118 312 L582 312 L530 708 Q350 742 170 708 Z" fill="url(#bw${k})"/>
+   <path d="M150 340 L178 690" stroke="#fff" stroke-opacity=".14" stroke-width="18" stroke-linecap="round"/>
+   <path d="M118 312 Q350 352 582 312" stroke="#7FA2FF" stroke-width="12" fill="none" stroke-linecap="round"/>
+   <rect x="196" y="402" width="308" height="64" rx="16" fill="#0A0F2C" opacity=".22"/>
+   <text x="350" y="448" text-anchor="middle" font-family="Space Grotesk" font-weight="700" font-size="40" fill="#F4F6FF">SEU WHATSAPP</text>
+   <ellipse id="hole${k}" cx="196" cy="600" rx="20" ry="28" fill="#05081A" stroke="#FF4D5E" stroke-width="6"/>
+   <text id="vtx${k}" x="350" y="285" text-anchor="middle" font-family="Space Grotesk" font-weight="700" font-size="46" fill="#0A0F2C" opacity="0">VENDAS</text>
+ </svg>
+ <div class="a" id="cst${k}" style="left:0;top:0;width:700px;height:312px;overflow:hidden"></div>
+ <div class="a" id="clk${k}" style="left:-200px;top:0;width:900px;height:900px"></div>
+ <div class="a" id="pt${k}" style="left:${196-66}px;top:${600-44}px;width:132px;height:88px;transform-origin:50% 50%"><div style="width:132px;height:88px;border-radius:26px 26px 26px 8px;background:var(--lime);border:6px solid #0A0F2C;color:var(--navy);display:flex;align-items:center;justify-content:center;font-family:'Space Grotesk';font-weight:700;font-size:32px;box-shadow:0 10px 30px rgba(183,228,0,.5)"><span id="ptt${k}" style="display:inline-block">IA 24H</span></div></div>`;
+ $('bkg').innerHTML=bucket('5')+`<div class="a H" id="vl" style="left:-84px;top:578px;font-size:38px;color:var(--loss);white-space:nowrap">VÁCUO →</div>`;
+ $('bk7').innerHTML=bucket('7')+`<div class="a" id="vch" style="left:520px;top:150px;transform-origin:0 100%"><span class="chip" style="background:var(--lime);color:var(--navy);font-size:40px;padding:12px 26px;box-shadow:0 14px 30px -10px rgba(0,0,0,.6)">Vendas ↑</span></div><div class="a" id="tg7w" style="left:500px;top:2px"><span class="tog" id="tg7" style="width:120px;height:62px;background:#C9CFE6"><i id="tk7" style="top:7px;left:7px;width:48px;height:48px"></i></span></div>`;
+ // coins
+ let h='';for(let i=0;i<12;i++)h+=`<div class="coin" id="s5_${i}">$</div>`;$('cst5').innerHTML=h;
+ h='';for(let i=0;i<8;i++)h+=`<div class="coin" id="l5_${i}">$</div>`;$('clk5').innerHTML=h;
+ h='';for(let i=0;i<12;i++)h+=`<div class="coin" id="s7_${i}">$</div>`;$('cst7').innerHTML=h;
+ {let k=0,hp='';[[9,300],[8,276],[7,252],[5,228],[3,206]].forEach(([n,y],r)=>{for(let j=0;j<n;j++){const x=350+(j-(n-1)/2)*48+(r%2?6:-6);HP.push({th:(r+j/n)/5*.88,r:(k*47)%40-20});hp+=`<div class="coin" id="pile${k}" style="left:${x}px;top:${y}px;opacity:0">$</div>`;k++;}});$('bk7').insertAdjacentHTML('beforeend',hp);}
+ // bill grid
+ h='';for(let i=0;i<26;i++){const r=Math.floor(i/13),c=i%13;h+=`<div class="cell" id="g${i}" style="left:${c*68}px;top:${r*68}px">✕</div>`;}$('grid').innerHTML=h;
+ // logos grid 4+4
+ const L=['cafe-fafa','idc','hebreus-barbershop','sandubao-goiano','top-fachadas','luanne-trotta','delicias-da-roca'];
+ h='';L.forEach((n,i)=>{const r=Math.floor(i/4);h+=`<span class="lgc a" id="lg${i}" style="left:${(i%4)*202+(r?101:0)}px;top:${r*92}px"><img src="a/${n}.webp"${n==='delicias-da-roca'?' style="max-height:76px;max-width:96px"':''}></span>`;});
+ $('lgg').innerHTML=h;
+ // variants
+ if(VAR==='safe'){ $('ha_l0').innerHTML='Chama no'; $('ha_l1').innerHTML='<span class="L">WhatsApp.</span>'; $('ha').style.fontSize='96px'; $('sw10').style.display='none'; $('tmr').style.display='none'; }
+ if(VAR==='ad'){ const b=$('btn'); b.style.background='transparent'; b.style.border='4px solid var(--lime)'; b.style.color='var(--lime)'; b.style.boxShadow='none'; b.style.fontSize='46px'; b.textContent='👇 Toque em “Enviar mensagem”'; $('eln').textContent='pk7.com.br · @pedrok.ads'; }
+})();
+
+// ---------- timeline helpers
+const EV=[]; const ev=(id,t,a,d=.5,o={})=>{EV.push(Object.assign({id,t,a,d},o));};
+const TX=[]; const txt=(id,t,s)=>TX.push({id,t,s});
+const fsz=el=>{let f=parseFloat(getComputedStyle(el).fontSize);const c=el.firstElementChild;if(c){const g=parseFloat(getComputedStyle(c).fontSize);if(g>f)f=g;}return f;};
+const lis=id=>[...document.querySelectorAll(`#${id} .li`)];
+const lin=(id,t,d=.42,st=.07)=>{lis(id).forEach((el,i)=>ev(el.id,t+i*st,'maskUp',d,{h:fsz(el)*1.62,fs:fsz(el)}));};
+// exits drop downward with the BOTTOM line first, so lines only ever move apart (never onto each other)
+const linOut=(id,t,d=.27)=>{const L=lis(id);L.forEach((el,i)=>ev(el.id,t+(L.length-1-i)*.03,'maskOut',d,{h:fsz(el)*1.62,fs:fsz(el)}));};
+// frame on which the last (top) line of an exit is cut: the next headline starts right after it
+const linEnd=(id,t,d=.27)=>t+(lis(id).length-1)*.03+.53*d-.04;
+
+// =================== TIMELINE ===================
+// ---- B1 hook (0-4.7): headline on screen at frame 0; the chat plays out under it; then the wait
+ev('m1',.10,'pop',.22);S(.10,'sent',1);
+S(.80,'read',.9);ev('sv1',.80,'stamp',.25);ev('sv1',1.55,'hide',.01);
+txt('st1',1.55,'digitando…');ev('ty1',1.55,'pop',.22);ev('sv2',1.55,'stamp',.25);ev('sv2',2.70,'hide',.01);S(1.60,'typing',.6,0,.95);
+ev('dp',1.95,'stamp',.3);S(2.0,'thock',1);ev('dp',2.62,'sout',.1);
+linOut('h1a',2.70);
+ev('ty1',2.70,'sout',.08);txt('st1',2.70,'visto por último hoje às 14:02');ev('sv3',2.72,'stamp',.25);S(2.75,'thock',.7);
+lin('cnt',linEnd('h1a',2.70)+.02);S(3.0,'clock',.9);S(4.0,'clock',.9);
+ev('sv3',4.30,'sout',.1);
+ev('cnt',4.40,'dock',.22);ev('cnt',4.62,'hide',.01);ev('ch1',4.62,'showAt',.01);S(4.45,'swipe',.5);
+// ---- B3 irritante (4.7-7.6)
+lin('h1b',4.64);S(4.70,'tap',.6);
+ev('ch1',4.98,'hold',1.25,{k:.75});S(5.05,'ff',.8,0,.8);
+ev('k1',5.85,'shake',.3,{amp:9});ev('k1',5.85,'desat',.4,{to:.65});S(5.85,'impact',.8);
+ev('m2',6.0,'pop',.22);S(6.0,'sent',.8);
+linOut('h1b',6.02);lin('h1c',linEnd('h1b',6.02)+.02);S(linEnd('h1b',6.02)+.06,'tap',.6);
+// ---- B4 concorrente (7.6-11.0)
+ev('c1',7.61,'whipOutR',.20);ev('c2',7.61,'whipInR',.20);S(7.60,'whoosh',.9,-.6);
+lin('h2a',7.80);
+ev('rip',8.08,'ripple',.20);S(8.08,'tap',.9);
+ev('lst',8.28,'hide',.01);ev('k2',8.28,'showAt',.01);ev('k2',8.28,'settle',.15,{k:.04});S(8.28,'swipe',.6,0,.3);
+ev('m3',8.38,'pop',.22);S(8.38,'sent',.8);
+ev('sw2',8.70,'pop',.2);S(8.70,'pop',.5);for(let k=0;k<4;k++)S(8.85+k*.15,'tick',.8);S(9.30,'swstop',.9);ev('sw2',9.30,'pulse1',.25);
+linOut('h2a',9.22);lin('h2b',linEnd('h2a',9.22)+.02);
+ev('m4',9.40,'pop',.22);S(9.40,'wa',.9,-.3);
+ev('m5',9.95,'pop',.22);S(9.95,'sent',.7);S(10.02,'coinFar',.9);
+linOut('h2b',10.70);
+// ---- B5 twist (11.0-15.2): vertical whip, side-by-side panels
+ev('c2',10.94,'whipOutU',.22);ev('c3',10.94,'whipInU',.22);S(10.92,'whooshBig',.8);
+lin('h3a',11.12,.42,.08);
+ev('bzL',11.15,'pop',.25);S(11.15,'snip',.7,-.4);
+ev('bzR',11.90,'pop',.25);S(11.90,'snip',.7,.4);
+ev('phTy',12.60,'pop',.2);ev('phTy',13.08,'hide',.01);S(12.60,'typing',.5,.4,.5);
+ev('phRep',13.10,'pop',.24);S(13.10,'wa',.8,.4);
+ev('phN',13.10,'showAt',.01);
+linOut('h3a',13.22);lin('h3b',linEnd('h3a',13.22)+.02);
+ev('iaci',13.50,'pop',.28);S(13.50,'pop',.6,.3,3);
+ev('vp',14.30,'stamp',.3);S(14.30,'stamp',1);ev('pL',14.30,'shake',.25,{amp:6});
+S(TR[0].t-.25,'swoosh',1,.5);
+// ---- B6 the bill (15.2-19.1)
+ev('ex',14.95,'showAt',.01);lin('b1',14.98);
+for(let i=0;i<26;i++)ev('g'+i,15.50+i*.03,'cellOn',.12);S(15.50,'cells',.8,0,.8);
+lin('b2',15.56);
+ev('tb',16.20,'rise',.3,{dy:120});['tr0','tr1','tr2'].forEach((r,i)=>{ev(r,16.20+i*.3,'rowIn',.3);S(16.20+i*.3,'count',.8,0,.3);});
+ev('pcs',17.30,'stamp',.3);S(17.30,'stamp',.9);S(17.35,'coinFar',.6);
+linOut('b1',17.45);lin('b1b',linEnd('b1',17.45)+.02,.36);S(linEnd('b1',17.45)+.06,'tap',.6);
+S(18.30,'riser',.6,0,.75);
+// ---- B7 conselho (19.1-20.3) -> smash cut to lime
+ev('c4',19.01,'whipOutL',.20);ev('c5',19.01,'whipInL',.20);S(19.00,'whoosh',.8,-.5);
+lin('h5',19.06);S(19.10,'tap',.6);
+ev('av5',19.10,'rise',.42,{dy:520});ev('nt5',19.28,'pop',.25);S(19.30,'pop',.6);
+// ---- B7b PARE DE ANUNCIAR (20.3): full-bleed lime, music stops
+S(20.30,'slam',1);ev('pa',20.30,'slamIn',.16);
+txt('tl5',21.30,'Anúncios: pausados');S(21.30,'switch',1);ev('tgr',21.30,'shake',.22,{amp:7});
+ev('as5',20.95,'fadeUp',.3);
+ev('pesi',21.55,'stamp',.3);S(21.58,'thock',1);
+// ---- B8 balde furado (23.086-24.4)
+lin('h6',A-6*B+.02);S(23.20,'coins',.8,0,1.6);
+// ---- B9 fecha o furo
+linOut('h6',24.30);lin('h7',linEnd('h6',24.30)+.02,.30,.04);S(linEnd('h6',24.30)+.06,'tap',.6);
+ev('pt5',24.95,'arc',.28,{dx:420,dy:120,lift:40});S(24.95,'whoosh',.5,-.3);S(A-2*B,'patch',1);S(25.25,'squeak',.7);S(25.30,'shimmer',.6);ev('pt5',A-2*B,'squash',.2);
+S(25.40,'riser',.7,0,.9);
+ev('vl',25.45,'sout',.12);
+linOut('h7',25.64,.15);
+// camera pushes into the patch: it lands as a big, readable 'IA 24H' card (26.06-26.30)
+ev('bkg',25.80,'zoomTo2',.26,{k:6.5,dx:154,dy:-348});S(25.80,'whoosh',.6,0);
+// ---- B9b machine (26.3-29.5): the IA card shrinks into the first chip on the drop, then the scene builds
+S(A,'swipe',.6);S(26.47,'pop',.8,0,1);
+lin('h6c',26.42,.38,.06);ev('k6',26.46,'rise',.34,{dy:260});ev('kb',26.55,'fadeUp',.3);
+ev('sw6',26.70,'pop',.2);S(26.70,'pop',.5);for(let k=0;k<4;k++)S(26.78+k*.1,'tick',.8);S(27.08,'swstop',.9);ev('sw6',27.08,'pulse1',.25);
+ev('n2',27.15,'pop',.22);S(27.15,'wa',.9,-.3);
+ev('n3',27.62,'pop',.22);S(27.62,'sent',.7);ev('k6m',27.62,'scroll',.25,{key:'s1'});
+ev('kcard',27.64,'kmove',.36,{dx:300});S(27.66,'swipe',.5,0,.3);
+ev('q2',27.72,'stamp',.25);S(27.72,'pop',.7,0,3);
+ev('n4',28.10,'pop',.22);S(28.10,'wa',.9,-.3);ev('k6m',28.10,'scroll',.25,{key:'s2'});
+ev('kcard',28.14,'kmove',.36,{dx:300});S(28.16,'swipe',.5,0,.3);
+ev('q3',28.22,'stamp',.25);S(28.22,'pop',.7,0,5);
+// ---- B10 aí sim (A+6B .. A+8B)
+S(A+6*B,'toggleOn',1);ev('vch',30.12,'pop',.25);S(30.12,'pop',.8,.4,5);S(A+6*B+.09,'coins',.7,0,.9);S(A+6*B+.09,'up',.6,0,.95);
+// ---- B11 boleto (A+8B .. 34.3): music silent
+ev('blw',A+8*B,'riseO',.34,{dy:700});S(A+8*B+.03,'paper',.9);
+lin('h8a',A+8*B);
+ev('sbw',32.25,'stamp',.3);S(32.25,'stamp',1);ev('blw',32.25,'shake',.25,{amp:10});
+linOut('h8a',32.68);
+S(32.80,'flip',.9);S(32.96,'chime',.9);
+S(33.36,'swipe',.5);
+lin('vpg',33.41,.36,.06);
+// ---- B12 who (34.336-38.6): hard cut on the brand hit, PK7 big then up to the header
+ev('pk',A+15*B,'pkIn',.46);ev('pk',34.80,'pkUp',.28);S(A+15*B,'impact',.9);S(A+15*B,'shimmer',.5);S(34.80,'whoosh',.4,0);
+lin('pks',34.98);S(34.98,'tap',.6);ev('pp',35.00,'showAt',.01);ev('pp',35.00,'riseO',.3,{dy:40});
+for(let k=0;k<5;k++)S(35.10+k*.16,'click',.7,-.6+k*.3,k);S(35.74,'coin',.7);
+ev('av9',34.96,'rise',.5,{dy:500});
+ev('cC',35.90,'pop',.3);S(35.90,'pop',.7,.4,2);
+ev('nt9',36.15,'fadeUp',.3);
+lin('nums',36.45);S(36.50,'pop',.8,0,4);
+for(let i=0;i<7;i++)ev('lg'+i,36.80+i*.04,'pop',.25);S(36.80,'swipe',.4);
+// ---- B13 CTA mirror (38.62-43.5)
+ev('c9',38.52,'whipOutR',.20);ev('c10',38.52,'whipInR',.20);S(38.50,'whoosh',.8,.5);
+lin('ha',38.66);
+ev('m10',38.75,'pop',.22);S(38.75,'sent',.9);
+S(38.85,'read',.8);
+if(VAR!=='safe'){ev('sw10',38.90,'pop',.2);for(let k=0;k<3;k++)S(39.0+k*.2,'tick',.8);S(39.40,'swstop',.9);ev('sw10',39.40,'pulse1',.25);}
+ev('r10',39.50,'pop',.25);S(39.50,'wa',.9,-.3);
+ev('btn',39.65,'rise',.35,{dy:240});S(39.65,'whoosh',.5);ev('btn',40.3,'pulse',3.2);
+ev('eln',39.95,'fadeUp',.3);
+linOut('ha',41.00);lin('hb',linEnd('ha',41.0)+.02);S(linEnd('ha',41.0)+.08,'tap',.6);
+CUES.sort((a,b)=>a.t-b.t);
+
+// ---------- animation library
+const AN={
+ fadeUp:(p,s)=>{const q=eo(p);if(p<=0)s.o=0;s.y+=(1-q)*50;},
+ fadeIn:(p,s)=>{s.o*=p;},
+ fadeOut:(p,s)=>{s.o*=1-p;},
+ maskUp:(p,s,e,pf)=>{s.y+=(1-eo(p))*e.h;if((1-eo(pf))*e.h>e.fs*.98)s.o=0;},   // rises from below; hidden until the letters (not just accents) are inside
+ maskOut:(p,s,e,pf)=>{s.y+=eio(p)*e.h;if(eio(pf)*e.h>e.fs*.95)s.o=0;},  // drops out downward; cut before only accents remain
+ pop:(p,s)=>{const q=eb(p);if(p<=0)s.o=0;s.s*=.5+.5*q;},
+ sout:(p,s)=>{s.s*=1-eio(p);if(p>=1)s.o=0;},
+ stamp:(p,s)=>{const q=eo(p);if(p<=0)s.o=0;s.s*=1.35-.35*q;if(p>0&&p<1)s.x+=Math.sin(p*60)*6*(1-p);},
+ slamIn:(p,s)=>{s.s*=1+.18*(1-eo(p));},
+ rise:(p,s,e)=>{const q=eo(p);if(p<=0)s.o=0;s.y+=(1-q)*(e.dy||400);},
+ riseO:(p,s,e)=>{const q=eo(p);s.y+=(1-q)*(e.dy||400);},
+ zoomIn:(p,s)=>{const q=eo(p);s.o*=cl(p*6);s.s*=1.4-.4*q;},
+ pkIn:(p,s)=>{s.s*=2.25-.25*eo(p);s.y+=470;},
+ pkUp:(p,s)=>{const q=eo(p);s.s*=1-.5*q;s.y-=470*q;},
+ shake:(p,s,e)=>{if(p>0&&p<1)s.x+=Math.sin(p*70)*(e.amp||10)*(1-p);},
+ desat:(p,s,e)=>{s.sat=1-(1-e.to)*eio(p);},
+ dock:(p,s)=>{const q=eio(p);s.x+=q*DOCK.dx;s.y+=q*DOCK.dy;s.s*=1-(1-DOCK.s)*q;},
+ settle:(p,s,e)=>{s.s*=1+e.k*(1-eo(p));},
+ whipOutR:(p,s)=>{s.x+=eio(p)*1150;}, whipInR:(p,s)=>{s.x-=(1-eio(p))*1150;},
+ whipOutL:(p,s)=>{s.x-=eio(p)*1150;}, whipInL:(p,s)=>{s.x+=(1-eio(p))*1150;},
+ whipOutU:(p,s)=>{s.y-=eio(p)*1300;if(p>=1)s.o=0;}, whipInU:(p,s)=>{s.y+=(1-eio(p))*1300;},
+ ripple:(p,s)=>{s.s*=1+p*5;s.o*=1-p;},
+ openFrom:(p,s)=>{const q=eo(p);s.s*=.15+.85*q;},
+ zoomTo:(p,s,e)=>{const q=Math.pow(p,2.2);s.s*=1+q*(e.k-1);},
+ arc:(p,s,e)=>{const q=eio(p);s.x+=(1-q)*e.dx;s.y+=(1-q)*e.dy-Math.sin(q*Math.PI)*(e.lift===undefined?120:e.lift);s.o*=cl(p*10);s.s*=.6+.4*q;s.r+=(1-q)*40;},
+ squash:(p,s)=>{if(p>0&&p<1){const w=Math.sin(p*Math.PI);s.s*=1+.12*w*(1-p);}},
+ kmove:(p,s,e)=>{s.x+=eio(p)*e.dx;},
+ scroll:(p,s,e)=>{s.y-=eio(p)*(SCR[e.key]||0);},
+ pulse:(p,s)=>{if(p>0)s.s*=1+.02*Math.max(0,Math.sin(p*Math.PI*2*2.4));},
+ pulse1:(p,s)=>{if(p>0&&p<1)s.s*=1+.12*Math.sin(p*Math.PI);},
+ cellOn:(p,s)=>{if(p>0){const q=eb(p);s.s*=.6+.4*q;}},
+ rowIn:(p,s)=>{const q=eo(p);s.x+=(1-q)*-60;if(p<=0)s.o=0;},
+ hold:(p,s,e)=>{const a=eo(cl(p/.15))*(1-eio(cl((p-.8)/.2)));s.s*=1+e.k*a;},
+ zoomTo2:(p,s,e)=>{const q=eio(p);s.s*=1+q*(e.k-1);s.x+=q*e.dx;s.y+=q*e.dy;},
+};
+// discrete (frame-quantized) animations: evaluated on TF so motion-blur subframes never blend them
+const PERFRAME={shake:1,stamp:1};
+const DISC={hide:(p,s)=>{if(p>=1)s.o=0;},showAt:(p,s)=>{if(p<=0)s.o=0;},showAt2:(p,s)=>{if(p<1)s.o=0;}};
+const BYID={};EV.forEach(e=>{(BYID[e.id]=BYID[e.id]||[]).push(e);});Object.values(BYID).forEach(a=>a.sort((x,y)=>x.t-y.t));
+let SCR={};
+function apply(id,T,TF){const el=$(id);if(!el)return;const st={o:1,x:0,y:0,s:CAM[id]||1,r:0,b:0,sat:1,sx:1};const evs=BYID[id]||[];
+ for(const e of evs){if(DISC[e.a])DISC[e.a](P(TF,e.t-EPS,e.t+e.d),st,e);else if(e.a==='maskUp'||e.a==='maskOut')AN[e.a](P(T,e.t,e.t+e.d),st,e,P(TF,e.t,e.t+e.d));else if(PERFRAME[e.a])AN[e.a](P(TF,e.t,e.t+e.d),st,e);else AN[e.a](P(T,e.t,e.t+e.d),st,e);}
+ el.style.opacity=st.o;el.style.transform=`translate(${st.x}px,${st.y}px) scale(${st.s}) rotate(${st.r}deg)`;
+ const f=[];if(st.b>.05)f.push(`blur(${st.b}px)`);if(st.sat<.999)f.push(`saturate(${st.sat})`);el.style.filter=f.length?f.join(' '):'none';}
+const mmss=s=>{s=Math.max(0,Math.floor(s+1e-6));return String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0');};
+const TXI={};TX.forEach(x=>{if(!(x.id in TXI))TXI[x.id]=$(x.id).textContent;});
+const fmt=n=>Math.round(n).toLocaleString('pt-BR');
+let CAM={}, MT=null, PPL=null;
+function measureOnce(){ // layout-dependent values (scene must be displayed)
+ if(!MT&&$('c6').style.display==='block'){const q=$('q1c'),r=$('qrow');MT={x:r.offsetLeft+q.parentNode.offsetLeft,y:r.offsetTop+q.parentNode.offsetTop,w:q.offsetWidth,h:q.offsetHeight};
+   const top=id=>$(id).offsetTop;SCR={s1:top('n2')-top('n1')+6,s2:top('n3')-top('n2')};}
+ if(!PPL&&$('c9').style.display==='block'){const a=$('nd0'),b=$('nd4');const pr=$('ppr');PPL={x0:pr.offsetLeft+a.offsetLeft+a.offsetWidth/2,x1:pr.offsetLeft+b.offsetLeft+b.offsetWidth/2,xs:[0,1,2,3,4].map(i=>pr.offsetLeft+$('nd'+i).offsetLeft+$('nd'+i).offsetWidth/2)};}
+}
+
+window.render=function(T){
+ const TF=Math.round(T*30)/30;
+ CAM={};
+ for(const s of SC)$(s[0]).style.display='none';
+ for(const [id,a,b,z] of SC){const el=$(id);if(TF>=a-EPS&&TF<b-EPS){el.style.display='block';el.style.zIndex=z;el.style.clipPath='';CAM[id]=1+.015*cl((T-a)/(b-a));}}
+ measureOnce();
+ for(const [id] of SC)if(!BYID[id]&&$(id).style.display==='block')$(id).style.transform=`scale(${CAM[id]})`;
+ $('vig').style.opacity=($('c5l').style.display==='block'||$('c8b').style.display==='block'||(TF>=33.36-EPS&&TF<33.46))?.45:1;
+ const cur=$('cur');cur.style.display='none';
+ for(const x of TR){if(T<x.t-CW||T>=x.t+CW)continue;const p=eio(P(T,x.t-CW,x.t+CW)),Xc=lerp(1300,-560,p),Xt=Xc+150;
+   $(x.inc).style.clipPath=`polygon(${Xt+204}px 0,1500px 0,1500px 1920px,${Xt-204}px 1920px)`;$(x.inc).style.zIndex=9;
+   cur.style.display='block';cur.style.transform=`translateX(${Xc}px) skewX(-12deg)`;}
+ for(const id in BYID)apply(id,T,TF);
+ // text swaps (frame-quantized)
+ for(const id in TXI){let s=TXI[id];for(const x of TX)if(x.id===id&&TF>=x.t-EPS)s=x.s;$(id).textContent=s;}
+ // ---- C1
+ const jv=$('jv');if(jv)jv.style.transform=`translate(${Math.sin(T*75.4)*2}px,${Math.cos(T*63)*2}px)`;
+ $('cntv').textContent=mmss(TF);
+ $('ck1').style.color=TF>=.8-EPS?'var(--read)':'#5D6690';
+ $('ch1v').textContent=TF<5.85-EPS?mmss(lerp(4,2820,Math.pow(P(TF,5.05,5.85),2.2))):'47 MIN';
+ [1,2,3].forEach(i=>{$('d'+i).style.transform=`translateY(${-Math.max(0,Math.sin((T*1.67-i*.18)*Math.PI*2))*10}px)`;});
+ // ---- C2 stopwatch
+ $('sw2v').textContent=TF<8.85-EPS?'00:00':'00:0'+Math.min(4,Math.floor((TF-8.85+EPS)/.15)+1);
+ // ---- C3 snipping scissors + badge pulse + falling clippings
+ [['L',11.15],['R',11.90]].forEach(([k,t0])=>{const on=T>=t0;const a=on?Math.abs(Math.sin((T-t0)*Math.PI*3.2))*13:5;
+   const A1=$('sa'+k),B1=$('sb'+k);if(A1){A1.setAttribute('transform',`rotate(${-a})`);B1.setAttribute('transform',`rotate(${a})`);}
+});
+ const b2=$('b2b');if(b2)b2.style.transform=`scale(${1+.12*Math.max(0,Math.sin(T*6))})`;
+ // ---- C4 cells + counters
+ for(let i=0;i<26;i++)$('g'+i).classList.toggle('on',TF>=15.50+i*.03-EPS);
+ [2340,7800,15600].forEach((v,i)=>{const t0=16.22+i*.3;$('tv'+i).textContent=fmt(v*eo(P(TF,t0,t0+.3)));});
+ // ---- C5L toggle off at 21.30
+ const off=TF>=21.30-EPS;const kx=off?11+104*(1-eo(P(T,21.30,21.42))):115;$('tk5').style.left=kx+'px';
+ $('tg5').style.background=off?'rgba(10,15,44,.28)':'var(--navy)';$('tk5').style.background=off?'#fff':'var(--lime)';
+ // ---- C5B coins: stream into the bucket, leak through the hole until the patch lands
+ const patched=TF>=A-2*B-EPS;
+ for(let i=0;i<12;i++){const c=$('s5_'+i);const ph=((T*1.9+i/12)%1);const vis=T>=23.15+i*.05;const y=150+ph*ph*175;c.style.opacity=vis&&y<318?1:0;c.style.left=(350+Math.sin(i*2.1+T*3)*12)+'px';c.style.top=y+'px';c.style.transform=`rotate(${(T*200+i*40)%360}deg)`;}
+ for(let i=0;i<8;i++){const c=$('l5_'+i);const ph=((T*1.25+i/8)%1);const vis=T>=23.40+i*.08&&!patched;c.style.opacity=vis&&ph>.04?1:0;c.style.left=(200+196-ph*(60+18*Math.sin(i*3.7)))+'px';c.style.top=(600+ph*ph*(200+30*Math.cos(i*2.3)))+'px';}
+ // ---- C7 tap toggle on + coins + heap
+ const on7=TF>=A+6*B-EPS;$('tg7').style.background=on7?'var(--lime)':'#C9CFE6';$('tk7').style.left=(on7?7+58*eo(P(T,A+6*B,A+6*B+.12)):7)+'px';
+ for(let i=0;i<12;i++){const c=$('s7_'+i);const ph=((T*2.1+i/12)%1);const vis=T>=A+6*B+.06+i*.04;const hh=eio(P(T,A+6*B+.15,A+8*B-.05))*100;const y=150+ph*ph*(175-hh);c.style.opacity=vis&&y<300-hh?1:0;c.style.left=(350+Math.sin(i*2.1+T*3)*12)+'px';c.style.top=y+'px';c.style.transform=`rotate(${(T*200+i*40)%360}deg)`;}
+ {const pr=P(TF,A+6*B+.12,A+8*B-.12);HP.forEach((c,i)=>{const q=cl((pr-c.th)/.12);const el=$('pile'+i);el.style.opacity=q>0?1:0;el.style.transform=`scale(${q>0?.6+.4*eb(q):0}) rotate(${c.r}deg)`;});}
+ // ---- C6 / morph: lime fills the frame at the end of the zoom, then shrinks into the first chip
+ const mo=$('morph');mo.style.display='none';
+ if(TF>=A-EPS&&TF<26.46&&MT){const p=eio(P(T,A,26.46)),pf=P(TF,A,26.46),w=lerp(780,MT.w,p),h=lerp(494,MT.h,p);mo.style.display='flex';
+   mo.style.left=lerp(110,MT.x,p)+'px';mo.style.top=lerp(515,MT.y,p)+'px';mo.style.width=w+'px';mo.style.height=h+'px';mo.style.borderRadius=lerp(130,MT.h/2,p)+'px';mo.style.boxShadow=`0 0 0 ${39*(1-cl(p*3))}px #0A0F2C`;
+   mo.textContent=pf<.5?'IA 24H':'';mo.style.fontSize=(h*.42)+'px';}
+ const m2=$('morph2');m2.style.display='none';
+ if(TF>=33.36-EPS&&TF<33.46){const p=eio(P(T,33.35,33.47)),pf=P(TF,33.35,33.47),h=lerp(600,1960,p);m2.style.display='flex';m2.style.left=lerp(100,-20,p)+'px';m2.style.top=lerp(520,-20,p)+'px';m2.style.width=lerp(800,1120,p)+'px';m2.style.height=h+'px';m2.style.borderRadius=lerp(26,0,p)+'px';
+   m2.innerHTML=pf<.5?'<div style="display:flex;flex-direction:column;align-items:center"><div style="line-height:1">✓ Pago</div><div style="font-family:Plus Jakarta Sans;font-weight:800;text-transform:none;font-size:.286em;margin-top:.143em">Pagamento recebido</div></div>':'';m2.style.fontSize=(h*.233)+'px';}
+ $('q1').style.opacity=TF>=26.46-EPS?1:0;
+ $('sw6v').textContent=TF<26.78-EPS?'00:00':'00:0'+Math.min(4,Math.floor((TF-26.78+EPS)/.1)+1);
+ // ---- C8 flip
+ const fp=eio(P(T,32.80,33.08));const fs=1-.1*Math.sin(fp*Math.PI);$('blf').style.transform=`perspective(1800px) scale(${fs}) rotateY(${fp*180}deg)`;$('blb').style.transform=`perspective(1800px) scale(${fs}) rotateY(${fp*180-180}deg)`;
+ const fpF=eio(P(TF,32.80,33.08));$('blf').style.visibility=fpF<.5?'visible':'hidden';$('blb').style.visibility=fpF>=.5?'visible':'hidden';
+ // ---- C9 pipeline coin + nodes light up
+ if(PPL){const pc=P(T,35.10,35.74);$('pcoin').style.left=lerp(PPL.x0,PPL.x1,pc)+'px';$('pcoin').style.opacity=T>=35.10&&T<35.90?1:0;$('ppl').style.left=PPL.x0+'px';$('ppl').style.width=(PPL.x1-PPL.x0)+'px';$('ppl').style.transform=`scaleX(${eo(P(T,35.04,35.74))})`;}
+ for(let i=0;i<5;i++){const lit=TF>=35.10+i*.16-EPS;const n=$('nd'+i);n.style.background=lit?(i===4?'var(--lime)':'#1E50E6'):'#1A2350';n.style.color=lit?(i===4?'var(--navy)':'#fff'):'var(--muted)';n.style.borderColor=lit?'transparent':'rgba(255,255,255,.14)';}
+ // ---- C10 stopwatch + viewer timer
+ $('sw10v').textContent=TF<39.0-EPS?'00:00':'00:0'+Math.min(3,Math.floor((TF-39.0+EPS)/.2)+1);
+ $('ck10').style.color=TF>=38.85-EPS?'var(--read)':'#5D6690';
+ $('tmrv').textContent=mmss(TF-41.30);
+ $('grain').style.backgroundPosition=`${(Math.round(T*30)*137)%540}px ${(Math.round(T*30)*251)%960}px`;
+};
+window.CUES=CUES; window.TOTAL=TOTAL;
+window.render(0);
+</script>
+</body></html>
