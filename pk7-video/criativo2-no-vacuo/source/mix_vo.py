@@ -29,16 +29,16 @@ sys.path.insert(0, HERE)
 import audio6 as A  # noqa: E402
 
 SR, N = A.SR, A.N
-VO_TARGET = -16.0
-VO_DUCK = dict(depth_db=-9.0, presence_db=-4.0, lo=1500, hi=4000, att=.010, rel=.25, hold=.4)
-SFX_UNDER_VO_DB = -1.0
+VO_TARGET = -13.0
+VO_DUCK = dict(depth_db=-13.0, presence_db=-4.0, lo=1500, hi=4000, att=.010, rel=.25, hold=.4)
+SFX_UNDER_VO_DB = -4.0
 VO_LEVELER = dict(ratio=3.0, att=.004, rel=.12, below_p90_db=8.0, look=.003)
 VO_BOOST_CAP_DB = 12.0
 VO_TUCK = dict(hero_db=3.0, short_db=3.0, att=.005, rel=.06, max_window=.15)   # last resort, see vo_tucks()
 VO_PEAK_CAP_DB, VO_PEAK_CAP_HERO = -0.6, -1.4   # effects peak caps in this mix (final scale, before the limiter)
 TYPING_BED_UNDER_VO = 2.2      # under the voice the keyboard leans on its continuous key-bed
 SFX_HP_UNDER_VO = 200.0        # dialogue-friendly voicing of the effects in this mix (HP 200 Hz + -3 dB at 420 Hz)
-VO_TARGETS = {'hero': 3.0, 'normal': 0.0, 'layer': 0.0}
+VO_TARGETS = {"hero": 0.0, "normal": -4.0, "layer": -6.0}
 
 
 # ------------------------------------------------------------------ voice-over
