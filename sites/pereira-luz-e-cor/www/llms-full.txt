@@ -847,9 +847,9 @@ Não. Dilua só na proporção indicada na embalagem e com o diluente que ela pe
 
 ## Qual fio usar no chuveiro elétrico? Tabela por potência — https://www.pereiraluzecor.com.br/guias/qual-fio-usar-no-chuveiro-eletrico/
 
-Resposta rápida: Em 220 V, use fio de 4 mm² até 5.500 W e fio de 6 mm² com disjuntor de 40 A de 6.400 a 7.800 W. Em 127 V, fio de 6 mm² com disjuntor de 40 A até 4.600 W e 10 mm² com disjuntor de 50 A em 5.500 W. Circuito exclusivo, com terra e DR; trajeto longo pede fio mais grosso, e o manual do chuveiro prevalece.
+Resposta rápida: Em 220 V: fio de 4 mm² com disjuntor de 25 ou 32 A até 5.500 W e fio de 6 mm² com 40 A de 6.400 a 7.800 W. Em 127 V: 6 mm² com 40 A até 4.600 W e 10 mm² com 50 A de 5.400 a 5.500 W. Circuito exclusivo, terra e DR são obrigatórios; trajeto longo pede fio mais grosso, e o manual prevalece.
 
-- Em 220 V: fio de 4 mm² até 5.500 W; de 6.400 a 7.800 W, fio de 6 mm² com disjuntor de 40 A.
+- Em 220 V: fio de 4 mm² (disjuntor de 25 ou 32 A, conforme o manual) até 5.500 W; de 6.400 a 7.800 W, fio de 6 mm² com disjuntor de 40 A.
 - Em 127 V: fio de 6 mm² com disjuntor de 40 A até 4.600 W; de 5.400 a 5.500 W, fio de 10 mm² com disjuntor de 50 A.
 - Chuveiro longe do quadro ou fio passando em lugar quente pede bitola maior; o manual do chuveiro tem a palavra final.
 - Circuito exclusivo, fio terra e DR de 30 mA são obrigatórios pela NBR 5410.
@@ -857,7 +857,7 @@ Resposta rápida: Em 220 V, use fio de 4 mm² até 5.500 W e fio de 6 mm² com d
 
 ### Tabela de fio e disjuntor para chuveiro elétrico
 
-A bitola do fio do chuveiro depende da potência (em watts), da tensão (127 V ou 220 V) e da distância até o quadro de disjuntores. A tabela resume o que os manuais dos principais fabricantes nacionais costumam pedir para trajetos curtos, conferido com a NBR 5410.
+A bitola do fio do chuveiro depende da potência (em watts), da tensão (127 V ou 220 V) e da distância até o quadro de disjuntores. A tabela resume o que os manuais dos principais fabricantes nacionais costumam pedir para trajetos curtos, com os valores conferidos na NBR 5410.
 TensãoPotência do chuveiroCorrente aproximadaFio de cobre (mínimo)Disjuntor
 127 V4.400 a 4.600 W35 a 36 A6 mm²40 A
 127 V5.400 a 5.500 W42 a 43 A10 mm²50 A
@@ -869,9 +869,9 @@ Valores de referência para fio de cobre com isolação de PVC, em eletroduto em
 
 ### Distância do quadro e calor: quando o fio precisa ser mais grosso
 
-Quanto mais longe o chuveiro fica do quadro, mais grosso o fio precisa ser, porque o fio comprido perde tensão no caminho: o chuveiro esquenta menos e o fio trabalha mais quente. Por isso os manuais trazem, ao lado de cada bitola, uma distância máxima; passou dela, sobe para a medida seguinte (4, 6, 10, 16 mm²).
+Quanto mais longe o chuveiro fica do quadro, mais grosso o fio precisa ser, porque o fio comprido perde tensão no caminho: chega menos tensão ao chuveiro, ele esquenta menos a água e parte da energia vira calor ao longo do fio. Por isso os manuais trazem, ao lado de cada bitola, uma distância máxima; passou dela, sobe para a medida seguinte (4, 6, 10, 16 mm²).
 Queda de tensão: a NBR 5410 limita a queda de tensão nos circuitos terminais a 4%. Em 127 V o problema aparece mais cedo: um chuveiro de 5.500 W puxa cerca de 43 A e, com fio de 10 mm², uns 25 metros de distância já deixam a perda perto desse limite.
-Calor: as capacidades da tabela valem para ambiente de até 30 °C. Em Barreiras, eletroduto no forro ou sobre a laje, debaixo de telhado quente, passa disso, e a norma manda reduzir a capacidade do fio; muitas vezes o eletricista sobe uma bitola.
+Calor: as capacidades citadas acima (32, 41 e 57 A) valem para ambiente de até 30 °C. Em Barreiras, o forro e o espaço sobre a laje, debaixo de telhado quente, passam fácil disso, principalmente em setembro e outubro; aí a norma manda reduzir a capacidade do fio. No chuveiro de 7.500 a 7.800 W em 220 V, o fio de 6 mm² já trabalha perto do limite e, nesse caso, costuma ir para 10 mm².
 Vários circuitos no mesmo eletroduto: fios agrupados esquentam um ao outro e perdem capacidade; o ideal é o chuveiro ter eletroduto só dele.
 Na dúvida entre duas bitolas, fique com a maior; quem mede o trajeto e faz a conta é o eletricista.
 
@@ -888,8 +888,8 @@ Montar ou mexer no quadro é serviço para eletricista qualificado, com a energi
 
 Para a mesma potência, o chuveiro de 127 V puxa cerca de 1,7 vez a corrente do chuveiro de 220 V, e é por isso que pede fio mais grosso e disjuntor maior: um chuveiro de 5.500 W consome perto de 43 A em 127 V e só 25 A em 220 V. Corrente maior esquenta mais o fio, os bornes e as emendas.
 Conta de luz: o gasto depende da potência e do tempo de banho, não da tensão: um chuveiro de 5.500 W consome praticamente a mesma energia em 127 V ou em 220 V.
-Tensão errada queima ou não esquenta: chuveiro ou resistência de 127 V ligado em 220 V queima na hora; o de 220 V ligado em 127 V entrega só cerca de um terço da potência, e a água sai morna.
-Mudar de tensão é obra: passar de 127 V para 220 V depende do padrão de entrada da casa e pede circuito novo. Decida com o eletricista.
+Tensão errada queima ou não esquenta: chuveiro ou resistência de 127 V ligado em 220 V queima na hora; o de 220 V ligado em 127 V entrega só cerca de um terço da potência, e a água sai morna. Em rede 220/380 V, entre duas fases há 380 V: chuveiro de 220 V ligado assim também queima.
+Mudar de tensão é obra: passar de 127 V para 220 V depende do padrão de entrada da casa e pode exigir fio e disjuntor novos. Decida com o eletricista.
 Antes de comprar chuveiro ou resistência, confirme a tensão do ponto com o eletricista ou pela etiqueta do chuveiro antigo que funcionava bem.
 
 ### Por que o fio do chuveiro esquenta ou derrete
@@ -897,7 +897,6 @@ Antes de comprar chuveiro ou resistência, confirme a tensão do ponto com o ele
 O fio do chuveiro esquenta ou derrete quase sempre por um destes motivos: bitola menor que a pedida no manual, conexão frouxa ou emenda malfeita, disjuntor maior do que o fio aguenta ou troca por um chuveiro mais potente sem refazer o circuito. Em todos os casos, o risco é de incêndio.
 Mau contato: é a causa mais comum do fio derretido logo na saída do chuveiro. Emenda torcida com fita, conector frouxo ou fio oxidado viram ponto de aquecimento.
 Chuveiro novo, circuito velho: trocar um chuveiro de 4.500 W por um de 7.800 W sem conferir fio e disjuntor sobrecarrega o circuito.
-Disjuntor “aumentado”: quando o disjuntor cai e alguém coloca um maior, o fio deixa de estar protegido e passa a esquentar sem que nada desligue.
 Fio fora de norma: fio sem certificação pode ter menos cobre que a medida impressa; compre fio com selo do Inmetro.
 Sinais de alerta: cheiro de queimado, fio escurecido ou com a capa ressecada, disjuntor esquentando e luz piscando quando o chuveiro liga. Nesses casos, desligue o disjuntor do chuveiro e chame um eletricista.
 
@@ -906,7 +905,7 @@ Sinais de alerta: cheiro de queimado, fio escurecido ou com a capa ressecada, di
 A resistência provavelmente queimou quando a água sai fria em todas as posições, ou quando uma delas deixou de esquentar, com o disjuntor ligado e a água correndo normal. A troca é simples, mas a peça nova precisa ser do mesmo modelo, da mesma tensão e da mesma potência do chuveiro.
 Por que queima: chuveiro ligado sem água (a resistência queima a seco), ar na tubulação depois de falta d'água, pouca vazão, tensão errada e o desgaste natural.
 Antes de trocar: desligue o disjuntor do chuveiro (a chave do chuveiro não basta) e espere esfriar; se não souber qual é, desligue o geral.
-Na troca: siga o manual do chuveiro, encaixe a resistência na posição certa e não estique a espiral.
+Na troca: siga o manual do chuveiro, encaixe a resistência na posição certa e não estique a espiral. Se não se sentir seguro, chame um eletricista.
 Para religar: abra o registro, deixe a água correr alguns segundos para tirar o ar e só depois ligue o disjuntor.
 Se a resistência queima toda hora, o problema não é a peça: pode ser pouca pressão de água, mau contato nos bornes ou tensão errada. Para acertar a peça de primeira, traga a antiga ou mande uma foto da etiqueta do chuveiro no WhatsApp.
 
