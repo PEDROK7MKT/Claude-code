@@ -49,23 +49,24 @@ export default {
   // quando preenchido). Ex.: https://g.page/r/XXXXXXXX/review
   googleReviewUrl: '',
 
-  // Horário de funcionamento — CONFIRMAR. Formato 24h. Dias: mo tu we th fr sa su
+  // Horário de funcionamento — PROVISÓRIO: confirmar ao criar o Perfil da
+  // Empresa no Google e atualizar aqui. Formato 24h. Dias: mo tu we th fr sa su
   hours: [
     { days: ['mo', 'tu', 'we', 'th', 'fr'], opens: '07:30', closes: '18:00' },
     { days: ['sa'], opens: '07:30', closes: '13:00' },
   ],
   timezone: 'America/Bahia',
 
-  // Formas de pagamento — CONFIRMAR
-  payment: ['Pix', 'Cartão de crédito', 'Cartão de débito', 'Dinheiro'],
+  // Formas de pagamento — confirmadas pelo cliente em 07/10/2026
+  payment: ['Pix', 'Cartão de crédito', 'Cartão de débito', 'Dinheiro', 'Boleto'],
   priceRange: '$$',
 
-  // Entrega: deixe false até o cliente confirmar que entrega.
+  // Entrega: deixe false até confirmar (será coletado ao criar o perfil no Google).
   delivery: false,
 
   // Redes sociais (deixe vazio o que não existir). Entram no schema `sameAs`.
   social: {
-    instagram: '', // CONFIRMAR: ex. https://www.instagram.com/pereiraluzecor
+    instagram: 'https://www.instagram.com/pereira_luzecor/',
     facebook: '',
     tiktok: '',
     youtube: '',

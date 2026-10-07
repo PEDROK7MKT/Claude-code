@@ -9,15 +9,19 @@ sitemap se atualizam.
 - [x] **Telefone/WhatsApp oficial:** (77) 99192-0081, confirmado pelo
       cliente (o mesmo da fachada). Já aplicado no site.
 - [ ] **Horário de funcionamento** (hoje no site: seg–sex 7h30–18h, sáb
-      7h30–13h — valor provisório). Campo: `hours`.
-- [ ] **Formas de pagamento** (hoje: Pix, crédito, débito, dinheiro). Campo: `payment`.
+      7h30–13h, valor provisório). Coletar ao criar o Perfil da Empresa no
+      Google e atualizar o campo `hours`.
+- [x] **Formas de pagamento:** Pix, cartão de crédito e débito, dinheiro e
+      boleto (confirmado pelo cliente). Já aplicado.
 - [ ] **CEP**: 47802-121 (lado ímpar da Rua São Francisco, Jardim Ouro
       Branco). Conferir no site dos Correios.
 - [ ] **Domínio**: sugerido `pereiraluzecor.com.br` (registrar no Registro.br).
       Campo: `url`. Se for outro, troque e rode o build.
-- [ ] **Instagram/Facebook** da loja, se existirem. Campo: `social`.
-- [ ] **Faz entrega?** Se sim, `delivery: true` (e me peça para incluir a
-      seção de entrega com bairros/condições).
+- [x] **Instagram:** https://www.instagram.com/pereira_luzecor/ (já no site e
+      no schema `sameAs`). Facebook, se existir: campo `social.facebook`.
+- [ ] **Faz entrega?** Coletar ao criar o Perfil da Empresa no Google. Se
+      sim, `delivery: true` (e incluir a seção de entrega com bairros e
+      condições).
 - [ ] **Marcas** que a loja revende (Suvinil, Coral, Tigre, Lorenzetti…).
       Cada marca confirmada vira texto indexável. Campo: `brands`.
 - [ ] **Data de inauguração** (opcional). Campo: `foundingDate`.

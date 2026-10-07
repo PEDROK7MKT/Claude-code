@@ -62,7 +62,7 @@ apontando para a página da categoria no site.
 
 ## 4. Atributos para marcar (se verdadeiros)
 
-Pix · Cartão de crédito · Cartão de débito · Entrada acessível para cadeirantes
+Pix · Cartão de crédito · Cartão de débito · Dinheiro · Boleto · Entrada acessível para cadeirantes
 (só se tiver) · Retirada na loja · Atendimento pelo WhatsApp.
 
 ## 5. Fotos (subir no dia da criação — perfis com fotos recebem mais cliques)
@@ -131,7 +131,7 @@ Cadastre na ordem, sempre com o **mesmo** nome, endereço e telefone:
 
 1. **Bing Places** (dá para importar do Google) — alimenta Bing e Copilot.
 2. **Apple Business Connect** — Apple Maps e Siri.
-3. **Instagram** e **Facebook** com endereço e botão de WhatsApp.
+3. **Instagram** ([@pereira_luzecor](https://www.instagram.com/pereira_luzecor/)): colocar o mesmo endereço, o WhatsApp (77) 99192-0081 e o link do site na bio. **Facebook**, se tiver, com os mesmos dados.
 4. **Waze** (Waze for Cities / pin de empresa).
 5. Diretórios que aparecem nas buscas de Barreiras: **Solutudo**, **ClickDisk**,
    **ListaMais**, **GuiaMais**, **Apontador**, **TeleListas**.

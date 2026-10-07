@@ -31,7 +31,7 @@ export const storeFaq = (cats) => [
   },
   {
     q: 'Quais formas de pagamento a loja aceita?',
-    a: `<p>A ${site.name} aceita <strong>${esc(site.payment.join(', ').replace(/, ([^,]*)$/, ' e $1'))}</strong>. Para compras maiores ou de obra, fale com a equipe pelo WhatsApp e confirme as condições na hora do orçamento.</p>`,
+    a: `<p>A ${site.name} aceita <strong>${esc(site.payment.map((x, i) => (i ? x.charAt(0).toLowerCase() + x.slice(1) : x)).join(', ').replace(/, ([^,]*)$/, ' e $1'))}</strong>. Para compras maiores ou de obra, fale com a equipe pelo WhatsApp e confirme as condições na hora do orçamento.</p>`,
   },
   {
     q: 'Vocês vendem mangueira por metro?',
@@ -728,7 +728,7 @@ export function contact(ctx) {
       <a class="ccontact ccontact--wa" href="${wa()}" target="_blank" rel="noopener" data-track="wa-contact" data-reveal>${icon('whatsapp', { size: 30 })}<div><b>WhatsApp</b><span><span class="nw">${esc(site.phoneDisplay)}</span></span><small>Orçamentos, dúvidas e disponibilidade</small></div>${icon('arrow', { size: 20 })}</a>
       <a class="ccontact" href="tel:${site.phoneE164}" data-reveal>${icon('phone', { size: 28 })}<div><b>Telefone</b><span><span class="nw">${esc(site.phoneDisplay)}</span></span><small>Ligue no horário de atendimento</small></div>${icon('arrow', { size: 20 })}</a>
       <a class="ccontact" href="${directionsUrl()}" target="_blank" rel="noopener" data-reveal>${icon('route', { size: 28 })}<div><b>Endereço</b><span>${esc(site.address.street)}</span><small>${esc(site.address.neighborhood)} · ${esc(site.address.city)}-${site.address.state}${site.address.postalCode ? ` · CEP ${esc(site.address.postalCode)}` : ''}</small></div>${icon('arrow', { size: 20 })}</a>
-      ${site.social.instagram ? `<a class="ccontact" href="${site.social.instagram}" target="_blank" rel="noopener" data-reveal>${icon('instagram', { size: 28 })}<div><b>Instagram</b><span>Novidades e ofertas</span></div>${icon('arrow', { size: 20 })}</a>` : ''}
+      ${site.social.instagram ? `<a class="ccontact" href="${site.social.instagram}" target="_blank" rel="noopener" data-reveal>${icon('instagram', { size: 28 })}<div><b>Instagram</b><span>@${esc(site.social.instagram.replace(/\/$/, '').split('/').pop())}</span><small>Novidades da loja</small></div>${icon('arrow', { size: 20 })}</a>` : ''}
       <div class="infocard infocard--big" data-reveal>${icon('clock', { size: 24 })}<div><b>Horário de funcionamento <span class="open-badge open-badge--inline" data-open-badge></span></b>${hoursList()}</div></div>
     </div>
     <form class="wform" data-wa-form data-reveal>
