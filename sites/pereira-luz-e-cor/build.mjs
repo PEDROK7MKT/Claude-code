@@ -153,7 +153,7 @@ Sitemap: ${abs('/sitemap.xml')}
 )
 
 // ---------------------------------------------------------------- llms.txt
-const catLines = categories.map((c) => `- [${c.name}](${abs(`/${c.slug}/`)}): ${stripTags(c.cardBlurb)} Inclui: ${c.groups.map((g) => g.name.toLowerCase()).join(', ')}.`).join('\n')
+const catLines = categories.map((c) => `- [${c.name}](${abs(`/${c.slug}/`)}): ${stripTags(c.cardBlurb)} Inclui: ${c.groups.map((g) => g.name).join('; ')}.`).join('\n')
 const guideLines = guides.map((g) => `- [${g.title}](${abs(`/guias/${g.slug}/`)}): ${stripTags(g.summary)}`).join('\n')
 const facts = [
   `Nome: ${site.name} (também conhecida como ${site.alternateNames.join(', ')})`,

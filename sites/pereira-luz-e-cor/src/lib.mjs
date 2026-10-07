@@ -120,5 +120,12 @@ export const fmtDatePt = (iso) => {
 
 export const sameAs = () => Object.values(site.social).filter(Boolean)
 
+/** Minúsculas preservando siglas (LED, DR, DPS, PVA, EPI). */
+export const lc = (s = '') =>
+  String(s)
+    .split(/(\s+)/)
+    .map((w) => (/^[A-ZÀ-Ú0-9-]{2,}$/.test(w) ? w : w.toLowerCase()))
+    .join('')
+
 /** Junta classes ignorando falsy. */
 export const cx = (...a) => a.filter(Boolean).join(' ')

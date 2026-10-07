@@ -1,5 +1,5 @@
 // Páginas do site. Cada função devolve { path, title, description, body, jsonld, ... }.
-import { site, esc, wa, abs, addressLine, hoursRows, hoursText, directionsUrl, fmtDatePt, slugify, stripTags } from './lib.mjs'
+import { site, esc, wa, abs, addressLine, hoursRows, hoursText, directionsUrl, fmtDatePt, slugify, stripTags, lc } from './lib.mjs'
 import { icon } from './icons.mjs'
 import {
   breadcrumb, sectionHead, addChip, categoryCard, guideCard, faqList, hoursList, mapBlock, ctaBand,
@@ -27,7 +27,7 @@ export const storeFaq = (cats) => [
   },
   {
     q: `O que a ${site.name} vende?`,
-    a: `<p>A loja trabalha com ${cats.map((c) => `<a href="/${c.slug}/">${esc(c.name.toLowerCase())}</a>`).join(', ').replace(/, ([^,]*)$/, ' e $1')}. Na prática: fios, disjuntores, chuveiros e resistências, lâmpadas e fita de LED, tintas, massa corrida, spray, ferramentas manuais e elétricas, discos de corte, torneiras, mangueira por metro, caixa d'água, escadas, carrinho de mão, parafusos, WD-40 e muito mais.</p>`,
+    a: `<p>A loja trabalha com ${cats.map((c) => `<a href="/${c.slug}/">${esc(lc(c.name))}</a>`).join(', ').replace(/, ([^,]*)$/, ' e $1')}. Na prática: fios, disjuntores, chuveiros e resistências, lâmpadas e fita de LED, tintas, massa corrida, spray, ferramentas manuais e elétricas, discos de corte, torneiras, mangueira por metro, caixa d'água, escadas, carrinho de mão, parafusos, WD-40 e muito mais.</p>`,
   },
   {
     q: 'Quais formas de pagamento a loja aceita?',
@@ -271,7 +271,7 @@ export function category(c, ctx) {
       <p class="phero__lead">${c.intro}</p>
       <ul class="phero__chips">${c.highlights.map((h) => `<li>${icon('check', { size: 16, sw: 2.6 })}${esc(h)}</li>`).join('')}</ul>
       <div class="phero__ctas">
-        <a class="btn btn--wa btn--lg" href="${wa(`Olá, ${site.name}! Vim pelo site e quero um orçamento de ${c.name.toLowerCase()}.`)}" target="_blank" rel="noopener" data-track="wa-cat">${icon('whatsapp', { size: 22 })}Orçamento de ${esc(c.shortName.toLowerCase())}</a>
+        <a class="btn btn--wa btn--lg" href="${wa(`Olá, ${site.name}! Vim pelo site e quero um orçamento de ${lc(c.name)}.`)}" target="_blank" rel="noopener" data-track="wa-cat">${icon('whatsapp', { size: 22 })}Orçamento de ${esc(lc(c.shortName))}</a>
         <a class="btn btn--ghost btn--lg" href="#itens">Ver itens ${icon('arrow', { size: 18 })}</a>
       </div>
     </div>
@@ -290,7 +290,7 @@ export function category(c, ctx) {
         <header><span class="group__n">${String(i + 1).padStart(2, '0')}</span><h2 class="group__title">${esc(g.name)}</h2></header>
         <p class="group__desc">${g.description}</p>
         <div class="group__chips">${g.items.map((it) => addChip(it, c.name)).join('')}</div>
-        <a class="group__ask" href="${wa(`Olá, ${site.name}! Vocês têm ${g.name.toLowerCase()}? Gostaria de saber medidas e preços.`)}" target="_blank" rel="noopener">${icon('whatsapp', { size: 16 })}Não achou a medida? Pergunte</a>
+        <a class="group__ask" href="${wa(`Olá, ${site.name}! Vocês têm ${lc(g.name)}? Gostaria de saber medidas e preços.`)}" target="_blank" rel="noopener">${icon('whatsapp', { size: 16 })}Não achou a medida? Pergunte</a>
       </article>`,
         )
         .join('')}
@@ -315,7 +315,7 @@ ${
 }
 <section class="section faq-sec" aria-labelledby="faq-cat-titulo">
   <div class="wrap faq-home__grid">
-    ${sectionHead({ eyebrow: `${icon('info', { size: 16 })} Perguntas frequentes`, title: `Dúvidas sobre ${esc(c.name.toLowerCase())}`, id: 'faq-cat-titulo', text: `Respostas rápidas da equipe da ${esc(site.name)}, em ${esc(site.address.city)}.` })}
+    ${sectionHead({ eyebrow: `${icon('info', { size: 16 })} Perguntas frequentes`, title: `Dúvidas sobre ${esc(lc(c.name))}`, id: 'faq-cat-titulo', text: `Respostas rápidas da equipe da ${esc(site.name)}, em ${esc(site.address.city)}.` })}
     ${faqList(c.faq)}
   </div>
 </section>
@@ -325,7 +325,7 @@ ${
     <div class="others__row">${[...relCats, ...others.filter((o) => !relCats.includes(o))].map((o) => `<a class="otile" href="/${o.slug}/" data-reveal>${icon(o.icon, { size: 26 })}<span>${esc(o.name)}</span>${icon('arrow', { size: 18 })}</a>`).join('')}</div>
   </div>
 </section>
-${ctaBand({ title: `Precisa de ${esc(c.shortName.toLowerCase())}? Mande a lista.` })}`
+${ctaBand({ title: `Precisa de ${esc(lc(c.shortName))}? Mande a lista.` })}`
 
   const title = c.seo.title
   const description = c.seo.description
@@ -422,7 +422,7 @@ export function guide(g, ctx) {
   <div class="wrap">
     ${sectionHead({ eyebrow: `${icon('book', { size: 16 })} Continue lendo`, title: 'Outros guias do balcão', id: 'mais-guias' })}
     <div class="guides__grid">${[...related, ...more].slice(0, 3).map((x, i) => guideCard(x, i)).join('')}</div>
-    ${cat ? `<a class="otile otile--wide" href="/${cat.slug}/" data-reveal>${icon(cat.icon, { size: 26 })}<span>Ver produtos de ${esc(cat.name.toLowerCase())}</span>${icon('arrow', { size: 18 })}</a>` : ''}
+    ${cat ? `<a class="otile otile--wide" href="/${cat.slug}/" data-reveal>${icon(cat.icon, { size: 26 })}<span>Ver produtos de ${esc(lc(cat.name))}</span>${icon('arrow', { size: 18 })}</a>` : ''}
   </div>
 </section>
 ${ctaBand()}`
@@ -474,7 +474,7 @@ export function guidesIndex(ctx) {
 ${byCat
   .map(
     ({ c, gs }) => `<section class="section gsec" aria-labelledby="g-${c.slug}"><div class="wrap">
-  <div class="split-head">${sectionHead({ eyebrow: `${icon(c.icon, { size: 16 })} ${esc(c.name)}`, title: esc(c.name), id: `g-${c.slug}` })}<a class="link-arrow" href="/${c.slug}/" data-reveal>Produtos de ${esc(c.shortName.toLowerCase())} ${icon('arrow', { size: 18 })}</a></div>
+  <div class="split-head">${sectionHead({ eyebrow: `${icon(c.icon, { size: 16 })} ${esc(c.name)}`, title: esc(c.name), id: `g-${c.slug}` })}<a class="link-arrow" href="/${c.slug}/" data-reveal>Produtos de ${esc(lc(c.shortName))} ${icon('arrow', { size: 18 })}</a></div>
   <div class="guides__grid">${gs.map((g, i) => guideCard(g, i)).join('')}</div>
 </div></section>`,
   )
@@ -606,7 +606,7 @@ ${ctx.categories
   .map(
     (c) => `<section class="section faq-sec faq-sec--cat" id="${c.slug}" aria-labelledby="faq-${c.slug}-t">
   <div class="wrap faq-home__grid">
-    <div>${sectionHead({ eyebrow: `${icon(c.icon, { size: 16 })} ${esc(c.shortName)}`, title: esc(c.name), id: `faq-${c.slug}-t` })}<a class="link-arrow" href="/${c.slug}/#duvidas">Ver na página de ${esc(c.shortName.toLowerCase())} ${icon('arrow', { size: 18 })}</a></div>
+    <div>${sectionHead({ eyebrow: `${icon(c.icon, { size: 16 })} ${esc(c.shortName)}`, title: esc(c.name), id: `faq-${c.slug}-t` })}<a class="link-arrow" href="/${c.slug}/#duvidas">Ver na página de ${esc(lc(c.shortName))} ${icon('arrow', { size: 18 })}</a></div>
     ${faqList(c.faq.slice(0, 4), { id: `faq-${c.slug}` })}
   </div>
 </section>`,
