@@ -18,8 +18,16 @@ Feito para **SEO local, GEO (IA generativa) e AEO (respostas diretas)**.
 npm run build   # gera o site em www/ (≈ 0,1 s)
 npm run check   # valida os textos de categorias e guias
 npm run og      # regera as imagens de compartilhamento (precisa do Playwright)
+npm run audit   # auditoria técnica de SEO das páginas geradas (títulos, links, schema…)
 npm run dev     # build + servidor local em http://localhost:4173
+npm run demo    # grava vídeos de demonstração (desktop e celular) em demo/ — servidor rodando
 ```
+
+Qualidade conferida antes da entrega: textos revisados por agentes
+independentes (dados técnicos de elétrica checados contra a NBR 5410),
+auditoria de SEO sem erros, axe-core (WCAG 2.2 AA) limpo nas páginas
+principais, testes funcionais da lista, busca e calculadora, e QA visual de
+360 px a 1920 px.
 
 ## Onde mexer
 

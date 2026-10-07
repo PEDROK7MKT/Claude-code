@@ -99,7 +99,8 @@ async function record(name, contextOpts, scenario) {
 }
 
 // ------------------------------------------------------------- desktop
-await record('desktop', { viewport: { width: 1440, height: 810 }, deviceScaleFactor: 1 }, async (p) => {
+const ONLY = process.env.ONLY || ''
+if (!ONLY || ONLY === 'desktop') await record('desktop', { viewport: { width: 1440, height: 810 }, deviceScaleFactor: 1 }, async (p) => {
   await p.goto(BASE + '/', { waitUntil: 'networkidle' })
   await p.mouse.move(300, 400)
   await wait(p, 2600) // animação do hero
@@ -160,11 +161,11 @@ await record('desktop', { viewport: { width: 1440, height: 810 }, deviceScaleFac
 })
 
 // ------------------------------------------------------------- celular
-await record('celular', { ...devices['iPhone 13'], deviceScaleFactor: 2, viewport: { width: 390, height: 844 }, videoSize: { width: 780, height: 1688 } }, async (p) => {
+if (!ONLY || ONLY === 'celular') await record('celular', { ...devices['iPhone 13'], deviceScaleFactor: 2, viewport: { width: 390, height: 844 }, videoSize: { width: 780, height: 1688 } }, async (p) => {
   await p.goto(BASE + '/', { waitUntil: 'networkidle' })
   await wait(p, 3000)
   await glide(p, '.hero__art', 1500, 120); await wait(p, 1200)
-  await p.tap('.float--3').catch(() => {}); await wait(p, 1400)
+  await p.tap('.float--3', { force: true, timeout: 3000 }).catch(() => {}); await wait(p, 1400)
   await glide(p, '#produtos', 1800); await wait(p, 900)
   await glide(p, '.ccard:nth-child(3)', 2000, 120); await wait(p, 700)
   await glide(p, '.steps .phone', 1800, 60); await wait(p, 3000)
@@ -174,8 +175,8 @@ await record('celular', { ...devices['iPhone 13'], deviceScaleFactor: 2, viewpor
   await p.tap('[data-menu-open]'); await wait(p, 1800)
   await p.tap('.mnav__cats a:nth-child(3)'); await p.waitForLoadState('networkidle'); await wait(p, 1500)
   await glide(p, '#itens', 1600, 130); await wait(p, 600)
-  await p.tap('.group:nth-child(1) .chip:nth-child(1)').catch(() => {}); await wait(p, 900)
-  await p.tap('.group:nth-child(2) .chip:nth-child(2)').catch(() => {}); await wait(p, 1100)
-  await p.tap('.fab-list').catch(() => {}); await wait(p, 2600)
+  await p.tap('.group:nth-child(1) .chip:nth-child(1)', { timeout: 4000 }).catch(() => {}); await wait(p, 900)
+  await p.tap('.group:nth-child(2) .chip:nth-child(2)', { timeout: 4000 }).catch(() => {}); await wait(p, 1100)
+  await p.tap('.fab-list', { force: true, timeout: 4000 }).catch(() => {}); await wait(p, 2600)
   await p.keyboard.press('Escape'); await wait(p, 800)
 })
