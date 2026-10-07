@@ -598,7 +598,7 @@
   }
 
   /* ------------- esconde o botão flutuante quando o CTA do topo está visível */
-  const heroCta = $('.hero__ctas, .phero__ctas')
+  const heroCta = $('.hero, .phero__ctas')
   const fabW = $('.fab-wa')
   if (heroCta && fabW && 'IntersectionObserver' in window) new IntersectionObserver(([en]) => fabW.classList.toggle('is-hidden', en.isIntersecting)).observe(heroCta)
 

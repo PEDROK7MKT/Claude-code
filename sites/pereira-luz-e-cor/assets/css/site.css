@@ -988,6 +988,9 @@ html:has(.subnav) { scroll-padding-top: calc(var(--hdr) + 77px); }
   .topbar .open-badge { display: none; }
   .topbar__long { display: none; }
   .topbar__short { display: inline; }
+  .topbar { font-size: .74rem; }
+  .topbar__in { gap: 10px; }
+  .topbar__addr span { max-width: none; }
   .store__photo figcaption { position: static; margin-top: 10px; background: none; backdrop-filter: none; padding: 4px 0; }
   .sres__add span { display: none; }
   .brand img { width: 128px; }
