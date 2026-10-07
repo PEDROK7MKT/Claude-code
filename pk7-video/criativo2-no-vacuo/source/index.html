@@ -63,6 +63,8 @@ html,body{width:1080px;height:1920px;overflow:hidden;background:#000}
 #morph,#morph2{position:absolute;z-index:45;display:none;align-items:center;justify-content:center;font-family:'Space Grotesk';font-weight:700;color:var(--navy);text-transform:uppercase;white-space:nowrap;overflow:hidden;background:radial-gradient(1000px 1000px at 50% 40%,#C9F01A 0%,rgba(183,228,0,0) 70%),var(--lime)}
 #grain{position:absolute;inset:-40px;z-index:60;background:url(a/noise.png);background-size:540px 960px;opacity:.05;mix-blend-mode:overlay;pointer-events:none}
 #vig{position:absolute;inset:0;z-index:59;pointer-events:none;background:radial-gradient(ellipse at 50% 45%,rgba(0,0,0,0) 55%,rgba(0,0,0,.32) 100%)}
+.stk{position:absolute;filter:drop-shadow(0 5px 5px rgba(1,4,20,.45)) drop-shadow(0 30px 38px rgba(1,4,20,.55))}
+.stk .rot{position:relative;width:100%;height:100%}.stk svg{display:block;width:100%;height:100%;overflow:visible}
 </style></head>
 <body><div id="stage">
 
@@ -137,7 +139,7 @@ html,body{width:1080px;height:1920px;overflow:hidden;background:#000}
 <!-- ===== C5 · CONSELHO (19.00-20.30) ===== -->
 <section class="scene" id="c5">
   <div class="a H hl ml" id="h5" style="top:260px;font-size:76px">Conselho do Pedro,<br><span class="L">gestor de tráfego:</span></div>
-  <img class="a avm" id="av5" src="a/pose-point.webp" style="left:170px;top:430px;width:680px">
+  <div class="a" id="av5" style="left:0;top:0;width:1080px;height:1920px;pointer-events:none;z-index:6"><div data-stk="pose-point" data-theme="navy" data-x="505" data-y="770" data-s="1.0" data-rot="-3" data-ring="PEDRO R GOMES • PEDROK ADS" data-ring-at="40" data-z="6"></div></div>
   <div class="a" id="nt5" style="left:60px;width:880px;top:1128px;text-align:center"><span class="chip" style="background:#fff;color:var(--navy);font-size:30px;padding:12px 26px">Pedro R Gomes · fundador da <b style="color:#1E50E6">PK7</b></span></div>
 </section>
 
@@ -225,7 +227,7 @@ html,body{width:1080px;height:1920px;overflow:hidden;background:#000}
     <div id="ppr" style="position:absolute;left:0;right:0;top:0;display:flex;justify-content:center;gap:16px"><div class="node" id="nd0">ANÚNCIO</div><div class="node" id="nd1">SITE</div><div class="node" id="nd2">IA</div><div class="node" id="nd3">CRM</div><div class="node" id="nd4">VENDA ✓</div></div>
     <div class="a" id="pcoin" style="left:0;top:35px;width:30px;height:30px;margin:-15px;border-radius:50%;background:#E6FF7A;box-shadow:0 0 22px 8px rgba(183,228,0,.7);z-index:1"></div>
   </div>
-  <img class="a avm" id="av9" src="a/hero-present.webp" style="left:70px;top:600px;width:440px">
+  <div class="a" id="av9" style="left:0;top:0;width:1080px;height:1920px;pointer-events:none;z-index:6"><div data-stk="pose-celebrate" data-theme="navy" data-x="290" data-y="830" data-s="0.78" data-rot="3" data-ring="PEDRO R GOMES • PEDROK ADS" data-ring-at="40" data-z="6"></div></div>
   <div class="a" id="cC" style="left:530px;top:640px"><span class="chip" style="background:var(--lime);color:var(--navy);font-size:34px;line-height:1.15;padding:18px 28px;white-space:nowrap">Fale direto<br>com o Pedro</span></div>
   <div class="a" id="nt9" style="left:534px;top:790px;width:400px;font-size:30px;font-weight:700;line-height:1.3;color:rgba(244,246,255,.9)">Pedro R Gomes<br><span style="color:var(--muted)">fundador da PK7</span></div>
   <div class="a H ml" id="nums" style="left:528px;top:906px;font-size:56px;line-height:1.08"><span class="L">+40</span> clientes<br><span class="L">3</span> continentes</div>
@@ -252,6 +254,96 @@ html,body{width:1080px;height:1920px;overflow:hidden;background:#000}
 <div id="cur"><div class="s"></div><div class="s2"></div></div>
 <div id="vig"></div><div id="grain"></div>
 </div>
+<script>
+const AVURL=pose=>(new URLSearchParams(location.search).get('edge')==='1')?`a/edge/${pose}.png`:`a/${pose}.webp`;
+const POPURL=pose=>`cut/${pose}-pop.png`;
+/* Disc + pop-out params produced by tools/gen_masks.py (cut/params.json) */
+const SP={
+ "hero-present":{cx:256,cy:300,R:196,pop:[175,50,335,121]},
+ "pose-point":{cx:250,cy:296,R:198,pop:[72,38,364,492]},
+ "pose-celebrate":{cx:256,cy:304,R:190,pop:[35,49,482,295]},
+ "pose-laptop":{cx:256,cy:292,R:200,pop:[169,29,343,112]},
+ "head-wow":{cx:256,cy:282,R:208,pop:[166,66,347,95]}
+};
+const THEMES={
+ navy:{band:'#0A0F2C',ring:'#B7E400',text:'#B7E400',d0:'#4A7DFF',d1:'#1E50E6',d2:'#0C2680',ray:'#FFFFFF',rayO:.07},
+ lime:{band:'#0A0F2C',ring:'#B7E400',text:'#F4F6FF',d0:'#E4FF5C',d1:'#B7E400',d2:'#7F9F00',ray:'#0A0F2C',rayO:.07},
+ blue:{band:'#B7E400',ring:'#0A0F2C',text:'#0A0F2C',d0:'#4A7DFF',d1:'#1E50E6',d2:'#0C2680',ray:'#FFFFFF',rayO:.07}
+};
+let SEALN=0;
+function stickerSVG(pose,theme,ringText,ringAt){
+  const n='_stk'+(++SEALN),p=SP[pose],T=THEMES[theme],{cx,cy,R}=p,B=Math.round(R*.2),Ro=R+B,OUT=17,PAD=OUT+10;
+  const pb=p.pop||[cx,cy,cx,cy];
+  const x0=Math.min(cx-Ro,pb[0])-PAD,y0=Math.min(cy-Ro,pb[1])-PAD,x1=Math.max(cx+Ro,pb[2])+PAD,y1=Math.max(cy+Ro,pb[3])+PAD;
+  const vb=[x0,y0,x1-x0,y1-y0];
+  // sunburst rays
+  let rays='';for(let i=0;i<32;i+=2){const a0=i*Math.PI/16,a1=(i+1)*Math.PI/16;
+    rays+=`M${cx} ${cy}L${cx+R*Math.cos(a0)} ${cy+R*Math.sin(a0)}A${R} ${R} 0 0 1 ${cx+R*Math.cos(a1)} ${cy+R*Math.sin(a1)}Z`;}
+  // text arc along the bottom of the band (reads left->right, letters upright)
+  const ca=(ringAt==null?90:+ringAt),fs=B*.52,rt=R+B/2+fs*.36,A0=(ca+122)*Math.PI/180,A1=(ca-122)*Math.PI/180;
+  const arc=`M${cx+rt*Math.cos(A0)} ${cy+rt*Math.sin(A0)}A${rt} ${rt} 0 1 0 ${cx+rt*Math.cos(A1)} ${cy+rt*Math.sin(A1)}`;
+  // die-cut outline: smooth dilation (blur + steep alpha ramp) => rounded white border
+  const sd=OUT/1.5, sl=64, ic=.5-sl*.0668;
+  const svg=`<svg viewBox="${vb.join(' ')}" xmlns="http://www.w3.org/2000/svg">
+ <defs>
+  <radialGradient id="dg${n}" gradientUnits="userSpaceOnUse" cx="${cx-R*.25}" cy="${cy-R*.45}" r="${R*1.45}">
+   <stop offset="0" stop-color="${T.d0}"/><stop offset=".5" stop-color="${T.d1}"/><stop offset="1" stop-color="${T.d2}"/></radialGradient>
+  <radialGradient id="vg${n}" gradientUnits="userSpaceOnUse" cx="${cx}" cy="${cy}" r="${R}">
+   <stop offset=".72" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".22"/></radialGradient>
+  <mask id="m${n}" maskUnits="userSpaceOnUse" x="-200" y="-200" width="912" height="912">
+   <circle cx="${cx}" cy="${cy}" r="${R}" fill="#fff"/>
+   <image href="${POPURL(pose)}" width="512" height="512"/>
+  </mask>
+  <clipPath id="co${n}"><circle cx="${cx}" cy="${cy}" r="${Ro}"/></clipPath>
+  <filter id="sh${n}" x="-20%" y="-20%" width="140%" height="140%" color-interpolation-filters="sRGB">
+   <feGaussianBlur in="SourceAlpha" stdDeviation="7"/><feOffset dx="3" dy="9" result="o"/>
+   <feFlood flood-color="#020517" flood-opacity=".55"/><feComposite in2="o" operator="in"/></filter>
+  <filter id="die${n}" filterUnits="userSpaceOnUse" x="${vb[0]}" y="${vb[1]}" width="${vb[2]}" height="${vb[3]}" color-interpolation-filters="sRGB">
+   <feGaussianBlur in="SourceAlpha" stdDeviation="${sd}" result="b"/>
+   <feComponentTransfer in="b" result="sil"><feFuncA type="linear" slope="${sl}" intercept="${ic}"/></feComponentTransfer>
+   <feFlood flood-color="#FFFFFF"/><feComposite in2="sil" operator="in" result="white"/>
+   <feGaussianBlur in="sil" stdDeviation="2.2" result="sb"/>
+   <feComposite in="sil" in2="sb" operator="out" result="rim"/>
+   <feFlood flood-color="#C9CFE6"/><feComposite in2="rim" operator="in" result="rimc"/>
+   <feMerge><feMergeNode in="white"/><feMergeNode in="rimc"/><feMergeNode in="SourceGraphic"/></feMerge>
+  </filter>
+  <filter id="sw${n}" filterUnits="userSpaceOnUse" x="${vb[0]}" y="${vb[1]}" width="${vb[2]}" height="${vb[3]}">
+   <feGaussianBlur in="SourceAlpha" stdDeviation="${sd}"/>
+   <feComponentTransfer><feFuncR type="linear" slope="0" intercept="1"/><feFuncG type="linear" slope="0" intercept="1"/><feFuncB type="linear" slope="0" intercept="1"/><feFuncA type="linear" slope="${sl}" intercept="${ic}"/></feComponentTransfer>
+  </filter>
+  <mask id="gm${n}" maskUnits="userSpaceOnUse" x="${vb[0]}" y="${vb[1]}" width="${vb[2]}" height="${vb[3]}"><use href="#body${n}" filter="url(#sw${n})"/></mask>
+  <linearGradient id="gl${n}" gradientUnits="userSpaceOnUse" x1="${x0}" y1="${y0}" x2="${x1}" y2="${y1}">
+   <stop offset=".30" stop-color="#fff" stop-opacity="0"/><stop offset=".40" stop-color="#fff" stop-opacity=".20"/>
+   <stop offset=".47" stop-color="#fff" stop-opacity="0"/><stop offset=".52" stop-color="#fff" stop-opacity=".08"/><stop offset=".58" stop-color="#fff" stop-opacity="0"/></linearGradient>
+  <path id="arc${n}" d="${arc}"/>
+ </defs>
+ <g filter="url(#die${n})"><g id="body${n}">
+  <circle cx="${cx}" cy="${cy}" r="${Ro}" fill="${T.band}"/>
+  <text font-family="Space Grotesk" font-weight="700" font-size="${fs}" letter-spacing="${fs*.16}" fill="${T.text}" text-anchor="middle"><textPath href="#arc${n}" startOffset="50%">${ringText||''}</textPath></text>
+  <circle cx="${cx}" cy="${cy}" r="${R}" fill="url(#dg${n})"/>
+  <path d="${rays}" fill="${T.ray}" opacity="${T.rayO}"/>
+  <circle cx="${cx}" cy="${cy}" r="${R}" fill="url(#vg${n})"/>
+  <circle cx="${cx}" cy="${cy}" r="${R+2}" fill="none" stroke="${T.ring}" stroke-width="5"/>
+  <g clip-path="url(#co${n})" opacity=".9"><g filter="url(#sh${n})"><image href="${AVURL(pose)}" width="512" height="512" mask="url(#m${n})"/></g></g>
+  <image href="${AVURL(pose)}" width="512" height="512" mask="url(#m${n})"/>
+ </g></g>
+ <rect x="${vb[0]}" y="${vb[1]}" width="${vb[2]}" height="${vb[3]}" fill="url(#gl${n})" mask="url(#gm${n})"/>
+</svg>`;
+  return {svg,vb};
+}
+function mountSeal(el){
+  const pose=el.dataset.stk,p=SP[pose],s=+el.dataset.s,{svg,vb}=stickerSVG(pose,el.dataset.theme||'navy',el.dataset.ring,el.dataset.ringAt);
+  const ox=(p.cx-vb[0])*s,oy=(p.cy-vb[1])*s;
+  el.classList.add('stk');
+  Object.assign(el.style,{left:(+el.dataset.x-ox)+'px',top:(+el.dataset.y-oy)+'px',width:vb[2]*s+'px',height:vb[3]*s+'px',zIndex:el.dataset.z||6,transformOrigin:ox+'px '+oy+'px'});
+  el.innerHTML=`<div class="rot" style="transform-origin:${ox}px ${oy}px;transform:rotate(${el.dataset.rot||0}deg)">${svg}</div>`;
+}
+
+
+
+document.querySelectorAll('[data-stk]').forEach(mountSeal);
+
+</script>
 <script>
 const Q=new URLSearchParams(location.search), VAR=Q.get('v')||'dare';
 const HP=[];
