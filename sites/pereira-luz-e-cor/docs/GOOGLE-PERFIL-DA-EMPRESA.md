@@ -1,7 +1,7 @@
 # Kit — Perfil da Empresa no Google (Google Meu Negócio)
 
 Tudo pronto para copiar e colar. **Antes de começar**, feche os itens marcados
-em `CHECKLIST-PUBLICACAO.md` (principalmente o telefone oficial e o horário):
+em `CHECKLIST-PUBLICACAO.md` (principalmente o horário):
 o NAP (nome, endereço, telefone) do perfil tem que ser **idêntico** ao do site.
 
 ---
@@ -14,9 +14,9 @@ o NAP (nome, endereço, telefone) do perfil tem que ser **idêntico** ao do site
 | **Categoria principal** | `Loja de ferragens` |
 | **Categorias adicionais** | `Loja de materiais elétricos` · `Loja de tintas` · `Loja de ferramentas` · `Loja de materiais de construção` · `Loja de material hidráulico` · `Loja de artigos de iluminação` |
 | **Endereço** | Rua São Francisco, 55 — Jardim Ouro Branco — Barreiras — BA — CEP 47802-121 *(confirmar CEP)* |
-| **Telefone principal** | (77) 99991-7142 *(confirmar: ver checklist)* |
+| **Telefone principal** | (77) 99192-0081 |
 | **Site** | `https://www.pereiraluzecor.com.br/?utm_source=google&utm_medium=organic&utm_campaign=gbp` |
-| **WhatsApp (Contato → Chat)** | `https://wa.me/5577999917142` |
+| **WhatsApp (Contato → Chat)** | `https://wa.me/5577991920081` |
 | **Horário** | Igual ao do site *(confirmar)* |
 | **Data de abertura** | Data da inauguração da loja nova |
 
@@ -147,6 +147,6 @@ com NAP consistente é atalho direto para aparecer em respostas de IA.
 ```
 Pereira Luz & Cor
 Rua São Francisco, 55 – Jardim Ouro Branco, Barreiras – BA, 47802-121
-(77) 99991-7142
+(77) 99192-0081
 https://www.pereiraluzecor.com.br
 ```

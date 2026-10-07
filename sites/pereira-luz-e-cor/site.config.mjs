@@ -21,11 +21,10 @@ export default {
   alternateNames: ['Pereira Luz e Cor', 'Pereira Materiais Elétricos e Tintas', 'Pereira Luz & Cor Barreiras'],
 
   // Telefone/WhatsApp. `whatsapp` = só dígitos com DDI 55 + DDD.
-  // CONFIRMAR: o cartão de visita traz (77) 99991-7142; a fachada mostra
-  // (77) 99?92-0081 (um dígito escondido pelo poste). Use o número oficial.
-  phoneDisplay: '(77) 99991-7142',
-  phoneE164: '+5577999917142',
-  whatsapp: '5577999917142',
+  // Confirmado pelo cliente em 07/10/2026 (é o mesmo da fachada).
+  phoneDisplay: '(77) 99192-0081',
+  phoneE164: '+5577991920081',
+  whatsapp: '5577991920081',
   email: '', // CONFIRMAR: opcional
 
   address: {

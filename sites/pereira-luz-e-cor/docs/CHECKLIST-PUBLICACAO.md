@@ -6,10 +6,8 @@ sitemap se atualizam.
 
 ## 1. Confirmar com o cliente (bloqueia a publicação)
 
-- [ ] **Telefone/WhatsApp oficial.** O cartão de visita do kit de marca traz
-      **(77) 99991-7142**; a fachada mostra **(77) 99?92-0081** (um dígito
-      escondido pelo poste na foto). O site está com o número do cartão.
-      Campos: `phoneDisplay`, `phoneE164`, `whatsapp`.
+- [x] **Telefone/WhatsApp oficial:** (77) 99192-0081, confirmado pelo
+      cliente (o mesmo da fachada). Já aplicado no site.
 - [ ] **Horário de funcionamento** (hoje no site: seg–sex 7h30–18h, sáb
       7h30–13h — valor provisório). Campo: `hours`.
 - [ ] **Formas de pagamento** (hoje: Pix, crédito, débito, dinheiro). Campo: `payment`.
