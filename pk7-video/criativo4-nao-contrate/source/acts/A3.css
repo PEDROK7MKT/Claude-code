@@ -1,0 +1,68 @@
+/* A3 · S12–S13 — all selectors are a3-prefixed or scoped to #A3 */
+/* scaled text/cards are re-rasterised every frame (no bitmap-scaled layers => crisp pops / punches) */
+#A3 .a,#A3 .li,#A3 .btn{will-change:auto}
+.a3w{position:absolute;left:0;top:0;width:1080px;height:1920px}
+.a3abs{position:absolute}
+/* ---------------- S12 beat 1: polaroid + column */
+.a3pol{position:absolute;left:160px;top:505px;width:320px;height:461px;background:#fff;padding:10px;border-radius:14px;transform-origin:50% 50%}
+.a3pol img{display:block;width:300px;height:441px;border-radius:6px}
+.a3foto{position:absolute;left:150px;top:925px;height:36px;line-height:36px;padding:0 14px;border-radius:999px;background:var(--lime);color:var(--navy);font-size:24px;transform-origin:50% 50%;box-shadow:0 10px 20px -8px rgba(0,0,0,.6)}
+.a3marco{position:absolute;left:510px;top:560px;height:40px;line-height:40px;padding:0 16px;border-radius:999px;font-size:26px;color:var(--lime);background:rgba(183,228,0,.15);transform-origin:0 50%}
+.a3big{position:absolute;left:510px;top:622px;font-size:80px;transform-origin:0 50%}   /* punch anchored on the column edge: never over the polaroid */
+.a3capt{position:absolute;left:510px;top:716px;font:600 30px/1.3 "Plus Jakarta Sans";color:#C5CEF0}
+/* ---------------- S12 beat 2: separate "hoje" card */
+.a3card{position:absolute;left:160px;top:990px;width:760px;height:160px;border-radius:28px;background:var(--card);border:3px solid var(--lime);box-shadow:0 30px 60px -20px rgba(0,0,0,.8);overflow:hidden}
+.a3crow{position:absolute;left:25px;top:15px;height:34px;display:flex;align-items:center;gap:14px}
+.a3hoje{height:34px;line-height:34px;padding:0 14px;border-radius:999px;font-size:26px;color:var(--navy);background:var(--lime)}
+.a3ecom{font:600 28px "Plus Jakarta Sans";color:#C5CEF0;white-space:nowrap}
+.a3num{position:absolute;left:25px;top:63px;font-size:84px;font-variant-numeric:tabular-nums;transform-origin:0 50%}
+.a3cfl{position:absolute;inset:0;background:var(--lime);opacity:0;pointer-events:none}
+.a3cring{position:absolute;left:160px;top:990px;width:760px;height:160px;border-radius:28px;border:3px solid var(--lime);opacity:0;pointer-events:none}
+/* ---------------- S12 beat 3: +40 / continents / logos */
+.a3r40{position:absolute;left:0;top:490px;width:1080px;height:170px;display:flex;justify-content:center;align-items:center;gap:26px}
+.a3cnt{display:inline-grid;font-size:170px;font-variant-numeric:tabular-nums;transform-origin:100% 55%}
+.a3cnt>span{grid-area:1/1;text-align:right}
+.a3gh{visibility:hidden}
+.a3cl{font-size:44px;line-height:1.05;text-align:left}
+.a3pins{position:absolute;left:0;top:752px;width:1080px;height:34px;display:flex;justify-content:center;gap:14px}
+.a3pin{position:relative;display:inline-flex;align-items:center;height:34px;padding:0 14px;border-radius:999px;font-size:20px;background:rgba(255,255,255,.08);border:2px solid rgba(183,228,0,.5);transform-origin:50% 50%}
+.a3pin i{position:relative;display:block;width:10px;height:10px;border-radius:50%;background:var(--lime);margin-right:8px}
+.a3pin i b{position:absolute;left:-2px;top:-2px;width:14px;height:14px;border-radius:50%;border:2px solid var(--lime);opacity:0}
+.a3lr{position:absolute;left:0;width:1080px;height:80px;display:flex;justify-content:center;gap:14px}
+.a3lr .lgc{transform-origin:50% 50%;box-shadow:0 14px 26px -12px rgba(0,0,0,.7)}
+/* act-level logo sizing (core .lgc img caps at 140x56): Delícias (78x74) at ≈74x70, Hebreus (152x46) at native 1:1 */
+#a3_l6 img{max-height:70px;max-width:150px}
+#a3_l2 img{max-width:152px;max-height:46px}
+.a3lc{font:600 24px "Plus Jakarta Sans";color:rgba(244,246,255,.85)}
+/* ---------------- S13 · the 4 red lines (compact, no board) */
+.a3row{position:absolute;left:160px;width:760px;height:80px;border-radius:18px;background:#2D1D44;border:2px solid rgba(255,77,94,.32);display:flex;align-items:center;gap:16px;padding:0 12px 0 14px;filter:drop-shadow(0 12px 12px rgba(0,0,0,.55))}
+/* split halves: the shadow is drawn from the CLIPPED shape (wrapper drop-shadow), so it follows the cut edge softly */
+.a3half{position:absolute;left:160px;width:760px;height:80px;filter:drop-shadow(0 12px 12px rgba(0,0,0,.55))}
+.a3row.a3in{left:0;top:0;filter:none}
+.a3row .n{flex:none;width:48px;height:48px;border-radius:12px;border:3px solid rgba(255,255,255,.18);display:flex;align-items:center;justify-content:center;font:700 28px "Space Grotesk";color:rgba(244,246,255,.75)}
+.a3row .t{flex:1;font:700 40px "Space Grotesk";text-transform:uppercase;letter-spacing:-.01em;white-space:nowrap;color:var(--light);line-height:1}
+.a3row .ck{flex:none;width:52px;height:52px;border-radius:14px;background:var(--loss);display:flex;align-items:center;justify-content:center;font:700 34px "Space Grotesk";color:#fff;line-height:1}
+.a3row .fx{position:absolute;inset:-2px;border-radius:18px;background:#FF4D5E;opacity:0;pointer-events:none}
+.a3sl{position:absolute;left:170px;top:452px;height:16px;border-radius:8px;background:var(--lime);transform-origin:0 50%;
+ box-shadow:0 0 16px rgba(183,228,0,.95),0 0 44px rgba(183,228,0,.55)}
+.a3sl::after{content:"";position:absolute;left:6px;right:6px;top:5px;height:6px;border-radius:3px;background:#F6FFD2}
+.a3d{position:absolute;left:0;top:0;transform-origin:50% 50%}
+.a3glow{position:absolute;left:150px;top:310px;width:780px;height:780px;border-radius:50%;opacity:0;pointer-events:none;
+ background:radial-gradient(circle closest-side,rgba(183,228,0,.75) 0%,rgba(183,228,0,.28) 45%,rgba(183,228,0,0) 100%)}
+/* ---------------- S13 · quote sticker, suggested message, button */
+.a3qt{position:absolute;left:676px;top:500px;width:250px;background:#fff;border-radius:22px;padding:14px 16px 12px;color:#1f1f1f;transform-origin:50% 50%;
+ box-shadow:0 22px 34px -8px rgba(1,4,20,.6)}
+.a3qh{display:flex;align-items:center;gap:8px;font:700 20px "Plus Jakarta Sans";color:#5f6368;margin-bottom:6px;white-space:nowrap}
+.a3qh .gdot{width:22px;height:22px}
+.a3qx{font:600 26px/1.25 "Plus Jakarta Sans"}
+.a3qx b{font-weight:700;padding:0 3px;border-radius:4px;background:linear-gradient(rgba(183,228,0,.6),rgba(183,228,0,.6)) no-repeat 0 0/0% 100%}
+.a3lbl{position:absolute;left:184px;top:920px;font-size:24px;line-height:26px;color:rgba(244,246,255,.85)}
+.a3fld{position:absolute;left:160px;top:952px;width:760px;height:68px;border-radius:999px;background:#fff;display:flex;align-items:center;padding:0 8px 0 30px;color:#1f1f1f;
+ font:700 32px "Plus Jakarta Sans","Noto Color Emoji";white-space:nowrap;box-shadow:0 20px 40px -18px rgba(0,0,0,.7)}
+.a3cur{flex:none;width:3px;height:36px;margin-left:12px;background:#25D366;border-radius:2px}
+.a3snd{flex:none;margin-left:auto;width:52px;height:52px;border-radius:50%;background:#25D366;display:flex;align-items:center;justify-content:center}
+.a3btn{left:175px;top:1036px;width:730px;height:96px;transform-origin:50% 50%}
+.a3btn.a3out{background:rgba(183,228,0,.07);color:var(--lime);border:4px solid var(--lime);font-size:36px;gap:14px;box-shadow:0 0 0 10px rgba(183,228,0,.10),0 30px 60px -24px rgba(183,228,0,.45)}
+.a3emo{font-family:"Noto Color Emoji";letter-spacing:0;font-size:.95em}
+.a3rip{position:absolute;border-radius:999px;border:4px solid var(--lime);opacity:0;pointer-events:none}
+.a3ft{font:600 30px "Plus Jakarta Sans";color:rgba(244,246,255,.75)}

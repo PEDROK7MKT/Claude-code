@@ -1,0 +1,118 @@
+/* A1 · S01–S07 — all selectors are a1-prefixed or scoped to #A1 */
+/* scaled text is re-rasterised every frame (no will-change layers => no blurry up/down-scaled bitmaps) */
+#A1 .a,#A1 .li{will-change:auto}
+.a1w{position:absolute;left:0;top:0;width:1080px;height:1920px}
+.a1p{position:absolute;left:0;top:0;transform-origin:0 0;white-space:nowrap}
+#a1_g1,#a1_g2,#a1_g3,#a1_pillw{transform-origin:0 0}   /* S01 push-in: heads() pivots these about stage (540,508) */
+.a1H{font-family:"Space Grotesk",sans-serif;font-weight:700;text-transform:uppercase;letter-spacing:-.01em;line-height:1;white-space:nowrap}
+.a1emo{font-family:"Noto Color Emoji";letter-spacing:0}
+/* replicas (hidden layout used to measure every headline state with the real fonts) */
+.a1rl{position:absolute;left:0;width:1080px;display:flex;align-items:center;justify-content:center}
+.a1rc{position:absolute;left:0;width:1080px;text-align:center}
+.a1ib{display:inline-block}
+/* NÃO stamp (em-based so every size is the exact scaled copy of the 112 px one) */
+.a1stp{display:block;background:var(--loss);color:#fff;border:.0625em solid #C8283A;border-radius:.143em;padding:.0536em .196em .0357em;box-shadow:0 .125em .27em -.09em rgba(255,77,94,.6)}
+.a1rot{position:relative;transform:rotate(-4deg)}
+.a1half{position:absolute;left:0;top:0;width:100%;height:100%;box-shadow:none}
+.a1crack{position:absolute;left:0;top:0;width:100%;height:100%;overflow:visible}
+.a1crack polyline{fill:none;stroke:#3B0710;stroke-width:3.2;stroke-linejoin:round;stroke-linecap:round;vector-effect:non-scaling-stroke}
+.a1pill{font-size:28px;color:var(--loss);border:3px solid var(--loss);background:rgba(255,77,94,.12);border-radius:999px;padding:7px 22px;letter-spacing:.02em}
+.a1flash{position:absolute;left:-60px;top:207px;width:1200px;height:1200px;border-radius:50%;background:radial-gradient(circle closest-side,rgba(183,228,0,.95) 0%,rgba(183,228,0,.38) 40%,rgba(183,228,0,0) 100%);opacity:0;pointer-events:none}
+/* board rows (two layers: base = empty/typed/✕/flap ; vl = lime ✓ state revealed by a left→right flood) */
+.a1row{position:absolute;border-radius:18px;overflow:hidden;transform-origin:50% 50%}
+.a1lay{position:absolute;left:0;top:0;right:0;bottom:0;display:flex;align-items:center;gap:16px;padding:0 20px;border-radius:18px}
+.a1base{background:#151E50}
+.a1base.a1x{background:rgba(255,77,94,.13)}
+.a1n{flex:none;width:var(--n);height:var(--n);border-radius:12px;border:3px solid rgba(255,255,255,.18);display:flex;align-items:center;justify-content:center;font:700 28px "Space Grotesk";color:rgba(244,246,255,.75)}
+.a1slot{flex:1;position:relative;align-self:stretch}
+.a1ph{position:absolute;left:0;top:50%;transform:translateY(-50%);display:flex;gap:14px}
+.a1ph i{display:block;height:18px;border-radius:9px;background:rgba(255,255,255,.12)}
+.a1t{font-size:var(--f);color:var(--light)}
+.a1slot .a1t{position:absolute;left:0;top:50%;transform:translateY(-50%)}
+.a1car{display:inline-block;width:4px;height:.8em;margin-left:5px;vertical-align:-.04em;background:var(--lime);border-radius:2px}
+.a1ck{flex:none;width:var(--ck);height:var(--ck);border-radius:14px;border:4px solid var(--loss);display:flex;align-items:center;justify-content:center;font:700 34px "Space Grotesk";color:#fff}
+.a1ck span{display:inline-block;line-height:1}
+.a1x .a1ck{background:var(--loss)}
+.a1fx{position:absolute;left:0;top:0;right:0;bottom:0;background:#FF4D5E;opacity:0;border-radius:18px;pointer-events:none}
+.a1vl{background:var(--lime);color:var(--navy);clip-path:inset(0 100% 0 0)}
+.a1vl .a1n{border-color:rgba(10,15,44,.35);color:var(--navy)}
+.a1vl .a1t{flex:1;color:var(--navy)}
+.a1vl .a1ck{background:var(--navy);border-color:var(--navy);color:var(--lime)}
+.a1base .a1ck.a1ok{background:var(--navy);border-color:var(--navy);color:var(--lime)}   /* landed: ✕ box → navy ✓ on the landing frame */
+/* split-flap housing */
+.a1fl{position:absolute;left:-12px;right:0;top:50%;height:var(--fh);margin-top:calc(var(--fh) / -2);border-radius:10px;background:#0B1236;box-shadow:inset 0 0 0 2px rgba(255,255,255,.06),0 6px 14px -6px rgba(0,0,0,.6);perspective:340px;display:none;transform-origin:50% 50%}
+.a1fh{position:absolute;left:0;right:0;overflow:hidden;backface-visibility:hidden}
+.a1top{top:0;height:50%;border-radius:10px 10px 0 0;background:linear-gradient(180deg,#16205A,#111A4A);transform-origin:50% 100%}
+.a1bot{top:50%;height:50%;border-radius:0 0 10px 10px;background:linear-gradient(180deg,#0E1641,#0B1236);transform-origin:50% 0}
+.a1fh span{position:absolute;left:12px;font-family:"Space Grotesk",sans-serif;font-weight:700;text-transform:uppercase;letter-spacing:-.01em;line-height:1;white-space:nowrap;font-size:var(--f);color:var(--light)}
+.a1top span{top:calc((var(--fh) - var(--f)) / 2)}
+.a1bot span{top:calc((var(--fh) - var(--f)) / 2 - var(--fh) / 2)}
+.a1fsh{position:absolute;left:0;top:0;right:0;bottom:0;background:#000;opacity:0}
+.a1split{position:absolute;left:0;right:0;top:50%;height:2px;margin-top:-1px;background:#03061A;z-index:3}
+.a1pin{position:absolute;top:50%;width:9px;height:22px;margin-top:-11px;border-radius:3px;background:#3A4688;box-shadow:inset 0 1px 0 rgba(255,255,255,.25);z-index:3}
+/* sparks */
+.a1spk{position:absolute;left:0;top:0;width:30px;height:7px;margin-top:-3.5px;border-radius:4px;background:var(--lime);transform-origin:0 50%;box-shadow:0 0 10px rgba(183,228,0,.7);visibility:hidden}
+/* vignettes */
+.a1vg{position:absolute;transform-origin:50% 50%;display:none}
+.a1tag{position:absolute;font:600 24px "Plus Jakarta Sans";color:rgba(244,246,255,.8);white-space:nowrap}
+/* S02 post */
+.a1post{position:absolute;left:0;top:0;right:0;bottom:0;border-radius:28px;background:#121A3A;border:2px solid rgba(255,255,255,.08);overflow:hidden;box-shadow:0 50px 110px -40px rgba(0,0,0,.85)}
+.a1pav{position:absolute;left:20px;top:12px;width:40px;height:40px;border-radius:50%;background:#2A3366}
+.a1pbar{position:absolute;border-radius:6px;background:rgba(255,255,255,.14)}
+.a1pdots{position:absolute;right:22px;top:27px;display:flex;gap:5px}.a1pdots b{display:block;width:6px;height:6px;border-radius:3px;background:rgba(255,255,255,.3)}
+.a1pimg{position:absolute;left:0;top:64px;width:500px;height:260px;background:linear-gradient(135deg,#1E50E6,#B7E400);display:flex;align-items:center;justify-content:center}
+.a1pact{position:absolute;left:22px;top:332px;display:flex;align-items:center;gap:12px;color:var(--light)}
+.a1caixa{position:absolute;left:350px;top:340px;width:220px;height:70px;transform:rotate(-5deg);background:#0A0F2C;border:2px solid rgba(255,77,94,.5);border-radius:14px;box-shadow:0 16px 30px -10px rgba(0,0,0,.7)}
+.a1caixa span{position:absolute;left:16px;top:2px;font:600 30px "Plus Jakarta Sans";color:#F4F6FF}
+.a1caixa i{position:absolute;left:16px;right:16px;top:48px;height:6px;border-radius:3px;background:#FF4D5E}
+.a1bigh{position:absolute;left:150px;top:94px;width:200px;height:200px;filter:drop-shadow(0 12px 26px rgba(10,15,44,.5));visibility:hidden}
+.a1bigh svg,.a1ht svg{display:block}
+.a1ht{position:absolute;left:0;top:0;visibility:hidden;filter:drop-shadow(0 4px 8px rgba(10,15,44,.45))}
+/* S03 report */
+.a1pdf{position:absolute;left:0;top:0;right:0;bottom:0;background:#fff;border-radius:18px;overflow:hidden;box-shadow:0 50px 110px -40px rgba(0,0,0,.9)}
+.a1pdfh{position:absolute;left:0;top:0;width:480px;height:72px;background:linear-gradient(90deg,#1E50E6 0%,#3F7BF2 55%,#B7E400 100%);display:flex;align-items:center;padding:0 24px;color:#fff}
+.a1pages{position:absolute;left:0;top:72px;width:480px;height:308px;perspective:1000px}
+.a1pg{position:absolute;left:0;top:0;width:480px;height:308px;background:#fff;transform-origin:0 50%;backface-visibility:hidden}
+.a1pgsh{position:absolute;left:0;top:0;right:0;bottom:0;background:linear-gradient(90deg,rgba(10,15,44,0),rgba(10,15,44,.35));opacity:0}
+.a1gb{position:absolute;border-radius:7px;background:#E3E8F4}
+.a1kpi{position:absolute;left:0;width:480px;top:22px;text-align:center;font:700 22px "Plus Jakarta Sans";color:#1B2350;letter-spacing:-.01em;white-space:nowrap}
+.a1kpi b{color:#4E9A06}
+.a1tagd{color:#3B4366;background:#EEF1F8;border-radius:10px;padding:2px 10px}
+.a1seal{position:absolute;left:338px;top:-12px;width:154px;height:52px;border-radius:999px;background:linear-gradient(180deg,#FFE58A,#F2B705);color:#5A3B00;display:flex;align-items:center;justify-content:center;gap:6px;overflow:hidden;box-shadow:0 12px 24px -8px rgba(0,0,0,.65),inset 0 2px 0 rgba(255,255,255,.7);visibility:hidden}
+#a1_seal .a1emo{font-size:26px;filter:drop-shadow(0 0 1px #5A3B00) drop-shadow(0 0 1px #5A3B00) drop-shadow(0 1px 0 #5A3B00)}   /* ✨ readable on the gold pill */
+.a1glint{position:absolute;top:-10px;bottom:-10px;left:0;width:40px;background:linear-gradient(100deg,rgba(255,255,255,0),rgba(255,255,255,.95),rgba(255,255,255,0))}
+.a1postit{position:absolute;left:310px;top:262px;width:220px;height:140px;background:linear-gradient(180deg,#F45E6B 0,#FF6B78 22%,#FF6B78 100%);color:#fff;font:700 34px/1.12 "Plus Jakarta Sans";display:flex;align-items:center;justify-content:center;text-align:center;padding:10px 16px 0;box-shadow:0 22px 34px -12px rgba(0,0,0,.7);visibility:hidden;border-radius:4px}
+/* S04 conveyor */
+.a1cap3{position:absolute;left:0;width:1080px;top:442px;height:54px;overflow:hidden;text-align:center}
+.a1cap3 div{font:600 32px/54px "Plus Jakarta Sans";color:#C5CEF0;white-space:nowrap}
+.a1belt{position:absolute;left:-220px;width:1520px;top:790px;height:32px;background-color:#1B2350;border-top:3px solid #3A4686;box-shadow:0 22px 30px -14px rgba(0,0,0,.8);background-size:40px 29px;background-repeat:repeat-x;
+ background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='29'%3E%3Cpath d='M15 8 L23 14.5 L15 21' fill='none' stroke='%23404C8E' stroke-width='4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E")}
+.a1belt::after{content:"";position:absolute;left:0;right:0;top:29px;height:12px;background:repeating-linear-gradient(90deg,#0D1336 0 24px,#2A3366 24px 28px)}
+.a1box{position:absolute;left:0;top:640px;width:170px;height:150px;transform-origin:50% 100%}
+.a1boxb{position:absolute;left:0;top:0;right:0;bottom:0;border-radius:8px;background:linear-gradient(180deg,#D5B07C,#BE9461);box-shadow:inset 0 -6px 0 rgba(0,0,0,.08),0 12px 20px -8px rgba(0,0,0,.65);overflow:hidden}
+.a1bflap{position:absolute;left:0;right:0;top:0;height:26px;background:#CCA36E;border-bottom:2px solid rgba(90,60,20,.28)}
+.a1btape{position:absolute;left:72px;width:26px;top:0;height:40px;background:rgba(242,220,170,.85)}
+.a1blbl{position:absolute;left:9px;right:9px;top:46px;height:30px;border-radius:6px;background:#fff;color:#0A0F2C;font-size:20px;letter-spacing:0;display:flex;align-items:center;justify-content:center}
+.a1bstp{position:absolute;left:50%;top:86px;font-size:30px;color:#D81F35;border:3px solid #D81F35;border-radius:6px;padding:3px 8px 1px;transform-origin:50% 50%;visibility:hidden;mix-blend-mode:multiply}
+.a1beam{position:absolute;left:400px;width:280px;top:502px;height:14px;border-radius:7px;background:linear-gradient(180deg,#36428A,#222C66);box-shadow:0 6px 14px -4px rgba(0,0,0,.6)}
+.a1rod{position:absolute;left:529px;width:22px;top:512px;height:18px;background:linear-gradient(90deg,#3E4A86,#9AA6DA 50%,#3E4A86)}
+.a1head{position:absolute;left:470px;top:530px;width:140px;height:54px;border-radius:12px;background:#1A2350;border:3px solid var(--lime);box-shadow:0 14px 24px -10px rgba(0,0,0,.75)}
+.a1head i{position:absolute;left:10px;right:10px;bottom:5px;height:6px;border-radius:3px;background:#FF4D5E}
+.a1head b{position:absolute;left:50%;top:9px;width:56px;height:6px;margin-left:-28px;border-radius:3px;background:rgba(183,228,0,.45)}
+.a1imp{position:absolute;left:0;top:0;width:22px;height:5px;border-radius:3px;background:#F4F6FF;visibility:hidden;transform-origin:0 50%}
+/* S05 transfer */
+.a1tr{position:absolute;left:0;top:0;right:0;bottom:0;border-radius:32px;background:#121A3A;border:2px solid rgba(255,255,255,.07);box-shadow:0 50px 110px -40px rgba(0,0,0,.85)}
+.a1trh{position:absolute;left:0;right:0;top:0;height:96px;display:flex;align-items:center;gap:18px;padding:0 28px;border-bottom:2px solid rgba(255,255,255,.07)}
+.a1tra{width:56px;height:56px;border-radius:50%;background:#2A3366;display:flex;align-items:center;justify-content:center;font:700 28px "Space Grotesk";color:#8A93B8}
+.a1trc{position:absolute;top:120px;text-align:center}
+.a1face{width:110px;height:110px;margin:0 auto;border-radius:50%;background:#2A3366;border:3px solid rgba(255,255,255,.15);overflow:hidden}
+.a1face svg{display:block;width:100%;height:100%}
+.a1sig{font:600 22px "Plus Jakarta Sans";color:var(--lime);margin-top:4px;display:inline-block;visibility:hidden}
+.a1trn{font-size:18px;margin-top:6px;color:#0A0F2C;background:#FFD24D;border-radius:8px;padding:3px 8px;display:inline-block}
+.a1arr{position:absolute;overflow:visible}
+.a1fold{position:absolute;left:0;top:0;width:58px;height:48px;margin:-24px 0 0 -29px;visibility:hidden;filter:drop-shadow(0 8px 12px rgba(0,0,0,.55))}
+.a1fold svg{display:block;width:100%;height:100%}
+.a1trx{position:absolute;left:40px;top:328px;font:700 28px "Plus Jakarta Sans";color:#C5CEF0;display:flex;align-items:center;gap:14px;visibility:hidden;white-space:nowrap}
+.a1spin{width:26px;height:26px;border-radius:50%;border:4px solid rgba(197,206,240,.22);border-top-color:#C5CEF0;display:inline-block}
+.a1trbar{position:absolute;left:40px;right:40px;top:372px;height:10px;border-radius:5px;background:rgba(255,255,255,.1);overflow:hidden;visibility:hidden}
+.a1trbar i{display:block;height:100%;width:0;border-radius:5px;background:linear-gradient(90deg,#6F79A6,#9AA3CC)}

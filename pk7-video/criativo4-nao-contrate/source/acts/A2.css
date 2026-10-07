@@ -1,0 +1,17 @@
+/* A2 · S08–S11 — all selectors are a2-prefixed or scoped to #A2 */
+/* cards / groups are scaled (push-ins, pops): keep them re-rasterised every frame instead of bitmap-scaled layers.
+   The headline containers keep core's default layer setup so the A1→A2 hand-off at 17.15 is pixel-identical. */
+#A2 .rec,#A2 .a2w,#A2 .a2pill,#A2 .a2lg,#A2 .a2chip,#A2 .a2kt{will-change:auto}
+.a2w{position:absolute;left:0;top:0;width:1080px;height:1920px}
+.a2lg{position:absolute;left:0;width:1080px}
+.a2chip{height:64px;padding:0 28px;letter-spacing:-.01em;border:3px solid var(--lime);color:var(--lime);background:#121A44;box-shadow:0 18px 34px -16px rgba(0,0,0,.8)}
+.a2pill{position:absolute;left:308px;top:870px;width:464px;height:40px;border-radius:999px;background:var(--lime);color:var(--navy);
+ font-size:24px;display:flex;align-items:center;justify-content:center;box-shadow:0 6px 12px -8px rgba(0,0,0,.5);
+ transform-origin:50% 100%}   /* slap 1.25→1 anchored on its bottom edge: never grows down onto the card's PRINT REAL chip */
+.a2kt{position:absolute;left:0;width:1080px;text-align:center}
+/* ✓ pulse glow: a soft lime blob behind the glyph, outside the .ln line mask (so it is never clipped into a rectangle) */
+.a2gl{position:absolute;width:156px;height:156px;border-radius:50%;pointer-events:none;
+ background:radial-gradient(circle closest-side,rgba(183,228,0,.62) 0%,rgba(183,228,0,.30) 38%,rgba(183,228,0,.10) 68%,rgba(183,228,0,0) 100%)}
+/* colour-code legend: the only key to the red / lime marks — larger, full-white and bolder bars than core .legend (A2 only) */
+#A2 .a2lg{font-size:28px;color:#F4F6FF;gap:40px}
+#A2 .a2lg b{width:44px;height:10px;border-radius:5px}

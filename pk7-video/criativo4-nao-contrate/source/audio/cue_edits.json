@@ -1,0 +1,54 @@
+{
+ "note": "Mix decisions on the animation's cue list (applied by audio8.py on load; the animation files are not touched). Each edit hits the ONE cue of that name nearest to t within tol, so a +-1 frame retime still matches. drop = not rendered (truly redundant, rather than buried); vol = dB on the cue's v; shift = seconds (never for a hit).",
+ "edits": [
+  {
+   "n": "swoosh",
+   "t": 42.2,
+   "tol": 0.04,
+   "action": "drop",
+   "why": "field-rise whisper (v .30) one frame after the quote sticker's post-it slap: its onset is inside the slap and its bloom lands under the lime marker and the keyboard (measured -3.7 dB as a layer); the slap + keyboard carry the beat"
+  },
+  {
+   "n": "riser",
+   "t": 12.267,
+   "tol": 0.04,
+   "action": "drop",
+   "why": "duplicate of the score's own riser: the storyboard has ONE riser for S06 (12.25-13.15, listed in the music section too) and audio8 builds it into the score (riser_part: tonal A-sus pad opening up, string glide, noise, accelerating tremolo, then the reverse cymbal swell into the 13.50 drop). Two risers over the same span masked each other and the split-flap clacks (riser -1.6 dB as a lead-in layer at +5.5 dB trim; clacks 12.87-13.00 only +4.4-4.6 after boosts)"
+  },
+  {
+   "n": "plink",
+   "t": 4.867,
+   "tol": 0.04,
+   "action": "drop",
+   "why": "like-plink two frames into the red-X buzzer (4.80, 0.2 s body): a ping inside a sustained buzzer and the buzzer cannot both clear +4 dB over each other (measured buzz +3.1 / plink +4.6, both at their boost limits); the buzzer is the punchline. The run still rises into the X, and the one plink after it (4.967) wraps to the bottom of the scale: the like deflates"
+  },
+  {
+   "n": "marker",
+   "t": 42.333,
+   "tol": 0.04,
+   "action": "drop",
+   "why": "the quote sticker's lime stroke (v .45) runs two frames into the keyboard -- the storyboard's sound for this beat -- and under the VO line that starts at 42.30: felt-tip squeak and keyboard share the same 260 ms; even at +6 dB it reached only +3.6 dB with the limiter working on it. Dropped rather than buried; the post-it slap, the keyboard and the button pop carry the beat"
+  },
+  {
+   "n": "whoosh",
+   "t": 5.0,
+   "tol": 0.04,
+   "action": "drop",
+   "why": "integrator: S02 whip-out whoosh is one gesture with the S03 paper whoosh 4 frames later (vignette hand-off tightened to 5.133); the two masked each other (paper +0.8). The paper whoosh carries the swap."
+  },
+  {
+   "n": "swoosh",
+   "t": 7.333,
+   "tol": 0.04,
+   "action": "drop",
+   "why": "integrator: S04 entry swoosh sits between the S03 whip-out whoosh (7.20) and the belt start (7.40) and masked both; the belt carries the entry."
+  },
+  {
+   "n": "swoosh",
+   "t": 24.2,
+   "tol": 0.04,
+   "action": "drop",
+   "why": "integrator: R3 rise swoosh one frame after the R2 whip-out whoosh (24.167): same gesture, masked (+3.6)."
+  }
+ ]
+}

@@ -1,0 +1,1541 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8">
+<link rel="stylesheet" href="fonts/fonts.css">
+<style>
+:root{--navy:#0A0F2C;--blue:#1E50E6;--lime:#B7E400;--light:#F4F6FF;--card:#121A3A;--muted:#8A93B8;--loss:#FF4D5E;--board:#0E1640}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:1080px;height:1920px;overflow:hidden;background:#000}
+#stage{position:relative;width:1080px;height:1920px;overflow:hidden;font-family:"Plus Jakarta Sans","Noto Color Emoji",sans-serif;color:var(--light);
+ background:radial-gradient(900px 900px at 50% 45%,#142463 0%,rgba(10,15,44,0) 70%),radial-gradient(rgba(255,255,255,.06) 1.6px,transparent 1.8px) 0 0/40px 40px,var(--navy)}
+/* an act is a full-stage layer; it carries its own background so slash wipes reveal a complete frame */
+.act{position:absolute;inset:0;display:none;overflow:hidden}
+.act.bg{background:radial-gradient(900px 900px at 50% 45%,#142463 0%,rgba(10,15,44,0) 70%),radial-gradient(rgba(255,255,255,.06) 1.6px,transparent 1.8px) 0 0/40px 40px,var(--navy)}
+.a{position:absolute;will-change:transform,opacity}
+.H{font-family:"Space Grotesk",sans-serif;font-weight:700;text-transform:uppercase;letter-spacing:-.01em;line-height:1.0;white-space:nowrap}
+.hc{left:0;width:1080px;text-align:center}
+.hl{left:60px;width:960px;text-align:center;transform-origin:50% 50%}
+.L{color:var(--lime)}.R{color:var(--loss)}
+.cap{font-family:"Space Grotesk";font-weight:700;text-transform:uppercase;letter-spacing:.02em;white-space:nowrap}
+/* line-mask headlines: .ml children are split per <br> into .ln (mask) > .li (moving line) */
+.ln{display:block;overflow:hidden;padding:.3em .14em .24em;margin:-.3em -.14em -.24em}
+.ml{display:flex;flex-direction:column;align-items:center}.ml:not(.hl):not(.hc){align-items:flex-start}
+.li{display:inline-block;will-change:transform;white-space:nowrap;vertical-align:top}
+#grain{position:absolute;inset:0;z-index:60;background:url(assets/noise.png);background-size:540px 960px;opacity:.05;mix-blend-mode:overlay;pointer-events:none}
+#vig{position:absolute;inset:0;z-index:59;pointer-events:none;background:radial-gradient(ellipse at 50% 45%,rgba(0,0,0,0) 55%,rgba(0,0,0,.32) 100%)}
+/* slash wipe bar */
+#cur{position:absolute;left:0;top:-200px;width:340px;height:2320px;z-index:50;display:none;pointer-events:none}
+#cur .s{position:absolute;inset:0;background:var(--lime)}
+#cur .s2{position:absolute;top:0;bottom:0;left:250px;width:90px;background:var(--blue)}
+/* stamp */
+.stamp{display:inline-block;background:var(--loss);color:#fff;border:7px solid #C8283A;border-radius:16px;padding:6px 22px 4px;box-shadow:0 14px 30px -10px rgba(255,77,94,.6);vertical-align:middle}
+/* board */
+.board{position:absolute;background:var(--board);border-radius:28px;border:2px solid rgba(255,255,255,.08);box-shadow:0 40px 90px -30px rgba(0,0,0,.85)}
+.brow{position:absolute;left:18px;right:18px;border-radius:18px;background:#151E50;display:flex;align-items:center;gap:16px;padding:0 20px;overflow:hidden}
+.brow .n{flex:none;border-radius:12px;border:3px solid rgba(255,255,255,.18);display:flex;align-items:center;justify-content:center;font:700 28px "Space Grotesk";color:rgba(244,246,255,.75)}
+.brow .t{flex:1;font-family:"Space Grotesk";font-weight:700;text-transform:uppercase;letter-spacing:-.01em;white-space:nowrap}
+.brow .ph{flex:1;display:flex;gap:14px}.brow .ph i{display:block;height:18px;border-radius:9px;background:rgba(255,255,255,.12)}
+.brow .ck{flex:none;border-radius:14px;border:4px solid var(--loss);display:flex;align-items:center;justify-content:center;font:700 34px "Space Grotesk";color:#fff}
+.brow.x{background:rgba(255,77,94,.13)}.brow.x .ck{background:var(--loss)}
+.brow.v{background:var(--lime);color:var(--navy)}.brow.v .n{border-color:rgba(10,15,44,.35);color:var(--navy)}.brow.v .ck{background:var(--navy);border-color:var(--navy);color:var(--lime)}
+/* recibo (real Google print card) */
+.rec{position:absolute;background:#fff;border-radius:28px;box-shadow:0 40px 90px -30px rgba(0,0,0,.8);color:#1f1f1f;overflow:hidden}
+.rec .hd{position:absolute;left:26px;right:26px;top:22px;height:36px;display:flex;align-items:center;gap:12px;font:700 24px "Plus Jakarta Sans";color:#5f6368}
+.gdot{width:28px;height:28px;border-radius:50%;background:conic-gradient(#4285F4 0 25%,#34A853 0 50%,#FBBC05 0 75%,#EA4335 0);position:relative;flex:none}
+.gdot::after{content:"";position:absolute;inset:6px;border-radius:50%;background:#fff}
+.rec .pr{margin-left:auto;display:flex;align-items:center;gap:8px;background:#FFECEE;color:var(--navy);border-radius:999px;padding:5px 14px;font:700 22px "Space Grotesk";letter-spacing:.02em}
+.rec .pr i{width:12px;height:12px;border-radius:50%;background:var(--loss)}
+.rec .dv{position:absolute;left:0;right:0;top:68px;height:2px;background:#EEF1F7}
+.crop{position:absolute;overflow:hidden}
+.crop img{position:absolute;display:block}
+.mk{position:absolute;background:rgba(183,228,0,.62);mix-blend-mode:multiply;border-radius:6px;z-index:2;transform-origin:0 50%}
+.ul{position:absolute;background:var(--loss);border-radius:3px;z-index:2;transform-origin:0 50%}
+.legend{display:flex;justify-content:center;gap:34px;align-items:center;font:700 22px "Space Grotesk";letter-spacing:.03em;text-transform:uppercase;color:rgba(244,246,255,.8)}
+.legend b{display:inline-block;width:34px;height:8px;border-radius:4px;margin-right:10px;vertical-align:middle}
+.chip{position:absolute;display:inline-flex;align-items:center;justify-content:center;border-radius:999px;font:700 32px "Space Grotesk";text-transform:uppercase;letter-spacing:.02em;white-space:nowrap}
+/* T4 avatar rig: the rig clips (overflow hidden) at a y INSIDE an opaque occluder; the mover translates the avatar */
+.rig{position:absolute;left:0;top:0;width:1080px;overflow:hidden}
+.mover{position:absolute;left:0;top:0;width:1080px;height:1920px}
+.av{position:absolute;display:block;-webkit-mask-image:linear-gradient(#000 86%,transparent 99%);mask-image:linear-gradient(#000 86%,transparent 99%);filter:drop-shadow(0 22px 34px rgba(0,0,0,.45))}
+.ao{position:absolute;pointer-events:none;-webkit-mask-size:100% 100%;mask-size:100% 100%}
+.halo{position:absolute;border-radius:50%;background:radial-gradient(circle,rgba(46,98,255,.55) 0%,rgba(30,80,230,.22) 42%,rgba(30,80,230,0) 70%)}
+.tile{position:absolute;border-radius:28px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;text-align:center;
+ background:linear-gradient(165deg,#24318A 0%,#151E52 60%,#111843 100%);border:2px solid rgba(255,255,255,.14);box-shadow:0 28px 50px -14px rgba(0,0,0,.75),inset 0 2px 0 rgba(255,255,255,.18)}
+.tile .ic{width:76px;height:76px;border-radius:22px;background:var(--lime);display:flex;align-items:center;justify-content:center}
+.tile .ic svg{width:42px;height:42px}
+.tile b{font:700 28px "Space Grotesk";text-transform:uppercase;letter-spacing:.01em;line-height:1}
+.tile small{display:block;font:700 19px "Space Grotesk";color:#AFC0FF;margin-top:6px;letter-spacing:.02em}
+/* T3 die-cut seal */
+.stk{position:absolute;filter:drop-shadow(0 5px 5px rgba(1,4,20,.45)) drop-shadow(0 30px 38px rgba(1,4,20,.55))}
+.stk .rot{position:relative;width:100%;height:100%}.stk svg{display:block;width:100%;height:100%;overflow:visible}
+.tagc{position:absolute;font:600 24px "Plus Jakarta Sans";color:rgba(244,246,255,.82);white-space:nowrap}
+.btn{position:absolute;display:flex;align-items:center;justify-content:center;gap:18px;border-radius:999px;background:var(--lime);color:var(--navy);font:700 40px "Space Grotesk";text-transform:uppercase;box-shadow:0 0 0 10px rgba(183,228,0,.16),0 30px 60px -20px rgba(183,228,0,.6)}
+.lgc{display:inline-flex;align-items:center;justify-content:center;width:180px;height:80px;border-radius:18px;background:#fff;vertical-align:top}
+.lgc img{max-width:140px;max-height:56px}
+/* QA overlays */
+.qa #sz{position:absolute;left:0;right:0;top:250px;height:980px;outline:3px dashed rgba(255,0,0,.8);z-index:99;pointer-events:none}
+.qa #sz::after{content:"";position:absolute;left:920px;top:750px;width:160px;height:230px;background:rgba(255,0,0,.25)}
+/* edge QA: no soft mask on the avatar, so any exposed source border (magenta in assets/edge) is caught */
+.edge .av{-webkit-mask-image:none!important;mask-image:none!important}
+
+/* ---- A1 */
+/* A1 · S01–S07 — all selectors are a1-prefixed or scoped to #A1 */
+/* scaled text is re-rasterised every frame (no will-change layers => no blurry up/down-scaled bitmaps) */
+#A1 .a,#A1 .li{will-change:auto}
+.a1w{position:absolute;left:0;top:0;width:1080px;height:1920px}
+.a1p{position:absolute;left:0;top:0;transform-origin:0 0;white-space:nowrap}
+#a1_g1,#a1_g2,#a1_g3,#a1_pillw{transform-origin:0 0}   /* S01 push-in: heads() pivots these about stage (540,508) */
+.a1H{font-family:"Space Grotesk",sans-serif;font-weight:700;text-transform:uppercase;letter-spacing:-.01em;line-height:1;white-space:nowrap}
+.a1emo{font-family:"Noto Color Emoji";letter-spacing:0}
+/* replicas (hidden layout used to measure every headline state with the real fonts) */
+.a1rl{position:absolute;left:0;width:1080px;display:flex;align-items:center;justify-content:center}
+.a1rc{position:absolute;left:0;width:1080px;text-align:center}
+.a1ib{display:inline-block}
+/* NÃO stamp (em-based so every size is the exact scaled copy of the 112 px one) */
+.a1stp{display:block;background:var(--loss);color:#fff;border:.0625em solid #C8283A;border-radius:.143em;padding:.0536em .196em .0357em;box-shadow:0 .125em .27em -.09em rgba(255,77,94,.6)}
+.a1rot{position:relative;transform:rotate(-4deg)}
+.a1half{position:absolute;left:0;top:0;width:100%;height:100%;box-shadow:none}
+.a1crack{position:absolute;left:0;top:0;width:100%;height:100%;overflow:visible}
+.a1crack polyline{fill:none;stroke:#3B0710;stroke-width:3.2;stroke-linejoin:round;stroke-linecap:round;vector-effect:non-scaling-stroke}
+.a1pill{font-size:28px;color:var(--loss);border:3px solid var(--loss);background:rgba(255,77,94,.12);border-radius:999px;padding:7px 22px;letter-spacing:.02em}
+.a1flash{position:absolute;left:-60px;top:207px;width:1200px;height:1200px;border-radius:50%;background:radial-gradient(circle closest-side,rgba(183,228,0,.95) 0%,rgba(183,228,0,.38) 40%,rgba(183,228,0,0) 100%);opacity:0;pointer-events:none}
+/* board rows (two layers: base = empty/typed/✕/flap ; vl = lime ✓ state revealed by a left→right flood) */
+.a1row{position:absolute;border-radius:18px;overflow:hidden;transform-origin:50% 50%}
+.a1lay{position:absolute;left:0;top:0;right:0;bottom:0;display:flex;align-items:center;gap:16px;padding:0 20px;border-radius:18px}
+.a1base{background:#151E50}
+.a1base.a1x{background:rgba(255,77,94,.13)}
+.a1n{flex:none;width:var(--n);height:var(--n);border-radius:12px;border:3px solid rgba(255,255,255,.18);display:flex;align-items:center;justify-content:center;font:700 28px "Space Grotesk";color:rgba(244,246,255,.75)}
+.a1slot{flex:1;position:relative;align-self:stretch}
+.a1ph{position:absolute;left:0;top:50%;transform:translateY(-50%);display:flex;gap:14px}
+.a1ph i{display:block;height:18px;border-radius:9px;background:rgba(255,255,255,.12)}
+.a1t{font-size:var(--f);color:var(--light)}
+.a1slot .a1t{position:absolute;left:0;top:50%;transform:translateY(-50%)}
+.a1car{display:inline-block;width:4px;height:.8em;margin-left:5px;vertical-align:-.04em;background:var(--lime);border-radius:2px}
+.a1ck{flex:none;width:var(--ck);height:var(--ck);border-radius:14px;border:4px solid var(--loss);display:flex;align-items:center;justify-content:center;font:700 34px "Space Grotesk";color:#fff}
+.a1ck span{display:inline-block;line-height:1}
+.a1x .a1ck{background:var(--loss)}
+.a1fx{position:absolute;left:0;top:0;right:0;bottom:0;background:#FF4D5E;opacity:0;border-radius:18px;pointer-events:none}
+.a1vl{background:var(--lime);color:var(--navy);clip-path:inset(0 100% 0 0)}
+.a1vl .a1n{border-color:rgba(10,15,44,.35);color:var(--navy)}
+.a1vl .a1t{flex:1;color:var(--navy)}
+.a1vl .a1ck{background:var(--navy);border-color:var(--navy);color:var(--lime)}
+.a1base .a1ck.a1ok{background:var(--navy);border-color:var(--navy);color:var(--lime)}   /* landed: ✕ box → navy ✓ on the landing frame */
+/* split-flap housing */
+.a1fl{position:absolute;left:-12px;right:0;top:50%;height:var(--fh);margin-top:calc(var(--fh) / -2);border-radius:10px;background:#0B1236;box-shadow:inset 0 0 0 2px rgba(255,255,255,.06),0 6px 14px -6px rgba(0,0,0,.6);perspective:340px;display:none;transform-origin:50% 50%}
+.a1fh{position:absolute;left:0;right:0;overflow:hidden;backface-visibility:hidden}
+.a1top{top:0;height:50%;border-radius:10px 10px 0 0;background:linear-gradient(180deg,#16205A,#111A4A);transform-origin:50% 100%}
+.a1bot{top:50%;height:50%;border-radius:0 0 10px 10px;background:linear-gradient(180deg,#0E1641,#0B1236);transform-origin:50% 0}
+.a1fh span{position:absolute;left:12px;font-family:"Space Grotesk",sans-serif;font-weight:700;text-transform:uppercase;letter-spacing:-.01em;line-height:1;white-space:nowrap;font-size:var(--f);color:var(--light)}
+.a1top span{top:calc((var(--fh) - var(--f)) / 2)}
+.a1bot span{top:calc((var(--fh) - var(--f)) / 2 - var(--fh) / 2)}
+.a1fsh{position:absolute;left:0;top:0;right:0;bottom:0;background:#000;opacity:0}
+.a1split{position:absolute;left:0;right:0;top:50%;height:2px;margin-top:-1px;background:#03061A;z-index:3}
+.a1pin{position:absolute;top:50%;width:9px;height:22px;margin-top:-11px;border-radius:3px;background:#3A4688;box-shadow:inset 0 1px 0 rgba(255,255,255,.25);z-index:3}
+/* sparks */
+.a1spk{position:absolute;left:0;top:0;width:30px;height:7px;margin-top:-3.5px;border-radius:4px;background:var(--lime);transform-origin:0 50%;box-shadow:0 0 10px rgba(183,228,0,.7);visibility:hidden}
+/* vignettes */
+.a1vg{position:absolute;transform-origin:50% 50%;display:none}
+.a1tag{position:absolute;font:600 24px "Plus Jakarta Sans";color:rgba(244,246,255,.8);white-space:nowrap}
+/* S02 post */
+.a1post{position:absolute;left:0;top:0;right:0;bottom:0;border-radius:28px;background:#121A3A;border:2px solid rgba(255,255,255,.08);overflow:hidden;box-shadow:0 50px 110px -40px rgba(0,0,0,.85)}
+.a1pav{position:absolute;left:20px;top:12px;width:40px;height:40px;border-radius:50%;background:#2A3366}
+.a1pbar{position:absolute;border-radius:6px;background:rgba(255,255,255,.14)}
+.a1pdots{position:absolute;right:22px;top:27px;display:flex;gap:5px}.a1pdots b{display:block;width:6px;height:6px;border-radius:3px;background:rgba(255,255,255,.3)}
+.a1pimg{position:absolute;left:0;top:64px;width:500px;height:260px;background:linear-gradient(135deg,#1E50E6,#B7E400);display:flex;align-items:center;justify-content:center}
+.a1pact{position:absolute;left:22px;top:332px;display:flex;align-items:center;gap:12px;color:var(--light)}
+.a1caixa{position:absolute;left:350px;top:340px;width:220px;height:70px;transform:rotate(-5deg);background:#0A0F2C;border:2px solid rgba(255,77,94,.5);border-radius:14px;box-shadow:0 16px 30px -10px rgba(0,0,0,.7)}
+.a1caixa span{position:absolute;left:16px;top:2px;font:600 30px "Plus Jakarta Sans";color:#F4F6FF}
+.a1caixa i{position:absolute;left:16px;right:16px;top:48px;height:6px;border-radius:3px;background:#FF4D5E}
+.a1bigh{position:absolute;left:150px;top:94px;width:200px;height:200px;filter:drop-shadow(0 12px 26px rgba(10,15,44,.5));visibility:hidden}
+.a1bigh svg,.a1ht svg{display:block}
+.a1ht{position:absolute;left:0;top:0;visibility:hidden;filter:drop-shadow(0 4px 8px rgba(10,15,44,.45))}
+/* S03 report */
+.a1pdf{position:absolute;left:0;top:0;right:0;bottom:0;background:#fff;border-radius:18px;overflow:hidden;box-shadow:0 50px 110px -40px rgba(0,0,0,.9)}
+.a1pdfh{position:absolute;left:0;top:0;width:480px;height:72px;background:linear-gradient(90deg,#1E50E6 0%,#3F7BF2 55%,#B7E400 100%);display:flex;align-items:center;padding:0 24px;color:#fff}
+.a1pages{position:absolute;left:0;top:72px;width:480px;height:308px;perspective:1000px}
+.a1pg{position:absolute;left:0;top:0;width:480px;height:308px;background:#fff;transform-origin:0 50%;backface-visibility:hidden}
+.a1pgsh{position:absolute;left:0;top:0;right:0;bottom:0;background:linear-gradient(90deg,rgba(10,15,44,0),rgba(10,15,44,.35));opacity:0}
+.a1gb{position:absolute;border-radius:7px;background:#E3E8F4}
+.a1kpi{position:absolute;left:0;width:480px;top:22px;text-align:center;font:700 22px "Plus Jakarta Sans";color:#1B2350;letter-spacing:-.01em;white-space:nowrap}
+.a1kpi b{color:#4E9A06}
+.a1tagd{color:#3B4366;background:#EEF1F8;border-radius:10px;padding:2px 10px}
+.a1seal{position:absolute;left:338px;top:-12px;width:154px;height:52px;border-radius:999px;background:linear-gradient(180deg,#FFE58A,#F2B705);color:#5A3B00;display:flex;align-items:center;justify-content:center;gap:6px;overflow:hidden;box-shadow:0 12px 24px -8px rgba(0,0,0,.65),inset 0 2px 0 rgba(255,255,255,.7);visibility:hidden}
+#a1_seal .a1emo{font-size:26px;filter:drop-shadow(0 0 1px #5A3B00) drop-shadow(0 0 1px #5A3B00) drop-shadow(0 1px 0 #5A3B00)}   /* ✨ readable on the gold pill */
+.a1glint{position:absolute;top:-10px;bottom:-10px;left:0;width:40px;background:linear-gradient(100deg,rgba(255,255,255,0),rgba(255,255,255,.95),rgba(255,255,255,0))}
+.a1postit{position:absolute;left:310px;top:262px;width:220px;height:140px;background:linear-gradient(180deg,#F45E6B 0,#FF6B78 22%,#FF6B78 100%);color:#fff;font:700 34px/1.12 "Plus Jakarta Sans";display:flex;align-items:center;justify-content:center;text-align:center;padding:10px 16px 0;box-shadow:0 22px 34px -12px rgba(0,0,0,.7);visibility:hidden;border-radius:4px}
+/* S04 conveyor */
+.a1cap3{position:absolute;left:0;width:1080px;top:442px;height:54px;overflow:hidden;text-align:center}
+.a1cap3 div{font:600 32px/54px "Plus Jakarta Sans";color:#C5CEF0;white-space:nowrap}
+.a1belt{position:absolute;left:-220px;width:1520px;top:790px;height:32px;background-color:#1B2350;border-top:3px solid #3A4686;box-shadow:0 22px 30px -14px rgba(0,0,0,.8);background-size:40px 29px;background-repeat:repeat-x;
+ background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='29'%3E%3Cpath d='M15 8 L23 14.5 L15 21' fill='none' stroke='%23404C8E' stroke-width='4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E")}
+.a1belt::after{content:"";position:absolute;left:0;right:0;top:29px;height:12px;background:repeating-linear-gradient(90deg,#0D1336 0 24px,#2A3366 24px 28px)}
+.a1box{position:absolute;left:0;top:640px;width:170px;height:150px;transform-origin:50% 100%}
+.a1boxb{position:absolute;left:0;top:0;right:0;bottom:0;border-radius:8px;background:linear-gradient(180deg,#D5B07C,#BE9461);box-shadow:inset 0 -6px 0 rgba(0,0,0,.08),0 12px 20px -8px rgba(0,0,0,.65);overflow:hidden}
+.a1bflap{position:absolute;left:0;right:0;top:0;height:26px;background:#CCA36E;border-bottom:2px solid rgba(90,60,20,.28)}
+.a1btape{position:absolute;left:72px;width:26px;top:0;height:40px;background:rgba(242,220,170,.85)}
+.a1blbl{position:absolute;left:9px;right:9px;top:46px;height:30px;border-radius:6px;background:#fff;color:#0A0F2C;font-size:20px;letter-spacing:0;display:flex;align-items:center;justify-content:center}
+.a1bstp{position:absolute;left:50%;top:86px;font-size:30px;color:#D81F35;border:3px solid #D81F35;border-radius:6px;padding:3px 8px 1px;transform-origin:50% 50%;visibility:hidden;mix-blend-mode:multiply}
+.a1beam{position:absolute;left:400px;width:280px;top:502px;height:14px;border-radius:7px;background:linear-gradient(180deg,#36428A,#222C66);box-shadow:0 6px 14px -4px rgba(0,0,0,.6)}
+.a1rod{position:absolute;left:529px;width:22px;top:512px;height:18px;background:linear-gradient(90deg,#3E4A86,#9AA6DA 50%,#3E4A86)}
+.a1head{position:absolute;left:470px;top:530px;width:140px;height:54px;border-radius:12px;background:#1A2350;border:3px solid var(--lime);box-shadow:0 14px 24px -10px rgba(0,0,0,.75)}
+.a1head i{position:absolute;left:10px;right:10px;bottom:5px;height:6px;border-radius:3px;background:#FF4D5E}
+.a1head b{position:absolute;left:50%;top:9px;width:56px;height:6px;margin-left:-28px;border-radius:3px;background:rgba(183,228,0,.45)}
+.a1imp{position:absolute;left:0;top:0;width:22px;height:5px;border-radius:3px;background:#F4F6FF;visibility:hidden;transform-origin:0 50%}
+/* S05 transfer */
+.a1tr{position:absolute;left:0;top:0;right:0;bottom:0;border-radius:32px;background:#121A3A;border:2px solid rgba(255,255,255,.07);box-shadow:0 50px 110px -40px rgba(0,0,0,.85)}
+.a1trh{position:absolute;left:0;right:0;top:0;height:96px;display:flex;align-items:center;gap:18px;padding:0 28px;border-bottom:2px solid rgba(255,255,255,.07)}
+.a1tra{width:56px;height:56px;border-radius:50%;background:#2A3366;display:flex;align-items:center;justify-content:center;font:700 28px "Space Grotesk";color:#8A93B8}
+.a1trc{position:absolute;top:120px;text-align:center}
+.a1face{width:110px;height:110px;margin:0 auto;border-radius:50%;background:#2A3366;border:3px solid rgba(255,255,255,.15);overflow:hidden}
+.a1face svg{display:block;width:100%;height:100%}
+.a1sig{font:600 22px "Plus Jakarta Sans";color:var(--lime);margin-top:4px;display:inline-block;visibility:hidden}
+.a1trn{font-size:18px;margin-top:6px;color:#0A0F2C;background:#FFD24D;border-radius:8px;padding:3px 8px;display:inline-block}
+.a1arr{position:absolute;overflow:visible}
+.a1fold{position:absolute;left:0;top:0;width:58px;height:48px;margin:-24px 0 0 -29px;visibility:hidden;filter:drop-shadow(0 8px 12px rgba(0,0,0,.55))}
+.a1fold svg{display:block;width:100%;height:100%}
+.a1trx{position:absolute;left:40px;top:328px;font:700 28px "Plus Jakarta Sans";color:#C5CEF0;display:flex;align-items:center;gap:14px;visibility:hidden;white-space:nowrap}
+.a1spin{width:26px;height:26px;border-radius:50%;border:4px solid rgba(197,206,240,.22);border-top-color:#C5CEF0;display:inline-block}
+.a1trbar{position:absolute;left:40px;right:40px;top:372px;height:10px;border-radius:5px;background:rgba(255,255,255,.1);overflow:hidden;visibility:hidden}
+.a1trbar i{display:block;height:100%;width:0;border-radius:5px;background:linear-gradient(90deg,#6F79A6,#9AA3CC)}
+
+/* ---- A2 */
+/* A2 · S08–S11 — all selectors are a2-prefixed or scoped to #A2 */
+/* cards / groups are scaled (push-ins, pops): keep them re-rasterised every frame instead of bitmap-scaled layers.
+   The headline containers keep core's default layer setup so the A1→A2 hand-off at 17.15 is pixel-identical. */
+#A2 .rec,#A2 .a2w,#A2 .a2pill,#A2 .a2lg,#A2 .a2chip,#A2 .a2kt{will-change:auto}
+.a2w{position:absolute;left:0;top:0;width:1080px;height:1920px}
+.a2lg{position:absolute;left:0;width:1080px}
+.a2chip{height:64px;padding:0 28px;letter-spacing:-.01em;border:3px solid var(--lime);color:var(--lime);background:#121A44;box-shadow:0 18px 34px -16px rgba(0,0,0,.8)}
+.a2pill{position:absolute;left:308px;top:870px;width:464px;height:40px;border-radius:999px;background:var(--lime);color:var(--navy);
+ font-size:24px;display:flex;align-items:center;justify-content:center;box-shadow:0 6px 12px -8px rgba(0,0,0,.5);
+ transform-origin:50% 100%}   /* slap 1.25→1 anchored on its bottom edge: never grows down onto the card's PRINT REAL chip */
+.a2kt{position:absolute;left:0;width:1080px;text-align:center}
+/* ✓ pulse glow: a soft lime blob behind the glyph, outside the .ln line mask (so it is never clipped into a rectangle) */
+.a2gl{position:absolute;width:156px;height:156px;border-radius:50%;pointer-events:none;
+ background:radial-gradient(circle closest-side,rgba(183,228,0,.62) 0%,rgba(183,228,0,.30) 38%,rgba(183,228,0,.10) 68%,rgba(183,228,0,0) 100%)}
+/* colour-code legend: the only key to the red / lime marks — larger, full-white and bolder bars than core .legend (A2 only) */
+#A2 .a2lg{font-size:28px;color:#F4F6FF;gap:40px}
+#A2 .a2lg b{width:44px;height:10px;border-radius:5px}
+
+/* ---- A3 */
+/* A3 · S12–S13 — all selectors are a3-prefixed or scoped to #A3 */
+/* scaled text/cards are re-rasterised every frame (no bitmap-scaled layers => crisp pops / punches) */
+#A3 .a,#A3 .li,#A3 .btn{will-change:auto}
+.a3w{position:absolute;left:0;top:0;width:1080px;height:1920px}
+.a3abs{position:absolute}
+/* ---------------- S12 beat 1: polaroid + column */
+.a3pol{position:absolute;left:160px;top:505px;width:320px;height:461px;background:#fff;padding:10px;border-radius:14px;transform-origin:50% 50%}
+.a3pol img{display:block;width:300px;height:441px;border-radius:6px}
+.a3foto{position:absolute;left:150px;top:925px;height:36px;line-height:36px;padding:0 14px;border-radius:999px;background:var(--lime);color:var(--navy);font-size:24px;transform-origin:50% 50%;box-shadow:0 10px 20px -8px rgba(0,0,0,.6)}
+.a3marco{position:absolute;left:510px;top:560px;height:40px;line-height:40px;padding:0 16px;border-radius:999px;font-size:26px;color:var(--lime);background:rgba(183,228,0,.15);transform-origin:0 50%}
+.a3big{position:absolute;left:510px;top:622px;font-size:80px;transform-origin:0 50%}   /* punch anchored on the column edge: never over the polaroid */
+.a3capt{position:absolute;left:510px;top:716px;font:600 30px/1.3 "Plus Jakarta Sans";color:#C5CEF0}
+/* ---------------- S12 beat 2: separate "hoje" card */
+.a3card{position:absolute;left:160px;top:990px;width:760px;height:160px;border-radius:28px;background:var(--card);border:3px solid var(--lime);box-shadow:0 30px 60px -20px rgba(0,0,0,.8);overflow:hidden}
+.a3crow{position:absolute;left:25px;top:15px;height:34px;display:flex;align-items:center;gap:14px}
+.a3hoje{height:34px;line-height:34px;padding:0 14px;border-radius:999px;font-size:26px;color:var(--navy);background:var(--lime)}
+.a3ecom{font:600 28px "Plus Jakarta Sans";color:#C5CEF0;white-space:nowrap}
+.a3num{position:absolute;left:25px;top:63px;font-size:84px;font-variant-numeric:tabular-nums;transform-origin:0 50%}
+.a3cfl{position:absolute;inset:0;background:var(--lime);opacity:0;pointer-events:none}
+.a3cring{position:absolute;left:160px;top:990px;width:760px;height:160px;border-radius:28px;border:3px solid var(--lime);opacity:0;pointer-events:none}
+/* ---------------- S12 beat 3: +40 / continents / logos */
+.a3r40{position:absolute;left:0;top:490px;width:1080px;height:170px;display:flex;justify-content:center;align-items:center;gap:26px}
+.a3cnt{display:inline-grid;font-size:170px;font-variant-numeric:tabular-nums;transform-origin:100% 55%}
+.a3cnt>span{grid-area:1/1;text-align:right}
+.a3gh{visibility:hidden}
+.a3cl{font-size:44px;line-height:1.05;text-align:left}
+.a3pins{position:absolute;left:0;top:752px;width:1080px;height:34px;display:flex;justify-content:center;gap:14px}
+.a3pin{position:relative;display:inline-flex;align-items:center;height:34px;padding:0 14px;border-radius:999px;font-size:20px;background:rgba(255,255,255,.08);border:2px solid rgba(183,228,0,.5);transform-origin:50% 50%}
+.a3pin i{position:relative;display:block;width:10px;height:10px;border-radius:50%;background:var(--lime);margin-right:8px}
+.a3pin i b{position:absolute;left:-2px;top:-2px;width:14px;height:14px;border-radius:50%;border:2px solid var(--lime);opacity:0}
+.a3lr{position:absolute;left:0;width:1080px;height:80px;display:flex;justify-content:center;gap:14px}
+.a3lr .lgc{transform-origin:50% 50%;box-shadow:0 14px 26px -12px rgba(0,0,0,.7)}
+/* act-level logo sizing (core .lgc img caps at 140x56): Delícias (78x74) at ≈74x70, Hebreus (152x46) at native 1:1 */
+#a3_l6 img{max-height:70px;max-width:150px}
+#a3_l2 img{max-width:152px;max-height:46px}
+.a3lc{font:600 24px "Plus Jakarta Sans";color:rgba(244,246,255,.85)}
+/* ---------------- S13 · the 4 red lines (compact, no board) */
+.a3row{position:absolute;left:160px;width:760px;height:80px;border-radius:18px;background:#2D1D44;border:2px solid rgba(255,77,94,.32);display:flex;align-items:center;gap:16px;padding:0 12px 0 14px;filter:drop-shadow(0 12px 12px rgba(0,0,0,.55))}
+/* split halves: the shadow is drawn from the CLIPPED shape (wrapper drop-shadow), so it follows the cut edge softly */
+.a3half{position:absolute;left:160px;width:760px;height:80px;filter:drop-shadow(0 12px 12px rgba(0,0,0,.55))}
+.a3row.a3in{left:0;top:0;filter:none}
+.a3row .n{flex:none;width:48px;height:48px;border-radius:12px;border:3px solid rgba(255,255,255,.18);display:flex;align-items:center;justify-content:center;font:700 28px "Space Grotesk";color:rgba(244,246,255,.75)}
+.a3row .t{flex:1;font:700 40px "Space Grotesk";text-transform:uppercase;letter-spacing:-.01em;white-space:nowrap;color:var(--light);line-height:1}
+.a3row .ck{flex:none;width:52px;height:52px;border-radius:14px;background:var(--loss);display:flex;align-items:center;justify-content:center;font:700 34px "Space Grotesk";color:#fff;line-height:1}
+.a3row .fx{position:absolute;inset:-2px;border-radius:18px;background:#FF4D5E;opacity:0;pointer-events:none}
+.a3sl{position:absolute;left:170px;top:452px;height:16px;border-radius:8px;background:var(--lime);transform-origin:0 50%;
+ box-shadow:0 0 16px rgba(183,228,0,.95),0 0 44px rgba(183,228,0,.55)}
+.a3sl::after{content:"";position:absolute;left:6px;right:6px;top:5px;height:6px;border-radius:3px;background:#F6FFD2}
+.a3d{position:absolute;left:0;top:0;transform-origin:50% 50%}
+.a3glow{position:absolute;left:150px;top:310px;width:780px;height:780px;border-radius:50%;opacity:0;pointer-events:none;
+ background:radial-gradient(circle closest-side,rgba(183,228,0,.75) 0%,rgba(183,228,0,.28) 45%,rgba(183,228,0,0) 100%)}
+/* ---------------- S13 · quote sticker, suggested message, button */
+.a3qt{position:absolute;left:676px;top:500px;width:250px;background:#fff;border-radius:22px;padding:14px 16px 12px;color:#1f1f1f;transform-origin:50% 50%;
+ box-shadow:0 22px 34px -8px rgba(1,4,20,.6)}
+.a3qh{display:flex;align-items:center;gap:8px;font:700 20px "Plus Jakarta Sans";color:#5f6368;margin-bottom:6px;white-space:nowrap}
+.a3qh .gdot{width:22px;height:22px}
+.a3qx{font:600 26px/1.25 "Plus Jakarta Sans"}
+.a3qx b{font-weight:700;padding:0 3px;border-radius:4px;background:linear-gradient(rgba(183,228,0,.6),rgba(183,228,0,.6)) no-repeat 0 0/0% 100%}
+.a3lbl{position:absolute;left:184px;top:920px;font-size:24px;line-height:26px;color:rgba(244,246,255,.85)}
+.a3fld{position:absolute;left:160px;top:952px;width:760px;height:68px;border-radius:999px;background:#fff;display:flex;align-items:center;padding:0 8px 0 30px;color:#1f1f1f;
+ font:700 32px "Plus Jakarta Sans","Noto Color Emoji";white-space:nowrap;box-shadow:0 20px 40px -18px rgba(0,0,0,.7)}
+.a3cur{flex:none;width:3px;height:36px;margin-left:12px;background:#25D366;border-radius:2px}
+.a3snd{flex:none;margin-left:auto;width:52px;height:52px;border-radius:50%;background:#25D366;display:flex;align-items:center;justify-content:center}
+.a3btn{left:175px;top:1036px;width:730px;height:96px;transform-origin:50% 50%}
+.a3btn.a3out{background:rgba(183,228,0,.07);color:var(--lime);border:4px solid var(--lime);font-size:36px;gap:14px;box-shadow:0 0 0 10px rgba(183,228,0,.10),0 30px 60px -24px rgba(183,228,0,.45)}
+.a3emo{font-family:"Noto Color Emoji";letter-spacing:0;font-size:.95em}
+.a3rip{position:absolute;border-radius:999px;border:4px solid var(--lime);opacity:0;pointer-events:none}
+.a3ft{font:600 30px "Plus Jakarta Sans";color:rgba(244,246,255,.75)}
+
+</style></head>
+<body><div id="stage"></div>
+<script>
+// ===================================================================== PK7 creative 4 — engine core
+// Deterministic frame renderer: window.render(T) must be a PURE function of T (frames are rendered out of order,
+// in parallel workers, and motion-blur sub-frames sample T ± 1/60 s around each frame).
+const Q=new URLSearchParams(location.search), VAR=Q.get('v')||'org', EDGE=Q.get('edge')==='1';
+const ONLY=(Q.get('acts')||'').split(',').filter(Boolean);
+const $=id=>document.getElementById(id);
+const cl=(v,a=0,b=1)=>Math.max(a,Math.min(b,v)), P=(t,a,b)=>cl((t-a)/(b-a));
+const eo=t=>1-Math.pow(1-t,3), ei=t=>t*t*t, eio=t=>t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2;
+const eb=(t,s=1.70158)=>{const c3=s+1;return 1+c3*Math.pow(t-1,3)+s*Math.pow(t-1,2)};   // outBack
+const lerp=(a,b,p)=>a+(b-a)*p;
+const rnd=i=>{let x=Math.sin(i*127.1+311.7)*43758.5453;return x-Math.floor(x);};     // deterministic 0..1
+const TOTAL=45.6, FPS=30, EPS=1e-6;
+const fq=t=>Math.round(t*FPS)/FPS;   // quantize a time to the frame grid
+
+// ---------------------------------------------------------------- registries filled by the acts
+const ACTS=[];        // {id,t0,t1,z,html,init(),render(T,TF)}
+const TRANS=[];       // slash wipes {t,cw,out,inc}
+const BLUR=[];        // motion-blur windows [t0,t1,K] (frames2.js takes the max K of the windows containing a frame)
+const CUES=[]; const S=(t,n,v=1,p=0,d)=>CUES.push(Object.assign({t:+(+t).toFixed(3),n,v,p},d!==undefined?{d:+(+d).toFixed(3)}:{}));
+
+// ---------------------------------------------------------------- avatar assets (EDGE=1 swaps in copies whose
+// border pixels are pure magenta, so an automated check can prove no hard image edge is ever on screen)
+const AVURL=pose=>EDGE?`assets/edge/${pose}.png`:`assets/${pose}.webp`;
+const POPURL=pose=>`cut/${pose}-pop.png`;
+
+// ---------------------------------------------------------------- declarative timeline (optional; an element is
+// driven EITHER by ev() events OR by an act's render(), never both)
+const EV=[]; const ev=(id,t,a,d=.5,o={})=>{EV.push(Object.assign({id,t,a,d},o));};
+const TX=[]; const txt=(id,t,s)=>TX.push({id,t,s});
+const fsz=el=>{let f=parseFloat(getComputedStyle(el).fontSize);const c=el.firstElementChild;if(c){const g=parseFloat(getComputedStyle(c).fontSize);if(g>f)f=g;}return f;};
+const lis=id=>[...document.querySelectorAll(`#${id} .li`)];
+const lin=(id,t,d=.42,st=.07)=>{lis(id).forEach((el,i)=>ev(el.id,t+i*st,'maskUp',d,{h:fsz(el)*1.62,fs:fsz(el)}));};
+// exits drop downward with the BOTTOM line first, so lines only ever move apart (never onto each other)
+const linOut=(id,t,d=.27)=>{const L=lis(id);L.forEach((el,i)=>ev(el.id,t+(L.length-1-i)*.03,'maskOut',d,{h:fsz(el)*1.62,fs:fsz(el)}));};
+const linEnd=(id,t,d=.27)=>t+(lis(id).length-1)*.03+.53*d-.04;
+let DOCK={dx:0,dy:0,s:1}, SCR={};
+const AN={
+ fadeUp:(p,s)=>{const q=eo(p);if(p<=0)s.o=0;s.y+=(1-q)*50;},
+ fadeIn:(p,s)=>{s.o*=p;},
+ fadeOut:(p,s)=>{s.o*=1-p;},
+ maskUp:(p,s,e,pf)=>{s.y+=(1-eo(p))*e.h;if((1-eo(pf))*e.h>e.fs*.98)s.o=0;},   // rises from below; hidden until the letters (not just accents) are inside
+ maskOut:(p,s,e,pf)=>{s.y+=eio(p)*e.h;if(eio(pf)*e.h>e.fs*.95)s.o=0;},  // drops out downward; cut before only accents remain
+ pop:(p,s)=>{const q=eb(p);if(p<=0)s.o=0;s.s*=.5+.5*q;},
+ sout:(p,s)=>{s.s*=1-eio(p);if(p>=1)s.o=0;},
+ stamp:(p,s)=>{const q=eo(p);if(p<=0)s.o=0;s.s*=1.35-.35*q;if(p>0&&p<1)s.x+=Math.sin(p*60)*6*(1-p);},
+ slamIn:(p,s)=>{s.s*=1+.18*(1-eo(p));},
+ rise:(p,s,e)=>{const q=eo(p);if(p<=0)s.o=0;s.y+=(1-q)*(e.dy||400);},
+ riseO:(p,s,e)=>{const q=eo(p);s.y+=(1-q)*(e.dy||400);},
+ zoomIn:(p,s)=>{const q=eo(p);s.o*=cl(p*6);s.s*=1.4-.4*q;},
+ pkIn:(p,s)=>{s.s*=2.25-.25*eo(p);s.y+=470;},
+ pkUp:(p,s)=>{const q=eo(p);s.s*=1-.5*q;s.y-=470*q;},
+ shake:(p,s,e)=>{if(p>0&&p<1)s.x+=Math.sin(p*70)*(e.amp||10)*(1-p);},
+ desat:(p,s,e)=>{s.sat=1-(1-e.to)*eio(p);},
+ dock:(p,s)=>{const q=eio(p);s.x+=q*DOCK.dx;s.y+=q*DOCK.dy;s.s*=1-(1-DOCK.s)*q;},
+ settle:(p,s,e)=>{s.s*=1+e.k*(1-eo(p));},
+ whipOutR:(p,s)=>{s.x+=eio(p)*1150;}, whipInR:(p,s)=>{s.x-=(1-eio(p))*1150;},
+ whipOutL:(p,s)=>{s.x-=eio(p)*1150;}, whipInL:(p,s)=>{s.x+=(1-eio(p))*1150;},
+ whipOutU:(p,s)=>{s.y-=eio(p)*1300;if(p>=1)s.o=0;}, whipInU:(p,s)=>{s.y+=(1-eio(p))*1300;},
+ ripple:(p,s)=>{s.s*=1+p*5;s.o*=1-p;},
+ openFrom:(p,s)=>{const q=eo(p);s.s*=.15+.85*q;},
+ zoomTo:(p,s,e)=>{const q=Math.pow(p,2.2);s.s*=1+q*(e.k-1);},
+ arc:(p,s,e)=>{const q=eio(p);s.x+=(1-q)*e.dx;s.y+=(1-q)*e.dy-Math.sin(q*Math.PI)*(e.lift===undefined?120:e.lift);s.o*=cl(p*10);s.s*=.6+.4*q;s.r+=(1-q)*40;},
+ squash:(p,s)=>{if(p>0&&p<1){const w=Math.sin(p*Math.PI);s.s*=1+.12*w*(1-p);}},
+ kmove:(p,s,e)=>{s.x+=eio(p)*e.dx;},
+ scroll:(p,s,e)=>{s.y-=eio(p)*(SCR[e.key]||0);},
+ pulse:(p,s)=>{if(p>0)s.s*=1+.02*Math.max(0,Math.sin(p*Math.PI*2*2.4));},
+ pulse1:(p,s)=>{if(p>0&&p<1)s.s*=1+.12*Math.sin(p*Math.PI);},
+ cellOn:(p,s)=>{if(p>0){const q=eb(p);s.s*=.6+.4*q;}},
+ rowIn:(p,s)=>{const q=eo(p);s.x+=(1-q)*-60;if(p<=0)s.o=0;},
+ hold:(p,s,e)=>{const a=eo(cl(p/.15))*(1-eio(cl((p-.8)/.2)));s.s*=1+e.k*a;},
+ grow:(p,s)=>{s.sx=eo(p);},
+ zoomTo2:(p,s,e)=>{const q=eio(p);s.s*=1+q*(e.k-1);s.x+=q*e.dx;s.y+=q*e.dy;},
+};
+
+const PERFRAME={shake:1,stamp:1};
+const DISC={hide:(p,s)=>{if(p>=1)s.o=0;},showAt:(p,s)=>{if(p<=0)s.o=0;},showAt2:(p,s)=>{if(p<1)s.o=0;}};
+let BYID={};
+function apply(id,T,TF){const el=$(id);if(!el)return;const st={o:1,x:0,y:0,s:1,r:0,b:0,sat:1,sx:1};const evs=BYID[id]||[];
+ for(const e of evs){if(DISC[e.a])DISC[e.a](P(TF,e.t-EPS,e.t+e.d),st,e);else if(e.a==='maskUp'||e.a==='maskOut')AN[e.a](P(T,e.t,e.t+e.d),st,e,P(TF,e.t,e.t+e.d));else if(PERFRAME[e.a])AN[e.a](P(TF,e.t,e.t+e.d),st,e);else AN[e.a](P(T,e.t,e.t+e.d),st,e);}
+ el.style.opacity=st.o;el.style.transform=`translate(${st.x}px,${st.y}px) scale(${st.s}) rotate(${st.r}deg)`+(st.sx!==1?` scaleX(${st.sx})`:'');
+ const f=[];if(st.b>.05)f.push(`blur(${st.b}px)`);if(st.sat<.999)f.push(`saturate(${st.sat})`);el.style.filter=f.length?f.join(' '):'none';}
+const mmss=s=>{s=Math.max(0,Math.floor(s+1e-6));return String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0');};
+const fmt=n=>Math.round(n).toLocaleString('pt-BR');
+let TXI={};
+
+// ---------------------------------------------------------------- shared builders
+// centred headline line(s) using the line-mask system (split per <br>)
+const HL=(id,top,size,html,extra='')=>`<div class="a H hc ml" id="${id}" style="top:${top}px;font-size:${size}px;${extra}">${html}</div>`;
+// real Google print card. crop=[sx0,sy0,sx1,sy1] in source px; marks=[[kind,x0,y0,x1,y1],...] in source px,
+// kind 'L' = lime highlighter box, 'U' = red 6px underline at y0. Returns {html,s,H,marks:[{id,kind,X,Y,W,Hh}]}
+const DOCS={'doc1.jpg':[675,1340],'doc4.jpg':[716,1380]};
+function recibo(id,x,y,w,src,crop,marks,o={}){
+ const [sx0,sy0,sx1,sy1]=crop, iw=w-52, s=iw/(sx1-sx0), ch=(sy1-sy0)*s, H=80+ch+24+(o.extraH||0);
+ const [nw,nh]=DOCS[src]; let m='';const M=[];
+ marks.forEach(([k,x0,y0,x1,y1],i)=>{const X=(x0-sx0)*s,Y=(y0-sy0)*s,W=(x1-x0)*s,Hh=(y1-y0)*s,mid=`${id}_m${i}`;M.push({id:mid,kind:k,X,Y,W,Hh});
+   m+=k==='L'?`<i class="mk" id="${mid}" style="left:${X}px;top:${Y}px;width:${W}px;height:${Hh}px"></i>`:`<i class="ul" id="${mid}" style="left:${X}px;top:${Y}px;width:${W}px;height:6px"></i>`;});
+ const html=`<div class="rec a" id="${id}" style="left:${x}px;top:${y}px;width:${w}px;height:${H}px;${o.style||''}">
+  <div class="hd"><span class="gdot"></span>Google · Modo IA<span class="pr"><i></i>PRINT REAL</span></div><div class="dv"></div>
+  <div class="crop" style="left:26px;top:80px;width:${iw}px;height:${ch}px"><img src="assets/${src}" style="left:${-sx0*s}px;top:${-sy0*s}px;width:${nw*s}px;height:${nh*s}px">${m}</div></div>`;
+ return {html,s,H,bottom:y+H,marks:M};
+}
+// board (the 4-row checklist object)
+function boardRowsHTML(id,rows,{rowH,gap=8,pad=18,font=40,nSize=48,ck=52,state=[]}){
+ let r='';rows.forEach((t,i)=>{const st=state[i]||'';const top=pad+i*(rowH+gap);
+  const inner=t===null?`<div class="ph"><i style="width:270px"></i><i style="width:120px"></i></div>`:`<div class="t" id="${id}_t${i}" style="font-size:${font}px">${t}</div>`;
+  r+=`<div class="brow ${st}" id="${id}_r${i}" style="top:${top}px;height:${rowH}px"><div class="n" style="width:${nSize}px;height:${nSize}px">${i+1}</div>${inner}<div class="ck" id="${id}_c${i}" style="width:${ck}px;height:${ck}px">${st==='x'?'✕':st==='v'?'✓':''}</div></div>`;});
+ return r;
+}
+// T4 occlusion rig. o={id,pose,x,y,w,clip,occ,halo:{x,y,size},tiles,z}. The rig box clips at y=clip, which MUST lie
+// inside an opaque occluder whose top edge is at y=occ (and the occluder must sit above the rig in z-order).
+const RIGS={};
+function rigHTML(o){RIGS[o.id]=o;const u=AVURL(o.pose);
+ return `<div class="rig" id="${o.id}" style="height:${o.clip}px;z-index:${o.z||5}">${o.halo?`<div class="halo" id="${o.id}_halo" style="left:${o.halo.x}px;top:${o.halo.y}px;width:${o.halo.size}px;height:${o.halo.size}px"></div>`:''}
+  <div class="mover" id="${o.id}_mv"><img class="av avimg" id="${o.id}_img" src="${u}" style="left:${o.x}px;top:${o.y}px;width:${o.w}px;height:${o.w}px">
+  <div class="ao" id="${o.id}_ao" style="left:${o.x}px;top:${o.y}px;width:${o.w}px;height:${o.w}px;-webkit-mask-image:url(${u});mask-image:url(${u})"></div>${o.tiles||''}</div></div>`;}
+// ty >= 0 only (the avatar never rises above its final y); haloK 0..1 scales/fades the halo
+function rigSet(id,ty,haloK=1){const o=RIGS[id];if(ty<0)ty=0;
+ $(id+'_mv').style.transform=`translateY(${ty}px)`;
+ const e=o.occ-(o.y+ty);
+ $(id+'_ao').style.background=`linear-gradient(180deg,rgba(4,7,26,0) ${e-170}px,rgba(4,7,26,.38) ${e-60}px,rgba(4,7,26,.78) ${e}px)`;
+ const h=$(id+'_halo');if(h){h.style.opacity=cl(haloK);h.style.transform=`scale(${.55+.45*eo(cl(haloK))})`;}}
+/* Disc + pop-out params produced by tools/gen_masks.py (cut/params.json) */
+const SP={
+ "hero-present":{cx:256,cy:300,R:196,pop:[175,50,335,121]},
+ "pose-point":{cx:250,cy:296,R:198,pop:[72,38,364,492]},
+ "pose-celebrate":{cx:256,cy:304,R:190,pop:[35,49,482,295]},
+ "pose-laptop":{cx:256,cy:292,R:200,pop:[169,29,343,112]},
+ "head-wow":{cx:256,cy:282,R:208,pop:[166,66,347,95]}
+};
+const THEMES={
+ navy:{band:'#0A0F2C',ring:'#B7E400',text:'#B7E400',d0:'#4A7DFF',d1:'#1E50E6',d2:'#0C2680',ray:'#FFFFFF',rayO:.07},
+ lime:{band:'#0A0F2C',ring:'#B7E400',text:'#F4F6FF',d0:'#E4FF5C',d1:'#B7E400',d2:'#7F9F00',ray:'#0A0F2C',rayO:.07},
+ blue:{band:'#B7E400',ring:'#0A0F2C',text:'#0A0F2C',d0:'#4A7DFF',d1:'#1E50E6',d2:'#0C2680',ray:'#FFFFFF',rayO:.07}
+};
+let SEALN=0;
+function stickerSVG(pose,theme,ringText,ringAt){
+  const n='_stk'+(++SEALN),p=SP[pose],T=THEMES[theme],{cx,cy,R}=p,B=Math.round(R*.2),Ro=R+B,OUT=17,PAD=OUT+10;
+  const pb=p.pop||[cx,cy,cx,cy];
+  const x0=Math.min(cx-Ro,pb[0])-PAD,y0=Math.min(cy-Ro,pb[1])-PAD,x1=Math.max(cx+Ro,pb[2])+PAD,y1=Math.max(cy+Ro,pb[3])+PAD;
+  const vb=[x0,y0,x1-x0,y1-y0];
+  // sunburst rays
+  let rays='';for(let i=0;i<32;i+=2){const a0=i*Math.PI/16,a1=(i+1)*Math.PI/16;
+    rays+=`M${cx} ${cy}L${cx+R*Math.cos(a0)} ${cy+R*Math.sin(a0)}A${R} ${R} 0 0 1 ${cx+R*Math.cos(a1)} ${cy+R*Math.sin(a1)}Z`;}
+  // text arc along the bottom of the band (reads left->right, letters upright)
+  const ca=(ringAt==null?90:+ringAt),fs=B*.52,rt=R+B/2+fs*.36,A0=(ca+122)*Math.PI/180,A1=(ca-122)*Math.PI/180;
+  const arc=`M${cx+rt*Math.cos(A0)} ${cy+rt*Math.sin(A0)}A${rt} ${rt} 0 1 0 ${cx+rt*Math.cos(A1)} ${cy+rt*Math.sin(A1)}`;
+  // die-cut outline: smooth dilation (blur + steep alpha ramp) => rounded white border
+  const sd=OUT/1.5, sl=64, ic=.5-sl*.0668;
+  const svg=`<svg viewBox="${vb.join(' ')}" xmlns="http://www.w3.org/2000/svg">
+ <defs>
+  <radialGradient id="dg${n}" gradientUnits="userSpaceOnUse" cx="${cx-R*.25}" cy="${cy-R*.45}" r="${R*1.45}">
+   <stop offset="0" stop-color="${T.d0}"/><stop offset=".5" stop-color="${T.d1}"/><stop offset="1" stop-color="${T.d2}"/></radialGradient>
+  <radialGradient id="vg${n}" gradientUnits="userSpaceOnUse" cx="${cx}" cy="${cy}" r="${R}">
+   <stop offset=".72" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".22"/></radialGradient>
+  <mask id="m${n}" maskUnits="userSpaceOnUse" x="-200" y="-200" width="912" height="912">
+   <circle cx="${cx}" cy="${cy}" r="${R}" fill="#fff"/>
+   <image href="${POPURL(pose)}" width="512" height="512"/>
+  </mask>
+  <clipPath id="co${n}"><circle cx="${cx}" cy="${cy}" r="${Ro}"/></clipPath>
+  <filter id="sh${n}" x="-20%" y="-20%" width="140%" height="140%" color-interpolation-filters="sRGB">
+   <feGaussianBlur in="SourceAlpha" stdDeviation="7"/><feOffset dx="3" dy="9" result="o"/>
+   <feFlood flood-color="#020517" flood-opacity=".55"/><feComposite in2="o" operator="in"/></filter>
+  <filter id="die${n}" filterUnits="userSpaceOnUse" x="${vb[0]}" y="${vb[1]}" width="${vb[2]}" height="${vb[3]}" color-interpolation-filters="sRGB">
+   <feGaussianBlur in="SourceAlpha" stdDeviation="${sd}" result="b"/>
+   <feComponentTransfer in="b" result="sil"><feFuncA type="linear" slope="${sl}" intercept="${ic}"/></feComponentTransfer>
+   <feFlood flood-color="#FFFFFF"/><feComposite in2="sil" operator="in" result="white"/>
+   <feGaussianBlur in="sil" stdDeviation="2.2" result="sb"/>
+   <feComposite in="sil" in2="sb" operator="out" result="rim"/>
+   <feFlood flood-color="#C9CFE6"/><feComposite in2="rim" operator="in" result="rimc"/>
+   <feMerge><feMergeNode in="white"/><feMergeNode in="rimc"/><feMergeNode in="SourceGraphic"/></feMerge>
+  </filter>
+  <filter id="sw${n}" filterUnits="userSpaceOnUse" x="${vb[0]}" y="${vb[1]}" width="${vb[2]}" height="${vb[3]}">
+   <feGaussianBlur in="SourceAlpha" stdDeviation="${sd}"/>
+   <feComponentTransfer><feFuncR type="linear" slope="0" intercept="1"/><feFuncG type="linear" slope="0" intercept="1"/><feFuncB type="linear" slope="0" intercept="1"/><feFuncA type="linear" slope="${sl}" intercept="${ic}"/></feComponentTransfer>
+  </filter>
+  <mask id="gm${n}" maskUnits="userSpaceOnUse" x="${vb[0]}" y="${vb[1]}" width="${vb[2]}" height="${vb[3]}"><use href="#body${n}" filter="url(#sw${n})"/></mask>
+  <linearGradient id="gl${n}" gradientUnits="userSpaceOnUse" x1="${x0}" y1="${y0}" x2="${x1}" y2="${y1}">
+   <stop offset=".30" stop-color="#fff" stop-opacity="0"/><stop offset=".40" stop-color="#fff" stop-opacity=".20"/>
+   <stop offset=".47" stop-color="#fff" stop-opacity="0"/><stop offset=".52" stop-color="#fff" stop-opacity=".08"/><stop offset=".58" stop-color="#fff" stop-opacity="0"/></linearGradient>
+  <path id="arc${n}" d="${arc}"/>
+ </defs>
+ <g filter="url(#die${n})"><g id="body${n}">
+  <circle cx="${cx}" cy="${cy}" r="${Ro}" fill="${T.band}"/>
+  <text font-family="Space Grotesk" font-weight="700" font-size="${fs}" letter-spacing="${fs*.16}" fill="${T.text}" text-anchor="middle"><textPath href="#arc${n}" startOffset="50%">${ringText||''}</textPath></text>
+  <circle cx="${cx}" cy="${cy}" r="${R}" fill="url(#dg${n})"/>
+  <path d="${rays}" fill="${T.ray}" opacity="${T.rayO}"/>
+  <circle cx="${cx}" cy="${cy}" r="${R}" fill="url(#vg${n})"/>
+  <circle cx="${cx}" cy="${cy}" r="${R+2}" fill="none" stroke="${T.ring}" stroke-width="5"/>
+  <g clip-path="url(#co${n})" opacity=".9"><g filter="url(#sh${n})"><image href="${AVURL(pose)}" width="512" height="512" mask="url(#m${n})"/></g></g>
+  <image href="${AVURL(pose)}" width="512" height="512" mask="url(#m${n})"/>
+ </g></g>
+ <rect x="${vb[0]}" y="${vb[1]}" width="${vb[2]}" height="${vb[3]}" fill="url(#gl${n})" mask="url(#gm${n})"/>
+</svg>`;
+  return {svg,vb};
+}
+function mountSeal(el){
+  const pose=el.dataset.stk,p=SP[pose],s=+el.dataset.s,{svg,vb}=stickerSVG(pose,el.dataset.theme||'navy',el.dataset.ring,el.dataset.ringAt);
+  const ox=(p.cx-vb[0])*s,oy=(p.cy-vb[1])*s;
+  el.classList.add('stk');
+  Object.assign(el.style,{left:(+el.dataset.x-ox)+'px',top:(+el.dataset.y-oy)+'px',width:vb[2]*s+'px',height:vb[3]*s+'px',zIndex:el.dataset.z||6,transformOrigin:ox+'px '+oy+'px'});
+  el.innerHTML=`<div class="rot" style="transform-origin:${ox}px ${oy}px;transform:rotate(${el.dataset.rot||0}deg)">${svg}</div>`;
+}
+
+
+// <div> placeholder that boot() turns into a die-cut seal: o={id,pose,x,y (centre of the disc on stage),s,rot,theme,ring,ringAt,z}
+const sealHTML=o=>`<div id="${o.id}" data-stk="${o.pose}" data-theme="${o.theme||'navy'}" data-x="${o.x}" data-y="${o.y}" data-s="${o.s}" data-rot="${o.rot||0}" data-ring="${o.ring||''}" data-ring-at="${o.ringAt==null?90:o.ringAt}" data-z="${o.z||6}"></div>`;
+
+
+// ---------------------------------------------------------------- boot
+function boot(){
+ const st=$('stage');
+ const acts=ONLY.length?ACTS.filter(a=>ONLY.includes(a.id)):ACTS.slice();
+ ACTS.length=0;acts.forEach(a=>ACTS.push(a));
+ for(const a of ACTS){const sec=document.createElement('section');sec.className='act'+(a.bg?' bg':'');sec.id=a.id;sec.innerHTML=a.html||'';st.appendChild(sec);a.el=sec;}
+ st.insertAdjacentHTML('beforeend','<div id="cur"><div class="s"></div><div class="s2"></div></div><div id="vig"></div><div id="grain"></div><div id="sz"></div>');
+ if(Q.get('qa'))document.body.classList.add('qa');
+ if(EDGE)document.body.classList.add('edge');
+ document.querySelectorAll('.ml').forEach(el=>{el.innerHTML=el.innerHTML.split(/<br\s*\/?>/i).map((h,i)=>`<span class="ln"><span class="li" id="${el.id}_l${i}">${h}</span></span>`).join('');});
+ document.querySelectorAll('[data-stk]').forEach(mountSeal);
+ for(const a of ACTS)if(a.init)a.init();
+ BYID={};EV.forEach(e=>{(BYID[e.id]=BYID[e.id]||[]).push(e);});Object.values(BYID).forEach(a=>a.sort((x,y)=>x.t-y.t));
+ TXI={};TX.forEach(x=>{if(!(x.id in TXI))TXI[x.id]=$(x.id).textContent;});
+ CUES.sort((a,b)=>a.t-b.t);
+ window.CUES=CUES;window.TOTAL=TOTAL;window.BLUR=BLUR;
+}
+window.render=function(T){
+ const TF=fq(T);
+ for(const a of ACTS){const on=TF>=a.t0-EPS&&TF<a.t1-EPS;a.el.style.display=on?'block':'none';if(on){a.el.style.clipPath='';a.el.style.zIndex=a.z||1;}}
+ const cur=$('cur');cur.style.display='none';
+ for(const x of TRANS){const inc=$(x.inc);if(!inc||inc.style.display!=='block')continue;
+   if(T>=x.t+x.cw)continue;
+   if(T<x.t-x.cw){inc.style.clipPath='inset(0 0 0 100%)';continue;}
+   const p=eio(P(T,x.t-x.cw,x.t+x.cw)),Xc=lerp(1300,-560,p),Xt=Xc+150;
+   inc.style.clipPath=`polygon(${Xt+204}px 0,1500px 0,1500px 1920px,${Xt-204}px 1920px)`;inc.style.zIndex=9;
+   cur.style.display='block';cur.style.transform=`translateX(${Xc}px) skewX(-12deg)`;}
+ for(const id in BYID)apply(id,T,TF);
+ for(const id in TXI){let s=TXI[id];for(const x of TX)if(x.id===id&&TF>=x.t-EPS)s=x.s;$(id).textContent=s;}
+ for(const a of ACTS)if(a.el.style.display==='block'&&a.render)a.render(T,TF);
+ $('grain').style.backgroundPosition=`${(Math.round(T*30)*137)%540}px ${(Math.round(T*30)*251)%960}px`;
+};
+
+// ==================================================================== A1
+// A1 · S01–S07 (0.00–17.15): hook, the 4 disqualifiers with the docked board, split-flap turn, Pedro rises behind
+// the board (cover 15.6 s) and the hand-off: board rows 1–2 morph into A2's two headline lines (last A1 frame 17.133).
+(()=>{
+const NAVY='#0A0F2C',LIME='#B7E400',LIGHT='#F4F6FF';
+const hx=h=>[1,3,5].map(i=>parseInt(h.slice(i,i+2),16));
+const mix=(a,b,q)=>{q=cl(q);const A=hx(a),B=hx(b);return `rgb(${A.map((v,i)=>Math.round(v+(B[i]-v)*q)).join(',')})`;};
+const vis=(el,on)=>{el.style.visibility=on?'visible':'hidden';};
+const V=(id,on)=>vis($(id),on);
+const DS=(el,on,d='block')=>{el.style.display=on?d:'none';};   // containers: display (a hidden parent must also hide explicitly-visible children)
+const OLD=['QUER CURTIDA','QUER RELATÓRIO BONITO','QUER PACOTE PRONTO','ACEITA ESTAGIÁRIO'];
+const NEW=['QUER VENDA','QUER FATURAR','QUER TIME SOB MEDIDA','QUER FALAR COM O PEDRO'];
+const TY=[4.40,6.60,8.80,11.00],TYD=.30,XT=[4.80,7.00,9.20,11.40];   // typing start / ✕ (all on the frame grid)
+const FL0=12.25,FLS=.18,FLD=.12,FSt=i=>FL0+FLS*i,LAND=i=>FSt(i)+3*FLD;  // flaps: 3 flips of .12 s per row; lands 12.61/12.79/12.97/13.15
+const ROWIN=[.45,.57,.69,.81];
+// ✓ pulses: cue on the first frame at/after the beat; the 0.09 s pulse window starts 0.02 s before that frame so the cue frame
+// already shows it, and every pulse is over before the next rest frame (15.6 = cover = rest frame for all 4 rows)
+const PULSE=[15.25,15.50,15.75,16.00].map(t=>Math.ceil(t*30-1e-6)/30),PLD=.09;
+const HITS=[7.95,8.35,8.75].map(fq),BSP=200;   // press hits snapped to the frame grid (7.967/8.367/8.767) · box spacing
+const HEARTS=[...Array(12)].map((_,k)=>3.5+1.45*Math.sqrt(k/11));      // accelerating spawns 3.50 → 4.95
+const SCR='ABCDEFGHIJKLMNOPQRSTUVWXYZÁÇ';
+const scr=(i,k)=>[...NEW[i]].map((ch,j)=>ch===' '?' ':SCR[Math.floor(rnd(i*97+k*41+j*7+3)*SCR.length)]).join('');
+// flap scrambles: measured with the real font; any scramble wider than its target is re-rolled (the widest target,
+// row 4, already sits exactly 24 px from the hinge pin, so "≤ target" guarantees the 24 px clearance)
+let FLT=null;
+function flt(){
+ if(FLT&&FLT.ok)return FLT;
+ const ok=!!(document.fonts&&document.fonts.check('700 42px "Space Grotesk"'));
+ const c=document.createElement('canvas').getContext('2d');c.font='700 42px "Space Grotesk"';const w=s=>c.measureText(s).width;
+ const R=[0,1,2,3].map(i=>{const tw=w(NEW[i]);
+  const pick=(k,not)=>{for(let a=0;a<60;a++){const s=scr(i,k+a*13);if(w(s)<=tw&&s!==not)return s;}return NEW[i];};
+  const s1=pick(1);return [OLD[i],s1,pick(2,s1),NEW[i]];});
+ R.ok=ok;FLT=R;return R;}
+// board states (B0 empty · B1 dock · B2 centre/flap · B3 footer) — rows are vertically centred in the frame
+const BS=[{x:160,y:724,w:760,h:496,rh:109,gap:8,n:56,ck:60,f:40},{x:160,y:888,w:760,h:334,rh:70,gap:6,n:44,ck:48,f:40},
+          {x:160,y:540,w:760,h:534,rh:116,gap:10,n:52,ck:56,f:42},{x:160,y:780,w:760,h:444,rh:96,gap:8,n:52,ck:56,f:42}];
+const gl=(a,b,q)=>{const o={};for(const k in a)o[k]=a[k]+(b[k]-a[k])*q;return o;};
+const bgeo=T=>gl(gl(gl(BS[0],BS[1],eio(P(T,2.80,3.10))),BS[2],eb(P(T,11.90,12.25),1.2)),BS[3],eo(P(T,14.20,14.55)));
+const rowRect=(g,i)=>{const pad=(g.h-4*g.rh-3*g.gap)/2;return {x:g.x+18,y:g.y+pad+i*(g.rh+g.gap),w:g.w-36,h:g.rh};};
+
+// ------------------------------------------------------------------ markup helpers
+const HEART=(c,s)=>`<svg width="${s}" height="${s}" viewBox="0 0 24 24"><path fill="${c}" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>`;
+const PERSON=`<svg viewBox="0 0 110 110"><circle cx="55" cy="44" r="19" fill="#3E4B8C"/><path d="M18 108c3-24 18-36 37-36s34 12 37 36z" fill="#3E4B8C"/></svg>`;
+const FOLDER=`<svg viewBox="0 0 58 48"><path d="M3 9a5 5 0 0 1 5-5h13l5 6h24a5 5 0 0 1 5 5v24a5 5 0 0 1-5 5H8a5 5 0 0 1-5-5z" fill="#E5B730"/><rect x="11" y="13" width="34" height="22" rx="3" fill="#fff"/><path d="M16 20h22M16 26h16" stroke="#9AA3CC" stroke-width="3" stroke-linecap="round"/><path d="M3 18h52v21a5 5 0 0 1-5 5H8a5 5 0 0 1-5-5z" fill="#FFD24D"/></svg>`;
+const CRACK='52,-2 48,20 56,38 46,57 54,77 50,102';
+const halfClip=side=>side==='l'?`polygon(-5% -5%,52% -5%,48% 20%,56% 38%,46% 57%,54% 77%,50% 105%,-5% 105%)`:`polygon(52% -5%,105% -5%,105% 105%,50% 105%,54% 77%,46% 57%,56% 38%,48% 20%)`;
+
+const rowHTML=i=>`<div class="a1row" id="a1_r${i}" style="z-index:11">
+ <div class="a1lay a1base" id="a1_b${i}"><div class="a1n" id="a1_n${i}">${i+1}</div>
+  <div class="a1slot"><div class="a1ph" id="a1_ph${i}"><i style="width:274px"></i><i style="width:122px"></i></div>
+   <div class="a1t a1H" id="a1_tw${i}"><span id="a1_t${i}"></span><i class="a1car" id="a1_car${i}"></i></div>
+   <div class="a1fl" id="a1_fl${i}">
+    <div class="a1fh a1top" id="a1_fbt${i}"><span></span></div><div class="a1fh a1bot" id="a1_fbb${i}"><span></span></div>
+    <div class="a1fh a1top" id="a1_ffa${i}"><span></span><i class="a1fsh"></i></div><div class="a1fh a1bot" id="a1_ffb${i}"><span></span><i class="a1fsh"></i></div>
+    <i class="a1split"></i><i class="a1pin" style="left:-5px"></i><i class="a1pin" style="right:-5px"></i></div></div>
+  <div class="a1ck" id="a1_c${i}"><span id="a1_cx${i}">✕</span></div></div>
+ <i class="a1fx" id="a1_fx${i}"></i>
+ <div class="a1lay a1vl" id="a1_vl${i}"><div class="a1n" id="a1_vn${i}">${i+1}</div><div class="a1t a1H" id="a1_vt${i}">${NEW[i]}</div><div class="a1ck" id="a1_vk${i}"><span id="a1_vc${i}">✓</span></div></div>
+ ${i<2?HL(`a1_mn${i+1}`,i?350:262,76,`<span style="display:inline-block;visibility:hidden">✓</span> QUER <span>${i?'FATURAR':'VENDA'}</span>`,'color:#0A0F2C;transform-origin:0 0;display:none'):''}
+</div>`;   // a1_mn1/2 = navy copy of the morph line, clipped by the lime pill during the hand-off wipe
+
+const PAGES=[ // S03 report pages (no numbers anywhere)
+ `<i class="a1gb" style="left:24px;top:22px;width:170px;height:14px"></i><i class="a1gb" style="left:24px;top:44px;width:110px;height:10px;opacity:.7"></i>
+  <svg style="position:absolute;left:34px;top:74px" width="180" height="180" viewBox="0 0 180 180"><g transform="rotate(-90 90 90)" fill="none" stroke-width="30">
+   <circle cx="90" cy="90" r="62" stroke="#1E50E6" stroke-dasharray="175 400"/><circle cx="90" cy="90" r="62" stroke="#B7E400" stroke-dasharray="0 179 118 400"/><circle cx="90" cy="90" r="62" stroke="#8FB0FF" stroke-dasharray="0 301 88 400"/></g></svg>
+  <div style="position:absolute;left:250px;top:96px;display:flex;flex-direction:column;gap:20px">${['#1E50E6','#B7E400','#8FB0FF'].map((c,k)=>`<div style="display:flex;align-items:center;gap:12px"><i style="width:18px;height:18px;border-radius:5px;background:${c}"></i><i class="a1gb" style="position:static;display:block;width:${[150,120,96][k]}px;height:12px"></i></div>`).join('')}</div>`,
+ `<i class="a1gb" style="left:24px;top:22px;width:150px;height:14px"></i><i class="a1gb" style="left:24px;top:44px;width:96px;height:10px;opacity:.7"></i>
+  <i style="position:absolute;left:60px;right:60px;top:262px;height:3px;background:#DDE3F0"></i>
+  ${[[96,70],[196,118],[296,170]].map(([x,h],k)=>`<i class="a1bar3" id="a1_bar${k}" style="position:absolute;left:${x}px;bottom:46px;width:66px;height:${h}px;border-radius:10px 10px 4px 4px;background:linear-gradient(180deg,#B7E400,#1E50E6);transform-origin:50% 100%"></i>`).join('')}
+  <svg style="position:absolute;left:300px;top:60px" width="70" height="40" viewBox="0 0 70 40"><path d="M4 34 L30 18 L44 26 L64 6" fill="none" stroke="#B7E400" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/><path d="M50 5h15v15" fill="none" stroke="#B7E400" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
+ `<i class="a1gb" style="left:24px;top:22px;width:180px;height:14px"></i><i class="a1gb" style="left:24px;top:44px;width:120px;height:10px;opacity:.7"></i>
+  <svg style="position:absolute;left:20px;top:70px" width="440" height="200" viewBox="0 0 440 200"><defs><linearGradient id="a1sg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#B7E400" stop-opacity=".55"/><stop offset="1" stop-color="#B7E400" stop-opacity="0"/></linearGradient></defs>
+   <path d="M10 170 C60 160 80 120 120 128 S180 150 210 110 S270 60 300 76 S370 40 420 18 L420 196 L10 196z" fill="url(#a1sg)"/>
+   <path id="a1_spl" d="M10 170 C60 160 80 120 120 128 S180 150 210 110 S270 60 300 76 S370 40 420 18" fill="none" stroke="#1E50E6" stroke-width="6" stroke-linecap="round" pathLength="100" stroke-dasharray="100 100"/>
+   <circle cx="420" cy="18" r="9" fill="#B7E400" stroke="#1E50E6" stroke-width="4"/></svg>`,
+ `<div class="a1kpi">alcance <b>↑</b> · impressões <b>↑</b> · engajamento <b>↑</b></div>
+  <svg style="position:absolute;left:24px;top:70px" width="270" height="150" viewBox="0 0 270 150"><path d="M8 136 C70 128 90 92 140 84 S220 30 262 12" fill="none" stroke="#1E50E6" stroke-width="7" stroke-linecap="round"/><path d="M8 136 C70 128 90 92 140 84 S220 30 262 12 L262 146 L8 146z" fill="#1E50E6" opacity=".09"/></svg>
+  <div style="position:absolute;left:24px;top:236px;display:flex;gap:10px">${[0,1,2].map(k=>`<i style="display:block;width:44px;height:12px;border-radius:6px;background:${['#1E50E6','#B7E400','#8FB0FF'][k]}"></i>`).join('')}</div>`
+];
+
+const BOXN=['BARBEARIA','CLÍNICA','RESTAURANTE'];
+const V3=fq(5.133),V4=fq(7.333),V5=fq(9.533);   // S03/S04/S05 enter on the frame the outgoing vignette is cut (no empty focus-stage frames)
+
+const HTML=`
+<div id="a1_rep" class="a1w" style="visibility:hidden;z-index:0">
+ <div class="a1rl a1H" style="top:318px;height:144px;font-size:112px;gap:24px"><span class="a1stp" id="a1_x0s">NÃO</span><span class="a1ib" id="a1_x0c">CONTRATE</span></div>
+ <div class="a1rc a1H" style="top:478px;font-size:150px"><span class="a1ib" id="a1_x0a">A PK7</span><span class="a1ib" id="a1_x0d">.</span></div>
+ <div class="a1rc a1H" style="top:652px;font-size:46px"><span class="a1ib" id="a1_x0e">…</span><span class="a1ib" id="a1_x0v">SE VOCÊ</span> <span class="a1ib" id="a1_x0f">FOR</span> <span class="a1ib" id="a1_x0u">UM DESSES 4:</span></div>
+ <div class="a1rl a1H" style="top:252px;height:86px;font-size:64px;gap:16px"><span class="a1stp" id="a1_x1s">NÃO</span><span><span class="a1ib" id="a1_x1c">CONTRATE</span> <span class="a1ib" id="a1_x1a">A PK7</span></span></div>
+ <div class="a1rc a1H" style="top:352px;font-size:64px"><span class="a1ib" id="a1_x1v">SE VOCÊ</span><span class="a1ib" id="a1_x1t">…</span></div>
+ <div class="a1rc a1H" style="top:263px;font-size:64px"><span class="a1ib" id="a1_x2c">CONTRATE</span> <span class="a1ib" id="a1_x2a">A PK7</span></div>
+ <div class="a1rc a1H" style="top:262px;font-size:76px"><span class="a1ib" id="a1_x3c">CONTRATE</span> <span class="a1ib" id="a1_x3a">A PK7</span></div>
+ <div class="a1rc a1H" style="top:350px;font-size:76px"><span class="a1ib" id="a1_x3v">SE VOCÊ</span><span class="a1ib" id="a1_x3t">…</span></div>
+ ${HL('a1_xm1',262,76,'<span class="L">✓</span> <span id="a1_xm1q">QUER</span> <span class="L" id="a1_xm1w">VENDA</span>')}
+ ${HL('a1_xm2',350,76,'<span class="L">✓</span> <span id="a1_xm2q">QUER</span> <span class="L" id="a1_xm2w">FATURAR</span>')}
+</div>
+<div class="a1w" id="a1_world">
+ <div class="a1flash" id="a1_flash" style="z-index:2"></div>
+ <div class="a1w" id="a1_vgs" style="z-index:4">
+  <div class="a1vg" id="a1_vg1" style="left:290px;top:450px;width:500px;height:410px">
+   <div class="a1post"><i class="a1pav"></i><i class="a1pbar" style="left:76px;top:17px;width:150px;height:12px"></i><i class="a1pbar" style="left:76px;top:38px;width:96px;height:10px;opacity:.6"></i>
+    <i class="a1pdots"><b></b><b></b><b></b></i>
+    <div class="a1pimg"><div class="a1H" style="font-size:44px;color:#fff;text-shadow:0 6px 22px rgba(10,15,44,.35)">PROMO DE HOJE!</div></div>
+    <div class="a1pact">${HEART('#FF4D5E',36)}<span class="a1H" style="font-size:26px">CURTIDAS ↑↑↑</span></div>
+    <div class="a1tag" id="a1_tag1" style="left:22px;top:372px">exemplo</div></div>
+   <div class="a1caixa"><span>caixa</span><i></i></div>
+   <div class="a1bigh" id="a1_bigh">${HEART('#FFFFFF',200)}</div>
+   ${HEARTS.map((_,k)=>`<i class="a1ht" id="a1_ht${k}">${HEART(['#FF4D5E','#FF7A88','#FF4D5E','#FFB3BC'][k%4],[40,32,46,30,38,44,34,42,30,40,36,46][k])}</i>`).join('')}
+  </div>
+  <div class="a1vg" id="a1_vg2" style="left:300px;top:460px;width:480px;height:380px">
+   <div class="a1pdf"><div class="a1pdfh"><span class="a1H" style="font-size:28px">RELATÓRIO MENSAL <span class="a1emo">✨</span></span></div>
+    <div class="a1pages">${PAGES.map((h,j)=>`<div class="a1pg" id="a1_pg${j}" style="z-index:${4-j}">${h}<i class="a1pgsh" id="a1_pgs${j}"></i></div>`).join('')}</div>
+    <div class="a1tag a1tagd" id="a1_tag2" style="left:18px;top:330px">exemplo</div></div>
+   <div class="a1seal" id="a1_seal"><span class="a1emo">✨</span><span class="a1H" style="font-size:26px">LINDO!</span><i class="a1glint" id="a1_glint"></i></div>
+   <div class="a1postit" id="a1_postit">…e as vendas?</div>
+  </div>
+  <div class="a1w a1vg" id="a1_vg3">
+   <div class="a1cap3"><div id="a1_cap3">mesma caixa pra todo mundo</div></div>
+   <div class="a1belt" id="a1_belt"></div>
+   ${BOXN.map((n,k)=>`<div class="a1box" id="a1_bx${k}"><div class="a1boxb"><i class="a1bflap"></i><i class="a1btape"></i><div class="a1blbl a1H">${n}</div><div class="a1bstp a1H" id="a1_bst${k}">PADRÃO</div></div></div>`).join('')}
+   <div class="a1w" id="a1_press"><i class="a1beam"></i><i class="a1rod" id="a1_rod"></i><div class="a1head" id="a1_head"><b></b><i></i></div>
+    ${[0,1,2,3].map(k=>`<i class="a1imp" id="a1_imp${k}"></i>`).join('')}</div>
+   <div class="a1tag" id="a1_tag3" style="left:170px;top:836px">exemplo</div>
+  </div>
+  <div class="a1vg" id="a1_vg4" style="left:200px;top:450px;width:680px;height:410px">
+   <div class="a1tr"><div class="a1trh"><div class="a1tra">A</div><div style="font:700 30px 'Plus Jakarta Sans'">Agência · atendimento</div></div>
+    <div class="tagc" style="right:28px;top:34px">cena ilustrativa</div>
+    <div class="a1trc" style="left:30px;width:240px"><div class="a1face">${PERSON}</div><div class="cap" style="font-size:26px;margin-top:10px;color:#C5CEF0">VENDEDOR</div><div class="a1sig" id="a1_sig">contrato assinado ✓</div></div>
+    <svg class="a1arr" id="a1_arr" style="left:250px;top:160px" width="195" height="40"><path d="M5 20 H182" stroke="#8A93B8" stroke-width="5" stroke-dasharray="14 10"/><path d="M172 6 L190 20 L172 34" fill="none" stroke="#8A93B8" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <div class="a1trc" style="left:420px;width:230px"><div class="a1face" id="a1_face2" style="border-color:var(--loss)">${PERSON}</div><div class="cap" style="font-size:26px;margin-top:10px">ESTAGIÁRIO</div><div class="cap a1trn">EM TREINAMENTO</div></div>
+    <div class="a1fold" id="a1_fold">${FOLDER}</div>
+    <div class="a1trx" id="a1_trx">transferindo seu atendimento…<i class="a1spin" id="a1_spin"></i></div>
+    <div class="a1trbar" id="a1_trbar"><i id="a1_trfill"></i></div></div>
+  </div>
+ </div>
+ ${rigHTML({id:'a1_rig',pose:'pose-celebrate',x:306,y:415,w:468,clip:868,occ:780,halo:{x:250,y:330,size:580},z:5})}
+ <div class="a1w" id="a1_spks" style="z-index:6">${[...Array(16)].map((_,k)=>`<i class="a1spk" id="a1_sp${k}"></i>`).join('')}</div>
+ <div class="a1w" style="z-index:7;height:0"><div id="a1_pillw" style="position:absolute;left:0;width:1080px;top:250px;display:flex;justify-content:center"><div class="a1pill a1H" id="a1_pill">⚠ AVISO HONESTO</div></div></div>
+ <div class="a1w" id="a1_g3" style="z-index:7">
+  <div class="a1p a1H" id="a1_pe" style="font-size:46px">…</div><div class="a1p a1H" id="a1_pf" style="font-size:46px">FOR</div><div class="a1p a1H" id="a1_pu" style="font-size:46px;color:var(--lime)">UM DESSES 4:</div></div>
+ <div class="a1w" id="a1_g1" style="z-index:7">
+  <div class="a1p" id="a1_ps" style="font-size:112px"><div class="a1rot" id="a1_psr"><div class="a1stp a1H" id="a1_psf">NÃO</div>
+   <div class="a1stp a1H a1half" id="a1_psl" style="clip-path:${halfClip('l')};transform-origin:25% 50%">NÃO</div><div class="a1stp a1H a1half" id="a1_psR" style="clip-path:${halfClip('r')};transform-origin:75% 50%">NÃO</div>
+   <svg class="a1crack" id="a1_crk" viewBox="0 0 100 100" preserveAspectRatio="none"><polyline id="a1_crkp" points="${CRACK}" pathLength="100" stroke-dasharray="100 100"/><polyline points="56,38 70,30 78,34" pathLength="100" stroke-dasharray="100 100" id="a1_crkb"/></svg></div></div>
+  <div class="a1p a1H" id="a1_pc" style="font-size:112px">CONTRATE</div>
+  <div class="a1p a1H" id="a1_pa" style="font-size:150px">A PK7</div><div class="a1p a1H" id="a1_pd" style="font-size:150px;color:var(--lime)">.</div></div>
+ <div class="a1w" id="a1_g2" style="z-index:7"><div class="a1p a1H" id="a1_pv" style="font-size:76px">SE VOCÊ</div><div class="a1p a1H" id="a1_pt" style="font-size:76px">…</div></div>
+ <div class="board" id="a1_bd" style="z-index:10"></div>
+ ${[0,1,2,3].map(rowHTML).join('')}
+ ${HL('a1_m1',262,76,'<span class="L" id="a1_m1k" style="display:inline-block">✓</span> QUER <span class="L" id="a1_m1w">VENDA</span>','z-index:12;transform-origin:0 0;display:none')}
+ ${HL('a1_m2',350,76,'<span class="L" id="a1_m2k" style="display:inline-block">✓</span> QUER <span class="L" id="a1_m2w">FATURAR</span>','z-index:12;transform-origin:0 0;display:none')}
+</div>`;
+
+// ------------------------------------------------------------------ measurement of the hidden replicas (layout only)
+let MM=null;
+function meas(){
+ if(MM&&MM.ok)return MM;
+ const sr=$('stage').getBoundingClientRect(),g=id=>{const r=$(id).getBoundingClientRect();return {x:r.left-sr.left,y:r.top-sr.top,w:r.width,h:r.height};};
+ const M={};['0s','0c','0a','0d','0e','0v','0f','0u','1s','1c','1a','1v','1t','2c','2a','3c','3a','3v','3t'].forEach(k=>M[k]=g('a1_x'+k));
+ M.q1=g('a1_xm1q');M.w1=g('a1_xm1w');M.l1=g('a1_xm1_l0');M.q2=g('a1_xm2q');M.w2=g('a1_xm2w');M.l2=g('a1_xm2_l0');
+ M.ok=!!(document.fonts&&document.fonts.status==='loaded'&&[...document.fonts].some(f=>/Space Grotesk/.test(f.family)&&f.status==='loaded'));
+ MM=M;return M;}
+const put=(id,p,on=true,extra='')=>{const e=$(id);e.style.display=on?'block':'none';if(on)e.style.transform=`translate(${p.x}px,${p.y}px) scale(${p.s})${extra}`;};
+const L3=(a,b,q)=>({x:lerp(a.x,b.x,q),y:lerp(a.y,b.y,q),s:lerp(a.s,b.s,q)});
+
+// ------------------------------------------------------------------ headline (S01 → S07), built from word pieces
+function heads(T,TF){
+ const M=meas(),F=(k,fs,b)=>({x:M[k].x,y:M[k].y,s:fs/b});
+ const kk=1+.03*eio(P(T,1,2.8))*(1-eio(P(T,2.8,3.1)));                 // type push-in 1.00→1.03 about stage (540,508), the headline block centre
+ const gT=kk===1?'none':`translate(540px,508px) scale(${kk}) translate(-540px,-508px)`;   // g1–g3 are full-stage boxes with transform-origin 0 0 (A1.css)
+ for(const id of ['a1_g1','a1_g2','a1_g3'])$(id).style.transform=gT;
+ $('a1_pillw').style.transform=kk===1?'none':`translate(540px,258px) scale(${kk}) translate(-540px,-258px)`;   // pill under the same push (its local origin = stage (0,250))
+ // dock: NÃO CONTRATE shrinks into place. "A PK7" shrinks to 64 px first (2.92), runs right under CONTRATE and past its slot
+ // (outBack x), rises into line 1 (2.86–3.00) with ≥16 px clear of CONTRATE, then settles back left into the slot (3.07).
+ // Its size and baseline are final (≤2 px) before it is ever closer than 16 px to CONTRATE. "SE VOCÊ" rises after.
+ const qd1=eio(P(T,2.80,3.00)),pa=P(T,2.80,3.07),qd2=eio(pa),qdv=eio(P(T,2.90,3.10)),qg=eio(P(T,13.35,13.60)),qh=eio(P(T,13.70,14.10));
+ const LA=(a,b)=>({x:lerp(a.x,b.x,eb(pa,1.8)),y:lerp(a.y,b.y,eio(P(T,2.86,3.00))),s:lerp(a.s,b.s,eo(P(T,2.80,2.92)))});
+ // masks: subtitle rise-in (.25–.55), dock drop-out of "… FOR UM DESSES 4:", final drop-out 16.75 (bottom line first)
+ const H46=46*1.62,H76=76*1.62;
+ const rise=(1-eo(P(T,.25,.55)))*H46,riseHid=(1-eo(P(TF,.25,.55)))*H46>46*.98;
+ const dk=eio(P(T,2.80,3.07))*H46,dkHid=eio(P(TF,2.80,3.07))*H46>46*.95;
+ const o2=eio(P(T,16.75,17.02))*H76,o2h=eio(P(TF,16.75,17.02))*H76>76*.95;
+ const o1=eio(P(T,16.78,17.05))*H76,o1h=eio(P(TF,16.78,17.05))*H76>76*.95;
+ const band46=`inset(${652-46*.3}px 0 ${1920-(698+46*.24)}px 0)`;
+ $('a1_g3').style.display=TF<3.1?'block':'none';
+ $('a1_g3').style.clipPath=band46;
+ $('a1_g2').style.clipPath=T<.6?band46:T>=16.75?`inset(${350-76*.3}px 0 ${1920-(426+76*.24)}px 0)`:'none';
+ $('a1_g1').style.clipPath=T>=16.75?`inset(${262-76*.3}px 0 ${1920-(338+76*.24)}px 0)`:'none';
+ // CONTRATE / A PK7 / dot
+ const c=L3(L3(L3(F('0c',112,112),F('1c',64,112),qd1),F('2c',64,112),qg),F('3c',76,112),qh);c.y+=o1;
+ const a=L3(L3(LA(F('0a',150,150),F('1a',64,150)),F('2a',64,150),qg),F('3a',76,150),qh);a.y+=o1;
+ put('a1_pc',c,!o1h);$('a1_pc').style.color=mix(LIGHT,LIME,qg);
+ put('a1_pa',a,!o1h);$('a1_pa').style.color=qg>0?mix(LIGHT,LIME,qg):mix(LIME,LIGHT,qd2);
+ const a0=F('0a',150,150),d0=F('0d',150,150),dm=1-eio(P(T,2.80,2.93)),ds=a.s/a0.s;
+ put('a1_pd',{x:a.x+(d0.x-a0.x)*ds,y:a.y+(d0.y-a0.y)*ds+150*a.s*(1-dm)*.8,s:a.s*dm},dm>.01);
+ // SE VOCÊ + trailing ellipsis
+ const v1=F('1v',64,76),v=L3(L3(F('0v',46,76),v1,qdv),F('3v',76,76),qh);v.y+=rise+o2;
+ const vOn=!riseHid&&!o2h;put('a1_pv',v,vOn);
+ const vcol=qg>0?mix(LIME,LIGHT,qg):mix(LIGHT,LIME,qdv);$('a1_pv').style.color=vcol;
+ const t1=F('1t',64,76),tm=eb(P(T,3.04,3.16)),tr=v.s/v1.s;
+ put('a1_pt',{x:v.x+(t1.x-v1.x)*tr,y:v.y+(t1.y-v1.y)*tr+76*v.s*(1-tm)*.5,s:v.s*tm},vOn&&TF>=3.04-EPS&&tm>.01);
+ $('a1_pt').style.color=mix(LIME,LIGHT,qg);
+ // "…" FOR "UM DESSES 4:" (masked rise-in, masked drop-out at the dock)
+ for(const k of ['e','f','u']){const p=F('0'+k,46,46);p.y+=rise+dk;put('a1_p'+k,p,!riseHid&&!dkHid);}
+ // pill
+ const pm=1-eio(P(T,2.80,2.92));const pl=$('a1_pill');pl.style.visibility=pm>.01?'visible':'hidden';pl.style.transform=`scale(${pm})`;
+ // NÃO stamp: settle 1.10→1 (0–.25), dock to 64 px, crack 13.20, two halves fall behind the board 13.25–13.85
+ const s=L3(F('0s',112,112),F('1s',64,112),qd1),sw=M['0s'].w,sh=M['0s'].h;
+ const sm=1.1-.1*eo(P(T,0,.25));
+ let st={x:s.x-(sm-1)*sw*s.s/2,y:s.y-(sm-1)*sh*s.s/2,s:s.s*sm};
+ const cracked=TF>=13.20-EPS,tf=Math.max(0,T-13.25);
+ if(cracked){const fi=Math.round((TF-13.2)*30);if(fi<3)st.x+=[3,-3,2][fi];
+  st.y+=-240*tf+.5*10800*tf*tf;}
+ put('a1_ps',st,TF<13.86&&!o1h);
+ V('a1_psf',!cracked);V('a1_psl',cracked);V('a1_psR',cracked);V('a1_crk',cracked&&tf<.05);
+ if(cracked){const cp=P(T,13.20,13.24),sep=1.5+3*P(T,13.2,13.25);
+  $('a1_crkp').style.strokeDashoffset=100*(1-cp);$('a1_crkb').style.strokeDashoffset=100*(1-P(T,13.21,13.25));
+  const u=tf/.6;
+  $('a1_psl').style.transform=`translate(${-sep-30*tf}px,${-40*tf}px) rotate(${18*u}deg)`;      // halves stay inside the board's
+  $('a1_psR').style.transform=`translate(${sep+50*tf}px,${60*tf*tf}px) rotate(${32*u}deg)`;}     // silhouette while passing behind it
+}
+
+// ------------------------------------------------------------------ morph targets: rows 1–2 → A2 headline lines
+function morph(T,TF,i){
+ const el=$('a1_m'+(i+1));
+ if(TF<16.75-EPS){el.style.display='none';return null;}
+ el.style.display='block';
+ const M=meas(),t0=16.75+i/30,t1=17.10,q=eio(P(T,t0,t1));      // both lines land at 17.10: frame 514 (+ its blur sub-samples) is exactly A2's layout
+ const g=BS[3],r=rowRect(g,i),Xr=r.x+20+g.n+16,Yr=r.y+r.h/2,s0=42/76;
+ const Q=M['q'+(i+1)],W=M['w'+(i+1)],LN=M['l'+(i+1)],top=i?350:262,Yc=LN.y+LN.h/2;
+ const s=lerp(s0,1,q),cx=lerp(Xr,Q.x,q),cy=lerp(Yr,Yc,q);
+ const wc=q>=1?'transform':'auto';el.style.willChange=wc;$(`a1_m${i+1}_l0`).style.willChange=wc;   // final frame = A2's layer setup (pixel-identical hand-off)
+ const tr=`translate(${cx-s*Q.x}px,${cy-top-s*(Yc-top)}px) scale(${s})`;
+ el.style.transform=q>=1?'none':tr;
+ // final colours throughout (QUER white, last word lime): this line sits UNDER the lime pill, whose own navy copy of the
+ // text (a1_mn*) is clipped by the pill — so every text pixel is either navy-on-lime or white/lime-on-navy, never a blend
+ el.style.color='';$(`a1_m${i+1}w`).style.color='';
+ const kp=P(T,HW+i/30,HW+i/30+.15),k=$(`a1_m${i+1}k`);   // ✓ pops as the wipe uncovers the line's left end
+ k.style.transform=q>=1?'':`scale(${eb(kp,2.2)})`;k.style.display=q>=1?'inline':'inline-block';k.style.visibility=kp>0?'visible':'hidden';
+ return {x:cx,y:cy-38*s,w:(W.x+W.w-Q.x)*s,h:76*s,s,tr};
+}
+const HW=16.90;   // hand-off: lime pill wipes off left→right 16.90–17.00 (line 2 one frame later)
+
+// ------------------------------------------------------------------ board + rows
+function setFlapText(id,s){const e=$(id).firstElementChild;if(e.textContent!==s)e.textContent=s;}
+function board(T,TF,MB){
+ const g=bgeo(T);
+ const ent=T<.95?60*(1-eo(P(T,.40,.95))):0;
+ let sx=0;const fi=Math.round((TF-11.5)*30);if(fi>=0&&fi<6)sx=[6,-6,5,-4,3,-1][fi];   // board shake 11.50 (per frame)
+ const drop=800*ei(P(T,16.75,16.95));
+ const bd=$('a1_bd');
+ bd.style.left=(g.x+sx)+'px';bd.style.top=(g.y+ent+drop)+'px';bd.style.width=g.w+'px';bd.style.height=g.h+'px';
+ bd.style.opacity=cl((T-.40)/.12);vis(bd,T>=.40&&TF<16.96);
+ for(let i=0;i<4;i++){
+  const el=$('a1_r'+i),r=rowRect(g,i);
+  let x=r.x+sx,y=r.y+ent,w=r.w,h=r.h;if(i>=2)y+=drop;
+  const on=TF>=fq(ROWIN[i])-EPS&&!(i>=2&&TF>=16.96);
+  const sc=T<1.2?.9+.1*eb(P(T,ROWIN[i],ROWIN[i]+.22)):1;
+  el.style.setProperty('--n',g.n+'px');el.style.setProperty('--ck',g.ck+'px');el.style.setProperty('--f',g.f+'px');el.style.setProperty('--fh',(g.rh-36)+'px');
+  // ---- hand-off: the lime row hugs the flying text (a pill), then the pill is wiped off left→right in 3 frames.
+  // The row sits above the morph line during the hand-off and carries a navy copy of it, so text inside the pill is
+  // navy-on-lime and text the wipe has uncovered is the final white/lime-on-navy (no colour or opacity blends).
+  let rowOn=on;
+  const mb=MB[i];
+  if(mb){const qa=eo(P(T,16.76,16.90)),px=18*mb.s,py=12*mb.s;
+   x=lerp(r.x,mb.x-px,qa);y=lerp(r.y,mb.y-py,qa);w=lerp(r.w,mb.w+2*px,qa);h=lerp(r.h,mb.h+2*py,qa);
+   const wq=P(T,HW+i/30,HW+i/30+.10),wp=wq*wq*(3-2*wq),cut=w*wp;x+=cut;w-=cut;rowOn=wp<1;}
+  el.style.zIndex=mb?13:11;
+  if(i<2){const mn=$('a1_mn'+(i+1));DS(mn,!!mb&&rowOn);if(mb&&rowOn)mn.style.transform=`translate(${-x}px,${-y}px) ${mb.tr}`;}
+  el.style.left=x+'px';el.style.top=y+'px';el.style.width=w+'px';el.style.height=h+'px';
+  el.style.transform=sc!==1?`scale(${sc})`:'none';DS(el,rowOn);
+  // ---- base layer: placeholder → typing → ✕ → flap
+  const land=LAND(i),baseOn=TF<land+.1-EPS;
+  const B=$('a1_b'+i);DS(B,baseOn,'flex');
+  const typed=TF>=TY[i]-EPS,crossed=TF>=XT[i]-EPS,flOn=TF>=12.20-EPS;
+  V('a1_ph'+i,!typed);
+  const n=typed?Math.min(OLD[i].length,Math.floor((TF-TY[i]+EPS)/TYD*OLD[i].length)+1):0;
+  const tt=$('a1_t'+i),ts=OLD[i].slice(0,n);if(tt.textContent!==ts)tt.textContent=ts;
+  DS($('a1_tw'+i),typed&&TF<12.30-EPS);V('a1_car'+i,typed&&!crossed);
+  B.classList.toggle('a1x',crossed);
+  // ✕ stamp; on the landing frame the box turns navy with a lime ✓ (pop), before the lime flood reaches it
+  const landed=TF>=land-EPS,cx=$('a1_cx'+i),vp=P(T,land,land+.12);vis(cx,crossed);
+  $('a1_c'+i).classList.toggle('a1ok',landed);const cs=landed?'✓':'✕';if(cx.textContent!==cs)cx.textContent=cs;
+  if(landed)cx.style.transform=`scale(${eb(vp,2.4)})`;
+  else if(crossed){const p=P(TF,XT[i],XT[i]+5/30);cx.style.transform=`scale(${1.6-.6*eo(p)})`;}
+  // tile "1" blinks lime at 2.2 and 2.6
+  if(i===0){const bl=Math.max(...[2.2,2.6].map(t=>T<t?0:T<t+.05?P(T,t,t+.05):1-P(T,t+.05,t+.28)));const nn=$('a1_n0');
+   nn.style.background=bl>0?`rgba(183,228,0,${bl})`:'';nn.style.color=bl>0?mix(LIGHT,NAVY,bl):'';nn.style.borderColor=bl>0?mix('#5A6390',LIME,bl):'';}
+  // red flash on the row at its ✕ (+ all rows at 11.40)
+  let fx=crossed?.55*(1-eo(P(T,XT[i],XT[i]+.35))):0;if(T>=11.4)fx=Math.max(fx,.4*(1-eo(P(T,11.4,11.75))));
+  $('a1_fx'+i).style.opacity=baseOn?fx:0;
+  // split-flap
+  const fl=$('a1_fl'+i);DS(fl,flOn&&baseOn);
+  if(flOn&&baseOn){const op=50*(1-eo(P(T,12.20,12.30)));fl.style.clipPath=op>.01?`inset(${op}% -20px ${op}% -20px)`:'none';
+   const s0=FSt(i),FT=flt()[i];let cur,nxt,u=-1;
+   if(T<s0)cur=nxt=FT[0];else if(T>=s0+3*FLD)cur=nxt=FT[3];
+   else{const k=Math.min(2,Math.floor((T-s0)/FLD));u=(T-s0-k*FLD)/FLD;cur=FT[k];nxt=FT[k+1];}
+   setFlapText('a1_fbt'+i,nxt);setFlapText('a1_fbb'+i,cur);setFlapText('a1_ffa'+i,cur);setFlapText('a1_ffb'+i,nxt);
+   const fa=$('a1_ffa'+i),fb=$('a1_ffb'+i);
+   vis(fa,u>=0&&u<.5);vis(fb,u>=.5);
+   if(u>=0&&u<.5){const a=ei(u/.5);fa.style.transform=`rotateX(${-90*a}deg)`;fa.lastElementChild.style.opacity=.55*a;}
+   if(u>=.5){const a=1-eo((u-.5)/.5);fb.style.transform=`rotateX(${90*a}deg)`;fb.lastElementChild.style.opacity=.45*a;}}
+  // ---- lime ✓ layer: left→right flood on landing, ✓ pop, S07 pulses + shine, hand-off
+  const vl=$('a1_vl'+i);
+  if(TF<land-EPS)vl.style.clipPath='inset(0 100% 0 0)';
+  else{const p=eo(P(T,land,land+.10));vl.style.clipPath=p>=1?'none':`inset(0 ${(1-p)*100}% 0 0)`;}
+  const vc=$('a1_vc'+i);vc.style.transform=`scale(${T<land?0:eb(vp,2.4)})`;
+  // S07 ✓ pulse (0.09 s): the ✓ box swells, its ✓ brightens and the row's lime brightens (background only — text stays navy)
+  const vk=$('a1_vk'+i),pp=P(T,PULSE[i]-.02,PULSE[i]-.02+PLD),pk=pp>0&&pp<1&&!mb?Math.sin(Math.PI*pp):0;
+  const tk=mb?Math.pow(1-P(T,16.75,16.90),3):1,tkF=mb?Math.pow(1-P(TF,16.75,16.90),3):1;   // outCubic shrink over 4–5 frames
+  // hand-off: tile and ✓ box hold their rest position on stage while they shrink, so the contracting pill sweeps over them
+  // (riding its fast-moving ends would smear a dark streak across the lime under the motion blur)
+  const vn=$('a1_vn'+i);let dk=0,dn=0;
+  if(mb){dk=r.x+r.w-20-g.ck-(x+vk.offsetLeft);dn=r.x+20-(x+vn.offsetLeft);}
+  vk.style.transform=`${dk?`translateX(${dk}px) `:''}scale(${(1+.22*pk)*tk})`;vn.style.transform=tk<1?`translateX(${dn}px) scale(${tk})`:'none';
+  vk.style.visibility=vn.style.visibility=tkF>.05?'':'hidden';   // no specks once they are tiny (restored = inherited)
+  vc.style.color=pk>0?mix(LIME,'#E9FF7A',pk):'';vk.style.boxShadow=pk>0?`0 0 ${16*pk}px ${5*pk}px rgba(236,255,140,${.9*pk})`:'';
+  vl.style.backgroundColor=pk>0?mix(LIME,'#D4FF2E',pk):'';
+  V('a1_vt'+i,!mb);
+ }
+}
+
+// ------------------------------------------------------------------ vignettes S02–S05
+// local x offset that keeps a tag (corner lx,ly rel. to the card centre, height h) ≥12 px inside the left frame edge
+const stick=(cx,tx,rot,lx,ly,h)=>{const th=rot*Math.PI/180,c=Math.cos(th),s=Math.sin(th);return Math.max(0,(12-(cx+tx+Math.min(lx*c-ly*s,lx*c-(ly+h)*s)))/c);};
+function showVG(id,on,tx,ty,rot,sc=1,op=1){const e=$(id);DS(e,on);if(!on)return;e.style.transform=`translate(${tx}px,${ty}px) rotate(${rot}deg) scale(${sc})`;e.style.opacity=op;}
+function vg(T,TF){
+ $('a1_vgs').style.clipPath='inset(0 0 1032px 0)';   // vignettes live above the docked board: they rise from behind its top edge (y 888)
+ // Leftward exits (honesty tags ≥24 px on screen whenever their vignette is): a card's tag is held ≥12 px inside the
+ // frame edge (it slides along its card), and the card is cut on the first frame the tag would no longer fit on it.
+ // S02 · post (3.00–5.20)
+ {const ex=t=>{const qi=eb(P(t,3.0,3.3),1.3),qo=eio(P(t,5.0,5.2));return [820*(1-qi)-800*qo,3+9*(1-qi)-11*qo];};
+  const [tx,rot]=ex(T),[txF,rotF]=ex(TF);
+  const on=TF>=3.0-EPS&&TF<5.2-EPS&&stick(540,txF,rotF,-228,167,27)<=230;   // tag (85 px) still clear of the "caixa" block
+  showVG('a1_vg1',on,tx,0,rot);
+  if(on){$('a1_tag1').style.transform=`translateX(${stick(540,tx,rot,-228,167,27)}px)`;const bh=$('a1_bigh'),p=P(T,3.45,3.70),o=P(T,3.95,4.083);
+   const s=p<.6?1.3*eo(p/.6):1.3-.3*eio((p-.6)/.4);
+   const so=o<.3?1+.12*eo(o/.3):1.12*(1-Math.pow((o-.3)/.7,2));     // binary pop-out 1→1.12→0, opacity held at 1
+   vis(bh,TF>=3.45-EPS&&TF<4.1-EPS&&so>.01);bh.style.transform=`scale(${s*so})`;bh.style.opacity=1;
+   HEARTS.forEach((t,k)=>{const e=$('a1_ht'+k),p=P(T,t,t+.9);const hon=TF>=fq(t)-EPS&&p<1;vis(e,hon);if(!hon)return;
+    const x=448+44*rnd(k+5)+16*Math.sin(p*6+k),y=318-300*eo(p),s=.4+.6*eb(P(T,t,t+.16));
+    e.style.transform=`translate(${x}px,${y}px) rotate(${(rnd(k+9)-.5)*30}deg) scale(${s})`;e.style.opacity=p<.7?1:1-(p-.7)/.3;});}}
+ // S03 · report (5.133–7.333)
+ {const pi=P(T,V3,V3+.3),qi=eo(pi),qo=eio(P(T,7.2,7.4)),qoF=eio(P(TF,7.2,7.4));   // short rise + overshoot-down pop (1.08→1): tag ≥24 px from the first frame
+  const on=TF>=V3-EPS&&TF<7.4-EPS&&stick(540,-900*qoF,-3-8*qoF,-222,140,34)<=160;   // tag (123 px) still clear of the post-it
+  showVG('a1_vg2',on,-900*qo,40*(1-qi),-3+6*(1-qi)-8*qo,1.08-.08*eo(P(T,V3,V3+.22)));
+  if(on){$('a1_tag2').style.transform=`translateX(${stick(540,-900*qo,-3-8*qo,-222,140,34)}px)`;
+   [0,1,2].forEach(j=>{const p=P(T,5.55+.2*j,5.75+.2*j),pg=$('a1_pg'+j);vis(pg,p<1);pg.style.transform=`rotateY(${-180*eio(p)}deg)`;$('a1_pgs'+j).style.opacity=Math.sin(Math.PI*Math.min(p*2,1))*.8;});
+   vis($('a1_pg3'),true);
+   [0,1,2].forEach(k=>{$('a1_bar'+k).style.transform=`scaleY(${.08+.92*eb(P(T,5.58+.05*k,5.86+.05*k),1.4)})`;});
+   $('a1_spl').style.strokeDashoffset=100*(1-eio(P(T,5.78,6.02)));
+   const se=$('a1_seal'),sp=P(T,6.05,6.27);vis(se,TF>=6.05-EPS);se.style.transform=`rotate(${13+8*(1-eo(sp))}deg) scale(${eb(sp,2.6)})`;
+   $('a1_glint').style.transform=`translateX(${-60+260*eio(P(T,6.15,6.55))}px) skewX(-20deg)`;
+   const po=$('a1_postit'),pq=P(TF,6.30,6.30+4/30);vis(po,TF>=6.30-EPS);po.style.transform=`rotate(${-5-6*(1-eo(pq))}deg) scale(${1.32-.32*eo(pq)})`;}}
+ // S04 · conveyor (7.333–9.533)
+ {const on=TF>=V4-EPS&&TF<V5-EPS;   // cut once the last box has left (only a belt end would remain)
+  const qo=eio(P(T,9.4,9.6)),bin=1300*(1-eo(P(T,V4-1/60,V4-1/60+.22)));   // belt/press slide in from the opening of the cut frame's shutter, so 7.333 already shows the belt entering
+  // tag (103 px wide): rides in with the belt, pinned ≥12 px inside the right edge (x ≤965) so it is fully visible from the
+  // first S04 frame, travels to x 170; leaves last (held ≥12 px inside the left edge)
+  showVG('a1_vg3',on,-1300*qo,0,0);$('a1_tag3').style.transform=`translateX(${Math.min(bin,965-170)+Math.max(0,12-(170-1300*qo))}px)`;
+  if(on){
+   const cp=P(T,7.36,7.66),cap=$('a1_cap3');cap.style.transform=`translateY(${(1-eo(cp))*54}px)`;vis(cap,(1-eo(P(TF,7.36,7.66)))*54<24);
+   // indexing conveyor: boxes (spacing 200) step in and stop under the press; the belt chevrons move with the boxes
+   const O=640*eio(P(T,7.38,7.82))+BSP*eio(P(T,8.05,8.29))+BSP*eio(P(T,8.45,8.69));
+   const belt=$('a1_belt');belt.style.transform=`translateX(${bin}px)`;belt.style.backgroundPosition=`${O%40}px 0`;
+   // press: 0.12 s downstroke ending ON the hit frame with the head bottom (584+56) on the box top (640); the head then
+   // rides the squashing box down for one more frame (2 contact frames) and returns in 0.15 s
+   const sqf=H=>1-.07*Math.sin(Math.PI*P(T,H,H+.14));          // box squash starts on the contact frame
+   let ty=0;HITS.forEach(H=>{const t1=H+1/30;
+    if(T>=H-.12&&T<H)ty=56*ei(P(T,H-.12,H));
+    else if(T>=H&&T<=t1)ty=56+150*(1-sqf(H));
+    else if(T>t1&&T<t1+.15)ty=(56+150*.07*Math.sin(Math.PI*(1/30)/.14))*(1-eo(P(T,t1,t1+.15)));});
+   $('a1_press').style.transform=`translateX(${bin}px)`;vis($('a1_tag3'),true);
+   $('a1_head').style.transform=`translateY(${ty}px)`;$('a1_rod').style.height=(18+ty)+'px';
+   [0,1,2].forEach(k=>{const cxk=-100-BSP*k+O,b=$('a1_bx'+k),H=HITS[k];
+    const sq=sqf(H);
+    b.style.transform=`translateX(${cxk-85}px) scaleY(${sq}) scaleX(${2-sq})`;
+    const st=$('a1_bst'+k),hp=P(TF,H,H+4/30);vis(st,TF>=H-EPS);st.style.transform=`translateX(-50%) rotate(-6deg) scale(${1.4-.4*eo(hp)})`;});
+   const hitOn=HITS.find(H=>TF>=H-EPS&&TF<H+.1-EPS);
+   [0,1,2,3].forEach(k=>{const e=$('a1_imp'+k);vis(e,!!hitOn);if(!hitOn)return;const p=P(TF,hitOn,hitOn+.1),side=k<2?-1:1,ang=side<0?[200,160][k%2]:[-20,20][k%2];
+    const x=side<0?462:618,y=634+(k%2?6:-6);e.style.transform=`translate(${x}px,${y}px) rotate(${ang}deg) translateX(${6+18*eo(p)}px) scaleX(${1-.6*p})`;});}}
+ // S05 · transfer (9.533–11.90)
+ {const on=TF>=V5-EPS&&TF<11.833-EPS;    // from 11.833 the right-hand tag is off-frame: only 30 px of empty card padding would remain
+  const pi=P(T,V5,V5+.3),qo=eio(P(T,11.7,11.9));               // rise + overshoot-down pop (1.08→1), no fade: tag ≥24 px throughout
+  showVG('a1_vg4',on,-1000*qo,40*(1-eo(pi)),0,1.08-.08*eo(P(T,V5,V5+.22)),1);
+  if(on){
+   const sg=$('a1_sig'),sp=P(T,10.0,10.2);vis(sg,TF>=10.0-EPS);sg.style.transform=`scale(${eb(sp,2.4)})`;
+   $('a1_arr').style.clipPath=`inset(0 ${(1-eo(P(T,10.25,10.55)))*100}% 0 0)`;
+   const fo=$('a1_fold'),fq2=eio(P(T,10.30,10.70)),fon=TF>=10.30-EPS&&T<10.80;vis(fo,fon);
+   if(fon){const x=lerp(150,535,fq2),y=175-46*Math.sin(Math.PI*fq2),s=Math.min(eb(P(T,10.30,10.40)),1)*(1+.18*Math.sin(Math.PI*fq2))*(1-eio(P(T,10.70,10.80)));
+    fo.style.transform=`translate(${x}px,${y}px) rotate(${-8+16*fq2}deg) scale(${s})`;}
+   $('a1_face2').style.transform=`scale(${1+.08*Math.sin(Math.PI*P(T,10.70,10.86))})`;
+   const tx=$('a1_trx');vis(tx,TF>=10.70-EPS);tx.style.transform=`translateY(${12*(1-eo(P(T,10.70,10.85)))}px)`;
+   vis($('a1_trbar'),TF>=10.70-EPS);$('a1_trfill').style.width=(68*eo(P(T,10.74,11.35)))+'%';
+   $('a1_spin').style.transform=`rotate(${(T-10.7)*420}deg)`;}}
+}
+
+// ------------------------------------------------------------------ Pedro (T4 rig behind the board), sparks, flash
+function pedro(T,TF){
+ const on=TF>=14.55-EPS&&TF<16.75-EPS;$('a1_rig').style.display=on?'block':'none';
+ if(on){let ty,hk;
+  if(T<15.15){const p=P(T,14.55,15.15);ty=440*(1-eo(p));hk=eo(p);}
+  else if(T<16.45){ty=3*(1-Math.cos(2*Math.PI*(T-15.15)/.5));hk=1;}
+  else{const b=3*(1-Math.cos(2*Math.PI*1.3/.5));ty=b+(460-b)*ei(P(T,16.45,16.75));hk=1-eo(P(T,16.45,16.70));}
+  rigSet('a1_rig',ty,hk);}
+ // lime sparks at both fists (15.00)
+ for(let k=0;k<16;k++){const f=k>>3,j=k&7,t0=15,p=P(T,t0,t0+.38),e=$('a1_sp'+k);
+  const sOn=T>=t0&&p<1;vis(e,sOn);if(!sOn)continue;
+  const ang=j*45-67.5+(rnd(k+31)-.5)*16,up=Math.max(0,-Math.sin(ang*Math.PI/180));       // no streak points straight up (headline above)
+  const cx=f?708:375,cy=506,r=(20+(52+26*rnd(k+57))*eo(p))*(1-.25*up),len=(1-p)*.9+.15;
+  e.style.transform=`translate(${cx}px,${cy}px) rotate(${ang}deg) translateX(${r}px) scaleX(${len})`;e.style.opacity=p<.55?1:1-(p-.55)/.45;}
+ const fp=P(T,13.5,13.8),fl=$('a1_flash');
+ fl.style.opacity=fp<=0||fp>=1?0:fp<.2?.6*(fp/.2):.6*(1-eo((fp-.2)/.8));fl.style.transform=`scale(${.8+.3*eo(fp)})`;
+}
+
+ACTS.push({id:'A1',t0:0,t1:17.20,z:1,bg:false,html:HTML,
+ init(){
+  // ---- SFX (cue frames = the frames where the visuals hit; fc = first frame at/after a continuous event start)
+  const fc=t=>Math.ceil(t*30-1e-6)/30;
+  S(0,'stamp',1);S(0,'impact',.8);
+  S(fq(.25),'typing',.5,0,.3);
+  ROWIN.forEach((t,i)=>S(fq(t),'click',.65,0,i));
+  S(fq(2.2),'tick',.35);S(fq(2.6),'tick',.35);
+  S(2.80,'swoosh',.55);
+  S(3.0,'swoosh',.8,.35);S(fq(3.40),'tap',.55);S(fq(3.45),'tap',.7);S(fq(3.45),'heart',1);
+  HEARTS.forEach((t,k)=>S(fq(t),'plink',.3+.03*k,.35+.3*rnd(k+5)));
+  S(TY[0],'typing',.9,0,TYD);S(XT[0],'buzz',1);S(XT[0],'thock',.55);
+  S(5.0,'whoosh',.7,-.35);
+  S(V3,'paper',.9);S(fq(5.55),'pages',.9,0,.6);S(fq(6.05),'shimmer',.8,.3);S(fq(6.05),'pop',.55,.3,5);S(6.30,'postit',1,.2);
+  S(TY[1],'typing',.9,0,TYD);S(XT[1],'buzz',1);S(XT[1],'thock',.55);
+  S(7.2,'whoosh',.7,-.35);
+  S(V4,'swoosh',.6,.35);[[7.38,.44],[8.05,.24],[8.45,.24]].forEach(([t,d])=>S(fc(t),'belt',.6,0,d));HITS.forEach(H=>S(H,'press',1));   // belt hum only while it moves
+  S(TY[2],'typing',.9,0,TYD);S(XT[2],'buzz',1);S(XT[2],'thock',.55);
+  S(9.4,'whoosh',.7,-.35);
+  S(V5,'swoosh',.45);S(10.0,'pop',.55,-.25,3);S(fq(10.30),'swipe',.45,0,.4);S(10.7,'blip',.85);S(10.7,'spinner',.4,0,1.0);
+  S(TY[3],'typing',.9,0,TYD);S(XT[3],'buzz',1);S(XT[3],'thock',.6);S(11.5,'slam',.5);
+  S(11.7,'whoosh',.6,-.35);
+  // S06: one Solari clack per flip (when the falling half lands), riser to the drop, ding on the 4th ✓, crack + fall
+  for(let i=0;i<4;i++)for(let k=1;k<=3;k++)S(fc(FSt(i)+k*FLD),'clack',k===3?.8:.6,-.3+.2*i);
+  S(fq(FL0),'riser',.7,0,1.25);
+  S(fc(LAND(3)),'chime',1);
+  S(13.2,'crack',1);S(fq(13.25),'fall',.9);
+  // S07
+  S(14.2,'swoosh',.45);S(fq(14.55),'whoosh',.8);
+  S(15.0,'sparkle',.9,-.4);S(15.0,'sparkle',.8,.4);
+  PULSE.forEach(t=>S(t,'tick',.7));
+  S(fc(16.45),'swoosh',.45);S(fc(16.75),'swipe',.7,0,.35);
+  // ---- motion blur windows
+  BLUR.push([0,.26,8],[2.80,3.12,24],[3.0,3.32,32],[3.45,3.72,12],[3.94,4.11,8],[4.8,4.97,8],[5.0,5.52,32],[5.55,6.17,12],[6.05,6.44,12],[7.0,7.17,8],
+   [7.2,7.68,32],[7.68,8.96,16],[9.2,9.37,8],[9.4,9.92,32],[10.0,10.8,8],[11.4,11.72,12],[11.7,12.3,24],[12.3,13.2,12],[13.2,13.9,24],
+   [13.9,14.12,8],[14.2,14.56,16],[14.56,15.16,16],[15.0,15.42,8],[16.45,17.15,32]);
+ },
+ render(T,TF){
+  const w=$('a1_world');
+  if(TF>=17.15-EPS){w.style.display='none';return;}     // from 17.15 A2 owns the (identical) headline
+  w.style.display='block';
+  let cx=0,cy=0;const fi=Math.round(TF*30);if(fi<8){const d=6*(1-fi/8);cx=d*Math.sin(fi*2.4+.6);cy=d*.6*Math.cos(fi*1.7);}   // camera shake on the stamp
+  w.style.transform=fi<8?`translate(${cx}px,${cy}px)`:'none';
+  heads(T,TF);
+  const MB=[morph(T,TF,0),morph(T,TF,1),null,null];
+  board(T,TF,MB);
+  vg(T,TF);
+  pedro(T,TF);
+ }
+});
+})();
+
+// integrator: hero hit for the music drop (lime flash at 13.50)
+S(13.5,'impact',.9);
+
+// ==================================================================== A2
+// A2 · S08–S11 (16.75–31.85): the three receipts (real Google prints with lime / red marks), Pedro presented with the
+// hero-present T4 rig holding the two tiles (S10, the only hero-present), and the Google summary + kinetic
+// INCENTIVO / + PERSONALIZAÇÃO (S11). Entry: A1 morphs board rows 1–2 into our first headline (we own it from 17.15).
+// Exit: A3 slash-wipes over us at 31.55–31.85 (registered by A3); our last S11 frame simply holds.
+(()=>{
+const ss=q=>{q=cl(q);return q*q*(3-2*q);};                 // highlighter / pen stroke ease (smoothstep)
+const fc=t=>Math.ceil(t*30-1e-6)/30;                       // first frame at/after a continuous event start
+const fm=t=>(Math.floor((t-1/60)*30+1e-6)+1)/30;            // first frame showing a stroke that starts at t (strokes lead by half a frame; visible once p>0)
+const vis=(e,on)=>{e.style.visibility=on?'visible':'hidden';};
+
+// ------------------------------------------------------------------ the four print cards (marks in source px, from the storyboard)
+const C1=recibo('a2_c1',160,462,760,'doc4.jpg',[24,437,700,815],
+ [['L',63,446,580,488],                                                                    // lime 1  "Foco em Vendas e Resultados"
+  ['U',35,644,511,649],['U',34,688,215,693],['U',443,688,680,693],['U',34,731,170,736],    // red ×4 "métricas de vaidade… / relatórios mensais complexos"
+  ['L',236,737,584,776],['L',28,780,131,814]],{style:'z-index:8'});                        // lime 2  "gargalo do seu negócio: / faturar"
+const C2=recibo('a2_c2',160,462,760,'doc1.jpg',[20,944,660,1198],
+ [['U',65,1029,535,1034],['U',66,1069,336,1074],                                            // red  "o formato tradicional… / pacotes padronizados"
+  ['L',59,1077,515,1111],['L',59,1115,228,1152]],{style:'z-index:8'});                     // lime "equipas sob demanda formadas por / especialistas"
+const C3=recibo('a2_c3',160,890,760,'doc4.jpg',[24,1022,700,1244],
+ [['L',298,1157,541,1196],['L',28,1201,390,1240],                                           // lime "Na PK7, você fala / diretamente com o Pedro"
+  ['U',32,1195,285,1200]],{style:'z-index:8'});                                            // red  "júnior ou estagiário"
+const C4=recibo('a2_c4',160,470,760,'doc4.jpg',[24,14,700,240],
+ [['L',29,152,642,192],['L',28,197,149,236]],{style:'z-index:8'});                         // lime "modelo de incentivo e à personalização do / serviço."
+const M1=C1.marks,M2=C2.marks,M3=C3.marks,M4=C4.marks;
+
+const LEG=(id,top)=>`<div class="a legend a2lg" id="${id}" style="top:${top}px"><span><b style="background:var(--loss)"></b>VÍCIOS DAS AGÊNCIAS</span><span><b style="background:var(--lime)"></b>DIFERENCIAL PK7</span></div>`;
+const CHIPS=[['TRÁFEGO',336,925,197],['SEO/GEO',553,925,191],['IDENTIDADE VISUAL',224,1005,356],['AUTOMAÇÃO',600,1005,255]];   // storyboard rects (x, y, w): gaps 20, both rows centred on x 540
+const IC1='<svg viewBox="0 0 24 24" fill="none" stroke="#0A0F2C" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11v2a1 1 0 0 0 1 1h2l5 4V6L6 10H4a1 1 0 0 0-1 1z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M18.5 5.5a9 9 0 0 1 0 13"/></svg>';
+const IC2='<svg viewBox="0 0 24 24" fill="none" stroke="#0A0F2C" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.4 8.4 0 0 1-12.3 7.5L3 21l2-5.5A8.5 8.5 0 1 1 21 11.5z"/><path d="M9 10h.01M12 10h.01M15 10h.01" stroke-width="3.2"/></svg>';
+// tiles ride inside the rig's mover (rigid with the avatar); they cover the cut hands (source cols x=0/511, y 185–263)
+const TILES=`<div class="tile" id="a2_tl" style="left:214px;top:556px;width:200px;height:200px"><div class="ic">${IC1}</div><div><b>TRÁFEGO</b><small>META + GOOGLE</small></div></div>
+ <div class="tile" id="a2_tr" style="left:666px;top:556px;width:200px;height:200px"><div class="ic">${IC2}</div><div><b>AUTOMAÇÃO</b><small>IA NO WHATSAPP</small></div></div>`;
+
+// ------------------------------------------------------------------ timing (storyboard §5)
+const R1=[16.95,17.35];                       // receipt 1 rises (y +520→0, rot 2°→0)
+const LIME1=[17.40,17.95],PUL1=17.95,LEG1=18.10,RED1=18.10,RED1D=.17,LIME2=[19.25,19.85],PUL2=19.85;
+const PUSH1=[19.85,20.80];
+// whip-pan = ONE camera move: both cards ride the same offset X(T) (card 2 sits PAND px to the right of card 1), with a
+// velocity-continuous ease (power-4 in to the peak at ~20.975, power-4 out), so the pan never drops speed or shows a gap
+const PAN=[20.80,21.35],PANM=.32,PANN=4,PAND=950;
+const pan=T=>{const u=P(T,PAN[0],PAN[1]);return PAND*(u<PANM?PANM*Math.pow(u/PANM,PANN):1-(1-PANM)*Math.pow(1-(u-PANM)/(1-PANM),PANN));};
+// receipt hand-offs share R1→R2's grammar: the outgoing card whips out LEFT (core whipOutL: -1150·inOutCubic) while the
+// incoming one is already rising from below, so every frame holds a card in the safe zone or the outgoing whip smear
+// (inOutCubic has the card fully past x 0 ≈60% into the whip, so the rise starts early enough to be ≥50% above y 1230 by then)
+const LEG2=21.50,RED2=[21.50,22.20],LIME3=[22.30,23.00],PUL3=23.00,CH0=23.00,CHS=.12,CHD=.17,DROP2=[24.15,24.40];
+const R3=[24.20,24.55],RISE=[24.75,25.40],TROT=[25.15,25.55],TROT2=25.1833,PILL=[761/30,25.60],LIME4=[25.60,26.40],PUL5=26.40,
+      RED3=[26.80,27.20],PAR=[27.30,28.40],TUP=[28.40,28.50],DIVE=[28.45,862/30],OUT3=[862/30,28.90];  // card 3 whips only once the rig is fully below its clip (DIVE end), so the occluder never slides off a visible rig edge
+const R4=[863/30,874/30],R4D=1060,LIME5=[29.40,30.20],INC=30.25,PER=30.55,PUSH4=[30.80,31.85];   // R4 rises while card 3 whips out (same .367 s rise)
+// headline swaps: the outgoing lines drop out (bottom first), the new ones mask in as soon as they are gone (0.3 s, 0.08 s apart)
+const SW=[20.90,24.30,28.70];
+
+const HTML=`
+${HL('a2_h1',262,76,'<span class="L" id="a2_k1">✓</span> QUER <span class="L">VENDA</span>','z-index:20;visibility:hidden')}
+${HL('a2_h2',350,76,'<span class="L" id="a2_k2">✓</span> QUER <span class="L">FATURAR</span>','z-index:20;visibility:hidden')}
+${HL('a2_h3',262,76,'<span class="L" id="a2_k3">✓</span> QUER TIME','z-index:20')}
+${HL('a2_h4',350,76,'<span class="L">SOB MEDIDA</span>','z-index:20')}
+${HL('a2_h5',262,76,'<span class="L" id="a2_k5">✓</span> QUER FALAR','z-index:20')}
+${HL('a2_h6',350,76,'<span class="L">COM O PEDRO</span>','z-index:20')}
+${HL('a2_h7',262,76,'O RESUMO DA','z-index:20')}
+${HL('a2_h8',350,76,'<span class="L">IA DO GOOGLE:</span>','z-index:20')}
+<div class="a2gl" id="a2_gl" style="z-index:19;display:none"></div>
+<div class="a2w" id="a2_g1" style="z-index:8;transform-origin:540px 712px;display:none">${C1.html}${LEG('a2_lg1',Math.round(C1.bottom)+18)}</div>
+<div class="a2w" id="a2_g2" style="z-index:8;display:none">${C2.html}${LEG('a2_lg2',Math.round(C2.bottom)+18)}
+ ${CHIPS.map(([t,x,y,w],i)=>`<div class="chip a2chip" id="a2_ch${i}" style="left:${x}px;top:${y}px;width:${w}px">${t}</div>`).join('')}</div>
+<div class="a2w" id="a2_g3" style="display:none">
+ ${rigHTML({id:'a2_rig',pose:'hero-present',x:260,y:402,w:560,clip:945,occ:870,halo:{x:240,y:340,size:600},tiles:TILES,z:5})}
+ <div class="a2w" id="a2_c3w" style="z-index:8;transform-origin:540px 1058px">${C3.html}<div class="a2pill cap" id="a2_pill" style="z-index:9">PEDRO R GOMES · FUNDADOR DA PK7</div></div>
+</div>
+<div class="a2w" id="a2_g4" style="z-index:8;transform-origin:540px 760px;display:none">
+ <div class="a2w" id="a2_kc1" style="z-index:9;clip-path:inset(811px 0 0 0)"><div class="a2kt H" id="a2_inc" style="top:850px;font-size:110px;line-height:110px"><span class="L">INCENTIVO</span></div></div>
+ <div class="a2w" id="a2_kc2" style="z-index:9;clip-path:inset(964px 0 0 0)"><div class="a2kt H" id="a2_per" style="top:980px;font-size:72px;line-height:72px">+ PERSONALIZAÇÃO</div></div>
+ <div class="a2w" style="z-index:8">${C4.html}</div>
+</div>`;
+
+// ------------------------------------------------------------------ helpers
+function mark(m,q){const e=$(m.id);vis(e,q>0);e.style.transform=`scaleX(${ss(q)})`;}
+// strokes lead by half a frame so their first pixels land on the cue frame (a start on the grid would otherwise show p=0)
+const ML=1/60,PM=(T,a,b)=>P(T,a-ML,b-ML);
+// sequential sweep over several marks, time split by mark width (one continuous gesture line after line)
+function sweep(ms,t0,t1,T){const tot=ms.reduce((a,m)=>a+m.W,0);let t=t0;for(const m of ms){const d=(t1-t0)*m.W/tot;mark(m,PM(T,t,t+d));t+=d;}}
+// ✓ pulse 1→1.2 (2 frames) →1; inline-block only while pulsing (A1's hand-off markup is inline). The lime glow is a
+// separate radial blob (a2_gl, z 19, outside the .ln line mask so it is never clipped); the glyph keeps only a tight
+// ≤8 px text-shadow that fits inside the mask's .14em side padding. Pulses never overlap, so one glow element is shared.
+function pulse(id,t,T,TF){const e=$(id),on=TF>=fq(t)-EPS&&TF<t+.42;
+ if(!on){e.style.display='';e.style.transform='';e.style.textShadow='';return false;}
+ const d=Math.max(0,T-t),k=d<.06?eo(d/.06):1-eo(cl((d-.06)/.34)),s=1+.2*k;
+ e.style.display='inline-block';e.style.transform=`scale(${s})`;e.style.textShadow=`0 0 ${(8*k).toFixed(2)}px rgba(183,228,0,${(.7*k).toFixed(3)})`;
+ // glyph centre in stage px from layout offsets (transform-independent)
+ let x=e.offsetWidth/2,y=e.offsetHeight/2,n=e;while(n&&n.id!=='A2'){x+=n.offsetLeft;y+=n.offsetTop;n=n.offsetParent;}
+ const g=$('a2_gl');g.style.display='block';g.style.left=(x-GLR).toFixed(1)+'px';g.style.top=(y-GLR).toFixed(1)+'px';
+ g.style.opacity=(.95*k).toFixed(3);g.style.transform=`scale(${(.75+.25*k).toFixed(4)})`;return true;}
+const GLR=78;   // glow radius (px)
+// pop 0→1.1→1 (binary visibility)
+function popS(p){if(p<=0)return 0;return p<.6?1.1*eo(p/.6):1.1-.1*eio((p-.6)/.4);}
+function legend(id,t,T,TF){const e=$(id),on=TF>=fq(t)-EPS;vis(e,on);const p=P(T,t,t+.22);
+ e.style.transform=on&&p<1?`scale(${(.6+.4*eb(p,2)).toFixed(4)})`:'none';}
+
+ACTS.push({id:'A2',t0:16.75,t1:31.85,z:2,bg:false,html:HTML,
+ init(){
+  // ---- headline swaps (masked line rise/drop, bottom line out first)
+  const ids=[['a2_h1','a2_h2'],['a2_h3','a2_h4'],['a2_h5','a2_h6'],['a2_h7','a2_h8']];
+  SW.forEach((t,k)=>{const [o1,o2]=ids[k],[n1,n2]=ids[k+1];
+   linOut(o2,t,.2);linOut(o1,t+.03,.2);const tin=linEnd(o1,t+.03,.2);
+   lin(n1,tin,.3);lin(n2,tin+.08,.3);});
+
+  // ---- SFX (on the frames where the visuals hit)
+  S(fc(R1[0]),'whoosh',.7,.2);                                  // receipt 1 rises
+  S(fm(LIME1[0]),'marker',.8,0,LIME1[1]-LIME1[0]);              // lime 1
+  S(fc(PUL1),'tick',.7);                                        // ✓ line 1 pulse
+  for(let i=0;i<4;i++)S(fm(RED1+RED1D*i),'pen',.85,-.15+.1*i,RED1D);   // 4 red underlines
+  S(fm(LIME2[0]),'marker',.8,0,LIME2[1]-LIME2[0]);              // lime 2
+  S(fc(PUL2),'tick',.7);                                        // ✓ line 2 pulse
+  S(fc(PAN[0]),'whoosh',.95,-.3);                              // whip-pan to receipt 2
+  {const w=M2.slice(0,2),tot=w[0].W+w[1].W,d0=(RED2[1]-RED2[0])*w[0].W/tot;
+   S(fm(RED2[0]),'pen',.85,0,d0);S(fm(RED2[0]+d0),'pen',.75,0,RED2[1]-RED2[0]-d0);}   // red (2 strokes)
+  S(fm(LIME3[0]),'marker',.8,0,LIME3[1]-LIME3[0]);              // lime
+  // (no tick on the 23.00 ✓ pulse: chip 1's snap lands on the same frame and carries the beat)
+  for(let i=0;i<4;i++)S(fq(CH0+CHS*i),'snap',.8,[-.25,.25,-.2,.2][i],i);   // 4 chips snap in, rising pitch
+  S(fc(DROP2[0]),'whoosh',.95,-.3);                            // everything whips out left (like the PAN)
+  S(fc(R3[0]),'swoosh',.4,.2);                                  // receipt 3 rises
+  S(fc(RISE[0]),'whoosh',.8);                                   // Pedro rises
+  S(fc(TROT[0]),'click',.6,-.4,1);S(fc(TROT2),'click',.6,.4,3); // the two tiles open
+  S(PILL[0],'slap',.8);                                         // name pill slaps onto the card edge
+  S(fm(LIME4[0]),'marker',.8,0,LIME4[1]-LIME4[0]);              // lime
+  S(fc(PUL5),'tick',.55);                                       // ✓ pulse
+  S(fm(RED3[0]),'pen',.85,0,RED3[1]-RED3[0]);                   // red
+  S(fc(DIVE[0]),'swipe',.45,0,.3);                              // Pedro dives
+  S(fc(R4[0]),'swipe',.6,.2,.3);                                // receipt 4 swish
+  S(fm(LIME5[0]),'marker',.85,0,LIME5[1]-LIME5[0]);             // long lime swipe
+  S(fc(INC),'thock',.7);S(fc(PER),'thock',.55);                 // 2 soft low hits on the words
+
+  // ---- motion blur on the fast moves
+  BLUR.push([16.95,17.36,16],[17.95,18.05,8],[18.10,18.33,8],[20.80,21.36,32],[21.36,21.42,12],[21.50,21.73,8],
+   [23.0,23.55,8],[24.15,24.42,32],[24.42,24.78,24],[24.78,25.42,16],[25.42,25.62,8],
+   [28.40,28.73,24],[28.73,28.92,32],[28.92,29.22,24],[29.22,29.26,12],[30.23,30.6,16],[30.53,30.9,16]);
+ },
+ render(T,TF){
+  // ---------------- headlines: first pair is A1's morph target — ours from 17.15 (A1 hides at the same frame)
+  const h12=TF>=17.15-EPS;$('a2_h1').style.visibility=h12?'visible':'hidden';$('a2_h2').style.visibility=h12?'visible':'hidden';
+  const gOn=[pulse('a2_k1',PUL1,T,TF),pulse('a2_k2',PUL2,T,TF),pulse('a2_k3',PUL3,T,TF),pulse('a2_k5',PUL5,T,TF)].some(Boolean);
+  if(!gOn)$('a2_gl').style.display='none';
+
+  // ---------------- S08 · receipt 1
+  const g1=$('a2_g1'),on1=TF>=fq(R1[0])-EPS&&TF<PAN[1]-EPS;g1.style.display=on1?'block':'none';
+  if(on1){
+   const p=P(T,R1[0],R1[1]),q=eo(p);
+   $('a2_c1').style.transform=p<1?`translateY(${(520*(1-q)).toFixed(2)}px) rotate(${(2*(1-q)).toFixed(3)}deg)`:'none';
+   const k=1+.03*eio(P(T,PUSH1[0],PUSH1[1])),dx=-pan(T);
+   g1.style.transform=k===1&&dx===0?'none':`translate(${dx.toFixed(2)}px,0) scale(${k.toFixed(5)})`;
+   mark(M1[0],PM(T,LIME1[0],LIME1[1]));
+   for(let i=0;i<4;i++)mark(M1[1+i],PM(T,RED1+RED1D*i,RED1+RED1D*(i+1)));
+   sweep(M1.slice(5,7),LIME2[0],LIME2[1],T);
+   legend('a2_lg1',LEG1,T,TF);
+  }
+
+  // ---------------- S09 · receipt 2 + chips
+  const g2=$('a2_g2'),on2=TF>=fq(PAN[0])-EPS&&TF<DROP2[1]-EPS;g2.style.display=on2?'block':'none';
+  if(on2){
+   const dx=PAND-pan(T),wx=-1150*eio(P(T,DROP2[0],DROP2[1]));   // card + legend + chips whip out left together
+   $('a2_c2').style.transform=dx>0?`translateX(${dx.toFixed(2)}px)`:'none';
+   g2.style.transform=wx<0?`translateX(${wx.toFixed(2)}px)`:'none';
+   sweep(M2.slice(0,2),RED2[0],RED2[1],T);
+   sweep(M2.slice(2,4),LIME3[0],LIME3[1],T);
+   legend('a2_lg2',LEG2,T,TF);
+   for(let i=0;i<4;i++){const e=$('a2_ch'+i),t=fq(CH0+CHS*i),s=popS(P(T,t-1/30,t-1/30+CHD));vis(e,TF>=t-EPS);e.style.transform=`scale(${s.toFixed(4)})`;}
+  }
+
+  // ---------------- S10 · receipt 3 + Pedro (hero-present T4 rig, tiles cover the cut hands)
+  const g3=$('a2_g3'),on3=TF>=R3[0]-EPS&&TF<OUT3[1]-EPS;g3.style.display=on3?'block':'none';
+  if(on3){
+   const p=P(T,R3[0],R3[1]),q=eo(p),dy=700*(1-q),wx=-1150*eio(P(T,OUT3[0],OUT3[1])),rot=2*(1-q);   // rise, then whip out left
+   $('a2_c3w').style.transform=dy>0||rot>0||wx<0?`translate(${wx.toFixed(2)}px,${dy.toFixed(2)}px) rotate(${rot.toFixed(3)}deg)`:'none';
+   // name pill: slaps onto the card's top edge 1.25 → 1 (outBack, tiny undershoot)
+   const pl=$('a2_pill'),pOn=TF>=PILL[0]-EPS;vis(pl,pOn);
+   const pp=P(T,PILL[0],PILL[1]);pl.style.transform=pOn&&pp<1?`scale(${(1.25-.25*eb(pp,1.6)).toFixed(4)})`:'none';
+   sweep(M3.slice(0,2),LIME4[0],LIME4[1],T);
+   mark(M3[2],PM(T,RED3[0],RED3[1]));
+   // rig: rise (outCubic, no overshoot) → breathing (ty 0…+6, only downward) → dive (inCubic)
+   const rg=$('a2_rig'),rOn=TF>=fq(RISE[0])-EPS&&TF<DIVE[1]+.05;rg.style.display=rOn?'block':'none';
+   if(rOn){
+    const br=t=>3*(1-Math.cos(2*Math.PI*Math.max(0,t-RISE[1])/1.5));
+    let ty,hk;
+    if(T<RISE[1]){const r=P(T,RISE[0],RISE[1]);ty=560*(1-eo(r));hk=eo(r);}
+    else if(T<DIVE[0]){ty=br(T);hk=1;}
+    else{const b=br(DIVE[0]);ty=b+(560-b)*ei(P(T,DIVE[0],DIVE[1]));hk=1-eo(P(T,DIVE[0],DIVE[0]+.25));}
+    rigSet('a2_rig',ty,hk);
+    // tiles: upright while crossing the card edge, then open to ∓5° (outBack 2.6); micro-parallax; upright again before the dive
+    const up=1-eio(P(T,TUP[0],TUP[1]));
+    const rl=-5*eb(P(T,TROT[0],TROT[1]),2.6)*up,rr=5*eb(P(T,TROT2,TROT[1]),2.6)*up;
+    const pe=Math.sin(Math.PI*P(T,PAR[0],PAR[1])),ph=2*Math.PI*(T-PAR[0])/1.1;
+    const lx=2.5*pe*Math.sin(ph),ly=2*pe*Math.sin(ph*.5+1),rx=-2.5*pe*Math.sin(ph+.8),ry=2*pe*Math.sin(ph*.5+2.2);
+    $('a2_tl').style.transform=`translate(${lx.toFixed(2)}px,${ly.toFixed(2)}px) rotate(${rl.toFixed(3)}deg)`;
+    $('a2_tr').style.transform=`translate(${rx.toFixed(2)}px,${ry.toFixed(2)}px) rotate(${rr.toFixed(3)}deg)`;
+   }
+  }
+
+  // ---------------- S11 · Google summary + kinetic INCENTIVO / + PERSONALIZAÇÃO (holds until A3's slash covers it)
+  const g4=$('a2_g4'),on4=TF>=fq(R4[0])-EPS;g4.style.display=on4?'block':'none';
+  if(on4){
+   const p=P(T,R4[0],R4[1]),q=eo(p);
+   $('a2_c4').style.transform=p<1?`translateY(${(R4D*(1-q)).toFixed(2)}px) rotate(${(2*(1-q)).toFixed(3)}deg)`:'none';
+   sweep(M4,LIME5[0],LIME5[1],T);
+   const k=1+.015*eio(P(T,PUSH4[0],PUSH4[1]));g4.style.transform=k>1?`scale(${k.toFixed(5)})`:'none';
+   // the words slide down out from behind the card's bottom edge / from under INCENTIVO (clip-path masks)
+   const i0=fc(INC)-1/30,p0=fc(PER)-1/30,a=P(T,i0,i0+.36),b=P(T,p0,p0+.36),ie=$('a2_inc'),pe=$('a2_per');
+   vis(ie,TF>=fc(INC)-EPS);vis(pe,TF>=fc(PER)-EPS);
+   ie.style.transform=`translateY(${(-175*(1-eb(a,1.5))).toFixed(2)}px)`;
+   pe.style.transform=`translateY(${(-110*(1-eb(b,1.5))).toFixed(2)}px)`;
+  }
+ }
+});
+})();
+
+// ==================================================================== A3
+// A3 · S12–S13 (31.55–45.60): PROVA, NÃO PROMESSA (Appmax plaque polaroid + R$ 100 MIL column, the separate HOJE
+// +R$ 500 MIL card counting from 0, the whip-scroll to +40 / 3 continentes / 7 logos), then the hard cut to the CTA:
+// AINDA TÁ AQUI? → the 4 red lines → ENTÃO VOCÊ NÃO É / NENHUM DOS 4. → lime slash cuts the lines → T3 seal (pose-point)
+// slap-on → Google quote sticker → unsent suggested message → WhatsApp button → footer → hold to 45.6.
+// Entry: core slash wipe (registered here) reveals us right-to-left over A2 during 31.55–31.85.
+(()=>{
+const vis=(e,on)=>{e.style.visibility=on?'visible':'hidden';};
+const DS=(e,on,d='block')=>{e.style.display=on?d:'none';};
+const fc=t=>Math.ceil(t*30-1e-6)/30;                 // first frame at/after a continuous start
+const at=(TF,t)=>TF>=fc(t)-EPS;                       // discrete "has started" (frame grid)
+const popS=p=>p<=0?0:(p<.6?1.1*eo(p/.6):1.1-.1*eio((p-.6)/.4));   // 0 → 1.1 → 1
+const f2=v=>(+v).toFixed(2),f4=v=>(+v).toFixed(4);
+const AD=VAR==='ad';
+const setMask=(e,m)=>{e.style.maskImage=m;e.style.webkitMaskImage=m;};
+
+// ------------------------------------------------------------------ timing (storyboard §5, S12–S13)
+const H1=31.68,H2=31.75;                              // PROVA, / NÃO PROMESSA. — already rising as the slash uncovers them (spec 31.85)
+const POL0=31.95,POLHIT=32+5/30,POL1=32.35;            // polaroid drop (31.95–32.35), contact on frame 965
+const FOTO=32.40,MARCO=32.45,BIG=32.55,CAPT=32.70,PUSH=[32.75,36.95];
+const CARD=[34.40,34.70],CNT=[34.70,35.70],LIME500=35.70;
+const SCR=[37.00,37.30],DSC=700;                      // beats 1+2 whip up under the headline, +40 rides in with them
+const C40=[37.05,37.60],CONT=37.50,PINS=[37.65,37.75,37.85],LG0=37.90,LGS=.08,LCAP=37.92;   // caption rises with the logos (spec 38.50)
+const CUT=39.00;                                      // hard cut (scratch)
+const ROW0=39.20,ROWS=.12,ROWD=.14;                   // 4 red lines slam in from the left
+const SWAP=40.18,E1=40.25,E2=40.27;                   // AINDA TÁ AQUI? → ENTÃO VOCÊ NÃO É / NENHUM DOS 4.
+const SL=[41.05,41.20],SLT=[41.15,41.32],G=14000,FALLEND=41.95;
+// each row splits on the first moment the slash head (eo along (170,460)→(910,830)) has cleared its bottom edge:
+// 41.063 / 41.080 / 41.103 / 41.155 → split frames 41.067 / 41.100 / 41.133 / 41.167
+const TS=[0,1,2,3].map(i=>SL[0]+(SL[1]-SL[0])*(1-Math.cbrt(1-(90+90*i)/370)));
+// gravity onset bottom row first (41.155 / 41.155 / 41.165 / 41.175): the halves slide apart along the cut, then the stack
+// drops with heavier lower rows, so rows only ever move apart (0 px² overlap between rows in every frame, work_a3/fix/sim.js)
+const TG=[0,1,2,3].map(i=>Math.max(TS[i],41.145+.01*(3-i)));
+const SEAL0=41.55,HIT=41.70,SET1=42.00,HAND=HIT+4/30,FLOAT0=42.00;
+const QT=[42.05,42+5/30,42.30],MK=[42.32,42.62];
+const FLD=42.20,TYP=42.40,CPS=.035,BTN=42.50,FOOT=42.70,BR=43.40,SHINE=[43.50,44.00],RIP=44.20,STING=44.40;
+
+const OLD=['QUER CURTIDA','QUER RELATÓRIO BONITO','QUER PACOTE PRONTO','ACEITA ESTAGIÁRIO'];
+const MSG=Array.from('Oi Pedro, não sou nenhum dos 4 😄');
+const LOGOS=['cafe-fafa','idc','hebreus-barbershop','sandubao-goiano','top-fachadas','luanne-trotta','delicias-da-roca'];
+const CONTS=['AMÉRICA DO SUL','AMÉRICA DO NORTE','EUROPA'];
+// slash (170,460)→(910,830): in each row's local px the cut is x = 30+180i+2y
+const SLA=Math.atan2(370,740),SLL=Math.hypot(740,370);
+const cutX=(i,y)=>30+180*i+2*y;
+const PIECE=[0,1,2,3].map(i=>{const a=cutX(i,-40),b=cutX(i,120),a0=cutX(i,0),b0=cutX(i,80),mid=(a0+b0)/2;
+ return {L:`polygon(-40px -40px,${a}px -40px,${b}px 120px,-40px 120px)`,R:`polygon(${a}px -40px,800px -40px,800px 120px,${b}px 120px)`,
+         oL:`${f2(mid/2)}px 40px`,oR:`${f2((mid+760)/2)}px 40px`,mid,
+         pc:[{o:[mid/2,40],poly:[[0,0],[a0,0],[b0,80],[0,80]]},{o:[(mid+760)/2,40],poly:[[a0,0],[760,0],[760,80],[b0,80]]}]};});
+// halves: horizontal spread ±250 px/s + a 260–340 px/s kick along the cut normal (left half down-left, right half up-right;
+// vertical part halved so the top row never rises into the headline) → ≥73 px perpendicular gap after 4 frames.
+// Spin: left CCW, right CW, |ω| ≤ 12°/s for halves > 400 px. Gravity per row G·(.85+.1i): lower rows fall faster.
+const KICK=[0,1,2,3].map(i=>[-1,1].map(sg=>{const k=260+80*rnd(i*13+sg*7+3),len=sg<0?PIECE[i].mid:760-PIECE[i].mid;
+ return {vx:sg*(250+k/Math.sqrt(5))+(rnd(i*31+sg*5+11)-.5)*40,vy:-sg*k/Math.sqrt(5),w:sg*(4800+800*rnd(i*17+sg*3+29))/len,g:G*(.85+.1*i)*(.98+.04*rnd(i*23+sg*11+7))};}));
+const halfAt=(i,s,T)=>{const kk=KICK[i][s],tt=Math.max(0,T-TS[i]),tg=Math.max(0,T-TG[i]);return {x:kk.vx*tt,y:kk.vy*tt+.5*kk.g*tg*tg,r:kk.w*tt};};
+const halfTop=(i,s,T)=>{const h=halfAt(i,s,T),pc=PIECE[i].pc[s],th=h.r*Math.PI/180,c=Math.cos(th),sn=Math.sin(th);
+ return 470+90*i+h.y+Math.min(...pc.poly.map(([x,y])=>pc.o[1]+sn*(x-pc.o[0])+c*(y-pc.o[1])));};
+const SHARDS=[...Array(18)].map((_,k)=>{const i=k%4,yl=8+64*rnd(k*7+1),x=160+cutX(i,yl),y=470+90*i+yl,r=rnd(k*11+5);
+ return {i,x,y,vx:(rnd(k*5+2)-.5)*560,vy:-120-380*rnd(k*3+9),w:(rnd(k*9+4)-.5)*1400,sz:6+9*rnd(k*13+6),
+         c:r<.45?'#FF4D5E':r<.8?'#B7E400':'#F4F6FF',tri:rnd(k*19+8)<.5};});
+
+// ------------------------------------------------------------------ markup
+const rowInner=i=>`<div class="n">${i+1}</div><div class="t">${OLD[i]}</div><div class="ck">✕</div>`;
+// WhatsApp mark: filled bubble-with-tail, handset knocked out (evenodd) so the lime button shows through; bold SVG arrow (5 px = label stem)
+const WA=`<svg width="50" height="50" viewBox="0 0 24 24"><path fill="#0A0F2C" fill-rule="evenodd" d="M20.464 3.488A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413ZM17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347Z"/></svg>`;
+const ARW=`<svg width="38" height="30" viewBox="0 0 38 30"><path d="M3 15H33M22 4l11 11-11 11" fill="none" stroke="#0A0F2C" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+const BTN_HTML=AD?`<div class="btn a3btn a3out" id="a3_btn"><span class="a3emo">👇</span>TOQUE EM “ENVIAR MENSAGEM”</div>`
+                 :`<div class="btn a3btn" id="a3_btn">${WA}CHAMAR NO WHATSAPP${ARW}</div>`;
+const FOOT_TXT='pk7.com.br · @pedrok.ads';
+
+const HTML=`
+<div class="a3w" id="a3_s12" style="display:none">
+ ${HL('a3_h1',262,90,'PROVA,','z-index:20')}
+ ${HL('a3_h2',364,90,'<span class="L">NÃO PROMESSA.</span>','z-index:20')}
+ <div class="a3w" id="a3_ca" style="z-index:6"><div class="a3w" id="a3_g1"><div class="a3w" id="a3_b1" style="transform-origin:540px 740px">
+  <div class="a3pol" id="a3_pol"><img src="assets/plaque2.jpg" alt=""></div>
+  <div class="a3foto cap" id="a3_foto">FOTO REAL</div>
+  <div class="a3marco cap" id="a3_marco">1º MARCO</div>
+  <div class="a3big H L" id="a3_big">R$ 100 MIL</div>
+  <div class="a3capt a ml" id="a3_capt">faturados como<br>parceiro Appmax</div></div>
+  <div class="a3card" id="a3_card"><div class="a3crow"><span class="a3hoje cap">HOJE</span><span class="a3ecom">em e-commerce próprio</span></div>
+   <div class="a3num H" id="a3_num">+R$ <span id="a3_nv">0</span> MIL</div><i class="a3cfl" id="a3_cfl"></i></div>
+  <i class="a3cring" id="a3_cring"></i>
+ </div></div>
+ <div class="a3w" id="a3_cb" style="z-index:6"><div class="a3w" id="a3_g40">
+  <div class="a3r40"><span class="a3cnt H L" id="a3_cnt"><span class="a3gh">+40</span><span id="a3_n40">+0</span></span><div class="a3cl H">CLIENTES<br>ATENDIDOS</div></div>
+ </div></div>
+ ${HL('a3_c3',690,48,'3 CONTINENTES','z-index:7')}
+ <div class="a3pins" style="z-index:7">${CONTS.map((t,k)=>`<span class="a3pin cap" id="a3_p${k}"><i><b id="a3_pr${k}"></b></i>${t}</span>`).join('')}</div>
+ <div class="a3lr" style="top:820px;z-index:7">${LOGOS.slice(0,4).map((l,k)=>`<span class="lgc" id="a3_l${k}"><img src="assets/${l}.webp" alt=""></span>`).join('')}</div>
+ <div class="a3lr" style="top:914px;z-index:7">${LOGOS.slice(4).map((l,k)=>`<span class="lgc" id="a3_l${k+4}"><img src="assets/${l}.webp" alt=""></span>`).join('')}</div>
+ <div class="a hc ml a3lc" id="a3_lc" style="top:1006px;z-index:7">alguns clientes atendidos · logos reais</div>
+</div>
+<div class="a3w" id="a3_s13" style="display:none">
+ ${HL('a3_q',262,100,'AINDA TÁ <span class="L">AQUI?</span>','z-index:20;transform-origin:540px 50px')}
+ ${HL('a3_e1',262,64,'ENTÃO VOCÊ NÃO É','z-index:20')}
+ ${HL('a3_e2',340,100,'<span class="L">NENHUM DOS 4.</span>','z-index:20')}
+ ${[0,1,2,3].map(i=>`<div class="a3row" id="a3_r${i}" style="top:${470+90*i}px;z-index:${10+i}">${rowInner(i)}<i class="fx" id="a3_rf${i}"></i></div>
+  <div class="a3half" id="a3_ra${i}" style="top:${470+90*i}px;z-index:${10+i};transform-origin:${PIECE[i].oL};display:none"><div class="a3row a3in" style="clip-path:${PIECE[i].L}">${rowInner(i)}</div></div>
+  <div class="a3half" id="a3_rb${i}" style="top:${470+90*i}px;z-index:${10+i};transform-origin:${PIECE[i].oR};display:none"><div class="a3row a3in" style="clip-path:${PIECE[i].R}">${rowInner(i)}</div></div>`).join('')}
+ ${SHARDS.map((d,k)=>`<i class="a3d" id="a3_d${k}" style="width:${f2(d.sz)}px;height:${f2(d.sz*(d.tri?1:.62))}px;background:${d.c};${d.tri?'clip-path:polygon(50% 0,100% 100%,0 100%)':'border-radius:2px'};z-index:14;display:none"></i>`).join('')}
+ <div class="a3sl" id="a3_sl" style="z-index:15;display:none"></div>
+ <div class="a3glow" id="a3_glow" style="z-index:5"></div>
+ ${sealHTML({id:'a3_seal',pose:'pose-point',x:540,y:700,s:.86,rot:-3,theme:'navy',ring:'PEDRO R GOMES • PEDROK ADS',ringAt:40,z:9})}
+ <div class="a3qt" id="a3_qt" style="z-index:14"><div class="a3qh"><span class="gdot"></span>IA do Google</div>
+  <div class="a3qx">“Na PK7, você fala <b id="a3_qb">diretamente com o Pedro</b>”</div></div>
+ <div class="a3lbl cap" id="a3_lbl" style="z-index:11">SUGESTÃO DE MENSAGEM</div>
+ <div class="a3fld" id="a3_fld" style="z-index:11"><span id="a3_ftx"></span><i class="a3cur" id="a3_cur"></i>
+  <span class="a3snd"><svg width="26" height="26" viewBox="0 0 24 24"><path d="M3 20l18-8L3 4v6l12 2-12 2z" fill="#fff"/></svg></span></div>
+ <i class="a3rip" id="a3_rip" style="z-index:10"></i>
+ ${BTN_HTML.replace('id="a3_btn"','id="a3_btn" style="z-index:11"')}
+ <div class="a hc ml a3ft" id="a3_ft" style="top:1152px;z-index:11">${FOOT_TXT}</div>
+</div>`;
+
+// ------------------------------------------------------------------ seal extras (hand pop-out layer + shine), injected into the core seal SVG
+const HAND_PATH='M84 318L150 312L196 340L206 392L192 432L180 462L172 494L96 496L62 470L60 410L70 352Z',HPX=120,HPY=488;
+function sealExtras(){
+ const svg=$('a3_seal').querySelector('svg'),body=svg.querySelector('g[id^="body_stk"]'),n=body.id.slice(4),vb=svg.viewBox.baseVal,
+       cx=SP['pose-point'].cx,cy=SP['pose-point'].cy;
+ svg.querySelector('defs').insertAdjacentHTML('beforeend',
+  `<filter id="a3_hb" filterUnits="userSpaceOnUse" x="20" y="270" width="230" height="270"><feGaussianBlur stdDeviation="3"/></filter>
+   <mask id="a3_hm" maskUnits="userSpaceOnUse" x="20" y="270" width="230" height="270"><path d="${HAND_PATH}" fill="#fff" filter="url(#a3_hb)"/></mask>
+   <linearGradient id="a3_shg" gradientUnits="userSpaceOnUse" x1="${cx-260}" y1="${cy-260}" x2="${cx+260}" y2="${cy+260}">
+    <stop offset=".44" stop-color="#fff" stop-opacity="0"/><stop offset=".485" stop-color="#fff" stop-opacity=".14"/><stop offset=".5" stop-color="#fff" stop-opacity=".34"/><stop offset=".515" stop-color="#fff" stop-opacity=".14"/><stop offset=".56" stop-color="#fff" stop-opacity="0"/></linearGradient>`);
+ // the hand + sleeve, re-drawn on top with the SAME disc/pop mask (so it never shows more of the source than the base does),
+ // scaled about the sleeve end for the 1.06 → 1 pop; identical to the base while k = 1
+ body.insertAdjacentHTML('beforeend',`<g id="a3_hand"><g mask="url(#a3_hm)"><image href="${AVURL('pose-point')}" width="512" height="512" mask="url(#m${n})"/></g></g>`);
+ svg.insertAdjacentHTML('beforeend',`<rect id="a3_shr" x="${vb.x}" y="${vb.y}" width="${vb.width}" height="${vb.height}" fill="url(#a3_shg)" mask="url(#gm${n})" style="display:none"/>`);
+}
+
+ACTS.push({id:'A3',t0:31.55,t1:46.6,z:3,bg:true,html:HTML,
+ init(){
+  TRANS.push({t:31.70,cw:.15,out:'A2',inc:'A3'});
+  sealExtras();
+  // warm the image cache/decoder for everything that first appears mid-act
+  ['assets/plaque2.jpg',AVURL('pose-point'),POPURL('pose-point'),...LOGOS.map(l=>`assets/${l}.webp`)].forEach(u=>{const im=new Image();im.src=u;if(im.decode)im.decode().catch(()=>{});});
+
+  // ---- headlines (masked line rise 0.3 s, 0.08 s apart)
+  lin('a3_h1',H1,.3);lin('a3_h2',H2,.3);
+  lin('a3_capt',CAPT,.3,.07);
+  lin('a3_c3',CONT,.3);
+  lin('a3_lc',LCAP,.25);
+  linOut('a3_q',SWAP,.2);lin('a3_e1',E1,.25);lin('a3_e2',E2,.23);              // both lines land by 40.50
+  lin('a3_ft',FOOT,.3);
+
+  // ---- SFX (each on the frame where the visual hits)
+  S(fq(31.55),'whooshBig',.75,-.2);                             // the lime/blue slash wipe
+  S(fc(POL0),'swoosh',.35,-.3);S(POLHIT,'slap',.85,-.25);       // polaroid "thwap"
+  S(fc(FOTO),'stamp',.7,-.35);                                  // FOTO REAL chip
+  S(fc(MARCO),'tap',.45,.3);S(fc(BIG),'thock',.75,.3);          // 1º MARCO · R$ 100 MIL punch
+  S(fc(CARD[0]),'swoosh',.55);                                  // HOJE card rises
+  S(fc(CNT[0]),'count',.55,0,CNT[1]-CNT[0]);S(fc(LIME500),'chime',.9);   // soft digital ticks + ding at +R$ 500 MIL
+  S(fc(SCR[0]),'whoosh',.75);                                   // whip-scroll to beat 3
+  S(fc(C40[0]),'count',.45,0,C40[1]-C40[0]);S(fc(C40[1]),'tick',.5);
+  S(fc(CONT),'tap',.4);
+  PINS.forEach((t,k)=>S(fc(t),'pop',.5,[-.3,0,.3][k],2+k));    // 3 pin pops
+  LOGOS.forEach((_,k)=>S(fc(LG0+LGS*k),'pop',.42,-.3+.1*k,k));  // 7 bubbly logo pops (rising pitch)
+  S(CUT,'scratch',.8);                                          // hard cut "hã?" (music also low-passes here)
+  for(let i=0;i<4;i++)S(fc(ROW0+ROWS*i+ROWD),'thock',.75,-.2+.13*i);   // the 4 line hits
+  S(fc(SWAP),'swoosh',.3);
+  S(fc(SL[0]),'swoosh',.95,.1);S(fc(TS[0]),'crack',.45);S(fc(TG[3]),'fall',.8);   // slash · first row cracks · the stack drops
+  S(HIT,'slap',1);                                              // seal "thup" (groove returns 41.55 in the music)
+  S(fc(HAND),'pop',.45,-.3,5);                                  // the pointing hand pops
+  S(QT[1],'postit',.75,.35);                                    // quote sticker slaps
+  S(fc(MK[0]),'marker',.45,.35,MK[1]-MK[0]);
+  S(fc(FLD),'swoosh',.3);
+  S(fc(TYP),'typing',.7,0,MSG.length*CPS);                      // keyboard only — never a send sound
+  S(fc(BTN),'pop',.55,0,3);
+  S(fc(SHINE[0]),'shimmer',.55);
+  S(fc(RIP),'click',.45,0,0);
+
+  // ---- motion blur on the fast moves
+  // 1st window = the A2→A3 slash wipe (bar moves ≈620 px/frame at its peak → one continuous streak instead of 3 hard bars)
+  BLUR.push([31.55,31.86,32],[31.95,32.22,16],[32.40,32.50,8],[32.55,32.66,8],[34.40,34.62,16],[35.70,35.80,8],
+   [37.00,37.31,32],[37.65,37.95,8],[37.90,38.55,8],
+   [39.00,39.10,8],[39.20,39.72,24],[40.18,40.40,8],[41.05,41.33,16],[41.15,41.80,24],
+   [41.55,41.71,24],[41.71,41.80,8],[41.83,41.93,8],[42.05,42.17,16],[42.20,42.32,8],[42.50,42.70,8]);
+ },
+ render(T,TF){
+  const s12=TF<CUT-EPS;DS($('a3_s12'),s12);DS($('a3_s13'),!s12);
+  if(s12)renderS12(T,TF);else renderS13(T,TF);
+ }
+});
+
+// =================================================================== S12 · PROVA, NÃO PROMESSA
+function renderS12(T,TF){
+ const S_=DSC*eio(P(T,SCR[0],SCR[1]));
+ // beats 1+2: one group (push-in, then whip up under the headline: static clip just below "NÃO PROMESSA.")
+ const g1on=TF<SCR[1]-EPS;DS($('a3_ca'),g1on);
+ if(g1on){
+  const k=1+.012*eio(P(T,PUSH[0],PUSH[1]));
+  $('a3_g1').style.transform=S_>0?`translateY(${f2(-S_)}px)`:'none';$('a3_b1').style.transform=`scale(${f4(k)})`;
+  // goes under a soft edge just below the headline (466 → 466+60 px feather, widening with the scroll so frame 37.00 is unchanged)
+  // (eased ramp: the last few px of the HOJE card's lime border never read as an underline)
+  const F=60*cl(S_/60);setMask($('a3_ca'),T>=SCR[0]?`linear-gradient(to bottom,transparent 466px,rgba(0,0,0,.25) ${f2(466+.6*F)}px,#000 ${f2(466+F)}px)`:'none');
+  // polaroid drop: 1.15 → .985 (contact) → 1, −10° → −4°, shadow tightening
+  const pol=$('a3_pol'),pOn=at(TF,POL0);vis(pol,pOn);
+  if(pOn){let s,r,air;
+   if(T<POLHIT){const q=Math.pow(P(T,POL0,POLHIT),1.25);s=1.15-.165*q;r=-10+5.7*q;air=1-q;}
+   else{const q=eo(P(T,POLHIT,POL1));s=.985+.015*q;r=-4.3+.3*q;air=0;}
+   const sh=at(TF,POLHIT)&&TF<POLHIT+.1?(TF<POLHIT+.05?2:-1.5):0;   // 2-frame contact jolt
+   pol.style.transform=`translate(${f2(sh-18*air)}px,${f2(46*air)}px) rotate(${f4(r)}deg) scale(${f4(s)})`;
+   pol.style.boxShadow=`0 ${f2(40+60*air)}px ${f2(80+50*air)}px -24px rgba(0,0,0,${f2(.85-.3*air)})`;}
+  // FOTO REAL chip: stamp 1.35 → 1 with a small decaying wobble (per frame)
+  const fo=$('a3_foto'),fOn=at(TF,FOTO);vis(fo,fOn);
+  if(fOn){const p=P(T,FOTO,FOTO+.2),s=1.35-.35*eo(p),pf=P(TF,FOTO,FOTO+.2),wx=pf<1?Math.sin(pf*40)*5*(1-pf):0;
+   fo.style.transform=`translateX(${f2(wx)}px) rotate(-4deg) scale(${f4(s)})`;}
+  // column: 1º MARCO pop · R$ 100 MIL punch 1.3 → 1 · caption masks (lin)
+  const mc=$('a3_marco'),mOn=at(TF,MARCO);vis(mc,mOn);
+  if(mOn)mc.style.transform=`scale(${f4(.5+.5*eb(P(T,MARCO,MARCO+.24),1.7))})`;
+  const bg=$('a3_big'),bOn=at(TF,BIG);vis(bg,bOn);
+  if(bOn){const p=P(T,BIG,BIG+.22);bg.style.transform=`scale(${f4(1.3-.3*eo(p))})`;
+   const gl=1-eo(P(T,BIG,BIG+.5));bg.style.textShadow=gl>.01?`0 0 ${f2(40*gl)}px rgba(183,228,0,${f2(.7*gl)})`:'none';}
+  // HOJE card (separate, below): rises 34.40–34.70, counts +R$ 0 → 500 MIL (outCubic) 34.70–35.70, lime + flash at 35.70
+  const cd=$('a3_card'),cOn=at(TF,CARD[0]);vis(cd,cOn);
+  const num=$('a3_num'),cfl=$('a3_cfl'),cr=$('a3_cring');
+  if(cOn){
+   cd.style.transform=`translateY(${f2(240*(1-eo(P(T,CARD[0],CARD[1]))))}px)`;
+   $('a3_nv').textContent=Math.round(500*eo(P(TF,CNT[0],CNT[1])));   // one left-aligned run (tabular digits): no gap after R$, MIL steps right only at 9→10 and 99→100
+   const lit=at(TF,LIME500);num.style.color=lit?'var(--lime)':'var(--light)';
+   if(lit){const d=T-LIME500,a=1-eo(cl(d/.35));
+    num.style.transform=`scale(${f4(1+.08*(1-eo(cl(d/.25))))})`;
+    num.style.textShadow=a>.01?`0 0 ${f2(36*a)}px rgba(183,228,0,${f2(.8*a)})`:'none';
+    cfl.style.opacity=f4(.32*a);
+    const rq=eo(cl(d/.5));vis(cr,rq<1);cr.style.opacity=f4(.85*(1-rq));
+    cr.style.transform=`scale(${f4(1+8/760*rq)},${f4(1+36/160*rq)})`;}
+   else{num.style.transform='none';num.style.textShadow='none';cfl.style.opacity=0;vis(cr,false);}
+  }else vis(cr,false);
+ }
+ // beat 3: +40 row rides the same scroll in from below (clipped under y 1170 while it travels), counts 0 → 40
+ const g40on=at(TF,SCR[0]);DS($('a3_cb'),g40on);
+ if(g40on){
+  $('a3_g40').style.transform=`translateY(${f2(DSC-S_)}px)`;
+  setMask($('a3_cb'),T<SCR[1]?'linear-gradient(to bottom,#000 1110px,transparent 1170px)':'none');   // soft edge 1110–1170 while it scrolls in
+  $('a3_n40').textContent='+'+Math.round(40*eo(P(TF,C40[0],C40[1])));
+  const d=T-C40[1],cn=$('a3_cnt');
+  cn.style.transform=at(TF,C40[1])&&d<.3?`scale(${f4(1+.06*(1-eo(cl(d/.3))))})`:'none';
+ }
+ // 3 continents: pins pop + dot ping
+ PINS.forEach((t,k)=>{const e=$('a3_p'+k),on=at(TF,t);vis(e,on);if(!on)return;
+  e.style.transform=`scale(${f4(popS(P(T,t,t+.22)))})`;
+  const r=$('a3_pr'+k),q=P(T,t,t+.45);r.style.opacity=f4(.9*(1-q));r.style.transform=`scale(${f4(1+2.2*eo(q))})`;});
+ // 7 logos pop, 0.08 s apart
+ LOGOS.forEach((_,k)=>{const t=LG0+LGS*k,e=$('a3_l'+k),on=at(TF,t);vis(e,on);
+  if(on)e.style.transform=`scale(${f4(popS(P(T,t,t+.2)))})`;});
+}
+
+// =================================================================== S13 · CTA
+function renderS13(T,TF){
+ // AINDA TÁ AQUI? — hard cut, snaps 1.2 → 1 with a 3-frame record-scratch jolt
+ {const q=$('a3_q'),p=P(T,CUT,CUT+.2),k=Math.round((TF-CUT)*30),jx=[8,-6,3][k]||0;
+  q.style.transform=`translateX(${jx}px) scale(${f4(1.2-.2*eo(p))})`;}
+ // the 4 red lines: slam in from the left, red flash + jolt on contact; each splits the frame the slash clears it, then falls
+ for(let i=0;i<4;i++){
+  const t=ROW0+ROWS*i,land=t+ROWD,r=$('a3_r'+i),ra=$('a3_ra'+i),rb=$('a3_rb'+i);
+  const whole=at(TF,t)&&!at(TF,TS[i]),split=at(TF,TS[i])&&TF<FALLEND-EPS;
+  // each half is hidden only once it was already fully below the stage a frame earlier (never an on-screen pop-out)
+  const sh=[0,1].map(s=>split&&halfTop(i,s,TF-1/30)<=1925);
+  DS(r,whole,'flex');DS(ra,sh[0]);DS(rb,sh[1]);
+  if(whole){const x=-1150*(1-eo(P(T,t,land))),kf=Math.round((TF-fc(land))*30),j=TF>=fc(land)-EPS?([-5,3,-1][kf]||0):0;
+   r.style.transform=`translateX(${f2(x+j)}px)`;
+   const fa=TF>=fc(land)-EPS?1-eo(P(T,land,land+.22)):0;$('a3_rf'+i).style.opacity=f4(.5*fa);}
+  if(split)[ra,rb].forEach((e,s)=>{if(!sh[s])return;const h=halfAt(i,s,T);
+   e.style.transform=`translate(${f2(h.x)}px,${f2(h.y)}px) rotate(${f4(h.r)}deg)`;});
+ }
+ // debris: spawned along the cut when its row splits; each shard is hidden only once it has left the stage
+ const shardAt=(d,t)=>{const tt=Math.max(0,t-TS[d.i]);return [d.x+d.vx*tt,d.y+d.vy*tt+.5*9000*tt*tt,d.w*tt];};
+ SHARDS.forEach((d,k)=>{const e=$('a3_d'+k),q=shardAt(d,TF-1/30),on=at(TF,TS[d.i])&&TF<FALLEND-EPS&&q[1]<=1950&&q[0]>-40&&q[0]<1120;DS(e,on);if(!on)return;
+  const [x,y,w]=shardAt(d,T);e.style.transform=`translate(${f2(x)}px,${f2(y)}px) rotate(${f2(w)}deg)`;});
+ // lime slash 41.05–41.20 (head), tail retracts 41.15–41.32
+ {const b=eo(P(T,SL[0],SL[1])),a=eio(P(T,SLT[0],SLT[1])),e=$('a3_sl'),on=at(TF,SL[0])&&b-a>.015;DS(e,on);
+  if(on){
+   e.style.width=f2(Math.max(0,b-a)*SLL+16)+'px';
+   e.style.transform=`rotate(${f4(SLA*180/Math.PI)}deg) translateX(${f2(a*SLL-8)}px)`;}}
+ // T3 seal (pose-point): slap-on 41.55–42.00 (1.35 → .96 → 1, +14° → −3°, shadow tightening, 3 px jolt), hand pops
+ // 4 frames after contact, gentle float (±4 px / ±0.8° per 2 s), sting pulse at 44.40
+ const se=$('a3_seal'),sOn=at(TF,SEAL0);vis(se,sOn);
+ if(sOn){let s,r,air;
+  let dy=0;
+  if(T<HIT){const u=Math.pow(P(T,SEAL0,HIT),1.4);s=1.35-.39*u;r=17*(1-u);air=1-u;dy=75*(1-u);}   // accelerates into the hit; die-cut top ≥ y 455
+  else{const q=P(T,HIT,SET1);s=.96+.04*eo(q);r=-1.2*Math.sin(Math.PI*cl(q*1.4))*(1-q);air=0;}
+  const kf=Math.round((TF-HIT)*30),jx=TF>=HIT-EPS?([3,-3,2,-1.5,1][kf]||0):0,jy=TF>=HIT-EPS?([-2,2,-1,1,0][kf]||0):0;
+  const ramp=eio(P(T,FLOAT0,FLOAT0+.8)),ph=2*Math.PI*(T-FLOAT0)/2,fy=4*Math.sin(ph)*ramp,fr=.8*Math.sin(ph+1.2)*ramp-.8*Math.sin(1.2)*ramp;
+  const sp=1+.035*Math.sin(Math.PI*P(T,STING,STING+.32));
+  se.style.transform=`translate(${f2(jx)}px,${f2(jy+fy+dy)}px) rotate(${f4(r+fr)}deg) scale(${f4(s*sp)})`;
+  se.style.filter=`drop-shadow(0 ${f2(5+22*air)}px ${f2(5+26*air)}px rgba(1,4,20,${f2(.45-.2*air)})) drop-shadow(0 ${f2(30+70*air)}px ${f2(38+52*air)}px rgba(1,4,20,${f2(.55-.25*air)}))`;
+  const hp=T-HAND,hk=hp<0?1:hp<.07?1+.06*eo(hp/.07):1+.06*(1-eio(cl((hp-.07)/.25)));
+  $('a3_hand').setAttribute('transform',hk!==1?`translate(${HPX} ${HPY}) scale(${f4(hk)}) translate(${-HPX} ${-HPY})`:'');
+  // shine: linear −210 → +210 (band enters the die-cut on the shimmer cue and crosses it in ~14 frames)
+  const sh=$('a3_shr'),shp=P(T,SHINE[0],SHINE[1]),shOn=T>=SHINE[0]&&T<SHINE[1];DS(sh,shOn);
+  if(shOn){const d=-210+420*shp;$('a3_shg').setAttribute('gradientTransform',`translate(${f2(d)} ${f2(d)})`);}
+ }
+ // lime glow behind the seal: contact "thup" and final sting
+ {const g=$('a3_glow'),a1=T>=HIT?.42*(1-eo(P(T,HIT,HIT+.45))):0,a2=T>=STING?.5*Math.sin(Math.PI*P(T,STING,STING+.6)):0,a=Math.max(a1,a2);
+  g.style.opacity=f4(a);g.style.transform=`scale(${f4(T>=STING?.85+.3*eo(P(T,STING,STING+.6)):.8+.35*eo(P(T,HIT,HIT+.45)))})`;}
+ // Google quote sticker: slaps tilted the other way (+6°), then the lime marker sweeps
+ {const e=$('a3_qt'),on=at(TF,QT[0]);vis(e,on);
+  if(on){let s,r;if(T<QT[1]){const q=P(T,QT[0],QT[1]);s=1.3-.33*q;r=6+12*(1-q);}else{const q=eo(P(T,QT[1],QT[2]));s=.97+.03*q;r=6;}
+   const kf=Math.round((TF-QT[1])*30),jx=TF>=QT[1]-EPS?([2,-2,1][kf]||0):0;
+   e.style.transform=`translateX(${jx}px) rotate(${f4(r)}deg) scale(${f4(s)})`;
+   e.style.boxShadow=T<QT[1]?`0 ${f2(22+40*(1-P(T,QT[0],QT[1])))}px ${f2(34+30*(1-P(T,QT[0],QT[1])))}px -8px rgba(1,4,20,.5)`:'';
+   $('a3_qb').style.backgroundSize=`${f2(100*eio(P(T,MK[0],MK[1])))}% 100%`;}}
+ // suggested message field (rises), typing 0.035 s/char, cursor; NEVER sent
+ {const on=at(TF,FLD),f=$('a3_fld'),lb=$('a3_lbl');vis(f,on);vis(lb,on);
+  if(on){const y=50*(1-eo(P(T,FLD,FLD+.25)));f.style.transform=`translateY(${f2(y)}px)`;lb.style.transform=`translateY(${f2(y)}px)`;
+   const n=TF<TYP-EPS?0:Math.min(MSG.length,Math.floor((TF-TYP)/CPS+1e-6)+1);$('a3_ftx').textContent=MSG.slice(0,n).join('');
+   const typing=n>0&&n<MSG.length,done=n>=MSG.length,t0=done?TYP+MSG.length*CPS:FLD;
+   vis($('a3_cur'),typing||Math.floor((TF-t0)*2+1e-6)%2===0);}}
+ // WhatsApp button (org) / outline "toque em enviar mensagem" (ad): spring 0.8 → 1.04 → 1, breathing from 43.40, ripple 44.20
+ {const b=$('a3_btn'),on=at(TF,BTN);vis(b,on);
+  if(on){const p=P(T,BTN,BTN+.36);let s=p<.45?.8+.24*eo(p/.45):1.04-.04*eio((p-.45)/.55);
+   if(T>=BR)s*=1+.015*(1-Math.cos(2*Math.PI*(T-BR)/.8));
+   if(T>=RIP)s*=1-.025*Math.sin(Math.PI*P(T,RIP,RIP+.2));
+   b.style.transform=`scale(${f4(s)})`;}
+  const rp=$('a3_rip'),ron=T>=RIP&&T<RIP+.7;vis(rp,ron);
+  if(ron){const q=P(T,RIP,RIP+.7),ex=10*eo(q),ey=26*eo(q);
+   Object.assign(rp.style,{left:f2(175-ex)+'px',top:f2(1036-ey)+'px',width:f2(730+2*ex)+'px',height:f2(96+2*ey)+'px',opacity:f4(.75*(1-q))});}}
+}
+})();
+
+// integrator: final lime sting SFX on the visual sting pulse (music sting is aligned to it)
+S(44.4,'sting',1);
+
+boot();window.render(0);
+</script>
+</body></html>
