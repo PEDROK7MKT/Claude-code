@@ -6,11 +6,11 @@ export default {
   shortName: 'Ferramentas',
   seo: {
     title: 'Ferramentas e Furadeiras em Barreiras-BA | Pereira Luz & Cor',
-    description: 'Furadeira, parafusadeira, maquita, discos, brocas, alicates e colher de pedreiro no Jardim Ouro Branco, Barreiras-BA. Monte sua lista e peça orçamento no WhatsApp.',
+    description: 'Furadeira, parafusadeira, maquita, discos, brocas e alicates no Jardim Ouro Branco, em Barreiras-BA. Monte sua lista no site e peça orçamento pelo WhatsApp.',
   },
   h1: 'Ferramentas em Barreiras',
   kicker: 'Manuais, elétricas, discos e brocas para obra, reforma e reparo',
-  intro: 'Na Pereira Luz & Cor, no bairro Jardim Ouro Branco, em Barreiras, você encontra ferramentas manuais e elétricas para obra, reforma e manutenção: alicates, jogos de chaves, colher de pedreiro, desempenadeira, trena, furadeira de impacto, parafusadeira a bateria, esmerilhadeira (a famosa maquita) e serra mármore, além de discos, brocas e bits. Atendemos pedreiro, eletricista, encanador, produtor rural e quem faz o próprio reparo em casa. Monte sua lista no site e envie pelo WhatsApp, ou passe no balcão.',
+  intro: 'Na Pereira Luz & Cor, no bairro Jardim Ouro Branco, em Barreiras, você encontra ferramentas manuais e elétricas para obra, reforma e manutenção: alicates, colher de pedreiro, furadeira de impacto, parafusadeira a bateria, esmerilhadeira e serra mármore (as duas que muita gente chama de maquita), discos e brocas. Atendemos pedreiro, eletricista, encanador, produtor rural e quem faz o próprio reparo. Monte sua lista no site e envie pelo WhatsApp, ou passe no balcão: a gente confirma disponibilidade, modelo e orçamento.',
   cardBlurb: 'Furadeira, maquita, discos, brocas, alicates e colher de pedreiro para obra e reparo.',
   highlights: [
     'Ajuda para acertar o disco e a broca',
@@ -83,7 +83,7 @@ export default {
     },
     {
       name: 'Discos para maquita e serra mármore',
-      description: 'O disco tem que combinar com o material: o de corte, fino, só corta; o de desbaste, grosso, tira rebarba e solda; o flap lixa e dá acabamento; e o diamantado corta piso, cerâmica, pedra e concreto. O tamanho mais comum é 4.1/2" (115 mm) com furo de 22,23 mm, e a rotação máxima impressa no disco precisa ser igual ou maior que a da máquina.',
+      description: 'O disco tem que combinar com a máquina e com o material: o de corte, fino, só corta; o de desbaste, grosso, tira rebarba e solda; o flap lixa e dá acabamento; e o diamantado corta piso, cerâmica, pedra e concreto. Na esmerilhadeira mais comum, o disco é de 4.1/2" (115 mm) com furo de 22,23 mm; a serra mármore usa só disco diamantado, de 105 ou 110 mm, conforme o manual. Em qualquer caso, a rotação máxima impressa no disco tem que ser igual ou maior que a da máquina.',
       items: [
         'Disco de corte para aço 4.1/2" (115 mm)',
         'Disco de corte fino para inox 4.1/2"',
@@ -94,6 +94,7 @@ export default {
         'Disco diamantado turbo',
         'Escova de aço tipo copo para esmerilhadeira',
         'Disco de corte 7" e 9" para esmerilhadeira grande',
+        'Disco diamantado 110 mm para serra mármore',
       ],
     },
     {
@@ -142,7 +143,7 @@ export default {
   faq: [
     {
       q: 'Por que a esmerilhadeira é chamada de maquita?',
-      a: 'Maquita é o apelido popular da esmerilhadeira angular, a máquina de disco usada para cortar ferro, tirar rebarba, desbastar solda e, com disco diamantado, cortar piso e pedra. O apelido veio do nome de um fabricante que ficou muito conhecido e acabou virando sinônimo da ferramenta. No balcão, pode pedir por "maquita" sem problema; o que importa é saber o tamanho do disco, que na maioria das máquinas de uso geral é de 4.1/2 polegadas (115 mm).',
+      a: 'Maquita é um apelido que vem da marca Makita, que ficou tão conhecida no Brasil que o nome virou sinônimo de máquina de disco: muita gente chama de maquita tanto a esmerilhadeira angular, que corta ferro, tira rebarba e desbasta solda, quanto a serra mármore, que corta piso, pedra e concreto. Ao pedir no balcão, diga qual das duas é e o tamanho do disco: a esmerilhadeira mais comum usa disco de 4.1/2" (115 mm), e a serra mármore, disco diamantado de 105 ou 110 mm, conforme o manual.',
     },
     {
       q: 'Qual a diferença entre furadeira de impacto, parafusadeira e martelete?',
@@ -158,7 +159,7 @@ export default {
     },
     {
       q: 'Serra mármore corta porcelanato?',
-      a: 'Sim, a serra mármore corta porcelanato, cerâmica, granito e pedra, desde que você use um disco diamantado próprio para o material: no porcelanato, o disco contínuo (de borda lisa) dá corte mais limpo e lasca menos. Se o manual da máquina prevê corte com água, cortar molhado reduz poeira e aquecimento. No corte a seco, a poeira tem sílica: use máscara PFF2, óculos e protetor auricular, que você encontra em <a href="/utilidades-e-epi/">Utilidades e EPI</a>.',
+      a: 'Sim, a serra mármore corta porcelanato, cerâmica, granito e pedra, desde que você use um disco diamantado próprio para o material: no porcelanato, o disco contínuo (de borda lisa) dá corte mais limpo e lasca menos. Muitos discos contínuos são feitos para corte com água: siga a marcação do disco e só corte molhado se o manual da serra permitir. No corte a seco, a poeira tem sílica: use máscara PFF2, óculos e protetor auricular, que você encontra em <a href="/utilidades-e-epi/">Utilidades e EPI</a>.',
     },
     {
       q: 'Furadeira 3/8 ou 1/2: qual a diferença?',

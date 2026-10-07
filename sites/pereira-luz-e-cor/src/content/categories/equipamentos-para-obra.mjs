@@ -6,9 +6,9 @@ export default {
   shortName: 'Equipamentos',
   seo: {
     title: 'Escadas e Compressores em Barreiras-BA | Pereira Luz & Cor',
-    description: 'Escada de alumínio, compressor de ar, lavadora de alta pressão, carrinho de mão, pá e enxada no Jardim Ouro Branco, Barreiras-BA. Peça orçamento no WhatsApp.',
+    description: 'Escada de alumínio, compressor, lavadora de alta pressão e carrinho de mão, com ajuda para escolher, no Jardim Ouro Branco, Barreiras-BA. Peça no WhatsApp.',
   },
-  h1: 'Equipamentos para obra em Barreiras',
+  h1: 'Escadas, compressores e equipamentos para obra em Barreiras',
   kicker: 'Escada, compressor, lavadora, carrinho de mão e ferramenta de campo',
   intro: 'Na Pereira Luz & Cor, no bairro Jardim Ouro Branco, em Barreiras, você encontra equipamentos para obra, reforma e roça: escada de alumínio doméstica, tesoura e extensível, carrinho de mão, compressor de ar com mangueira, calibrador e pistola de pintura, lavadora de alta pressão, pá, enxada, picareta, cavadeira, rastelo, balde de pedreiro, masseira e peneira. Atendemos pedreiro, pintor, produtor rural e quem cuida da própria casa. Monte sua lista no site e envie pelo WhatsApp, ou passe no balcão.',
   cardBlurb: 'Escada de alumínio, compressor, lavadora, carrinho de mão, pá, enxada e masseira.',
@@ -20,7 +20,7 @@ export default {
   groups: [
     {
       name: 'Escadas de alumínio',
-      description: 'A escada doméstica fica em pé sozinha, tem plataforma e alça de apoio e serve para trocar lâmpada, limpar e pintar dentro de casa; a tesoura também é de abrir, não tem plataforma e é muito usada por pintor e gesseiro; a extensível tem dois lances que correm um sobre o outro e trabalha encostada na parede para alcançar muro, fachada e telhado. Escolha pela altura de alcance e pela carga máxima da etiqueta, e lembre que alumínio conduz eletricidade.',
+      description: 'Escada doméstica e tesoura para serviço dentro de casa, extensível para muro, fachada e telhado, e articulada para quem precisa das duas funções. Escolha pela altura de alcance e pela carga máxima da etiqueta, e lembre que alumínio conduz eletricidade.',
       items: [
         'Escada doméstica de alumínio 3 degraus',
         'Escada doméstica de alumínio 5 degraus',
@@ -46,12 +46,12 @@ export default {
     },
     {
       name: 'Compressores de ar',
-      description: 'O compressor de ar direto, sem reservatório, é compacto e resolve encher pneu, bola e boia e pintura leve com pistola própria; o compressor com reservatório guarda ar no tanque e aguenta pistola de pintura, bico de limpeza e ferramenta pneumática. Compare a vazão (pés³/min), a pressão máxima (PSI ou lbf/pol²), o tamanho do tanque em litros e a tensão: muitos modelos são só 127 V ou só 220 V.',
+      description: 'O compressor de ar direto, sem reservatório, é compacto e serve para encher pneu, bola e boia e para pintura leve com a pistola do próprio kit; o compressor com reservatório guarda ar no tanque e aguenta pistola de pintura, bico de limpeza e ferramenta pneumática. Confira a tensão da sua tomada antes de levar: muitos modelos são só 127 V ou só 220 V.',
       items: [
         'Compressor de ar direto (sem reservatório)',
         'Compressor de ar com reservatório de 25 L',
         'Compressor de ar com reservatório de 50 L',
-        'Compressor de ar com reservatório de 100 L ou mais',
+        'Compressor de ar com reservatório de 100 L ou mais (consulte disponibilidade)',
         'Compressor de ar portátil 12 V (tomada do carro)',
         'Óleo para compressor (conforme o manual)',
       ],
@@ -74,7 +74,7 @@ export default {
     },
     {
       name: 'Lavadoras de alta pressão',
-      description: 'A lavadora de alta pressão limpa carro, moto, calçada, quintal, piso e máquina com jato forte e, em geral, gasta menos água que a mangueira aberta, porque trabalha com vazão menor. Compare a pressão em libras (lbf/pol²), a vazão em litros por hora e a tensão, e ligue sempre em tomada com aterramento; bicos e mangueiras de reposição variam por modelo, então traga a referência da sua máquina.',
+      description: 'Lavadora de alta pressão para carro, moto, calçada, quintal e máquina, que em geral gasta menos água que a mangueira aberta, o que pesa na época da seca. Bico turbo, aplicador de espuma e mangueiras de reposição variam por modelo, então traga a referência da sua máquina.',
       items: [
         'Lavadora de alta pressão de uso doméstico',
         'Lavadora de alta pressão para uso intenso',
@@ -117,7 +117,7 @@ export default {
   faq: [
     {
       q: 'Qual escada de alumínio comprar para usar em casa?',
-      a: 'Para trocar lâmpada, limpar e pintar dentro de casa, a escada doméstica de alumínio com 4 a 6 degraus costuma atender os tetos residenciais mais comuns, de cerca de 2,6 m a 2,8 m. Para muro, fachada e telhado, a indicada é a extensível. Na hora de escolher, compare a altura de alcance informada pelo fabricante com a altura do serviço e confira a <strong>carga máxima</strong> da etiqueta, que soma o seu peso com o material que você leva.',
+      a: 'Para trocar lâmpada, limpar e pintar dentro de casa, a escada doméstica de alumínio de 3 a 5 degraus costuma atender os tetos residenciais mais comuns, de cerca de 2,5 m a 2,8 m. Para muro, fachada e telhado, a indicada é a extensível. Na hora de escolher, compare a altura de alcance informada pelo fabricante com a altura do serviço e confira a <strong>carga máxima</strong> da etiqueta, que soma o seu peso com o material que você leva.',
     },
     {
       q: 'Qual a diferença entre escada doméstica, tesoura e extensível?',
@@ -125,15 +125,15 @@ export default {
     },
     {
       q: 'Posso usar escada de alumínio perto de fiação elétrica?',
-      a: 'Não. O alumínio conduz eletricidade, e encostar a escada em fio energizado, no padrão de entrada ou na rede da rua pode causar choque grave. Perto de fiação, use escada de fibra de vidro limpa e seca (consulte disponibilidade) e deixe qualquer serviço na instalação com um eletricista qualificado, com o circuito desligado. Acima de 2 m de altura, o serviço já é trabalho em altura pela NR-35 e pede proteção contra queda; veja os EPIs em <a href="/utilidades-e-epi/">Utilidades e EPI</a>.',
+      a: 'Não é seguro: o alumínio conduz eletricidade, e encostar a escada em fio energizado, no padrão de entrada ou na rede da rua pode causar choque grave. Perto da instalação da casa, use escada de fibra de vidro limpa e seca (consulte disponibilidade) e deixe a parte elétrica com eletricista qualificado, com o circuito desligado. Serviço ou poda junto à rede da rua é com a concessionária. Acima de 2 m, a NR-35 trata o serviço como trabalho em altura; capacete e botina estão em <a href="/utilidades-e-epi/">Utilidades e EPI</a>.',
     },
     {
       q: 'Quantos litros e quantos PSI precisa ter um compressor de ar?',
-      a: 'Depende do serviço: para calibrar pneu de carro e moto e encher bola, um compressor de ar direto ou um portátil 12 V resolve; para pistola de pintura, bico de limpeza e ferramenta pneumática, escolha um compressor com reservatório. <strong>PSI</strong> (lbf/pol²) é a pressão máxima, <strong>litros</strong> é o tamanho do tanque e <strong>pés³/min</strong> é a vazão, que é o número que mais pesa na pintura: ela precisa ficar acima do consumo de ar da pistola. Para uso frequente, tanque maior faz o motor ligar menos vezes.',
+      a: 'Para calibrar pneu de carro e moto e encher bola, um compressor de ar direto, que em geral chega a uns 40 PSI, ou um portátil 12 V resolve; para pistola de pintura, bico de limpeza e ferramenta pneumática, escolha um com reservatório, a partir de uns 25 litros, que costuma trabalhar até 120 a 140 PSI. Na pintura, pesa mais a <strong>vazão</strong> (pés³/min), que precisa ficar acima do consumo de ar da pistola, com folga. O tamanho do tanque, em <strong>litros</strong>, só faz o motor ligar menos vezes.',
     },
     {
       q: 'Qual lavadora de alta pressão comprar para casa?',
-      a: 'Para lavar carro, moto, calçada, quintal e piso, uma lavadora de uso doméstico atende; para lavar máquina, galpão e curral todo dia, prefira um modelo para uso intenso. Compare a pressão em libras (lbf/pol²), a vazão em litros por hora e a tensão, e ligue em tomada com aterramento. Em geral, ela gasta menos água que a mangueira aberta, o que pesa na época da seca. De perto, o jato pode arrancar rejunte e descascar pintura: comece com o bico aberto e afastado.',
+      a: 'Para lavar carro, moto, calçada, quintal e piso, uma lavadora de uso doméstico atende; para lavar máquina, galpão e curral todo dia, prefira um modelo para uso intenso. Compare a pressão em libras (lbf/pol²), a vazão em litros por hora e a tensão. Ligue em tomada com aterramento, em circuito com DR, que a NBR 5410 exige para tomada em área externa (instalação é com eletricista qualificado), e nunca aponte o jato para tomada, fiação, motor elétrico, pessoas ou animais. De perto, o jato arranca rejunte e pintura: comece afastado.',
     },
     {
       q: 'Carrinho de mão com pneu maciço ou com câmara: qual é melhor?',
@@ -141,7 +141,7 @@ export default {
     },
     {
       q: 'Qual ferramenta usar para cavar buraco de mourão ou de cerca?',
-      a: 'A cavadeira articulada é a ferramenta certa para buraco de mourão, estaca de cerca e poste: as duas lâminas cortam a terra e, ao fechar os cabos, tiram o solo de dentro do buraco. Em chão duro ou com cascalho, solte antes com a cavadeira reta, o enxadão ou a picareta, e molhe a terra se ela estiver muito seca. Para valeta e alicerce, enxadão e pá rendem mais. Luvas e botina ficam em <a href="/utilidades-e-epi/">Utilidades e EPI</a>.',
+      a: 'A cavadeira articulada é a ferramenta certa para buraco de mourão, estaca de cerca e poste: crave as lâminas no chão com os cabos juntos e depois afaste os cabos, que as lâminas se fecham, prendem a terra e você puxa o solo para fora. Em chão duro ou com cascalho, solte antes com a cavadeira reta, o enxadão ou a picareta, e molhe a terra se ela estiver muito seca. Para valeta e alicerce, enxadão e pá rendem mais. Luvas e botina ficam em <a href="/utilidades-e-epi/">Utilidades e EPI</a>.',
     },
   ],
   relatedGuides: ['como-pintar-parede-passo-a-passo', 'wd-40-para-que-serve'],

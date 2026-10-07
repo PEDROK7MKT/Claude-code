@@ -34,7 +34,7 @@ export default {
     },
     {
       name: 'Óculos, protetor auricular e máscara PFF2',
-      description: 'Os óculos de proteção seguram lasca, faísca, poeira e respingo de cal e de tinta: lente incolor para ambiente interno e lente cinza com proteção UV para trabalhar no sol forte (lente escura comum não serve para solda). O protetor auricular é para maquita, como muita gente chama a esmerilhadeira, martelete, serra mármore e roçadeira. A máscara PFF2 filtra poeira de lixamento e de corte de cerâmica e concreto, mas não segura vapor de solvente nem de tinta spray.',
+      description: 'Os óculos de proteção seguram lasca, faísca, poeira e respingo de cal e de tinta: lente incolor para ambiente interno e lente cinza com proteção UV para trabalhar no sol forte (lente escura comum não serve para solda). Use protetor auricular com a maquita (apelido que o povo dá tanto à esmerilhadeira quanto à serra mármore), o martelete e a roçadeira. A máscara PFF2 filtra poeira de lixamento e de corte de cerâmica e concreto, mas não segura vapor de solvente nem de tinta spray.',
       items: [
         'Óculos de proteção lente incolor',
         'Óculos de proteção lente cinza com proteção UV',
@@ -50,13 +50,14 @@ export default {
     },
     {
       name: 'Capacete e botina',
-      description: 'O capacete protege a cabeça de material que cai e de batida em viga, laje e andaime: escolha com aba frontal ou aba total, ajuste a carneira e use a jugular em altura e com vento. Troque o casco depois de pancada forte, trinca ou ressecamento, ou no prazo indicado pelo fabricante. A botina de segurança com biqueira protege contra prego e peso que cai no pé; para eletricista, existem modelos sem partes metálicas, próprios para risco elétrico (confira no CA).',
+      description: 'O capacete protege a cabeça de material que cai e de batida em viga, laje e andaime: escolha com aba frontal ou aba total, ajuste a carneira e use a jugular em altura e com vento. Troque o casco depois de pancada forte, trinca ou ressecamento, ou no prazo indicado pelo fabricante. A biqueira da botina de segurança protege os dedos contra peso que cai e contra esmagamento; contra prego, a botina precisa ter palmilha antiperfuração, que nem todo modelo tem (confira no CA e na etiqueta). Para eletricista, existem modelos sem partes metálicas, próprios para risco elétrico (confira no CA).',
       items: [
         'Capacete de segurança com aba frontal',
         'Capacete de segurança com aba total',
         'Carneira (suspensão) de reposição para capacete',
         'Jugular (tira de queixo) para capacete',
         'Botina de segurança de couro com biqueira',
+        'Botina de segurança com palmilha antiperfuração (consulte)',
         'Botina de segurança sem partes metálicas (consulte)',
       ],
     },

@@ -198,7 +198,7 @@ export function home(ctx) {
       <ul class="hero__trust" data-hero-in style="--d:480ms">
         <li>${icon('pin', { size: 18 })}${esc(site.address.street)}</li>
         <li class="open-badge open-badge--hero" data-open-badge>${icon('clock', { size: 18 })}${esc(hoursRows()[0].label)}: ${esc(hoursRows()[0].value)}</li>
-        <li>${icon('pix', { size: 18 })}${esc(site.payment.slice(0, 2).join(' e '))}</li>
+        <li>${icon('pix', { size: 18 })}${esc(site.payment.map((x, i) => (i ? x.charAt(0).toLowerCase() + x.slice(1) : x)).slice(0, 2).join(' e '))}</li>
       </ul>
     </div>
     ${heroArt()}
@@ -582,7 +582,7 @@ export function faqHub(ctx) {
   const crumbs = [HOME, { name: 'Perguntas frequentes', path }]
   const sf = storeFaq(ctx.categories)
   const title = 'Perguntas Frequentes | Pereira Luz & Cor em Barreiras-BA'
-  const description = `Endereço, horário, formas de pagamento, orçamento pelo WhatsApp e dúvidas técnicas sobre elétrica, tintas, ferramentas e hidráulica na ${site.name}, em Barreiras.`
+  const description = `Endereço, horário, pagamento, orçamento pelo WhatsApp e dúvidas de elétrica, tintas, ferramentas e hidráulica respondidas pela ${site.name}, em Barreiras.`
   const body = `
 <section class="phero">
   <div class="phero__bg" aria-hidden="true"><div class="hero__grid"></div><span class="phero__icon">${icon('info', { size: 420, sw: 0.6 })}</span></div>
@@ -635,8 +635,8 @@ ${ctaBand()}`
 export function about(ctx) {
   const path = '/sobre/'
   const crumbs = [HOME, { name: 'A loja', path }]
-  const title = 'Sobre a Pereira Luz & Cor | Loja de Elétrica e Tintas em Barreiras'
-  const description = `Conheça a ${site.name}: loja nova de materiais elétricos, tintas, ferramentas e ferragens no bairro ${site.address.neighborhood}, em Barreiras-BA. Atendimento de balcão e WhatsApp.`
+  const title = 'Sobre a Pereira Luz & Cor | Elétrica e Tintas em Barreiras'
+  const description = `Conheça a ${site.name}: loja nova de materiais elétricos, tintas, ferramentas e ferragens no ${site.address.neighborhood}, em Barreiras-BA.`
   const body = `
 <section class="phero">
   <div class="phero__bg" aria-hidden="true"><div class="hero__grid"></div><span class="phero__icon">${icon('store', { size: 420, sw: 0.6 })}</span></div>
@@ -709,7 +709,7 @@ export function contact(ctx) {
   const path = '/contato/'
   const crumbs = [HOME, { name: 'Contato', path }]
   const title = 'Contato e Como Chegar | Pereira Luz & Cor Barreiras-BA'
-  const description = `${site.name}: ${addressLine()}. WhatsApp ${site.phoneDisplay}. Veja horário de funcionamento, mapa e como chegar à loja.`
+  const description = `Endereço, WhatsApp, horário e mapa da ${site.name}: ${site.address.street} – ${site.address.neighborhood}, ${site.address.city}-${site.address.state}. Veja como chegar à loja.`
   const body = `
 <section class="phero">
   <div class="phero__bg" aria-hidden="true"><div class="hero__grid"></div><span class="phero__icon">${icon('pin', { size: 420, sw: 0.6 })}</span></div>
@@ -743,6 +743,17 @@ export function contact(ctx) {
     </form>
   </div>
   <div class="wrap" data-reveal>${mapBlock()}</div>
+</section>
+<section class="section">
+  <div class="wrap faq-home__grid">
+    <div class="prose prose--dark">
+      <h2 id="como-chegar">Como chegar à loja</h2>
+      <p>A ${esc(site.name)} fica no <strong>número 55 da Rua São Francisco</strong>, no lado ímpar da rua, que pertence ao bairro <strong>${esc(site.address.neighborhood)}</strong>. A Rua São Francisco faz a divisa entre o ${esc(site.address.neighborhood)} e o Sandra Regina, numa região de comércio próxima ao Centro de ${esc(site.address.city)}.</p>
+      <p>Procure a <strong>fachada preta com faixa amarela</strong> e o letreiro “Pereira”. No celular, toque em <a href="${directionsUrl()}" target="_blank" rel="noopener">Traçar rota</a> para abrir o caminho no Google Maps a partir de onde você estiver.</p>
+      <p>Se estiver vindo de outra cidade da região, mande sua lista antes pelo WhatsApp <strong>${esc(site.phoneDisplay)}</strong>: a equipe confirma o que tem disponível e separa o material para você retirar sem perder viagem.</p>
+    </div>
+    ${faqList(storeFaq(ctx.categories).slice(0, 3), { id: 'faq-contato' })}
+  </div>
 </section>
 <section class="section area">
   <div class="wrap">

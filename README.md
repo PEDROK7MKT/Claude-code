@@ -51,3 +51,10 @@ Vite sozinho (build `npm run build`, output `dist`). Nada mais a configurar.
 
 No celular, abra a URL publicada e use "Adicionar à tela de início" para ter
 o app com ícone próprio.
+
+## Sites de clientes
+
+- [`sites/pereira-luz-e-cor/`](sites/pereira-luz-e-cor/) — site estático da
+  Pereira Luz & Cor (Barreiras-BA), com SEO local, GEO e AEO. Veja o README e
+  a pasta `docs/` (checklist de publicação, kit do Perfil da Empresa no Google
+  e estratégia).

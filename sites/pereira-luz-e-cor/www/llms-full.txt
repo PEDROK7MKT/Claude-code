@@ -264,7 +264,7 @@ Itens: Tinta spray uso geral (várias cores); Tinta spray metálica (prata, dour
 
 ### Rolos, pincéis, trinchas e bandejas
 
-Rolo de lã para tinta látex e acrílica em parede (pelo mais alto para reboco e textura, mais baixo para parede lisa), rolo de espuma para esmalte e verniz em superfície lisa, e trincha e pincel para recorte, canto e moldura. Com o extensor, dá para pintar o teto sem ficar subindo e descendo da escada.
+Rolo de lã para látex PVA e tinta acrílica em parede (pelo mais alto para reboco e textura, mais baixo para parede lisa), rolo de espuma para esmalte e verniz em superfície lisa, e trincha e pincel para recorte, canto e moldura. Com o extensor, dá para pintar o teto sem ficar subindo e descendo da escada.
 
 Itens: Rolo de lã 23 cm pelo alto (reboco e textura); Rolo de lã 23 cm pelo baixo (parede lisa); Rolo antirrespingo para teto; Rolo de espuma pequeno para esmalte e verniz; Pincel de 1, 2 e 3 polegadas; Trincha para recorte e moldura (várias larguras); Bandeja para pintura; Extensor (cabo) para rolo; Suporte e refil de rolo.
 
@@ -282,13 +282,13 @@ Parede rebocada precisa curar antes da tinta, em geral pelo menos 28 dias (confi
 
 Aqui no Oeste Baiano o sol esquenta a parede e a tinta seca rápido demais, deixando marca de emenda: pinte a fachada de manhã cedo ou no fim da tarde, com a parede na sombra. Na temporada de chuva, entre novembro e março, só pinte área externa sem previsão de chuva para as horas seguintes, e confira na lata os limites de temperatura e umidade. Em fachada, use sempre tinta acrílica, nunca PVA.
 
-### Dica: Portão de ferro: ferrugem fora antes do esmalte
+### Dica: Compre a tinta toda de uma vez
 
-Esmalte passado por cima de ferrugem solta descasca logo. Lixe ou escove até tirar a ferrugem, limpe pó e gordura, passe o fundo anticorrosivo e só depois o esmalte. Dilua com o diluente da embalagem (em geral aguarrás para esmalte sintético) e não deixe a fita crepe comum dias no sol, porque ela gruda e deixa cola.
+A cor pode variar um pouco de um lote para outro, e a diferença aparece na parede. Faça a conta antes na calculadora de tinta, compre tudo de uma vez, confira se as latas são do mesmo lote e, em parede grande, misture as embalagens num balde antes de começar. E não deixe a fita crepe comum dias no sol: ela gruda e deixa cola no rodapé e no batente.
 
 ### Quantas latas de tinta eu preciso para pintar um quarto?
 
-Um quarto de 3 × 4 m, com 2,6 m de pé-direito, uma porta e uma janela, tem cerca de 33 m² de parede, sem contar o teto. Com duas demãos em parede lisa, a conta fica perto de 6 a 7 litros, ou uns 2 galões de 3,6 L; reboco sem massa e troca de cor escura para clara pedem mais. Faça a conta do seu cômodo na calculadora de tinta e veja o guia quantas latas de tinta preciso.
+Um quarto de 3 × 4 m, com 2,60 m de pé-direito, uma porta e uma janela, tem 33,52 m² de parede e pede cerca de 6,7 litros para duas demãos em parede lisa, já com 10% de margem: 2 galões de 3,6 L. Reboco sem massa e cor escura coberta com clara pedem mais. A estimativa é conservadora, porque o rendimento real varia por marca e linha e vem impresso na lata. Calcule seu cômodo na calculadora de tinta ou leia o guia quantas latas de tinta preciso.
 
 ### Qual a diferença entre tinta acrílica e látex PVA?
 
@@ -296,11 +296,11 @@ A tinta acrílica resiste melhor à chuva, ao sol e à limpeza e pode ser usada 
 
 ### Posso usar massa corrida na parede externa ou no banheiro?
 
-Não. A massa corrida PVA é feita para parede interna seca e, com umidade, pode estufar e descascar. Em fachada, muro, banheiro, cozinha e área de serviço, use massa acrílica, que resiste à água. Nas duas, aplique em camadas finas, espere secar, lixe e tire o pó antes de pintar. Veja o guia massa corrida ou massa acrílica.
+Não: a massa corrida PVA é feita para parede interna seca e, com umidade, pode estufar e descascar; em fachada, muro, banheiro, cozinha e área de serviço, use massa acrílica, que resiste à água. Nas duas, aplique em camadas finas, espere secar, lixe e tire o pó antes de pintar. Veja o guia massa corrida ou massa acrílica.
 
 ### Tinta fosca, acetinada ou semibrilho: qual escolher?
 
-Escolha pelo cômodo: a fosca disfarça imperfeições e vai bem em sala, quarto e teto; a acetinada tem leve brilho e é mais fácil de limpar, boa para corredor, quarto de criança e cozinha; a semibrilho é a mais lavável, indicada para área de muito uso e úmida, mas realça defeitos, então a parede precisa estar bem lisa. O passo a passo está no guia como pintar parede.
+Escolha pelo cômodo: a fosca disfarça imperfeições e vai bem em sala, quarto e teto; a acetinada tem leve brilho e é mais fácil de limpar, boa para corredor, quarto de criança e cozinha; a semibrilho é a mais lavável, indicada para área de muito uso e úmida, mas realça defeitos, então a parede precisa estar bem lisa. Para deixar a parede lisa antes da tinta, veja o passo a passo no guia como pintar parede.
 
 ### Como pintar portão de ferro enferrujado?
 
@@ -312,13 +312,13 @@ Aplique camadas finas, com a lata sempre em movimento e de 20 a 30 cm da peça (
 
 ### Onde comprar tinta e massa corrida em Barreiras?
 
-Na Pereira Luz & Cor, na Rua São Francisco, 55, bairro Jardim Ouro Branco. A loja é nova e trabalha com tinta acrílica, látex PVA, esmalte, verniz, massa corrida, massa acrílica, textura, tinta para piso, tinta spray e os acessórios de pintura. Monte sua lista aqui no site e envie pelo WhatsApp para receber o orçamento, ou passe no balcão para tirar dúvidas. Veja como chegar na página de contato.
+Na Pereira Luz & Cor, na Rua São Francisco, 55, bairro Jardim Ouro Branco, em Barreiras, uma loja nova que trabalha com tinta acrílica, látex PVA, esmalte, verniz, massa corrida, massa acrílica, textura, tinta para piso, tinta spray e os acessórios de pintura. Monte sua lista aqui no site e envie pelo WhatsApp para receber o orçamento e confirmar a disponibilidade, ou passe no balcão para tirar dúvidas. Veja como chegar na página de contato.
 
 ---
 
 ## Ferramentas — https://www.pereiraluzecor.com.br/ferramentas/
 
-Na Pereira Luz & Cor, no bairro Jardim Ouro Branco, em Barreiras, você encontra ferramentas manuais e elétricas para obra, reforma e manutenção: alicates, jogos de chaves, colher de pedreiro, desempenadeira, trena, furadeira de impacto, parafusadeira a bateria, esmerilhadeira (a famosa maquita) e serra mármore, além de discos, brocas e bits. Atendemos pedreiro, eletricista, encanador, produtor rural e quem faz o próprio reparo em casa. Monte sua lista no site e envie pelo WhatsApp, ou passe no balcão.
+Na Pereira Luz & Cor, no bairro Jardim Ouro Branco, em Barreiras, você encontra ferramentas manuais e elétricas para obra, reforma e manutenção: alicates, colher de pedreiro, furadeira de impacto, parafusadeira a bateria, esmerilhadeira e serra mármore (as duas que muita gente chama de maquita), discos e brocas. Atendemos pedreiro, eletricista, encanador, produtor rural e quem faz o próprio reparo. Monte sua lista no site e envie pelo WhatsApp, ou passe no balcão: a gente confirma disponibilidade, modelo e orçamento.
 
 ### Alicates, chaves e martelos
 
@@ -346,9 +346,9 @@ Itens: Furadeira de impacto com mandril 3/8" ou 1/2"; Parafusadeira/furadeira a 
 
 ### Discos para maquita e serra mármore
 
-O disco tem que combinar com o material: o de corte, fino, só corta; o de desbaste, grosso, tira rebarba e solda; o flap lixa e dá acabamento; e o diamantado corta piso, cerâmica, pedra e concreto. O tamanho mais comum é 4.1/2" (115 mm) com furo de 22,23 mm, e a rotação máxima impressa no disco precisa ser igual ou maior que a da máquina.
+O disco tem que combinar com a máquina e com o material: o de corte, fino, só corta; o de desbaste, grosso, tira rebarba e solda; o flap lixa e dá acabamento; e o diamantado corta piso, cerâmica, pedra e concreto. Na esmerilhadeira mais comum, o disco é de 4.1/2" (115 mm) com furo de 22,23 mm; a serra mármore usa só disco diamantado, de 105 ou 110 mm, conforme o manual. Em qualquer caso, a rotação máxima impressa no disco tem que ser igual ou maior que a da máquina.
 
-Itens: Disco de corte para aço 4.1/2" (115 mm); Disco de corte fino para inox 4.1/2"; Disco de desbaste 4.1/2"; Disco flap grão 40, 60, 80 e 120; Disco diamantado segmentado (corte a seco); Disco diamantado contínuo (porcelanato e cerâmica); Disco diamantado turbo; Escova de aço tipo copo para esmerilhadeira; Disco de corte 7" e 9" para esmerilhadeira grande.
+Itens: Disco de corte para aço 4.1/2" (115 mm); Disco de corte fino para inox 4.1/2"; Disco de desbaste 4.1/2"; Disco flap grão 40, 60, 80 e 120; Disco diamantado segmentado (corte a seco); Disco diamantado contínuo (porcelanato e cerâmica); Disco diamantado turbo; Escova de aço tipo copo para esmerilhadeira; Disco de corte 7" e 9" para esmerilhadeira grande; Disco diamantado 110 mm para serra mármore.
 
 ### Brocas, bits e serras copo
 
@@ -376,7 +376,7 @@ Aqui no Oeste Baiano, a poeira do período seco entra pelas aberturas de ventila
 
 ### Por que a esmerilhadeira é chamada de maquita?
 
-Maquita é o apelido popular da esmerilhadeira angular, a máquina de disco usada para cortar ferro, tirar rebarba, desbastar solda e, com disco diamantado, cortar piso e pedra. O apelido veio do nome de um fabricante que ficou muito conhecido e acabou virando sinônimo da ferramenta. No balcão, pode pedir por "maquita" sem problema; o que importa é saber o tamanho do disco, que na maioria das máquinas de uso geral é de 4.1/2 polegadas (115 mm).
+Maquita é um apelido que vem da marca Makita, que ficou tão conhecida no Brasil que o nome virou sinônimo de máquina de disco: muita gente chama de maquita tanto a esmerilhadeira angular, que corta ferro, tira rebarba e desbasta solda, quanto a serra mármore, que corta piso, pedra e concreto. Ao pedir no balcão, diga qual das duas é e o tamanho do disco: a esmerilhadeira mais comum usa disco de 4.1/2" (115 mm), e a serra mármore, disco diamantado de 105 ou 110 mm, conforme o manual.
 
 ### Qual a diferença entre furadeira de impacto, parafusadeira e martelete?
 
@@ -392,7 +392,7 @@ Para concreto, tijolo e reboco, use broca de vídia (ponta de metal duro) na fur
 
 ### Serra mármore corta porcelanato?
 
-Sim, a serra mármore corta porcelanato, cerâmica, granito e pedra, desde que você use um disco diamantado próprio para o material: no porcelanato, o disco contínuo (de borda lisa) dá corte mais limpo e lasca menos. Se o manual da máquina prevê corte com água, cortar molhado reduz poeira e aquecimento. No corte a seco, a poeira tem sílica: use máscara PFF2, óculos e protetor auricular, que você encontra em Utilidades e EPI.
+Sim, a serra mármore corta porcelanato, cerâmica, granito e pedra, desde que você use um disco diamantado próprio para o material: no porcelanato, o disco contínuo (de borda lisa) dá corte mais limpo e lasca menos. Muitos discos contínuos são feitos para corte com água: siga a marcação do disco e só corte molhado se o manual da serra permitir. No corte a seco, a poeira tem sílica: use máscara PFF2, óculos e protetor auricular, que você encontra em Utilidades e EPI.
 
 ### Furadeira 3/8 ou 1/2: qual a diferença?
 
@@ -406,17 +406,17 @@ Para uso doméstico e manutenção, um multímetro digital que meça tensão alt
 
 ## Hidráulica — https://www.pereiraluzecor.com.br/hidraulica/
 
-Na Pereira Luz & Cor, no bairro Jardim Ouro Branco, em Barreiras, você encontra material hidráulico para obra, reforma e conserto: tubos e conexões de PVC para água e esgoto, registros, torneiras, duchas higiênicas, flexíveis, sifões, mangueira por metro e caixa d'água de polietileno com boia e adaptadores. Atendemos morador, encanador, pedreiro e produtor rural no balcão e pelo WhatsApp: monte sua lista no site, envie e a gente confirma medidas, disponibilidade e orçamento.
+Na Pereira Luz & Cor, no bairro Jardim Ouro Branco, em Barreiras, você encontra material hidráulico para obra, reforma e conserto: tubos e conexões de PVC para água e esgoto, registros, torneiras, duchas higiênicas, flexíveis, sifões, mangueira por metro, caixa d'água de polietileno, torneira de boia e adaptadores. Atendemos morador, encanador, pedreiro e produtor rural no balcão e pelo WhatsApp: monte sua lista no site, envie e a gente confirma medidas, disponibilidade e orçamento.
 
 ### Tubos e conexões para água fria
 
-O tubo marrom soldável é o da água fria. As medidas mais usadas em casa são 20 mm (corresponde à rosca de 1/2"), 25 mm (3/4") e 32 mm (1"). As conexões são coladas com adesivo para PVC, e as peças com rosca ou bucha de latão fazem a ligação com torneira, registro e chuveiro.
+O tubo marrom soldável é o da água fria, e as medidas mais usadas em casa são 20 mm (equivale à rosca de 1/2"), 25 mm (3/4") e 32 mm (1"). As conexões são coladas com adesivo para PVC, e as peças com rosca ou bucha de latão fazem a ligação com torneira, registro e chuveiro.
 
 Itens: Tubo PVC soldável 20 mm; Tubo PVC soldável 25 mm; Tubo PVC soldável 32 mm; Joelho 90° soldável (20, 25 e 32 mm); Tê soldável; Luva soldável; Bucha de redução soldável; Adaptador soldável curto com bolsa e rosca; Joelho 90° soldável com bucha de latão (ponto de torneira e chuveiro); Cap (tampão) soldável.
 
 ### Esgoto e ralos
 
-O tubo branco é o de esgoto e trabalha sem pressão, só pela inclinação. Em geral, 40 mm atende lavatório e chuveiro, 50 mm atende pia de cozinha e máquina de lavar, e 100 mm é o do vaso sanitário e da tubulação principal. Conforme a linha, as conexões são soldadas ou de junta elástica, com anel de borracha.
+O tubo branco de esgoto trabalha sem pressão, só pela inclinação: em geral, 40 mm atende lavatório e chuveiro, 50 mm atende pia de cozinha e máquina de lavar, e 100 mm é o do vaso sanitário e da tubulação principal. Conforme a linha, as conexões são soldadas ou de junta elástica, com anel de borracha.
 
 Itens: Tubo de esgoto PVC 40 mm; Tubo de esgoto PVC 50 mm; Tubo de esgoto PVC 100 mm; Joelho 45° e 90° para esgoto; Junção simples para esgoto; Luva de correr (para conserto); Ralo sifonado com grelha; Caixa sifonada.
 
@@ -428,7 +428,7 @@ Itens: Registro de gaveta 1/2" e 3/4" (base); Registro de pressão 1/2" e 3/4" (
 
 ### Duchas, flexíveis, sifões e válvulas
 
-As peças que ligam pia, lavatório, tanque e vaso ao ponto de água e ao esgoto: ducha higiênica, engate flexível, sifão para segurar o mau cheiro que vem do esgoto e válvula de escoamento. Os chuveiros elétricos ficam na seção de Materiais Elétricos.
+Engate flexível, sifão (que segura o mau cheiro do esgoto) e válvula de escoamento ligam pia, lavatório, tanque e vaso ao ponto de água e ao esgoto; aqui também ficam as duchas higiênicas. Os chuveiros elétricos estão na seção de Materiais Elétricos.
 
 Itens: Ducha higiênica com registro; Engate flexível 1/2" para torneira e caixa acoplada (30, 40 e 50 cm); Sifão sanfonado universal; Sifão de copo para lavatório; Válvula de escoamento para lavatório; Válvula americana para cuba de cozinha; Válvula para tanque.
 
@@ -452,7 +452,7 @@ Itens: Adesivo plástico para PVC; Solução limpadora para PVC; Lixa d'água pa
 
 ### Dica: Traga a peça velha (ou uma foto com a trena do lado)
 
-Reparo de torneira, base de registro, boia e flexível mudam de rosca, medida e modelo, e a diferença às vezes é de poucos milímetros. Traga a peça antiga ou mande no WhatsApp uma foto com a trena encostada: assim a gente acerta a medida antes de você fechar a parede ou abrir o registro geral.
+Reparo de torneira, base de registro, boia e flexível mudam de rosca, medida e modelo, e a diferença às vezes é de poucos milímetros. Traga a peça antiga ou mande no WhatsApp uma foto com a trena encostada: assim a gente acerta a medida de primeira, antes de você fechar a parede ou deixar a casa sem água esperando a peça certa.
 
 ### Dica: Cola na junta soldável, veda-rosca na rosca
 
@@ -460,7 +460,7 @@ Na junta soldável, lixe a ponta do tubo e a bolsa da conexão até tirar o bril
 
 ### Dica: Caixa d'água pede base inteira e tampa fechada
 
-Uma caixa de 1.000 litros cheia pesa cerca de uma tonelada, então a base precisa ser plana, nivelada, firme e maior que o fundo da caixa, sem apoiar só em ripas ou vigas com vão. Mantenha a tampa bem encaixada para não virar criadouro do mosquito da dengue, principalmente na época das chuvas, e siga o manual do fabricante na instalação e na limpeza.
+Uma caixa de 1.000 litros cheia pesa cerca de uma tonelada, então a base precisa ser plana, nivelada, firme e maior que o fundo da caixa, sem apoiar só em ripas ou vigas com vão; em laje, torre ou estrutura elevada, confirme com um engenheiro ou pedreiro experiente se ela aguenta o peso. Mantenha a tampa bem encaixada para não virar criadouro do mosquito da dengue, principalmente na época das chuvas, e siga o manual do fabricante na instalação e na limpeza.
 
 ### Qual a diferença entre registro de gaveta e registro de pressão?
 
@@ -468,11 +468,11 @@ O registro de gaveta serve para abrir ou fechar totalmente a água de um trecho,
 
 ### Tubo de 20 mm é a mesma coisa que 1/2 polegada?
 
-Na prática, sim: no PVC soldável marrom, o tubo de 20 mm é o que corresponde à rosca de 1/2", o de 25 mm à de 3/4" e o de 32 mm à de 1". O número em milímetros é o diâmetro externo do tubo, e a polegada é a medida da rosca de torneira, registro e flexível. Para passar de um para o outro, use adaptador soldável com rosca ou joelho com bucha de latão.
+Equivale: no PVC soldável marrom, o tubo de 20 mm é o que corresponde à rosca de 1/2", o de 25 mm à de 3/4" e o de 32 mm à de 1". O número em milímetros é o diâmetro externo do tubo, e a polegada é a medida da rosca de torneira, registro e flexível. Para passar de um para o outro, use adaptador soldável com rosca ou joelho com bucha de latão.
 
 ### Qual tamanho de caixa d'água eu preciso para a minha casa?
 
-Uma conta comum é multiplicar o número de moradores pelo consumo diário de cada um, que projetos costumam estimar entre 150 e 200 litros, e escolher uma caixa que guarde pelo menos um dia de uso. Para quatro pessoas, isso dá de 600 a 800 litros, por isso a de 1.000 litros é a mais procurada. Se a água falta com frequência na sua rua, vale ter reserva para mais dias. Veja a conta completa em qual tamanho de caixa d'água.
+Uma conta comum é multiplicar o número de moradores pelo consumo diário de cada um, que projetos costumam estimar entre 150 e 200 litros, e escolher uma caixa que guarde pelo menos um dia de uso. Para quatro pessoas, isso dá de 600 a 800 litros, e a caixa de 1.000 litros atende com folga. Se falta água com frequência na sua rua, vale ter reserva para dois dias, sem exagerar, para a água não ficar parada demais. Veja a conta completa em qual tamanho de caixa d'água.
 
 ### Vocês vendem mangueira por metro?
 
@@ -480,15 +480,15 @@ Sim, a mangueira é vendida por metro, então você leva só o comprimento de qu
 
 ### Precisa fechar o registro da ducha higiênica depois de usar?
 
-Sim, o recomendado é fechar o registro da ducha higiênica depois de cada uso. Com ele aberto, o flexível e o gatilho ficam sob pressão o tempo todo, o que força as vedações e pode causar vazamento ou rompimento do flexível, inclusive com a casa vazia. Por isso a ducha deve ser instalada com registro próprio. Na hora de comprar, confira a medida da rosca do ponto de água, que costuma ser de 1/2".
+Sim: o recomendado é fechar o registro da ducha higiênica depois de cada uso, porque, com ele aberto, o flexível e o gatilho ficam sob pressão o tempo todo, o que força as vedações e pode causar vazamento ou rompimento do flexível, inclusive com a casa vazia. Por isso a ducha deve ser instalada com registro próprio. Na hora de comprar, confira a medida da rosca do ponto de água, que costuma ser de 1/2".
 
 ### Posso usar cano marrom de PVC para água quente?
 
-Não: o tubo PVC soldável marrom é feito para água fria, e com água quente ele amolece, deforma e pode soltar nas conexões. Na saída de aquecedor solar, a gás ou boiler, use tubo próprio para água quente, como CPVC ou PPR, seguindo o projeto e o manual do aquecedor. O chuveiro elétrico é diferente, porque esquenta a água dentro dele, depois do cano, e por isso é ligado normalmente na rede de água fria.
+Não: o tubo PVC soldável marrom é feito só para água fria e, com água quente, amolece, deforma e pode soltar nas conexões; na saída de aquecedor solar, a gás ou boiler, use tubo próprio para água quente, como CPVC ou PPR, seguindo o projeto e o manual do aquecedor. O chuveiro elétrico é diferente, porque esquenta a água dentro dele, depois do cano, e por isso é ligado normalmente na rede de água fria.
 
-### Vocês têm chuveiro elétrico e resistência?
+### Onde comprar material hidráulico em Barreiras?
 
-Sim, chuveiros elétricos, duchas e resistências ficam na seção de Materiais Elétricos, porque a escolha depende da tensão (127 V ou 220 V), da potência e do fio do circuito. Na parte hidráulica da instalação entram o registro de pressão, o joelho com bucha de latão no ponto e a fita veda-rosca. Antes de comprar, veja qual fio usar no chuveiro elétrico.
+Em Barreiras, a Pereira Luz & Cor fica na Rua São Francisco, 55, no Jardim Ouro Branco, e trabalha com material hidráulico para obra e conserto: tubos e conexões de PVC para água e esgoto, registros, torneiras, duchas higiênicas, flexíveis, sifões, mangueira por metro e caixa d'água. A loja é nova: monte sua lista aqui no site e envie pelo WhatsApp, com a medida ou uma foto da peça, ou passe no balcão. Veja como chegar na página de contato.
 
 ---
 
@@ -498,7 +498,7 @@ Na Pereira Luz & Cor, no bairro Jardim Ouro Branco, em Barreiras, você encontra
 
 ### Escadas de alumínio
 
-A escada doméstica fica em pé sozinha, tem plataforma e alça de apoio e serve para trocar lâmpada, limpar e pintar dentro de casa; a tesoura também é de abrir, não tem plataforma e é muito usada por pintor e gesseiro; a extensível tem dois lances que correm um sobre o outro e trabalha encostada na parede para alcançar muro, fachada e telhado. Escolha pela altura de alcance e pela carga máxima da etiqueta, e lembre que alumínio conduz eletricidade.
+Escada doméstica e tesoura para serviço dentro de casa, extensível para muro, fachada e telhado, e articulada para quem precisa das duas funções. Escolha pela altura de alcance e pela carga máxima da etiqueta, e lembre que alumínio conduz eletricidade.
 
 Itens: Escada doméstica de alumínio 3 degraus; Escada doméstica de alumínio 5 degraus; Escada doméstica de alumínio 7 degraus; Escada tesoura de alumínio (vários tamanhos); Escada extensível de alumínio (2 lances); Escada articulada multifuncional de alumínio.
 
@@ -510,9 +510,9 @@ Itens: Carrinho de mão com caçamba metálica e pneu com câmara; Carrinho de m
 
 ### Compressores de ar
 
-O compressor de ar direto, sem reservatório, é compacto e resolve encher pneu, bola e boia e pintura leve com pistola própria; o compressor com reservatório guarda ar no tanque e aguenta pistola de pintura, bico de limpeza e ferramenta pneumática. Compare a vazão (pés³/min), a pressão máxima (PSI ou lbf/pol²), o tamanho do tanque em litros e a tensão: muitos modelos são só 127 V ou só 220 V.
+O compressor de ar direto, sem reservatório, é compacto e serve para encher pneu, bola e boia e para pintura leve com a pistola do próprio kit; o compressor com reservatório guarda ar no tanque e aguenta pistola de pintura, bico de limpeza e ferramenta pneumática. Confira a tensão da sua tomada antes de levar: muitos modelos são só 127 V ou só 220 V.
 
-Itens: Compressor de ar direto (sem reservatório); Compressor de ar com reservatório de 25 L; Compressor de ar com reservatório de 50 L; Compressor de ar com reservatório de 100 L ou mais; Compressor de ar portátil 12 V (tomada do carro); Óleo para compressor (conforme o manual).
+Itens: Compressor de ar direto (sem reservatório); Compressor de ar com reservatório de 25 L; Compressor de ar com reservatório de 50 L; Compressor de ar com reservatório de 100 L ou mais (consulte disponibilidade); Compressor de ar portátil 12 V (tomada do carro); Óleo para compressor (conforme o manual).
 
 ### Mangueiras, bicos e pistolas para compressor
 
@@ -522,7 +522,7 @@ Itens: Mangueira de ar trançada (por metro); Mangueira de ar espiral com engate
 
 ### Lavadoras de alta pressão
 
-A lavadora de alta pressão limpa carro, moto, calçada, quintal, piso e máquina com jato forte e, em geral, gasta menos água que a mangueira aberta, porque trabalha com vazão menor. Compare a pressão em libras (lbf/pol²), a vazão em litros por hora e a tensão, e ligue sempre em tomada com aterramento; bicos e mangueiras de reposição variam por modelo, então traga a referência da sua máquina.
+Lavadora de alta pressão para carro, moto, calçada, quintal e máquina, que em geral gasta menos água que a mangueira aberta, o que pesa na época da seca. Bico turbo, aplicador de espuma e mangueiras de reposição variam por modelo, então traga a referência da sua máquina.
 
 Itens: Lavadora de alta pressão de uso doméstico; Lavadora de alta pressão para uso intenso; Bico turbo (rotativo) para piso e calçada; Aplicador de detergente (espuma); Mangueira de alta pressão de reposição; Mangueira de jardim e engate rápido para alimentar a lavadora.
 
@@ -546,7 +546,7 @@ Aqui no Oeste Baiano, terra grudada na enxada e na pá segura umidade e enferruj
 
 ### Qual escada de alumínio comprar para usar em casa?
 
-Para trocar lâmpada, limpar e pintar dentro de casa, a escada doméstica de alumínio com 4 a 6 degraus costuma atender os tetos residenciais mais comuns, de cerca de 2,6 m a 2,8 m. Para muro, fachada e telhado, a indicada é a extensível. Na hora de escolher, compare a altura de alcance informada pelo fabricante com a altura do serviço e confira a carga máxima da etiqueta, que soma o seu peso com o material que você leva.
+Para trocar lâmpada, limpar e pintar dentro de casa, a escada doméstica de alumínio de 3 a 5 degraus costuma atender os tetos residenciais mais comuns, de cerca de 2,5 m a 2,8 m. Para muro, fachada e telhado, a indicada é a extensível. Na hora de escolher, compare a altura de alcance informada pelo fabricante com a altura do serviço e confira a carga máxima da etiqueta, que soma o seu peso com o material que você leva.
 
 ### Qual a diferença entre escada doméstica, tesoura e extensível?
 
@@ -554,15 +554,15 @@ A doméstica e a tesoura são escadas de abrir, que ficam em pé sozinhas: a dom
 
 ### Posso usar escada de alumínio perto de fiação elétrica?
 
-Não. O alumínio conduz eletricidade, e encostar a escada em fio energizado, no padrão de entrada ou na rede da rua pode causar choque grave. Perto de fiação, use escada de fibra de vidro limpa e seca (consulte disponibilidade) e deixe qualquer serviço na instalação com um eletricista qualificado, com o circuito desligado. Acima de 2 m de altura, o serviço já é trabalho em altura pela NR-35 e pede proteção contra queda; veja os EPIs em Utilidades e EPI.
+Não é seguro: o alumínio conduz eletricidade, e encostar a escada em fio energizado, no padrão de entrada ou na rede da rua pode causar choque grave. Perto da instalação da casa, use escada de fibra de vidro limpa e seca (consulte disponibilidade) e deixe a parte elétrica com eletricista qualificado, com o circuito desligado. Serviço ou poda junto à rede da rua é com a concessionária. Acima de 2 m, a NR-35 trata o serviço como trabalho em altura; capacete e botina estão em Utilidades e EPI.
 
 ### Quantos litros e quantos PSI precisa ter um compressor de ar?
 
-Depende do serviço: para calibrar pneu de carro e moto e encher bola, um compressor de ar direto ou um portátil 12 V resolve; para pistola de pintura, bico de limpeza e ferramenta pneumática, escolha um compressor com reservatório. PSI (lbf/pol²) é a pressão máxima, litros é o tamanho do tanque e pés³/min é a vazão, que é o número que mais pesa na pintura: ela precisa ficar acima do consumo de ar da pistola. Para uso frequente, tanque maior faz o motor ligar menos vezes.
+Para calibrar pneu de carro e moto e encher bola, um compressor de ar direto, que em geral chega a uns 40 PSI, ou um portátil 12 V resolve; para pistola de pintura, bico de limpeza e ferramenta pneumática, escolha um com reservatório, a partir de uns 25 litros, que costuma trabalhar até 120 a 140 PSI. Na pintura, pesa mais a vazão (pés³/min), que precisa ficar acima do consumo de ar da pistola, com folga. O tamanho do tanque, em litros, só faz o motor ligar menos vezes.
 
 ### Qual lavadora de alta pressão comprar para casa?
 
-Para lavar carro, moto, calçada, quintal e piso, uma lavadora de uso doméstico atende; para lavar máquina, galpão e curral todo dia, prefira um modelo para uso intenso. Compare a pressão em libras (lbf/pol²), a vazão em litros por hora e a tensão, e ligue em tomada com aterramento. Em geral, ela gasta menos água que a mangueira aberta, o que pesa na época da seca. De perto, o jato pode arrancar rejunte e descascar pintura: comece com o bico aberto e afastado.
+Para lavar carro, moto, calçada, quintal e piso, uma lavadora de uso doméstico atende; para lavar máquina, galpão e curral todo dia, prefira um modelo para uso intenso. Compare a pressão em libras (lbf/pol²), a vazão em litros por hora e a tensão. Ligue em tomada com aterramento, em circuito com DR, que a NBR 5410 exige para tomada em área externa (instalação é com eletricista qualificado), e nunca aponte o jato para tomada, fiação, motor elétrico, pessoas ou animais. De perto, o jato arranca rejunte e pintura: comece afastado.
 
 ### Carrinho de mão com pneu maciço ou com câmara: qual é melhor?
 
@@ -570,7 +570,7 @@ O pneu maciço é melhor para obra com prego, arame, entulho e terreno com espin
 
 ### Qual ferramenta usar para cavar buraco de mourão ou de cerca?
 
-A cavadeira articulada é a ferramenta certa para buraco de mourão, estaca de cerca e poste: as duas lâminas cortam a terra e, ao fechar os cabos, tiram o solo de dentro do buraco. Em chão duro ou com cascalho, solte antes com a cavadeira reta, o enxadão ou a picareta, e molhe a terra se ela estiver muito seca. Para valeta e alicerce, enxadão e pá rendem mais. Luvas e botina ficam em Utilidades e EPI.
+A cavadeira articulada é a ferramenta certa para buraco de mourão, estaca de cerca e poste: crave as lâminas no chão com os cabos juntos e depois afaste os cabos, que as lâminas se fecham, prendem a terra e você puxa o solo para fora. Em chão duro ou com cascalho, solte antes com a cavadeira reta, o enxadão ou a picareta, e molhe a terra se ela estiver muito seca. Para valeta e alicerce, enxadão e pá rendem mais. Luvas e botina ficam em Utilidades e EPI.
 
 ---
 
@@ -580,7 +580,7 @@ Na Pereira Luz & Cor, na Rua São Francisco, no Jardim Ouro Branco, em Barreiras
 
 ### Parafusos
 
-Parafuso para madeira e chipboard para móveis, MDF e aglomerado; parafuso para drywall, que prende a chapa de gesso no perfil de aço; autobrocante, que fura e rosqueia sozinho em chapa e telha metálica; e sextavado, para cargas maiores, com bucha ou com porca. A medida é sempre diâmetro x comprimento em milímetros, como 4,2 x 40.
+Parafuso para madeira e chipboard para móveis, MDF e aglomerado; parafuso para drywall, que prende a chapa de gesso no perfil de aço; autobrocante, que fura e rosqueia sozinho em chapa e telha metálica; e sextavado, para cargas maiores, com bucha ou com porca. A medida vem como diâmetro x comprimento: em milímetros na maioria (como 4,2 x 40) e, em sextavado e rosca máquina, muitas vezes em polegadas (como 1/4" x 2").
 
 Itens: Parafuso para madeira cabeça chata (rosca soberba); Parafuso chipboard cabeça chata para MDF e aglomerado; Parafuso para drywall cabeça trombeta 3,5 x 25 mm; Parafuso cabeça lentilha 4,2 x 13 mm (perfil com perfil); Parafuso autobrocante sextavado com arruela de vedação (telha metálica); Parafuso autobrocante cabeça panela (chapa metálica); Parafuso sextavado rosca soberba (para bucha); Parafuso sextavado rosca máquina com porca; Parafuso para telha de fibrocimento com conjunto de vedação; Kit de fixação para vaso sanitário e lavatório.
 
@@ -626,7 +626,7 @@ Parafuso é medido em diâmetro x comprimento, como 4,2 x 40 mm, e rosca soberba
 
 ### Dica: Sol forte e chuva pedem material de área externa
 
-Aqui no Oeste Baiano o sol castiga o ano todo, então na área externa prefira parafuso galvanizado ou inox, abraçadeira de nylon preta própria para sol e cubra a espuma expansiva com massa ou tinta. Antes da época das chuvas, que costuma ir de novembro a março, troque parafuso de telha com arruela ressecada e refaça a vedação de calha e rufo com selante de PU.
+Aqui no Oeste Baiano o sol castiga o ano todo, então na área externa prefira parafuso galvanizado ou inox, abraçadeira de nylon preta com proteção UV e cubra a espuma expansiva com massa ou tinta. Antes da época das chuvas, que costuma ir de novembro a março, troque parafuso de telha com arruela ressecada e refaça a vedação de calha e rufo com selante de PU. No telhado, não pise direto na telha, use cinto de segurança preso em ponto firme e tenha ajudante, ou chame um profissional.
 
 ### Dica: Peça enferrujada: produto, paciência e a chave certa
 
@@ -674,15 +674,15 @@ Itens: Luva de raspa (couro) cano curto; Luva de raspa cano longo; Luva de vaque
 
 ### Óculos, protetor auricular e máscara PFF2
 
-Os óculos de proteção seguram lasca, faísca, poeira e respingo de cal e de tinta: lente incolor para ambiente interno e lente cinza com proteção UV para trabalhar no sol forte (lente escura comum não serve para solda). O protetor auricular é para maquita, como muita gente chama a esmerilhadeira, martelete, serra mármore e roçadeira. A máscara PFF2 filtra poeira de lixamento e de corte de cerâmica e concreto, mas não segura vapor de solvente nem de tinta spray.
+Os óculos de proteção seguram lasca, faísca, poeira e respingo de cal e de tinta: lente incolor para ambiente interno e lente cinza com proteção UV para trabalhar no sol forte (lente escura comum não serve para solda). Use protetor auricular com a maquita (apelido que o povo dá tanto à esmerilhadeira quanto à serra mármore), o martelete e a roçadeira. A máscara PFF2 filtra poeira de lixamento e de corte de cerâmica e concreto, mas não segura vapor de solvente nem de tinta spray.
 
 Itens: Óculos de proteção lente incolor; Óculos de proteção lente cinza com proteção UV; Óculos de proteção de sobrepor (para quem usa óculos de grau); Óculos ampla visão contra respingo; Protetor auricular de espuma moldável; Protetor auricular de silicone com cordão; Protetor auricular tipo concha (abafador); Máscara PFF2 sem válvula; Máscara PFF2 com válvula de exalação; Respirador semifacial com filtro para vapores orgânicos (consulte).
 
 ### Capacete e botina
 
-O capacete protege a cabeça de material que cai e de batida em viga, laje e andaime: escolha com aba frontal ou aba total, ajuste a carneira e use a jugular em altura e com vento. Troque o casco depois de pancada forte, trinca ou ressecamento, ou no prazo indicado pelo fabricante. A botina de segurança com biqueira protege contra prego e peso que cai no pé; para eletricista, existem modelos sem partes metálicas, próprios para risco elétrico (confira no CA).
+O capacete protege a cabeça de material que cai e de batida em viga, laje e andaime: escolha com aba frontal ou aba total, ajuste a carneira e use a jugular em altura e com vento. Troque o casco depois de pancada forte, trinca ou ressecamento, ou no prazo indicado pelo fabricante. A biqueira da botina de segurança protege os dedos contra peso que cai e contra esmagamento; contra prego, a botina precisa ter palmilha antiperfuração, que nem todo modelo tem (confira no CA e na etiqueta). Para eletricista, existem modelos sem partes metálicas, próprios para risco elétrico (confira no CA).
 
-Itens: Capacete de segurança com aba frontal; Capacete de segurança com aba total; Carneira (suspensão) de reposição para capacete; Jugular (tira de queixo) para capacete; Botina de segurança de couro com biqueira; Botina de segurança sem partes metálicas (consulte).
+Itens: Capacete de segurança com aba frontal; Capacete de segurança com aba total; Carneira (suspensão) de reposição para capacete; Jugular (tira de queixo) para capacete; Botina de segurança de couro com biqueira; Botina de segurança com palmilha antiperfuração (consulte); Botina de segurança sem partes metálicas (consulte).
 
 ### Fitas e sinalização
 
@@ -1575,50 +1575,47 @@ Resposta rápida: Para furar tijolo e pendurar coisas em casa, a furadeira de im
 
 ### Qual a diferença entre furadeira, parafusadeira e martelete?
 
-A diferença está no serviço que cada uma faz melhor: a furadeira de impacto fura madeira, metal, tijolo e um pouco de concreto; a parafusadeira a bateria aperta e solta parafusos com controle de força e também fura; e o martelete SDS-plus tem um golpe muito mais forte, feito para furar concreto em quantidade e, em muitos modelos, quebrar piso e reboco.
-Furadeira de impacto: com o impacto desligado, é uma furadeira comum para madeira e metal. Ligado, dois discos dentados dentro da máquina dão milhares de pequenas batidas por minuto, que ajudam a broca de vídia a entrar no tijolo e no concreto. Funciona, mas cansa o braço e esquenta a máquina quando são muitos furos em concreto duro.
-Parafusadeira/furadeira a bateria: tem embreagem com anel numerado para regular o torque (a força de aperto), duas velocidades e reversão. Aperta sem espanar o parafuso e fura madeira e metal. Os modelos vendidos como parafusadeira e furadeira de impacto também têm impacto para furo leve em alvenaria.
-Parafusadeira de impacto (encaixe sextavado de 1/4"): dá golpes no sentido do giro, e não para a frente. Tem muito torque para parafuso comprido e autobrocante, mas não é ferramenta para furar concreto.
-Martelete: o impacto é eletropneumático, feito por um pistão que empurra um colchão de ar. São menos batidas, porém bem mais fortes. A broca tem encaixe SDS-plus, que desliza dentro do mandril para receber o golpe; por isso o furo em concreto sai rápido e quase sem força do braço.
+A diferença está no serviço que cada uma faz melhor: a furadeira de impacto fura madeira, metal, tijolo e um pouco de concreto; a parafusadeira a bateria aperta e solta parafusos com controle de força e também fura; e o martelete SDS-plus dá um golpe muito mais forte, feito para furar concreto em quantidade e quebrar piso e reboco.
+Furadeira de impacto: com o impacto desligado, é uma furadeira comum; ligado, dois discos dentados dão milhares de pequenas batidas por minuto, que ajudam a broca de vídia a entrar no tijolo e no concreto.
+Parafusadeira/furadeira a bateria: tem embreagem para regular o torque, duas velocidades e reversão; as versões com impacto também furam alvenaria leve.
+Parafusadeira de impacto (encaixe sextavado de 1/4"): golpeia no sentido do giro, não para a frente. Tem muito torque para parafuso longo e autobrocante, mas não fura concreto.
+Martelete: um pistão empurra um colchão de ar e dá golpes bem mais fortes; a broca SDS-plus desliza no encaixe para receber o golpe e fura concreto quase sem esforço.
 
 ### Comparativo: furadeira de impacto x parafusadeira x martelete
 
-Lado a lado, a furadeira de impacto é a mais versátil para casa, a parafusadeira a bateria ganha em parafuso, montagem e lugar sem tomada, e o martelete ganha com folga em concreto, laje, viga e demolição leve. Os números abaixo são faixas comuns no mercado, não regra: confira sempre a caixa e o manual do modelo.
+Lado a lado, a furadeira de impacto é a mais versátil para casa, a parafusadeira a bateria ganha em parafuso, montagem e lugar sem tomada, e o martelete ganha com folga em concreto, laje e demolição leve. Os números são faixas comuns de mercado: confira a caixa e o manual do modelo.
 FerramentaPara que serveMedidas comunsBroca ou encaixeNão é para
-Furadeira de impactoFuros em madeira, metal, tijolo e concreto em pouca quantidade500 a 1.000 W; mandril 3/8" (10 mm) ou 1/2" (13 mm)Vídia, aço rápido, broca de madeira, serra copoMuitos furos grandes em laje e viga
-Parafusadeira/furadeira a bateriaApertar e soltar parafusos, montar móveis, furar madeira e metal12 V ou 18 V; bateria de 1,5 a 5 Ah; mandril 3/8" ou 1/2"Bits, aço rápido, broca de madeira; vídia só nos modelos com impactoConcreto duro e furo grande em alvenaria
-Parafusadeira de impactoParafuso longo, autobrocante em telha e estrutura metálica12 V ou 18 V; encaixe sextavado 1/4"Bits e brocas de haste sextavadaFurar alvenaria e aperto delicado
-Martelete SDS-plusMuitos furos em concreto, laje e viga; com rompedor, quebrar reboco e piso e abrir rasgo650 a 1.000 W; cerca de 1,5 a 3 J nos modelos levesBroca, talhadeira e ponteiro SDS-plusParafusar; furo fino em madeira e metal sem adaptador
-Martelete SDS-maxFuros grandes e demolição em obra pesadaEm torno de 1.000 W ou mais; em geral 5 J ou maisBroca e ponteiro SDS-maxServiço doméstico
+Furadeira de impactoFurar madeira, metal, tijolo e pouco concreto500 a 1.000 W; mandril 3/8" ou 1/2"Vídia, aço rápido, madeira, serra copoMuito furo em laje
+Parafusadeira/furadeira a bateriaParafusar, montar móveis, furar madeira e metal12 V ou 18 V; bateria de 1,5 a 5 AhBits, aço rápido, madeira; vídia se tiver impactoConcreto duro
+Parafusadeira de impactoParafuso longo e autobrocante12 V ou 18 V; encaixe sextavado 1/4"Bits e brocas sextavadasFurar alvenaria
+Martelete SDS-plusMuitos furos em concreto; com rompedor, quebrar reboco e piso650 a 1.000 W; cerca de 1,5 a 3 J nos modelos levesBroca, talhadeira e ponteiro SDS-plusParafusar
+Martelete SDS-maxFuro grande e demolição pesadaCerca de 1.000 W ou mais; em geral 5 J ou maisBroca e ponteiro SDS-maxServiço doméstico
 
 ### Qual comprar: para casa ou para trabalhar
 
-Para casa, uma furadeira de impacto com mandril de 3/8" ou 1/2" e uma parafusadeira a bateria de 12 V resolvem quase tudo: pendurar quadro, cortina, prateleira e suporte de TV, e montar móveis. Para quem trabalha em obra todo dia, o martelete SDS-plus entra na lista, porque fura concreto com muito menos esforço e desgaste.
-Uso em casa: uma furadeira de impacto na faixa de 550 a 750 W costuma atender furos de bucha 6, 8 e 10 em tijolo e concreto, em pouca quantidade.
-Pedreiro e encanador: martelete SDS-plus de três funções (furar, furar com impacto e rompedor) para chumbador, passagem de cano e quebra de reboco e piso, mais uma furadeira de 1/2" para serra copo e madeira.
-Eletricista: parafusadeira de 12 V para tomada, interruptor e quadro, sempre com o circuito desligado; martelete para furo em laje e para abrir rasgo de eletroduto, com os cortes marcados antes na serra mármore, que muita gente também chama de maquita.
-Pintor: furadeira de 1/2" com controle de velocidade para misturar tinta e textura com haste misturadora, em baixa rotação e sem impacto, se o manual permitir.
-Produtor rural: parafusadeira de 18 V com duas baterias para galpão, cerca, cocho e telha com parafuso autobrocante, longe da tomada.
-Para cortar ferro, piso e pedra, a ferramenta é outra: a maquita, apelido usado tanto para a esmerilhadeira angular quanto para a serra mármore. Veja qual disco usar na esmerilhadeira.
+Para casa, uma furadeira de impacto e uma parafusadeira a bateria de 12 V resolvem quase tudo: pendurar quadro, cortina, prateleira e suporte de TV, e montar móveis. Para quem trabalha em obra todo dia, o martelete SDS-plus entra na lista, porque fura concreto com muito menos esforço e desgaste.
+Uso em casa: furadeira de impacto de 550 a 750 W costuma dar conta de bucha 6, 8 e 10 em pouca quantidade.
+Pedreiro e encanador: martelete SDS-plus de três funções (furar, furar com impacto e rompedor) para chumbador, cano e quebra de reboco e piso.
+Eletricista: parafusadeira de 12 V para tomada e interruptor, com o circuito desligado; martelete para furo em laje e rasgo de eletroduto.
+Pintor: furadeira de 1/2" com controle de velocidade e haste misturadora para tinta e textura, sem impacto, se o manual permitir.
+Produtor rural: parafusadeira de 18 V com duas baterias para galpão, cerca e telha com autobrocante, longe da tomada.
+Para cortar ferro, piso e pedra, use a maquita, apelido tanto da esmerilhadeira angular quanto da serra mármore: veja qual disco usar na esmerilhadeira.
 
 ### Potência, tensão e mandril: como ler a caixa
 
-Na caixa, olhe quatro coisas: a potência em watts (W), que indica a força do motor; a energia de impacto em joules (J), o número que importa no martelete; a abertura do mandril, 3/8" (10 mm) ou 1/2" (13 mm); e a tensão, 127 V ou 220 V, que precisa ser a mesma da tomada onde a máquina vai trabalhar.
-Watts e joules: mais potência aguenta broca maior e serviço longo. Mas, com a mesma potência, o martelete fura concreto bem mais rápido que a furadeira de impacto, porque o golpe é mais forte. Entre marteletes, compare joules com joules.
-Capacidade de perfuração: a caixa informa o diâmetro máximo em concreto, aço e madeira. Na furadeira de impacto, o máximo em concreto costuma ficar entre 10 e 16 mm; no martelete SDS-plus leve, em torno de 20 a 26 mm. Trabalhar sempre no limite desgasta a máquina.
-Mandril: o de 3/8" prende broca de até 10 mm; o de 1/2", até 13 mm, e aguenta melhor serra copo e haste misturadora. O de aperto rápido dispensa a chave. O martelete usa encaixe SDS-plus (haste de 10 mm com ranhuras); os grandes, SDS-max.
-Tensão: muita máquina com fio é só 127 V ou só 220 V. Uma de 127 V ligada em 220 V pode queimar o motor rapidamente; uma de 220 V em 127 V fica fraca e esquenta. Se não souber a tensão da tomada, confirme com um eletricista antes de ligar.
-Tomada e extensão: máquina mais potente em 127 V pode vir com plugue de 20 A, de pinos mais grossos, que não entra na tomada de 10 A do padrão NBR 14136. Não force nem use adaptador: peça a um eletricista qualificado uma tomada adequada, conforme a NBR 5410, e use extensão de fio compatível com a potência, toda desenrolada.
+Na caixa, olhe quatro coisas: a potência em watts (W); a energia de impacto em joules (J), que é o número que importa no martelete; a abertura do mandril, 3/8" (10 mm) ou 1/2" (13 mm); e a tensão, 127 V ou 220 V, que precisa ser a mesma da tomada.
+Watts, joules e capacidade: com a mesma potência, o martelete fura concreto bem mais rápido, porque o golpe é mais forte. O furo máximo em concreto, informado na caixa, costuma ficar entre 10 e 16 mm na furadeira de impacto e perto de 20 a 26 mm no martelete SDS-plus leve.
+Mandril: o de 1/2" aguenta melhor serra copo e haste misturadora. O martelete usa encaixe SDS-plus (haste de 10 mm com ranhuras) ou, nos grandes, SDS-max.
+Tensão: muita máquina com fio não é bivolt: a de 127 V ligada em 220 V pode queimar; a de 220 V em 127 V fica fraca e esquenta. Na dúvida sobre a tomada, consulte um eletricista.
+Plugue e extensão: máquina potente em 127 V pode vir com plugue de 20 A (padrão NBR 14136), que não entra em tomada de 10 A. Não force nem use adaptador: peça a um eletricista qualificado uma tomada adequada, conforme a NBR 5410, e extensão compatível com a potência, toda desenrolada.
 
 ### Bateria: o que significam V e Ah
 
-Na ferramenta a bateria, os volts (V) indicam a força e a categoria da máquina, e os amperes-hora (Ah) indicam quanto tempo ela trabalha por carga: 12 V atende casa, montagem e elétrica leve; 18 V é para broca maior, parafuso longo e serviço pesado; e bateria de mais Ah dura mais, mas também pesa mais.
-12 V ou 10,8 V; 18 V ou 20 V: muitas vezes é a mesma classe de bateria com nome diferente. Uma marca anuncia a tensão máxima, com a bateria recém-carregada (12 V ou 20 V "máx."), e outra anuncia a tensão nominal (10,8 V ou 18 V).
-Ah e Wh: multiplique V por Ah para saber a energia em watt-hora. Uma bateria de 18 V e 4 Ah guarda 72 Wh, o dobro de uma de 18 V e 2 Ah.
-Kit com duas baterias: enquanto uma trabalha, a outra carrega. Para quem usa o dia inteiro, faz diferença.
-Plataforma: em geral, a bateria de uma marca não serve na máquina de outra. Se pensa em ter mais ferramentas a bateria, vale ficar na mesma linha.
-Motor sem escovas (brushless): gasta menos bateria e esquenta menos, mas custa mais.
-Com o calor forte de Barreiras, principalmente em setembro e outubro, não deixe bateria de lítio no sol, no painel do carro ou na carroceria da caminhonete, e carregue na sombra, com o carregador original. Calor encurta a vida da bateria: se ela esquentou no serviço, espere esfriar antes de carregar.
+Na ferramenta a bateria, os volts (V) indicam a força da máquina e os amperes-hora (Ah), quanto tempo ela trabalha por carga: 12 V atende casa, montagem e elétrica leve; 18 V é para broca maior, parafuso longo e serviço pesado; e mais Ah dura mais, mas pesa mais.
+12 V ou 10,8 V; 18 V ou 20 V: em geral é a mesma classe. Uma marca anuncia a tensão máxima da bateria cheia ("máx."), outra a tensão nominal.
+Energia em Wh: multiplique V por Ah. Uma bateria de 18 V e 4 Ah guarda 72 Wh, o dobro de uma de 18 V e 2 Ah.
+Duas baterias: uma trabalha enquanto a outra carrega. E, em geral, a bateria de uma marca não serve na máquina de outra.
+Com o calor forte de Barreiras, principalmente em setembro e outubro, não deixe a bateria de lítio no sol nem no painel do carro. Carregue na sombra, com o carregador original, e espere ela esfriar depois do serviço.
 
 ### Qual broca usar em concreto, tijolo, madeira e metal
 
@@ -1626,20 +1623,20 @@ A broca certa depende do material: vídia (ponta de metal duro) para concreto, t
 MaterialBrocaImpactoDica
 Concreto, laje e vigaVídia ou SDS-plusLigadoSe bater em ferro, pare e mude o ponto
 Tijolo maciço e rebocoVídiaLigadoBucha e broca do mesmo número
-Tijolo furado (bloco cerâmico)VídiaDesligadoCom impacto o bloco estoura por dentro e a bucha fica frouxa
-Madeira e MDFBroca para madeira; broca chata ou serra copo para furo grandeDesligadoApoie uma tábua atrás para não lascar a saída
+Tijolo furado (bloco cerâmico)VídiaDesligadoO impacto estoura o bloco e a bucha fica frouxa
+Madeira e MDFBroca para madeira; chata ou serra copo para furo grandeDesligadoApoie uma tábua atrás para não lascar a saída
 Ferro, metalon e chapaAço rápido (HSS); com cobalto para inoxDesligadoMarque com punção, use rotação baixa e óleo de corte
 Azulejo e porcelanatoDiamantada ou própria para vidro e cerâmicaDesligadoComece devagar; depois da peça, troque pela vídia
-Broca de aço rápido ou de madeira não fura alvenaria, e a de vídia não serve bem para metal. Buchas e parafusos ficam em Fixação, Colas e Lubrificantes.
+Buchas e parafusos ficam em Fixação, Colas e Lubrificantes.
 
 ### Segurança antes, durante e depois do furo
 
-Para furar com segurança, use sempre óculos de proteção, protetor auricular com furadeira de impacto ou martelete e máscara PFF2 no pó de concreto; antes de furar a parede, desvie da linha das tomadas, interruptores, registros e chuveiro, onde costumam passar fio e cano; e tire a máquina da tomada, ou a bateria, antes de trocar a broca.
-Fio e cano escondidos: o eletroduto costuma subir e descer na vertical a partir de tomadas e interruptores, e os canos ligam registro, chuveiro e torneira. Fuja dessas linhas; perto delas, desligue o disjuntor do circuito e, na dúvida, chame um eletricista qualificado.
-Duas mãos na máquina: use a empunhadura lateral. Se a broca travar no concreto ou no ferro, a máquina gira no seu punho; o martelete tem embreagem de segurança, mas não conte só com ela. Na escada, fique firme e não estique o braço acima da cabeça.
-Roupa e cabelo: nada de manga larga, pulseira, corrente, cabelo solto ou luva folgada perto da broca girando.
-Depois do furo: a broca sai quente, principalmente em metal. Com a máquina desligada, limpe as aberturas de ventilação e guarde tudo seco.
-Óculos, protetor auricular e máscara estão em Utilidades e EPI.
+Para furar com segurança, use óculos de proteção, protetor auricular e, no pó de concreto, máscara PFF2; antes de furar a parede, desvie da linha das tomadas, interruptores, registros e chuveiro, onde costumam passar fio e cano; e tire a máquina da tomada, ou a bateria, antes de trocar a broca.
+Fio e cano escondidos: o eletroduto costuma correr na vertical a partir de tomadas e interruptores, e os canos ligam registro, chuveiro e torneira. Perto dessas linhas, desligue o disjuntor do circuito e, na dúvida, chame um eletricista qualificado.
+Duas mãos na máquina: use a empunhadura lateral. Se a broca travar no concreto ou no ferro, a máquina gira no seu punho, e a embreagem de segurança do martelete não elimina esse risco. Na escada, fique firme.
+Roupa e cabelo: nada de manga larga, pulseira, cabelo solto ou luva folgada perto da broca girando.
+Depois do furo: a broca sai quente. Com a máquina desligada, limpe a ventilação e guarde tudo seco.
+Veja os EPIs em Utilidades e EPI.
 
 ### Dá para furar concreto com parafusadeira a bateria?
 
@@ -1763,3 +1760,215 @@ Pode, se o manual do modelo permitir, mas à sombra ela funciona melhor: a água
 ### O que fazer com caixa d'água antiga de amianto?
 
 Não quebre, fure, lixe nem raspe a caixa: caixas antigas de fibrocimento podem conter amianto, material proibido no Brasil desde 2017, cujo pó faz mal quando é respirado. Se for trocar, retire a caixa inteira, com cuidado, usando luvas e máscara, e pergunte à prefeitura onde descartar esse tipo de resíduo. Na troca, aproveite para revisar a base, a boia e os registros.
+
+---
+
+## Como pintar parede passo a passo: do preparo à última demão — https://www.pereiraluzecor.com.br/guias/como-pintar-parede-passo-a-passo/
+
+Resposta rápida: Para pintar parede, proteja piso, móveis e rodapés, raspe e lixe o que estiver solto, trate furos e trincas, tire o pó, aplique selador ou fundo quando a parede pedir, recorte os cantos com trincha e passe o rolo em duas demãos, respeitando o intervalo indicado na lata. Pinte o teto primeiro e, para área externa, prefira os meses secos.
+
+- A ordem é: proteger, raspar e lixar, tratar trincas, limpar, selar ou fundear, massa (se precisar), recorte e rolo.
+- Reboco novo: espere a cura (em geral pelo menos 28 dias) e passe selador; reboco que solta pó pede fundo preparador.
+- Recorte uma parede com trincha e já passe o rolo nela, com a faixa ainda fresca, para não marcar.
+- O intervalo entre demãos é o da lata: não encurte por causa do calor.
+- Quarto de 3 × 4 m: cerca de 6,7 L de tinta nas paredes lisas, 2 galões de 3,6 L.
+
+### Antes de começar: material e quantidade de tinta
+
+Antes de pintar, separe tudo o que a parede vai pedir (tinta, selador ou fundo, massa, lixa, fita crepe, lona, rolo, trincha e bandeja) e calcule a tinta pela área real. Compre tudo de uma vez, para não parar o serviço no meio nem arriscar um lote com tom diferente.
+A calculadora de tinta faz assim: perímetro × pé-direito, menos 1,68 m² por porta e 1,20 m² por janela, × demãos ÷ rendimento por demão (11 m²/L em parede lisa, 8 m²/L em reboco) + 10% de folga.
+Quarto 3 × 4 m, pé-direito 2,60 m, 1 porta, 1 janelaÁreaTintaSugestão da calculadora
+Paredes lisas, 2 demãos33,52 m²≈ 6,7 L2 galões de 3,6 L
+Paredes e teto lisos, 2 demãos45,52 m²≈ 9,1 L2 galões + 3 quartos, ou 3 galões (10,8 L) com mais sobra
+Paredes em reboco, 2 demãos33,52 m²≈ 9,2 L2 galões + 3 quartos
+Paredes lisas, de escuro para claro (3 demãos)33,52 m²≈ 10,1 L3 galões
+A conta é conservadora: o rendimento real muda com a marca e a linha e vem impresso na lata (linhas premium costumam render mais). Selador, fundo e massa têm rendimento próprio. O cálculo completo está em quantas latas de tinta preciso.
+
+### Preparo da parede: proteger, lixar, limpar e tratar trincas
+
+A preparação é o que faz a pintura durar: proteja piso, móveis e rodapés, raspe o que estiver soltando, lixe, limpe pó e gordura, trate mofo e trincas e só pinte com a parede firme, limpa e seca. Tinta sobre parede suja ou esfarelando descasca junto.
+Proteção: junte os móveis no centro, cubra com lona, forre o piso e passe fita crepe em rodapé e batente. Para tirar espelhos de tomada, desligue antes o disjuntor do circuito; na dúvida, só cubra com fita.
+Lixa: raspe a tinta solta e lixe a parede de leve (quanto maior o número do grão, mais fina a lixa). Acetinado ou semibrilho deve ser lixado até ficar fosco, para a tinta nova aderir. Use óculos e máscara contra pó.
+Limpeza: tire o pó com escova ou pano; gordura sai com água e detergente neutro. Mofo se limpa com água sanitária diluída na proporção da ficha técnica da tinta, com luvas e janela aberta; enxágue e deixe secar bem. Nunca misture água sanitária com outros produtos de limpeza.
+Furos e fissuras finas: abra de leve com a ponta da espátula, tire o pó e preencha com massa ou com selante acrílico próprio para trincas. Depois de seco, lixe rente.
+Chame um profissional se a trinca é larga, corre na diagonal a partir do canto de porta ou janela, aumenta ou volta depois de consertada, ou se o mofo sempre volta e a tinta estufa: pode ser estrutura ou umidade, e tinta não resolve. Um engenheiro ou pedreiro de confiança deve avaliar antes.
+
+### Selador, fundo preparador ou massa: o que vai antes da tinta
+
+O que vai antes da tinta depende de como a parede está: reboco novo e curado leva selador acrílico; reboco fraco, que solta pó, parede caiada e gesso levam fundo preparador; pintura antiga firme pede só lixa e limpeza; e a massa entra quando você quer a parede lisa ou precisa corrigir defeitos.
+Como está a paredeO que fazer antes da tinta
+Reboco novoEsperar a cura (os fabricantes costumam pedir pelo menos 28 dias) e passar selador acrílico
+Reboco fraco, que esfarela ou solta pó na mãoEscovar e aplicar fundo preparador de paredes
+Caiação ou tinta velha que solta pó brancoRaspar o que estiver solto, escovar e aplicar fundo preparador
+GessoFundo preparador que traga indicação para gesso na embalagem
+Pintura antiga firmeLixar de leve e tirar o pó; os remendos de massa recebem antes um pouco de fundo ou de tinta, para não manchar
+Em reboco novo, o selador vem antes da massa. Massa corrida PVA é só para parede interna e seca; em área externa ou úmida, use massa acrílica (veja massa corrida ou massa acrílica). Aplique em camadas finas, lixe com lixa fina e tire todo o pó.
+
+### Como fazer o recorte com trincha e passar o rolo
+
+Pinte primeiro o teto e depois as paredes, sempre de cima para baixo. Em cada parede, faça o recorte com trincha nos cantos, junto ao teto, ao rodapé e aos batentes, e logo em seguida passe o rolo, com a faixa da trincha ainda fresca, para as duas se misturarem sem deixar marca.
+Tinta: mexa bem antes e durante o uso e dilua só com o que a lata indica, na proporção indicada. Muitas linhas pedem diluição diferente na primeira demão.
+Recorte: faça uma faixa de uns 5 a 10 cm nos encontros e em volta das tomadas, carregando só a ponta das cerdas.
+Rolo: molhe na bandeja e rode na parte rugosa até tirar o excesso. Aplique em faixas de cerca de 1 m de largura, em movimento de W ou N, espalhe sem recarregar e termine com passadas leves de cima para baixo, num só sentido.
+Borda molhada: emende sempre na tinta ainda fresca e termine a parede inteira de uma vez; não volte o rolo sobre a parte que já começou a secar.
+Não aperte o rolo: pressão demais espirra tinta e marca a parede. Entre uma demão e outra, embrulhe rolo e trincha em saco plástico para não secarem.
+
+### Quanto tempo esperar entre uma demão e outra
+
+Espere o intervalo entre demãos impresso na lata antes de passar a próxima: em muitas tintas base água ele fica em torno de 4 horas, mas muda com a linha, a temperatura e a ventilação. A tinta seca ao toque bem antes disso, e a segunda demão aplicada cedo demais arrasta a primeira e deixa marcas.
+Número de demãos: duas é o padrão; de cor escura para clara, conte três. Cores muito vivas podem pedir mais uma: siga a lata.
+Cura: a tinta seca em horas, mas só chega à resistência total depois da cura, que leva semanas. Até lá, nada de esfregar ou lavar a parede.
+Calor e ar seco secam a superfície mais rápido, mas não encurte o intervalo; só trabalhe em trechos menores para não perder a borda molhada.
+
+### Melhor época para pintar em Barreiras
+
+A melhor época para pintar em Barreiras é a seca, de maio a setembro, principalmente fachada e muro, que assim secam e curam sem risco de chuva. Dentro de casa dá para pintar o ano todo, com o cômodo ventilado; fora, cuidado com o calor de setembro e outubro e com as chuvas, mais ou menos de novembro a março.
+Seca (maio a setembro): melhor fase para área externa. Evite dia de vento forte, que joga poeira na tinta fresca.
+Calor forte (setembro e outubro): parede no sol esquenta e a tinta seca rápido demais, marcando as emendas. Pinte a fachada de manhã cedo ou no fim da tarde, com a parede na sombra.
+Chuvas (novembro a março): só pinte área externa com a parede seca e sem previsão de chuva para as horas seguintes. Confira na lata os limites de temperatura e umidade.
+Na fachada, use sempre tinta acrílica; veja tinta acrílica ou látex PVA.
+
+### Limpeza das ferramentas e descarte da sobra
+
+Limpe as ferramentas assim que terminar: com tinta base água, tire o excesso do rolo e da trincha na borda da lata ou em jornal e lave num balde com água e sabão; com esmalte e verniz base solvente, use o diluente indicado na lata. Nunca jogue tinta, água de lavagem ou solvente no ralo, na pia ou na terra.
+Água de lavagem: deixe descansar até a tinta assentar e descarte o resíduo como orientam o fabricante e a prefeitura.
+Sobra de tinta: feche bem e guarde em local fresco e longe de crianças, com a cor anotada na tampa.
+Lata vazia: deixe o restinho secar com a lata aberta, em local ventilado e fora do alcance de crianças e animais, e descarte conforme a coleta da sua cidade.
+Panos e estopas com solvente: deixe secar abertos, ao ar livre e longe de fogo, antes de jogar fora.
+
+### Passo a passo para pintar parede
+
+1. Escolha o dia e calcule a tinta: Prefira dias secos e sem vento forte; na área externa, evite chuva prevista e parede no sol. Calcule os litros na calculadora de tinta e compre tudo de uma vez, já com a folga.
+2. Esvazie e proteja o cômodo: Tire ou junte os móveis no centro, cubra com lona e forre o piso. Passe fita crepe em rodapés, batentes e janelas. Para tirar espelhos de tomada e interruptor, desligue antes o disjuntor do circuito; na dúvida, só cubra com fita.
+3. Raspe, lixe e trate furos e trincas: Raspe a tinta solta com espátula, lixe a parede de leve e tire o brilho de acabamento acetinado ou semibrilho. Preencha furos e fissuras finas com massa ou selante acrílico e lixe rente depois de seco. Trinca larga ou que volta pede avaliação de um profissional.
+4. Limpe a parede e deixe secar: Tire o pó com escova ou pano, lave gordura com água e detergente neutro e trate o mofo com água sanitária diluída conforme a ficha técnica, enxaguando depois. Só siga com a parede bem seca.
+5. Aplique selador ou fundo, se precisar: Reboco novo e curado leva selador acrílico; reboco que solta pó, caiação e gesso levam fundo preparador. Pintura antiga firme dispensa esta etapa. Respeite a secagem indicada na embalagem.
+6. Passe massa onde for preciso: Para deixar a parede lisa, aplique massa corrida (área interna e seca) ou massa acrílica (área externa e úmida) em camadas finas com desempenadeira de aço. Depois de seca, lixe com lixa fina e tire todo o pó.
+7. Prepare a tinta e o rolo: Mexa bem a tinta, dilua só com o que a lata indica e na proporção indicada e despeje uma parte na bandeja. Enrole fita crepe no rolo de lã novo e puxe para tirar os pelos soltos.
+8. Faça o recorte com trincha: Comece pelo teto. Com trincha ou pincel, pinte uma faixa de 5 a 10 cm nos cantos, junto ao teto, ao rodapé, aos batentes e em volta das tomadas, uma parede de cada vez.
+9. Passe o rolo e repita as demãos: Logo depois do recorte, passe o rolo em faixas de cerca de 1 m, em W ou N, espalhe e termine de cima para baixo, sem parar no meio da parede. Espere o intervalo da lata e aplique a segunda demão; de escuro para claro, conte três.
+10. Tire a fita, limpe e guarde: Retire a fita crepe depois da última demão, com a tinta ainda fresca, puxando devagar. Lave as ferramentas num balde, nunca no ralo, guarde a sobra bem fechada e deixe o cômodo ventilado.
+
+### Qual rolo usar para pintar parede?
+
+Para tinta acrílica ou látex PVA, use rolo de lã: de pelo baixo em parede lisa ou com massa e de pelo alto em reboco, parede áspera e textura, porque o pelo comprido alcança as reentrâncias. O de 23 cm é o tamanho mais usado em parede. O rolo de espuma é para esmalte e verniz em superfície lisa e, em parede, costuma deixar bolhas. No teto, rolo antirrespingo e extensor facilitam o serviço.
+
+### Quanto tempo leva para pintar um quarto?
+
+Um quarto de 3 × 4 m com a parede em bom estado costuma levar um dia de serviço: algumas horas de proteção e preparo, de uma a duas horas por demão e a espera entre demãos indicada na lata. Se a parede precisar de massa, selador ou consertos, conte mais um ou dois dias, porque cada produto tem sua secagem. Reboco novo ainda precisa curar antes, o que costuma levar semanas.
+
+### Como cobrir uma parede escura com cor clara?
+
+Conte três demãos em vez de duas e mantenha a diluição da lata, sem engrossar nem afinar a tinta por conta própria. No quarto de 3 × 4 m, com paredes lisas, a conta passa de 6,7 para cerca de 10,1 litros, ou 3 galões de 3,6 L. Se a cor antiga ainda aparecer depois da terceira demão, consulte a embalagem ou pergunte no balcão antes de continuar. Faça a sua conta na calculadora de tinta.
+
+### Quando tirar a fita crepe depois de pintar?
+
+Tire a fita logo depois da última demão, com a tinta ainda fresca, puxando devagar e num ângulo baixo, para a borda ficar reta. Se a tinta já secou por cima da fita, passe um estilete rente à borda antes de puxar, senão a película sai junto. Não deixe fita crepe comum por dias na parede ou no sol: ela gruda e deixa cola.
+
+### Depois de pintar, quando posso usar o quarto de novo?
+
+Mantenha portas e janelas abertas durante e depois da pintura e só volte a usar o cômodo com a tinta seca e sem cheiro forte; se der, durma em outro cômodo na primeira noite, principalmente crianças, gestantes e quem tem problema respiratório. Encoste móveis só depois da secagem final indicada na lata e deixe para esfregar a parede depois da cura. Esmalte e verniz base solvente pedem ventilação ainda maior.
+
+### Onde comprar tinta e material de pintura em Barreiras?
+
+Na Pereira Luz & Cor, na Rua São Francisco, 55, bairro Jardim Ouro Branco, em Barreiras. A loja é nova e trabalha com tinta acrílica, látex PVA, selador, fundo preparador, massa, lixas, rolos, trinchas, fita crepe e lona, em várias linhas e medidas. Monte sua lista aqui no site e envie pelo WhatsApp para receber o orçamento, ou passe no balcão para tirar dúvidas. Veja como chegar na página de contato.
+
+---
+
+## Para que serve o WD-40? Usos, cuidados e alternativas — https://www.pereiraluzecor.com.br/guias/wd-40-para-que-serve/
+
+Resposta rápida: O WD-40 é um produto multiuso em spray que afasta a umidade de peças de metal, ajuda a soltar parafuso e mecanismo enferrujado, lubrifica de leve, deixa uma película fina contra ferrugem e remove resíduos como cola de etiqueta, graxa e piche. Não substitui a graxa em rolamento, eixo e engrenagem, é inflamável e nunca deve ser aplicado em equipamento ligado na energia.
+
+- WD vem de "Water Displacement" (deslocamento de água, em inglês): o produto nasceu para expulsar a umidade de superfícies de metal.
+- Para soltar parafuso enferrujado: aplique na junta, espere alguns minutos, dê batidas leves e use a chave do tamanho certo; em ferrugem pesada, repita.
+- É lubrificação leve e de curta duração. Rolamento, eixo, engrenagem, cremalheira e graxeira de implemento pedem graxa.
+- É inflamável: longe de chama, solda, faísca e superfície quente, e nunca em aparelho, tomada, quadro ou cerca elétrica energizados.
+- Evite policarbonato e poliestireno transparente, teste antes em plástico, borracha e pintura, e não use em freio, correia nem em nada que toque alimento.
+
+### O que é o WD-40 e para que ele serve
+
+O WD-40 é um produto multiuso em spray, feito de solventes e óleos derivados de petróleo, que serve para afastar a umidade de peças de metal, ajudar a soltar parafuso e mecanismo emperrado, lubrificar de leve, deixar uma película fina contra a ferrugem e limpar resíduos como cola, graxa e piche.
+O nome vem do inglês Water Displacement (deslocamento de água). Segundo o fabricante, a fórmula foi criada em 1953, nos Estados Unidos, e deu certo na 40ª tentativa. WD-40 é marca registrada da WD-40 Company; o nome aparece aqui porque é assim que o produto é conhecido e pedido no balcão.
+Afasta a umidade: ajuda a secar ferramenta e peça de metal que pegou chuva.
+Solta peça presa: penetra na ferrugem fina entre rosca e porca.
+Lubrifica de leve: acaba com o rangido de dobradiça, fechadura e cadeado.
+Protege: deixa uma película oleosa que afasta a umidade do metal por um tempo.
+Limpa: tira cola de etiqueta, graxa e piche.
+
+### Como soltar parafuso, porca e peça enferrujada
+
+Para soltar parafuso enferrujado com WD-40, tire a sujeira solta, aplique o spray na junta entre a rosca e a porca, espere alguns minutos para o produto penetrar, dê batidas leves com o martelo e desaperte com a chave do tamanho exato, sem forçar tudo de uma vez.
+Tire o grosso da ferrugem e da terra com escova de aço.
+Aplique com o canudinho direto na junta e deixe agir alguns minutos. Em ferrugem pesada, repita a aplicação e dê mais tempo, se puder até de um dia para o outro.
+Dê batidas leves na cabeça do parafuso ou na porca: a vibração ajuda o produto a entrar.
+Use chave de boca, estrela ou soquete do tamanho exato; alicate espana o sextavado.
+Faça um vai e vem: aperte um pouquinho e depois solte.
+Na montagem, passe graxa ou óleo na rosca para não travar de novo.
+Se nada resolver e for preciso cortar o parafuso com a maquita (apelido da esmerilhadeira angular, que também é usado para a serra mármore), limpe o excesso de produto e espere evaporar antes: o spray é inflamável e a máquina solta faísca. Veja qual disco usar no guia de discos para esmerilhadeira.
+
+### Usos práticos em casa, na obra e na roça
+
+No dia a dia, o WD-40 resolve bem serviços rápidos, como dobradiça rangendo, cadeado e fechadura emperrados, parafuso preso, ferramenta que vai ficar guardada e resíduo de cola; na obra e na roça, ele ajuda a proteger ferramentas da ferrugem e a soltar peças de andaime, porteira e implemento.
+OndeUsoDica
+CasaDobradiça de porta e portão rangendo; cadeado, fechadura e trinco emperradosAplique pouco e tire o excesso. Para durar mais, óleo fino.
+CasaCola de etiqueta, fita adesiva e piche em metal ou vidroEm plástico e pintura, teste antes num cantinho.
+ObraParafuso e porca de andaime, escora metálica, morsa e grampoSolta a peça travada; depois, proteja a rosca com graxa ou óleo.
+ObraColher de pedreiro, desempenadeira de aço, alicates e chaves no fim do serviçoLave e seque antes: o spray não tira cimento endurecido.
+RoçaEnxada, foice, facão e tesoura de poda que vão ficar guardadosLimpe, seque, aplique camada fina e guarde no coberto.
+RoçaCadeado e dobradiça de porteira, parafusos de implemento, motor estacionário que pegou chuvaSempre com o motor desligado e frio. Ponto de graxa (graxeira) continua levando graxa.
+Aqui no Oeste Baiano, as chuvas vão mais ou menos de novembro a março. Outubro é uma boa época para revisar ferramentas antes da umidade chegar. No período seco o problema é outro: a poeira gruda em qualquer óleo e vira uma pasta que desgasta a peça, então use pouco produto e tire o excesso.
+
+### Quando o WD-40 não é o ideal
+
+O WD-40 não é o produto certo para lubrificação pesada e duradoura, como rolamento, eixo, engrenagem e graxeira, que pedem graxa; ele também não deve ir em freio, correia, superfície que toca alimento, equipamento de oxigênio e alguns plásticos transparentes, e precisa ser removido antes de pintar ou colar.
+Carga e atrito constante: a película do spray é fina e parte dela evapora. Roda de carrinho de mão, coroa e pinhão de betoneira, rolamento e graxeira de implemento levam graxa, do tipo indicado no manual.
+Plástico e borracha: o fabricante informa que o produto pode ser usado na maioria das superfícies, mas recomenda evitar policarbonato e poliestireno transparente, materiais comuns em telha de policarbonato, viseira, lente de óculos de proteção e farol de carro. Em outros plásticos e borrachas, teste antes; em anel de vedação (o-ring) e borracha de registro, prefira graxa de silicone.
+Freio, embreagem e correia: nunca aplique em disco, pastilha, lona de freio, correia ou polia. Se respingar, limpe como indica o manual do veículo ou da máquina.
+Alimento: não use em panela, grelha ou moedor, nem perto de ração e água de animais.
+Oxigênio: nunca passe óleo, graxa ou spray em regulador, mangueira ou conexão de cilindro de oxigênio (solda oxiacetilênica e oxicorte): óleo em contato com oxigênio sob pressão pode pegar fogo ou explodir.
+Antes de pintar ou colar: a película oleosa atrapalha a aderência. Limpe a peça com desengraxante, seque e só então aplique fundo, tinta ou cola. Veja o que usar em Tintas e Pintura.
+Eletrônicos: placa e conector pedem limpa contato, com o aparelho desligado.
+
+### Segurança: inflamável e nunca em equipamento energizado
+
+O WD-40 vem em aerossol inflamável: use longe de chama, cigarro, solda, faísca de esmerilhadeira e superfície quente, em lugar ventilado, e nunca aplique em aparelho, tomada, quadro, motor ou cerca elétrica ligados na energia; desligue tudo, espere o produto evaporar e só depois religue.
+Desligue e desconecte: tire da tomada, desligue o disjuntor ou retire a bateria antes de aplicar em qualquer coisa que tenha parte elétrica.
+Instalação elétrica não é lugar de spray: não borrife dentro de quadro de distribuição, tomada, interruptor nem em cerca elétrica. Instalação molhada ou dando choque é serviço para eletricista qualificado, conforme a NBR 5410.
+Espere evaporar o produto antes de religar o aparelho ou dar partida no motor.
+Calor: lata de aerossol não pode ficar exposta a mais de 50 °C. Com o calor de setembro e outubro aqui em Barreiras, não deixe o spray no painel do carro nem na carroceria ao sol.
+Lata: não fure nem queime, mesmo vazia.
+Saúde: não aspire a névoa e guarde longe de crianças. Se alguém engolir, não provoque vômito e procure atendimento levando o rótulo. Óculos de proteção e luva nitrílica estão em Utilidades e EPI.
+
+### Alternativas: desengripante, graxa, óleo fino e outros
+
+Cada serviço tem um produto mais indicado: desengripante para ferrugem pesada, graxa para rolamento, eixo e engrenagem, óleo fino para dobradiça e mecanismo leve, spray de silicone para borracha, plástico e trilho, grafite em pó para miolo de fechadura e limpa contato para eletrônicos. O WD-40 fica com o serviço rápido e geral.
+ProdutoMelhor paraCuidado
+WD-40 (multiuso)Umidade, peça emperrada, lubrificação leve, limpezaPelícula fina, de curta duração.
+Óleo desengripanteParafuso e porca muito enferrujadosDepois de soltar, lubrifique com o produto certo.
+Graxa de uso geral (a de lítio é a mais comum)Rolamento, eixo, engrenagem, cremalheira, graxeira de implementoUse o tipo indicado no manual.
+Graxa de siliconeAnel de vedação, borracha, registro e torneiraEm peça de água potável, use graxa própria para esse uso.
+Óleo fino (óleo de máquina, de almotolia)Dobradiça, tesoura, alicate, máquina de costura e mecanismo leveDura mais que o spray; tire o excesso.
+Spray de siliconeTrilho de janela e porta de correr, borracha de porta, plásticoNão deixe cair em piso nem em degrau.
+Grafite em póMiolo de fechadura e cadeadoSeco, não junta poeira; siga a indicação do fabricante da fechadura.
+Limpa contatoContatos e conectores de eletrônicosSó com o aparelho desligado e desconectado.
+Na dúvida, siga o manual do equipamento e o rótulo do produto, ou mande uma foto da peça pelo WhatsApp. Veja mais em Fixação, Colas e Lubrificantes.
+
+### WD-40 é a mesma coisa que desengripante?
+
+Na prática, muita gente chama o WD-40 de desengripante, e ele solta bem peça com ferrugem leve, mas o fabricante o apresenta como produto multiuso: também afasta umidade, protege e limpa. Os óleos vendidos como desengripante são feitos principalmente para penetrar na ferrugem e costumam render mais em parafuso muito travado. Em qualquer caso, depois de soltar a peça, lubrifique com o produto certo para o serviço, como graxa ou óleo.
+
+### Posso passar WD-40 na corrente da bicicleta ou da moto?
+
+Pode usar para limpar a corrente e tirar a água depois da chuva, mas a película que fica é leve e sai rápido. Depois de limpar, aplique um lubrificante próprio para corrente. Na moto, siga o manual: corrente com retentor (o-ring) pede produto compatível com essas borrachas. E cuidado com o borrifo: disco, pastilha e lona de freio nunca podem receber óleo; se respingar, limpe antes de rodar.
+
+### Posso usar WD-40 no portão eletrônico?
+
+Pode usar para soltar dobradiça, roldana ou trinco emperrados, mas desligue o motor do portão no disjuntor antes e não borrife no motor, na placa nem na fiação. Para cremalheira, engrenagem e partes do automatizador, siga o manual do fabricante ou a orientação do instalador, que costuma indicar graxa ou um lubrificante específico. Em lugar com muita poeira, tire o excesso de produto com pano.
+
+### WD-40 tira ferrugem?
+
+Tira ferrugem leve, de superfície: aplique, espere alguns minutos, esfregue com escova de aço, palha de aço ou lixa e limpe com pano. Ferrugem grossa, que já descasca, precisa de escova de aço, lixa ou disco flap na esmerilhadeira. Se a peça for ser pintada, remova toda a película oleosa com desengraxante e aplique um fundo anticorrosivo antes da tinta, como pede a embalagem.
+
+### Quanto tempo dura a proteção do WD-40 contra ferrugem?
+
+Não existe prazo fixo: depende do ambiente. Em ferramenta guardada em lugar coberto e seco, a película protege por mais tempo; em peça exposta a chuva, sereno, adubo ou terra úmida, ela some rápido e precisa ser reaplicada com frequência. Para guardar máquina ou implemento parado por meses, graxa ou óleo protetivo formam uma barreira mais grossa, e em estrutura fixa o caminho é fundo anticorrosivo e tinta.

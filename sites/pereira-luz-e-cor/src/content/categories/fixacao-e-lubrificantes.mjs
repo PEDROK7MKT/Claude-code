@@ -20,7 +20,7 @@ export default {
   groups: [
     {
       name: 'Parafusos',
-      description: 'Parafuso para madeira e chipboard para móveis, MDF e aglomerado; parafuso para drywall, que prende a chapa de gesso no perfil de aço; autobrocante, que fura e rosqueia sozinho em chapa e telha metálica; e sextavado, para cargas maiores, com bucha ou com porca. A medida é sempre diâmetro x comprimento em milímetros, como 4,2 x 40.',
+      description: 'Parafuso para madeira e chipboard para móveis, MDF e aglomerado; parafuso para drywall, que prende a chapa de gesso no perfil de aço; autobrocante, que fura e rosqueia sozinho em chapa e telha metálica; e sextavado, para cargas maiores, com bucha ou com porca. A medida vem como diâmetro x comprimento: em milímetros na maioria (como 4,2 x 40) e, em sextavado e rosca máquina, muitas vezes em polegadas (como 1/4\" x 2\").',
       items: [
         'Parafuso para madeira cabeça chata (rosca soberba)',
         'Parafuso chipboard cabeça chata para MDF e aglomerado',
@@ -128,7 +128,7 @@ export default {
     },
     {
       title: 'Sol forte e chuva pedem material de área externa',
-      body: 'Aqui no Oeste Baiano o sol castiga o ano todo, então na área externa prefira parafuso galvanizado ou inox, abraçadeira de nylon preta própria para sol e cubra a espuma expansiva com massa ou tinta. Antes da época das chuvas, que costuma ir de novembro a março, troque parafuso de telha com arruela ressecada e refaça a vedação de calha e rufo com selante de PU.',
+      body: 'Aqui no Oeste Baiano o sol castiga o ano todo, então na área externa prefira parafuso galvanizado ou inox, abraçadeira de nylon preta com proteção UV e cubra a espuma expansiva com massa ou tinta. Antes da época das chuvas, que costuma ir de novembro a março, troque parafuso de telha com arruela ressecada e refaça a vedação de calha e rufo com selante de PU. No telhado, não pise direto na telha, use cinto de segurança preso em ponto firme e tenha ajudante, ou chame um profissional.',
     },
     {
       title: 'Peça enferrujada: produto, paciência e a chave certa',

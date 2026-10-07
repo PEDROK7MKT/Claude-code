@@ -6,11 +6,11 @@ export default {
   shortName: 'Hidráulica',
   seo: {
     title: 'Material Hidráulico em Barreiras-BA | Pereira Luz & Cor',
-    description: 'Tubos e conexões PVC, registros, torneiras, mangueira por metro e caixa d\'água no Jardim Ouro Branco, em Barreiras-BA. Monte a lista e peça orçamento no WhatsApp.',
+    description: 'Tubos e conexões de PVC, registros, torneiras, mangueira por metro e caixa d\'água no Jardim Ouro Branco, Barreiras-BA. Peça seu orçamento pelo WhatsApp.',
   },
   h1: 'Material hidráulico em Barreiras',
   kicker: 'Tubos, conexões, torneiras, mangueira por metro e caixa d\'água',
-  intro: 'Na Pereira Luz & Cor, no bairro Jardim Ouro Branco, em Barreiras, você encontra material hidráulico para obra, reforma e conserto: tubos e conexões de PVC para água e esgoto, registros, torneiras, duchas higiênicas, flexíveis, sifões, mangueira por metro e caixa d\'água de polietileno com boia e adaptadores. Atendemos morador, encanador, pedreiro e produtor rural no balcão e pelo WhatsApp: monte sua lista no site, envie e a gente confirma medidas, disponibilidade e orçamento.',
+  intro: 'Na Pereira Luz & Cor, no bairro Jardim Ouro Branco, em Barreiras, você encontra material hidráulico para obra, reforma e conserto: tubos e conexões de PVC para água e esgoto, registros, torneiras, duchas higiênicas, flexíveis, sifões, mangueira por metro, caixa d\'água de polietileno, torneira de boia e adaptadores. Atendemos morador, encanador, pedreiro e produtor rural no balcão e pelo WhatsApp: monte sua lista no site, envie e a gente confirma medidas, disponibilidade e orçamento.',
   cardBlurb: 'Tubos, conexões, registros, torneiras, mangueira por metro e caixa d\'água.',
   highlights: [
     'Mangueira vendida por metro',
@@ -20,7 +20,7 @@ export default {
   groups: [
     {
       name: 'Tubos e conexões para água fria',
-      description: 'O tubo marrom soldável é o da água fria. As medidas mais usadas em casa são 20 mm (corresponde à rosca de 1/2"), 25 mm (3/4") e 32 mm (1"). As conexões são coladas com adesivo para PVC, e as peças com rosca ou bucha de latão fazem a ligação com torneira, registro e chuveiro.',
+      description: 'O tubo marrom soldável é o da água fria, e as medidas mais usadas em casa são 20 mm (equivale à rosca de 1/2"), 25 mm (3/4") e 32 mm (1"). As conexões são coladas com adesivo para PVC, e as peças com rosca ou bucha de latão fazem a ligação com torneira, registro e chuveiro.',
       items: [
         'Tubo PVC soldável 20 mm',
         'Tubo PVC soldável 25 mm',
@@ -36,7 +36,7 @@ export default {
     },
     {
       name: 'Esgoto e ralos',
-      description: 'O tubo branco é o de esgoto e trabalha sem pressão, só pela inclinação. Em geral, 40 mm atende lavatório e chuveiro, 50 mm atende pia de cozinha e máquina de lavar, e 100 mm é o do vaso sanitário e da tubulação principal. Conforme a linha, as conexões são soldadas ou de junta elástica, com anel de borracha.',
+      description: 'O tubo branco de esgoto trabalha sem pressão, só pela inclinação: em geral, 40 mm atende lavatório e chuveiro, 50 mm atende pia de cozinha e máquina de lavar, e 100 mm é o do vaso sanitário e da tubulação principal. Conforme a linha, as conexões são soldadas ou de junta elástica, com anel de borracha.',
       items: [
         'Tubo de esgoto PVC 40 mm',
         'Tubo de esgoto PVC 50 mm',
@@ -64,7 +64,7 @@ export default {
     },
     {
       name: 'Duchas, flexíveis, sifões e válvulas',
-      description: 'As peças que ligam pia, lavatório, tanque e vaso ao ponto de água e ao esgoto: ducha higiênica, engate flexível, sifão para segurar o mau cheiro que vem do esgoto e válvula de escoamento. Os chuveiros elétricos ficam na seção de Materiais Elétricos.',
+      description: 'Engate flexível, sifão (que segura o mau cheiro do esgoto) e válvula de escoamento ligam pia, lavatório, tanque e vaso ao ponto de água e ao esgoto; aqui também ficam as duchas higiênicas. Os chuveiros elétricos estão na seção de Materiais Elétricos.',
       items: [
         'Ducha higiênica com registro',
         'Engate flexível 1/2" para torneira e caixa acoplada (30, 40 e 50 cm)',
@@ -119,7 +119,7 @@ export default {
   tips: [
     {
       title: 'Traga a peça velha (ou uma foto com a trena do lado)',
-      body: 'Reparo de torneira, base de registro, boia e flexível mudam de rosca, medida e modelo, e a diferença às vezes é de poucos milímetros. Traga a peça antiga ou mande no WhatsApp uma foto com a trena encostada: assim a gente acerta a medida antes de você fechar a parede ou abrir o registro geral.',
+      body: 'Reparo de torneira, base de registro, boia e flexível mudam de rosca, medida e modelo, e a diferença às vezes é de poucos milímetros. Traga a peça antiga ou mande no WhatsApp uma foto com a trena encostada: assim a gente acerta a medida de primeira, antes de você fechar a parede ou deixar a casa sem água esperando a peça certa.',
     },
     {
       title: 'Cola na junta soldável, veda-rosca na rosca',
@@ -127,7 +127,7 @@ export default {
     },
     {
       title: 'Caixa d\'água pede base inteira e tampa fechada',
-      body: 'Uma caixa de 1.000 litros cheia pesa cerca de uma tonelada, então a base precisa ser plana, nivelada, firme e maior que o fundo da caixa, sem apoiar só em ripas ou vigas com vão. Mantenha a tampa bem encaixada para não virar criadouro do mosquito da dengue, principalmente na época das chuvas, e siga o manual do fabricante na instalação e na limpeza.',
+      body: 'Uma caixa de 1.000 litros cheia pesa cerca de uma tonelada, então a base precisa ser plana, nivelada, firme e maior que o fundo da caixa, sem apoiar só em ripas ou vigas com vão; em laje, torre ou estrutura elevada, confirme com um engenheiro ou pedreiro experiente se ela aguenta o peso. Mantenha a tampa bem encaixada para não virar criadouro do mosquito da dengue, principalmente na época das chuvas, e siga o manual do fabricante na instalação e na limpeza.',
     },
   ],
   faq: [
@@ -137,11 +137,11 @@ export default {
     },
     {
       q: 'Tubo de 20 mm é a mesma coisa que 1/2 polegada?',
-      a: 'Na prática, sim: no PVC soldável marrom, o tubo de 20 mm é o que corresponde à rosca de 1/2", o de 25 mm à de 3/4" e o de 32 mm à de 1". O número em milímetros é o diâmetro externo do tubo, e a polegada é a medida da rosca de torneira, registro e flexível. Para passar de um para o outro, use adaptador soldável com rosca ou joelho com bucha de latão.',
+      a: 'Equivale: no PVC soldável marrom, o tubo de 20 mm é o que corresponde à rosca de 1/2", o de 25 mm à de 3/4" e o de 32 mm à de 1". O número em milímetros é o diâmetro externo do tubo, e a polegada é a medida da rosca de torneira, registro e flexível. Para passar de um para o outro, use adaptador soldável com rosca ou joelho com bucha de latão.',
     },
     {
       q: 'Qual tamanho de caixa d\'água eu preciso para a minha casa?',
-      a: 'Uma conta comum é multiplicar o número de moradores pelo consumo diário de cada um, que projetos costumam estimar entre 150 e 200 litros, e escolher uma caixa que guarde pelo menos um dia de uso. Para quatro pessoas, isso dá de 600 a 800 litros, por isso a de 1.000 litros é a mais procurada. Se a água falta com frequência na sua rua, vale ter reserva para mais dias. Veja a conta completa em <a href="/guias/qual-tamanho-de-caixa-d-agua/">qual tamanho de caixa d\'água</a>.',
+      a: 'Uma conta comum é multiplicar o número de moradores pelo consumo diário de cada um, que projetos costumam estimar entre 150 e 200 litros, e escolher uma caixa que guarde pelo menos um dia de uso. Para quatro pessoas, isso dá de 600 a 800 litros, e a caixa de 1.000 litros atende com folga. Se falta água com frequência na sua rua, vale ter reserva para dois dias, sem exagerar, para a água não ficar parada demais. Veja a conta completa em <a href="/guias/qual-tamanho-de-caixa-d-agua/">qual tamanho de caixa d\'água</a>.',
     },
     {
       q: 'Vocês vendem mangueira por metro?',
@@ -149,15 +149,15 @@ export default {
     },
     {
       q: 'Precisa fechar o registro da ducha higiênica depois de usar?',
-      a: 'Sim, o recomendado é fechar o registro da ducha higiênica depois de cada uso. Com ele aberto, o flexível e o gatilho ficam sob pressão o tempo todo, o que força as vedações e pode causar vazamento ou rompimento do flexível, inclusive com a casa vazia. Por isso a ducha deve ser instalada com registro próprio. Na hora de comprar, confira a medida da rosca do ponto de água, que costuma ser de 1/2".',
+      a: 'Sim: o recomendado é fechar o registro da ducha higiênica depois de cada uso, porque, com ele aberto, o flexível e o gatilho ficam sob pressão o tempo todo, o que força as vedações e pode causar vazamento ou rompimento do flexível, inclusive com a casa vazia. Por isso a ducha deve ser instalada com registro próprio. Na hora de comprar, confira a medida da rosca do ponto de água, que costuma ser de 1/2".',
     },
     {
       q: 'Posso usar cano marrom de PVC para água quente?',
-      a: 'Não: o tubo PVC soldável marrom é feito para água fria, e com água quente ele amolece, deforma e pode soltar nas conexões. Na saída de aquecedor solar, a gás ou boiler, use tubo próprio para água quente, como CPVC ou PPR, seguindo o projeto e o manual do aquecedor. O chuveiro elétrico é diferente, porque esquenta a água dentro dele, depois do cano, e por isso é ligado normalmente na rede de água fria.',
+      a: 'Não: o tubo PVC soldável marrom é feito só para água fria e, com água quente, amolece, deforma e pode soltar nas conexões; na saída de aquecedor solar, a gás ou boiler, use tubo próprio para água quente, como CPVC ou PPR, seguindo o projeto e o manual do aquecedor. O chuveiro elétrico é diferente, porque esquenta a água dentro dele, depois do cano, e por isso é ligado normalmente na rede de água fria.',
     },
     {
-      q: 'Vocês têm chuveiro elétrico e resistência?',
-      a: 'Sim, chuveiros elétricos, duchas e resistências ficam na seção de <a href="/materiais-eletricos/">Materiais Elétricos</a>, porque a escolha depende da tensão (127 V ou 220 V), da potência e do fio do circuito. Na parte hidráulica da instalação entram o registro de pressão, o joelho com bucha de latão no ponto e a fita veda-rosca. Antes de comprar, veja <a href="/guias/qual-fio-usar-no-chuveiro-eletrico/">qual fio usar no chuveiro elétrico</a>.',
+      q: 'Onde comprar material hidráulico em Barreiras?',
+      a: 'Em Barreiras, a <strong>Pereira Luz & Cor</strong> fica na Rua São Francisco, 55, no Jardim Ouro Branco, e trabalha com material hidráulico para obra e conserto: tubos e conexões de PVC para água e esgoto, registros, torneiras, duchas higiênicas, flexíveis, sifões, mangueira por metro e caixa d\'água. A loja é nova: monte sua lista aqui no site e envie pelo WhatsApp, com a medida ou uma foto da peça, ou passe no balcão. Veja como chegar na página de <a href="/contato/">contato</a>.',
     },
   ],
   relatedGuides: ['qual-tamanho-de-caixa-d-agua', 'qual-fio-usar-no-chuveiro-eletrico'],

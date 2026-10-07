@@ -82,7 +82,7 @@ export default {
     },
     {
       name: 'Rolos, pincéis, trinchas e bandejas',
-      description: 'Rolo de lã para tinta látex e acrílica em parede (pelo mais alto para reboco e textura, mais baixo para parede lisa), rolo de espuma para esmalte e verniz em superfície lisa, e trincha e pincel para recorte, canto e moldura. Com o extensor, dá para pintar o teto sem ficar subindo e descendo da escada.',
+      description: 'Rolo de lã para látex PVA e tinta acrílica em parede (pelo mais alto para reboco e textura, mais baixo para parede lisa), rolo de espuma para esmalte e verniz em superfície lisa, e trincha e pincel para recorte, canto e moldura. Com o extensor, dá para pintar o teto sem ficar subindo e descendo da escada.',
       items: [
         'Rolo de lã 23 cm pelo alto (reboco e textura)',
         'Rolo de lã 23 cm pelo baixo (parede lisa)',
@@ -119,14 +119,14 @@ export default {
       body: 'Aqui no Oeste Baiano o sol esquenta a parede e a tinta seca rápido demais, deixando marca de emenda: pinte a fachada de manhã cedo ou no fim da tarde, com a parede na sombra. Na temporada de chuva, entre novembro e março, só pinte área externa sem previsão de chuva para as horas seguintes, e confira na lata os limites de temperatura e umidade. Em fachada, use sempre tinta acrílica, nunca PVA.',
     },
     {
-      title: 'Portão de ferro: ferrugem fora antes do esmalte',
-      body: 'Esmalte passado por cima de ferrugem solta descasca logo. Lixe ou escove até tirar a ferrugem, limpe pó e gordura, passe o fundo anticorrosivo e só depois o esmalte. Dilua com o diluente da embalagem (em geral aguarrás para esmalte sintético) e não deixe a fita crepe comum dias no sol, porque ela gruda e deixa cola.',
+      title: 'Compre a tinta toda de uma vez',
+      body: 'A cor pode variar um pouco de um lote para outro, e a diferença aparece na parede. Faça a conta antes na calculadora de tinta, compre tudo de uma vez, confira se as latas são do mesmo lote e, em parede grande, misture as embalagens num balde antes de começar. E não deixe a fita crepe comum dias no sol: ela gruda e deixa cola no rodapé e no batente.',
     },
   ],
   faq: [
     {
       q: 'Quantas latas de tinta eu preciso para pintar um quarto?',
-      a: 'Um quarto de 3 × 4 m, com 2,6 m de pé-direito, uma porta e uma janela, tem cerca de <strong>33 m² de parede</strong>, sem contar o teto. Com duas demãos em parede lisa, a conta fica perto de 6 a 7 litros, ou uns <strong>2 galões de 3,6 L</strong>; reboco sem massa e troca de cor escura para clara pedem mais. Faça a conta do seu cômodo na <a href="/calculadora-de-tinta/">calculadora de tinta</a> e veja o guia <a href="/guias/quantas-latas-de-tinta-preciso/">quantas latas de tinta preciso</a>.',
+      a: 'Um quarto de 3 × 4 m, com 2,60 m de pé-direito, uma porta e uma janela, tem 33,52 m² de parede e pede cerca de <strong>6,7 litros</strong> para duas demãos em parede lisa, já com 10% de margem: <strong>2 galões de 3,6 L</strong>. Reboco sem massa e cor escura coberta com clara pedem mais. A estimativa é conservadora, porque o rendimento real varia por marca e linha e vem impresso na lata. Calcule seu cômodo na <a href="/calculadora-de-tinta/">calculadora de tinta</a> ou leia o guia <a href="/guias/quantas-latas-de-tinta-preciso/">quantas latas de tinta preciso</a>.',
     },
     {
       q: 'Qual a diferença entre tinta acrílica e látex PVA?',
@@ -134,11 +134,11 @@ export default {
     },
     {
       q: 'Posso usar massa corrida na parede externa ou no banheiro?',
-      a: '<strong>Não.</strong> A massa corrida PVA é feita para parede interna seca e, com umidade, pode estufar e descascar. Em fachada, muro, banheiro, cozinha e área de serviço, use <strong>massa acrílica</strong>, que resiste à água. Nas duas, aplique em camadas finas, espere secar, lixe e tire o pó antes de pintar. Veja o guia <a href="/guias/massa-corrida-ou-massa-acrilica/">massa corrida ou massa acrílica</a>.',
+      a: '<strong>Não</strong>: a massa corrida PVA é feita para parede interna seca e, com umidade, pode estufar e descascar; em fachada, muro, banheiro, cozinha e área de serviço, use <strong>massa acrílica</strong>, que resiste à água. Nas duas, aplique em camadas finas, espere secar, lixe e tire o pó antes de pintar. Veja o guia <a href="/guias/massa-corrida-ou-massa-acrilica/">massa corrida ou massa acrílica</a>.',
     },
     {
       q: 'Tinta fosca, acetinada ou semibrilho: qual escolher?',
-      a: 'Escolha pelo cômodo: a <strong>fosca</strong> disfarça imperfeições e vai bem em sala, quarto e teto; a <strong>acetinada</strong> tem leve brilho e é mais fácil de limpar, boa para corredor, quarto de criança e cozinha; a <strong>semibrilho</strong> é a mais lavável, indicada para área de muito uso e úmida, mas realça defeitos, então a parede precisa estar bem lisa. O passo a passo está no guia <a href="/guias/como-pintar-parede-passo-a-passo/">como pintar parede</a>.',
+      a: 'Escolha pelo cômodo: a <strong>fosca</strong> disfarça imperfeições e vai bem em sala, quarto e teto; a <strong>acetinada</strong> tem leve brilho e é mais fácil de limpar, boa para corredor, quarto de criança e cozinha; a <strong>semibrilho</strong> é a mais lavável, indicada para área de muito uso e úmida, mas realça defeitos, então a parede precisa estar bem lisa. Para deixar a parede lisa antes da tinta, veja o passo a passo no guia <a href="/guias/como-pintar-parede-passo-a-passo/">como pintar parede</a>.',
     },
     {
       q: 'Como pintar portão de ferro enferrujado?',
@@ -150,7 +150,7 @@ export default {
     },
     {
       q: 'Onde comprar tinta e massa corrida em Barreiras?',
-      a: 'Na <strong>Pereira Luz & Cor</strong>, na Rua São Francisco, 55, bairro Jardim Ouro Branco. A loja é nova e trabalha com tinta acrílica, látex PVA, esmalte, verniz, massa corrida, massa acrílica, textura, tinta para piso, tinta spray e os acessórios de pintura. Monte sua lista aqui no site e envie pelo WhatsApp para receber o orçamento, ou passe no balcão para tirar dúvidas. Veja como chegar na página de <a href="/contato/">contato</a>.',
+      a: 'Na <strong>Pereira Luz & Cor</strong>, na Rua São Francisco, 55, bairro Jardim Ouro Branco, em Barreiras, uma loja nova que trabalha com tinta acrílica, látex PVA, esmalte, verniz, massa corrida, massa acrílica, textura, tinta para piso, tinta spray e os acessórios de pintura. Monte sua lista aqui no site e envie pelo WhatsApp para receber o orçamento e confirmar a disponibilidade, ou passe no balcão para tirar dúvidas. Veja como chegar na página de <a href="/contato/">contato</a>.',
     },
   ],
   relatedGuides: [
