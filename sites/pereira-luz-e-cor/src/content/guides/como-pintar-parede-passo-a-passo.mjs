@@ -61,7 +61,7 @@ export default {
 <tr><td>Reboco fraco, que esfarela ou solta pó na mão</td><td>Escovar e aplicar fundo preparador de paredes</td></tr>
 <tr><td>Caiação ou tinta velha que solta pó branco</td><td>Raspar o que estiver solto, escovar e aplicar fundo preparador</td></tr>
 <tr><td>Gesso</td><td>Fundo preparador que traga indicação para gesso na embalagem</td></tr>
-<tr><td>Pintura antiga firme</td><td>Lixar de leve e tirar o pó; os remendos de massa recebem antes um pouco de fundo ou de tinta, para não manchar</td></tr>
+<tr><td>Pintura antiga firme</td><td>Lixar de leve e tirar o pó; remendo de massa leva antes um pouco de fundo, para não manchar</td></tr>
 </tbody>
 </table>
 <p>Em reboco novo, o selador vem antes da massa. Massa corrida PVA é só para parede interna e seca; em área externa ou úmida, use massa acrílica (veja <a href="/guias/massa-corrida-ou-massa-acrilica/">massa corrida ou massa acrílica</a>). Aplique em camadas finas, lixe com lixa fina e tire todo o pó.</p>`,
@@ -70,10 +70,10 @@ export default {
       h2: 'Como fazer o recorte com trincha e passar o rolo',
       html: `<p>Pinte primeiro o teto e depois as paredes, sempre de cima para baixo. Em cada parede, faça o recorte com trincha nos cantos, junto ao teto, ao rodapé e aos batentes, e logo em seguida passe o rolo, com a faixa da trincha ainda fresca, para as duas se misturarem sem deixar marca.</p>
 <ul>
-<li><strong>Tinta</strong>: mexa bem antes e durante o uso e dilua só com o que a lata indica, na proporção indicada. Muitas linhas pedem diluição diferente na primeira demão.</li>
+<li><strong>Tinta</strong>: mexa bem e dilua só como a lata indica (às vezes a primeira demão leva mais água).</li>
 <li><strong>Recorte</strong>: faça uma faixa de uns 5 a 10 cm nos encontros e em volta das tomadas, carregando só a ponta das cerdas.</li>
 <li><strong>Rolo</strong>: molhe na bandeja e rode na parte rugosa até tirar o excesso. Aplique em faixas de cerca de 1 m de largura, em movimento de W ou N, espalhe sem recarregar e termine com passadas leves de cima para baixo, num só sentido.</li>
-<li><strong>Borda molhada</strong>: emende sempre na tinta ainda fresca e termine a parede inteira de uma vez; não volte o rolo sobre a parte que já começou a secar.</li>
+<li><strong>Borda molhada</strong>: emende sempre na tinta fresca e termine a parede de uma vez, sem voltar o rolo onde já começou a secar.</li>
 </ul>
 <p>Não aperte o rolo: pressão demais espirra tinta e marca a parede. Entre uma demão e outra, embrulhe rolo e trincha em saco plástico para não secarem.</p>`,
     },
@@ -82,7 +82,7 @@ export default {
       html: `<p>Espere o intervalo entre demãos impresso na lata antes de passar a próxima: em muitas tintas base água ele fica em torno de 4 horas, mas muda com a linha, a temperatura e a ventilação. A tinta seca ao toque bem antes disso, e a segunda demão aplicada cedo demais arrasta a primeira e deixa marcas.</p>
 <ul>
 <li><strong>Número de demãos</strong>: duas é o padrão; de cor escura para clara, conte três. Cores muito vivas podem pedir mais uma: siga a lata.</li>
-<li><strong>Cura</strong>: a tinta seca em horas, mas só chega à resistência total depois da cura, que leva semanas. Até lá, nada de esfregar ou lavar a parede.</li>
+<li><strong>Cura</strong>: a tinta seca em horas, mas só atinge a resistência total depois da cura, que leva semanas; até lá, não esfregue a parede.</li>
 <li><strong>Calor e ar seco</strong> secam a superfície mais rápido, mas não encurte o intervalo; só trabalhe em trechos menores para não perder a borda molhada.</li>
 </ul>`,
     },
@@ -90,7 +90,7 @@ export default {
       h2: 'Melhor época para pintar em Barreiras',
       html: `<p>A melhor época para pintar em Barreiras é a seca, de maio a setembro, principalmente fachada e muro, que assim secam e curam sem risco de chuva. Dentro de casa dá para pintar o ano todo, com o cômodo ventilado; fora, cuidado com o calor de setembro e outubro e com as chuvas, mais ou menos de novembro a março.</p>
 <ul>
-<li><strong>Seca (maio a setembro)</strong>: melhor fase para área externa. Evite dia de vento forte, que joga poeira na tinta fresca.</li>
+<li><strong>Seca (maio a setembro)</strong>: melhor fase para área externa; evite dia de vento forte, que joga poeira na tinta.</li>
 <li><strong>Calor forte (setembro e outubro)</strong>: parede no sol esquenta e a tinta seca rápido demais, marcando as emendas. Pinte a fachada de manhã cedo ou no fim da tarde, com a parede na sombra.</li>
 <li><strong>Chuvas (novembro a março)</strong>: só pinte área externa com a parede seca e sem previsão de chuva para as horas seguintes. Confira na lata os limites de temperatura e umidade.</li>
 </ul>

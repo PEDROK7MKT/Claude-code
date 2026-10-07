@@ -4,11 +4,11 @@ export default {
   title: 'Como escolher e instalar fita de LED: 12 V, 24 V ou 220 V?',
   seo: {
     title: 'Fita de LED: como escolher e instalar | Pereira Luz & Cor',
-    description: 'Fita de LED 12 V, 24 V ou 220 V: tipos, IP65, cor da luz e cálculo da fonte com exemplo. Em Barreiras, monte sua lista e peça orçamento pelo WhatsApp.',
+    description: 'Fita de LED 12 V, 24 V ou 220 V: como escolher, calcular a fonte e instalar com perfil. Em Barreiras, monte sua lista e peça orçamento pelo WhatsApp.',
   },
   kicker: 'Guia prático · Iluminação e LED',
   readingMinutes: 8,
-  summary: 'Para sanca, móvel e nicho, a escolha mais segura é a fita de LED de 12 V ou 24 V com fonte; a de 24 V aguenta trechos mais longos sem perder brilho. A fita de 127 V ou 220 V liga direto na rede e pede eletricista. Para a fonte, multiplique os watts por metro pelos metros e some cerca de 20% de folga. Corte só nas marcações.',
+  summary: 'Para sanca, móvel e nicho, a escolha mais segura é a fita de LED de 12 V ou 24 V com fonte; a de 24 V perde menos brilho em trechos longos. A fita de 127 V ou 220 V liga direto na rede e pede eletricista. Para a fonte, multiplique os watts por metro pelos metros e some cerca de 20% de folga. Corte só nas marcações.',
   keyTakeaways: [
     'Fita de 12 V e 24 V precisa de fonte da mesma tensão; fita de 127 V ou 220 V liga na rede e deve ser instalada por eletricista.',
     'Fonte = W/m × metros + cerca de 20% de folga. Exemplo: 8 m × 9,6 W/m = 76,8 W, então fonte de 100 W ou mais.',
@@ -19,7 +19,7 @@ export default {
   sections: [
     {
       h2: '12 V, 24 V ou 127/220 V: qual fita de LED escolher?',
-      html: '<p>Para sanca, móvel planejado, nicho e prateleira, escolha fita de LED de <strong>12 V ou 24 V</strong>, que trabalha com fonte e em extrabaixa tensão; deixe a fita de <strong>127 V ou 220 V</strong>, que liga direto na rede, para contornos longos e fora do alcance das mãos, sempre instalada por eletricista.</p><p>Na fita de 12 V ou 24 V, a fonte reduz a tensão e a fita tem risco de choque bem menor. Na fita de rede, a própria fita recebe 127 V ou 220 V, e qualquer ponta mal vedada é perigosa.</p><table><thead><tr><th>Característica</th><th>12 V</th><th>24 V</th><th>127 V / 220 V</th></tr></thead><tbody><tr><td>Precisa de fonte?</td><td>Sim, de 12 V</td><td>Sim, de 24 V</td><td>Não; usa plugue próprio com retificador</td></tr><tr><td>Trecho por ponta (regra prática)</td><td>Até uns 5 m</td><td>Até uns 10 m</td><td>Bem maior (veja o manual)</td></tr><tr><td>Ponto de corte</td><td>Em geral, a cada 3 LEDs</td><td>Em geral, a cada 6 LEDs</td><td>Em geral, a cada 50 cm ou 1 m</td></tr><tr><td>Uso típico</td><td>Móvel, nicho, sanca pequena</td><td>Sanca grande e trechos longos</td><td>Fachada, beiral e contorno externo alto</td></tr></tbody></table>',
+      html: '<p>Para sanca, móvel planejado, nicho e prateleira, escolha fita de LED de <strong>12 V ou 24 V</strong>, que trabalha com fonte e em extrabaixa tensão; deixe a fita de <strong>127 V ou 220 V</strong>, que liga direto na rede, para contornos longos e fora do alcance das mãos, sempre instalada por eletricista.</p><p>Na fita de rede, a própria fita recebe 127 V ou 220 V, e qualquer ponta mal vedada é perigosa.</p><table><thead><tr><th>Característica</th><th>12 V</th><th>24 V</th><th>127 V / 220 V</th></tr></thead><tbody><tr><td>Precisa de fonte?</td><td>Sim, de 12 V</td><td>Sim, de 24 V</td><td>Não; usa plugue próprio com retificador</td></tr><tr><td>Trecho por ponta (regra prática)</td><td>Até uns 5 m</td><td>Até uns 10 m</td><td>Bem maior (veja o manual)</td></tr><tr><td>Ponto de corte</td><td>Em geral, a cada 3 LEDs</td><td>Em geral, a cada 6 LEDs</td><td>Varia por modelo, muitas vezes a cada 50 cm ou 1 m</td></tr><tr><td>Uso típico</td><td>Móvel, nicho, sanca pequena</td><td>Sanca grande e trechos longos</td><td>Fachada, beiral e contorno externo alto</td></tr></tbody></table>',
     },
     {
       h2: 'Tipos de LED: SMD 3528, 2835, 5050 e COB',
@@ -27,7 +27,7 @@ export default {
     },
     {
       h2: 'IP20, IP65 ou IP67: onde cada fita pode ficar',
-      html: '<p>Use fita <strong>IP20</strong> só em ambiente interno e seco, como sanca, closet e dentro de móvel; em cozinha perto da pia, varanda, área de serviço e fachada, escolha <strong>IP65</strong> ou superior, que tem capa de silicone e resiste a poeira, respingos e jatos de água.</p><ul><li><strong>IP20</strong>: sem proteção contra água; é a fita sem capa.</li><li><strong>IP65</strong>: totalmente protegida contra poeira e resistente a jatos de água. É a mais usada em área externa coberta.</li><li><strong>IP67</strong>: aguenta imersão temporária. Para piscina, espelho d\'água ou lugar que alaga, só produto feito para isso e instalado por eletricista.</li></ul><p>Aqui no Oeste Baiano, a chuva forte vai de novembro a março e o resto do ano é de sol pesado. Silicone no sol direto pode amarelar e ressecar: deixe a fita sob o beiral ou dentro de perfil, com fonte própria para área externa ou em local abrigado.</p>',
+      html: '<p>Use fita <strong>IP20</strong> só em ambiente interno e seco, como sanca, closet e dentro de móvel; em cozinha perto da pia, varanda, área de serviço e fachada, escolha <strong>IP65</strong> ou superior, que tem cobertura de silicone ou resina e resiste a poeira, respingos e jatos de água.</p><ul><li><strong>IP20</strong>: sem proteção contra água; é a fita sem capa.</li><li><strong>IP65</strong>: totalmente protegida contra poeira e resistente a jatos de água. É a mais usada em área externa coberta.</li><li><strong>IP67</strong>: aguenta imersão temporária. Para piscina, espelho d\'água ou lugar que alaga, só produto feito para isso e instalado por eletricista.</li></ul><p>Aqui no Oeste Baiano, a chuva forte vai de novembro a março e o resto do ano é de sol pesado. A cobertura de silicone ou resina pode amarelar e ressecar no sol direto: deixe a fita sob o beiral ou dentro de perfil, com fonte própria para área externa ou em local abrigado.</p>',
     },
     {
       h2: 'Cor da luz: quente, neutra, fria ou RGB',
@@ -35,7 +35,7 @@ export default {
     },
     {
       h2: 'Como calcular a fonte da fita de LED (com exemplo)',
-      html: '<p>Para dimensionar a fonte, multiplique os watts por metro da fita pelo total de metros e acrescente cerca de 20% de folga; a fonte tem que ter a mesma tensão da fita (12 V com 12 V, 24 V com 24 V) e potência igual ou acima do resultado, para não trabalhar no limite e esquentar.</p><p><strong>Exemplo:</strong> sanca de sala com 8 m de fita 12 V de 9,6 W/m.</p><table><thead><tr><th>Passo</th><th>Conta</th><th>Resultado</th></tr></thead><tbody><tr><td>Consumo da fita</td><td>9,6 W/m × 8 m</td><td>76,8 W</td></tr><tr><td>Folga de 20%</td><td>76,8 W × 1,2</td><td>Cerca de 92 W</td></tr><tr><td>Corrente da fita</td><td>76,8 W ÷ 12 V</td><td>6,4 A</td></tr><tr><td>Fonte</td><td>Potência comercial acima de 92 W</td><td>12 V de 100 W ou 12 V 10 A (120 W)</td></tr></tbody></table><p>Fonte maior que o cálculo pode, porque a fita só puxa o que precisa; menor, não, porque esquenta, desarma ou queima. Se a fonte tiver chave seletora de entrada (110/220 V), confira a posição antes de ligar. A fonte tipo colmeia, de grade metálica, é para local interno, ventilado e com acesso para manutenção.</p>',
+      html: '<p>Para dimensionar a fonte, multiplique os watts por metro da fita pelo total de metros e acrescente cerca de 20% de folga; a fonte tem que ter a mesma tensão da fita (12 V com 12 V, 24 V com 24 V) e potência igual ou acima do resultado, para não trabalhar no limite e esquentar.</p><p><strong>Exemplo:</strong> sanca de sala com 8 m de fita 12 V de 9,6 W/m.</p><table><thead><tr><th>Passo</th><th>Conta</th><th>Resultado</th></tr></thead><tbody><tr><td>Consumo da fita</td><td>9,6 W/m × 8 m</td><td>76,8 W</td></tr><tr><td>Folga de 20%</td><td>76,8 W × 1,2</td><td>Cerca de 92 W</td></tr><tr><td>Corrente da fita</td><td>76,8 W ÷ 12 V</td><td>6,4 A</td></tr><tr><td>Fonte</td><td>Potência comercial acima de 92 W</td><td>12 V de 100 W ou 12 V 10 A (120 W)</td></tr></tbody></table><p>Fonte maior que o cálculo pode, porque a fita só puxa o que precisa; menor, não, porque esquenta, desarma ou queima. Se a fonte tiver chave seletora de entrada (110/220 V), confira a posição antes de ligar. A fonte tipo colmeia, de grade metálica, tem os bornes da rede expostos: fica em local interno, seco e ventilado, protegida, fora do alcance e com o terra ligado; quem a liga na rede é o eletricista.</p>',
     },
     {
       h2: 'Queda de tensão: por que o fim da fita fica fraco',
@@ -71,7 +71,7 @@ export default {
     },
     {
       q: 'Queimou um pedaço da fita de LED. Dá para trocar só ele?',
-      a: '<strong>Sim.</strong> Na fita de 12 V ou 24 V, dá para cortar o segmento apagado nas marcas de tesoura e colocar no lugar um pedaço de fita igual: mesma tensão, mesmo tipo de LED, mesma quantidade de LEDs por metro e mesma cor de luz. A emenda pode ser feita com conector ou solda. Leve um pedaço da fita antiga ou uma foto da etiqueta para facilitar a comparação no balcão.',
+      a: '<strong>Sim.</strong> Na fita de 12 V ou 24 V, dá para cortar o segmento apagado nas marcas de tesoura e colocar no lugar um pedaço de fita igual: mesma tensão, mesmo tipo de LED, mesma quantidade de LEDs por metro e mesma cor de luz. A emenda pode ser feita com conector ou solda; na fita de 127 V ou 220 V, a troca é do segmento inteiro entre marcas e fica com o eletricista. Leve um pedaço da fita antiga ou uma foto da etiqueta ao balcão.',
     },
     {
       q: 'Onde comprar fita de LED, fonte e perfil em Barreiras?',

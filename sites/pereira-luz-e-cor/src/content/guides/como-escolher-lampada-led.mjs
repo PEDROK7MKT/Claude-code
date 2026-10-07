@@ -4,7 +4,7 @@ export default {
   title: 'Como escolher lâmpada LED: lúmens, cor da luz e tabela de equivalência',
   seo: {
     title: 'Como escolher lâmpada LED: lúmens e cor | Pereira Luz & Cor',
-    description: 'Veja quantos lúmens trocam sua incandescente, a cor de luz certa para cada cômodo e o que conferir na caixa. Em Barreiras, peça orçamento pelo WhatsApp.',
+    description: 'Veja quantos lúmens substituem sua incandescente, a cor de luz certa para cada cômodo e o que conferir na caixa. Em Barreiras, peça orçamento pelo WhatsApp.',
   },
   kicker: 'Guia rápido · Iluminação',
   readingMinutes: 7,
@@ -35,7 +35,7 @@ export default {
     },
     {
       h2: 'Bivolt, rosca E27 e o tipo de luminária',
-      html: '<p>Antes de levar a lâmpada, confira três coisas na caixa: a tensão (bivolt ou só 127 V ou 220 V), o tipo de base e se ela pode ir na luminária que você tem em casa.</p><ul><li><strong>Bivolt:</strong> a lâmpada marcada como bivolt (em geral 100 V a 240 V) funciona em 127 V e em 220 V. Se a caixa indicar uma tensão só, confirme a da sua casa antes.</li><li><strong>Rosca E27:</strong> é a rosca comum dos bocais no Brasil, a da lâmpada bulbo. Lustre e abajur costumam usar a E14, mais fina, e spots usam GU10 ou base de pino. Na dúvida, leve a lâmpada antiga ao balcão.</li><li><strong>Luminária fechada:</strong> calor encurta a vida do LED. Em plafon fechado, globo de vidro ou arandela vedada, use lâmpada que a embalagem libere para esse uso e respeite a potência máxima da luminária. Aqui em Barreiras, com o calor forte de setembro e outubro, esse cuidado faz diferença.</li><li><strong>Área externa:</strong> a lâmpada bulbo comum não é à prova d\'água. Em varanda descoberta, muro e fachada, ela vai dentro de arandela com proteção contra chuva; para quintal grande e galpão, use refletor LED IP65. Veja os modelos em <a href="/iluminacao-e-led/">iluminação e LED</a>.</li></ul>',
+      html: '<p>Antes de levar a lâmpada, confira três coisas na caixa: a tensão (bivolt ou só 127 V ou 220 V), o tipo de base e se ela pode ir na luminária que você tem em casa.</p><ul><li><strong>Bivolt:</strong> a lâmpada marcada como bivolt (em geral 100 V a 240 V) funciona em 127 V e em 220 V. Se a caixa indicar uma tensão só, confirme a da sua casa antes.</li><li><strong>Rosca E27:</strong> é a rosca comum dos bocais no Brasil, a da lâmpada bulbo. Alguns lustres e abajures usam a E14, mais fina, e spots usam GU10 ou base de pino. Na dúvida, leve a lâmpada antiga ao balcão.</li><li><strong>Luminária fechada:</strong> calor encurta a vida do LED. Em plafon fechado, globo de vidro ou arandela vedada, use lâmpada que a embalagem libere para esse uso e respeite a potência máxima da luminária. Aqui em Barreiras, com o calor forte de setembro e outubro, esse cuidado faz diferença.</li><li><strong>Área externa:</strong> a lâmpada bulbo comum não é à prova d\'água. Em varanda descoberta, muro e fachada, ela vai dentro de arandela com proteção contra chuva; para quintal grande e galpão, use refletor LED IP65. Veja os modelos em <a href="/iluminacao-e-led/">iluminação e LED</a>.</li></ul>',
     },
     {
       h2: 'Selo do Inmetro e o que ler na embalagem',
@@ -43,7 +43,7 @@ export default {
     },
     {
       h2: 'Quanto se economiza trocando por LED',
-      html: '<p>Trocar uma incandescente de 60 W por uma LED de 9 W com luz parecida corta cerca de 85% do consumo daquele ponto de luz, e trocar uma fluorescente compacta de 15 W pela mesma LED corta perto de 40%, além de a LED durar bem mais.</p><table><thead><tr><th>Lâmpada (cerca de 800 lm)</th><th>Potência</th><th>Consumo no mês (5 h por dia)</th><th>Vida útil típica</th></tr></thead><tbody><tr><td>Incandescente</td><td>60 W</td><td>9 kWh</td><td>cerca de 1.000 h</td></tr><tr><td>Fluorescente compacta</td><td>15 W</td><td>2,25 kWh</td><td>cerca de 6.000 a 10.000 h</td></tr><tr><td>LED</td><td>9 W</td><td>1,35 kWh</td><td>muitas declaram de 15.000 a 25.000 h</td></tr></tbody></table><p>Para saber o valor em reais, multiplique os kWh pela tarifa da sua conta de luz. Numa casa com oito pontos acesos 5 horas por dia, trocar incandescentes por LED tira cerca de 61 kWh por mês do consumo (8 × 7,65 kWh). A durabilidade real depende de calor e ventilação da luminária.</p><p>Tem ainda um ganho que se sente aqui no Oeste Baiano: a incandescente transforma a maior parte da energia em calor, e a LED esquenta bem menos o ambiente. A incandescente comum já saiu do mercado brasileiro por regras de eficiência energética, mas ainda aparece em casa antiga e sítio.</p>',
+      html: '<p>Trocar uma incandescente de 60 W por uma LED de 9 W com luz parecida corta cerca de 85% do consumo daquele ponto de luz, e trocar uma fluorescente compacta de 15 W pela mesma LED corta perto de 40%, além de a LED durar bem mais.</p><table><thead><tr><th>Lâmpada (cerca de 800 lm)</th><th>Potência</th><th>Consumo no mês (5 h por dia, 30 dias)</th><th>Vida útil típica</th></tr></thead><tbody><tr><td>Incandescente</td><td>60 W</td><td>9 kWh</td><td>cerca de 1.000 h</td></tr><tr><td>Fluorescente compacta</td><td>15 W</td><td>2,25 kWh</td><td>cerca de 6.000 a 10.000 h</td></tr><tr><td>LED</td><td>9 W</td><td>1,35 kWh</td><td>muitas declaram de 15.000 a 25.000 h</td></tr></tbody></table><p>Para saber o valor em reais, multiplique os kWh pela tarifa da sua conta de luz. Numa casa com oito pontos acesos 5 horas por dia, trocar incandescentes por LED tira cerca de 61 kWh por mês do consumo (8 × 7,65 kWh). A durabilidade real depende de calor e ventilação da luminária.</p><p>Tem ainda um ganho que se sente aqui no Oeste Baiano: a incandescente transforma a maior parte da energia em calor, e a LED esquenta bem menos o ambiente. A incandescente comum já saiu do mercado brasileiro por regras de eficiência energética, mas ainda aparece em casa antiga e sítio.</p>',
     },
   ],
   howTo: null,
@@ -63,7 +63,7 @@ export default {
     },
     {
       q: 'O que fazer com a lâmpada fluorescente velha?',
-      a: 'Não jogue no lixo comum nem quebre: a fluorescente tem <strong>mercúrio</strong> e entra na logística reversa prevista na Política Nacional de Resíduos Sólidos (Lei 12.305/2010). Guarde inteira, de preferência na caixa da lâmpada nova, e leve a um ponto de coleta de lâmpadas. Se quebrar, abra as janelas, saia do cômodo por alguns minutos e recolha os cacos com luva e papelão, sem usar vassoura ou aspirador.',
+      a: 'Não jogue no lixo comum nem quebre: a fluorescente tem <strong>mercúrio</strong> e entra na logística reversa prevista na Política Nacional de Resíduos Sólidos (Lei 12.305/2010). Guarde inteira, de preferência na caixa da lâmpada nova, e leve a um ponto de coleta de lâmpadas. Se quebrar, abra as janelas, saia do cômodo por uns 10 minutos e recolha os cacos com luva e papelão, sem usar vassoura ou aspirador; guarde tudo num pote ou saco bem fechado e pergunte no ponto de coleta ou na prefeitura onde entregar.',
     },
     {
       q: 'Posso trocar a lâmpada sozinho ou preciso de eletricista?',
@@ -71,7 +71,7 @@ export default {
     },
     {
       q: 'Lâmpada LED pode ficar acesa a noite toda no quintal?',
-      a: 'Pode, e gasta pouco: uma LED de 9 W acesa 12 horas por noite consome cerca de <strong>3,2 kWh por mês</strong>, contra uns 21,6 kWh de uma incandescente de 60 W. Em quintal, garagem e sítio, vale ligar a luz numa fotocélula, que acende ao anoitecer e apaga ao amanhecer, ou num sensor de presença. Ao ar livre, a lâmpada precisa estar em luminária protegida da chuva.',
+      a: 'Pode, e gasta pouco: uma LED de 9 W acesa 12 horas por noite consome cerca de <strong>3,2 kWh por mês</strong>, contra uns 21,6 kWh de uma incandescente de 60 W. Em quintal, garagem e sítio, vale ligar a luz numa fotocélula, que acende ao anoitecer e apaga ao amanhecer, ou num sensor de presença; confira na embalagem se o modelo é compatível com LED e chame um eletricista para a instalação. Ao ar livre, a lâmpada precisa estar em luminária protegida da chuva.',
     },
   ],
   cta: {
@@ -80,8 +80,8 @@ export default {
     items: [
       'Lâmpada LED bulbo 9 W E27 bivolt',
       'Lâmpada LED bulbo 12 W E27 bivolt',
-      'Lâmpada LED bulbo 15 W E27 bivolt',
       'Lâmpada LED bulbo luz amarela (2700 K a 3000 K)',
+      'Lâmpada LED bulbo luz neutra (4000 K)',
       'Lâmpada LED bulbo luz branca (6500 K)',
       'Relé fotoelétrico (fotocélula) bivolt',
     ],
@@ -92,7 +92,7 @@ export default {
     { name: 'Programa Brasileiro de Etiquetagem (PBE) e Selo Procel — lâmpadas LED', url: '' },
     { name: 'ABNT NBR ISO/CIE 8995-1 — Iluminação de ambientes de trabalho', url: '' },
     { name: 'ABNT NBR 5410 — Instalações elétricas de baixa tensão', url: '' },
-    { name: 'U.S. Department of Energy / Energy Star — equivalência entre watts e lúmens (Lighting Facts)', url: '' },
+    { name: 'ENERGY STAR / U.S. Department of Energy — equivalência entre watts da incandescente e lúmens', url: '' },
     { name: 'Lei nº 12.305/2010 — Política Nacional de Resíduos Sólidos (logística reversa de lâmpadas fluorescentes)', url: '' },
   ],
 }

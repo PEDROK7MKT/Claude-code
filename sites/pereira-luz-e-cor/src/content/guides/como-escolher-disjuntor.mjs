@@ -7,8 +7,8 @@ export default {
     description: 'Disjuntor protege o fio: veja qual amperagem usar, curva B ou C, quando o DR é obrigatório e para que serve o DPS. Peça orçamento no WhatsApp em Barreiras.',
   },
   kicker: 'Guia rápido · Elétrica',
-  readingMinutes: 7,
-  summary: 'Para escolher o disjuntor, comece pelo fio: pela NBR 5410, a amperagem tem que ser maior ou igual à corrente do circuito e menor ou igual à que o fio aguenta. Em casa, fio 1,5 mm² costuma levar 10 A e fio 2,5 mm², 16 A ou 20 A. Use curva B em cargas resistivas, curva C em motores e ar-condicionado, e DR de 30 mA nas áreas molhadas.',
+  readingMinutes: 8,
+  summary: 'Para escolher o disjuntor, comece pelo fio: pela NBR 5410, a corrente nominal tem que ficar entre a corrente do circuito e o que o fio aguenta. Em casa, fio 1,5 mm² costuma levar 10 A, e o de 2,5 mm², 16 A ou 20 A. Curva B para cargas resistivas, C para motores e ar-condicionado; DR de 30 mA nas áreas molhadas e DPS contra surtos.',
   keyTakeaways: [
     'O disjuntor protege o fio, não o aparelho: a amperagem nunca pode passar do que o fio aguenta.',
     'Curva B para chuveiro, iluminação e tomadas comuns; curva C para ar-condicionado, bomba d\'água e motores.',
@@ -27,7 +27,7 @@ export default {
     },
     {
       h2: 'Curva B, C ou D: qual a diferença',
-      html: `<p>A curva diz com que rapidez o disjuntor desarma num pico forte de corrente: a curva B desarma na hora com 3 a 5 vezes a corrente nominal, a C com 5 a 10 vezes e a D com 10 a 20 vezes. Contra sobrecarga, um disjuntor de 20 A curva B e um de 20 A curva C protegem o fio do mesmo jeito.</p><table><thead><tr><th>Curva</th><th>Desarme instantâneo</th><th>Uso mais comum</th></tr></thead><tbody><tr><td>B</td><td>3 a 5 vezes a corrente nominal</td><td>Chuveiro, iluminação, aquecedor, tomadas comuns e circuitos longos</td></tr><tr><td>C</td><td>5 a 10 vezes</td><td>Ar-condicionado, geladeira, bomba d'água, máquina de lavar e tomadas onde se ligam aparelhos com motor</td></tr><tr><td>D</td><td>10 a 20 vezes</td><td>Motores grandes, transformadores e máquinas de partida pesada (uso mais industrial)</td></tr></tbody></table><p>Aparelho com motor puxa um pico de corrente na partida e pode derrubar um curva B sem defeito nenhum, como acontece em tomada de obra com betoneira, compressor ou maquita (apelido, vindo da marca Makita, que o povo dá à esmerilhadeira e à serra mármore). Por isso, muitos eletricistas usam curva C também nas tomadas.</p>`,
+      html: `<p>A curva diz com que rapidez o disjuntor desarma num pico forte de corrente: a curva B desarma na hora com 3 a 5 vezes a corrente nominal, a C com 5 a 10 vezes e a D com 10 a 20 vezes. Contra sobrecarga, um disjuntor de 20 A curva B e um de 20 A curva C protegem o fio do mesmo jeito.</p><table><thead><tr><th>Curva</th><th>Desarme instantâneo</th><th>Uso mais comum</th></tr></thead><tbody><tr><td>B</td><td>3 a 5 vezes a corrente nominal</td><td>Chuveiro, iluminação, aquecedor, tomadas comuns e circuitos longos</td></tr><tr><td>C</td><td>5 a 10 vezes</td><td>Ar-condicionado, geladeira, bomba d'água, máquina de lavar e tomadas onde se ligam aparelhos com motor</td></tr><tr><td>D</td><td>10 a 20 vezes</td><td>Motores grandes, transformadores e máquinas de partida pesada (uso mais industrial)</td></tr></tbody></table><p>Aparelho com motor puxa um pico de corrente na partida e pode derrubar um disjuntor curva B sem defeito nenhum, como acontece em tomada de obra com betoneira, compressor ou maquita (apelido, vindo da marca Makita, que o povo dá à esmerilhadeira e à serra mármore). Por isso, muitos eletricistas usam curva C também nas tomadas.</p>`,
     },
     {
       h2: 'Monopolar, bipolar ou tripolar?',
@@ -35,7 +35,7 @@ export default {
     },
     {
       h2: 'DR de 30 mA: onde a NBR 5410 exige',
-      html: `<p>O DR (dispositivo diferencial residual) de 30 mA é obrigatório pela NBR 5410 nos circuitos que atendem áreas molhadas e externas, porque desliga a energia em fração de segundo quando percebe corrente fugindo pelo corpo de alguém ou por um defeito. O disjuntor comum não faz isso: ele protege o fio, e o DR protege as pessoas.</p><p>A norma exige DR de alta sensibilidade (até 30 mA) em:</p><ul><li>circuitos que atendem locais com chuveiro ou banheira (a iluminação instalada a 2,50 m de altura ou mais pode ficar de fora);</li><li>tomadas em áreas externas e tomadas internas que possam alimentar aparelhos do lado de fora;</li><li>cozinha, copa-cozinha, lavanderia, área de serviço, garagem e outros cômodos molhados ou que são lavados.</li></ul><p>Um DR pode proteger um ou vários circuitos, e a corrente nominal dele (25 A, 40 A, 63 A) deve ser compatível com os disjuntores. Ele exige ligação correta, com o neutro passando por ele e sem neutro ligado ao terra depois dele. Aperte o botão de teste na frequência que o fabricante indicar; se não desarmar, chame o eletricista.</p>`,
+      html: `<p>O DR (dispositivo diferencial residual) de 30 mA é obrigatório pela NBR 5410 nos circuitos que atendem áreas molhadas e externas, porque desliga a energia em fração de segundo quando percebe corrente fugindo pelo corpo de alguém ou por um defeito. O disjuntor comum não faz isso: ele protege o fio, e o DR protege as pessoas.</p><p>A norma exige DR de alta sensibilidade (até 30 mA) em:</p><ul><li>circuitos que atendem locais com chuveiro ou banheira;</li><li>tomadas em áreas externas e tomadas internas que possam alimentar aparelhos do lado de fora;</li><li>cozinha, copa-cozinha, lavanderia, área de serviço, garagem e outros cômodos molhados ou que são lavados.</li></ul><p>Um DR pode proteger um ou vários circuitos, e a corrente nominal dele (25 A, 40 A, 63 A) deve ser compatível com os disjuntores. Ele exige ligação correta, com o neutro passando por ele e sem neutro ligado ao terra depois dele. Aperte o botão de teste na frequência que o fabricante indicar; se não desarmar, chame o eletricista.</p>`,
     },
     {
       h2: 'DPS: proteção contra surtos e raios',
@@ -43,23 +43,23 @@ export default {
     },
     {
       h2: 'Disjuntor caindo toda hora? Nunca troque por um maior',
-      html: `<p>Disjuntor que desarma com frequência está avisando que algo passou do limite: aparelhos demais no circuito, curto-circuito, mau contato ou fio fino demais. Trocar por um de amperagem maior não resolve; só tira a proteção do fio, que passa a esquentar além do que a isolação aguenta e pode derreter a capa e começar um incêndio dentro da parede.</p><ul><li><strong>Sobrecarga:</strong> ferro de passar, micro-ondas e air fryer ligados juntos no mesmo circuito, ou benjamim com vários aparelhos.</li><li><strong>Curto-circuito:</strong> fio descascado, aparelho com defeito, umidade dentro da caixa de tomada.</li><li><strong>Mau contato:</strong> emenda ou borne frouxo esquenta e pode derrubar o disjuntor mesmo sem sobrecarga.</li><li><strong>Curva errada ou disjuntor gasto:</strong> motor derrubando curva B na partida, ou disjuntor velho desarmando abaixo do valor.</li></ul><p>Se quem cai é o DR, há fuga de corrente (resistência de chuveiro vazando, fio encostando em metal, umidade), e tirar o DR é tirar a proteção contra choque. Com segurança, você pode anotar qual circuito caiu e o que estava ligado, desligar alguns aparelhos e chamar um eletricista. Não abra o quadro nem troque disjuntor: mesmo com o geral desligado, os bornes de entrada continuam energizados.</p>`,
+      html: `<p>Disjuntor que desarma com frequência está avisando que algo passou do limite (aparelhos demais, curto-circuito, mau contato ou fio fino), e trocar por um de amperagem maior não resolve: só tira a proteção do fio, que esquenta além do que a isolação aguenta e pode derreter a capa e começar um incêndio dentro da parede.</p><ul><li><strong>Sobrecarga:</strong> ferro de passar, micro-ondas e air fryer ligados juntos no mesmo circuito, ou benjamim com vários aparelhos.</li><li><strong>Curto-circuito:</strong> fio descascado, aparelho com defeito, umidade dentro da caixa de tomada.</li><li><strong>Mau contato:</strong> emenda ou borne frouxo esquenta e pode derrubar o disjuntor mesmo sem sobrecarga.</li><li><strong>Curva errada ou disjuntor gasto:</strong> motor derrubando curva B na partida, ou disjuntor velho desarmando abaixo do valor.</li></ul><p>Se quem cai é o DR, há fuga de corrente (resistência de chuveiro vazando, fio encostando em metal, umidade), e tirar o DR é tirar a proteção contra choque. Com segurança, você pode anotar qual circuito caiu e o que estava ligado, desligar alguns aparelhos e chamar um eletricista. Não abra o quadro nem troque disjuntor: mesmo com o geral desligado, os bornes de entrada continuam energizados.</p>`,
     },
   ],
   howTo: null,
   widget: null,
   faq: [
     {
-      q: 'Qual disjuntor usar para fio 2,5 mm²?',
-      a: 'Em instalação residencial comum, com o fio em conduíte embutido na parede, o fio 2,5 mm² costuma ficar com disjuntor de <strong>16 A ou 20 A</strong>, já que a NBR 5410 dá a ele cerca de 24 A de capacidade nessas condições. Disjuntor de 25 A ou mais nesse fio deixa o circuito sem proteção. Com vários circuitos no mesmo conduíte ou calor forte no caminho, o limite cai: confirme com o eletricista.',
+      q: 'Quantos watts aguenta um disjuntor de 20 A?',
+      a: 'Um disjuntor de 20 A suporta cerca de <strong>2.540 W em 127 V</strong> e <strong>4.400 W em 220 V</strong>, pela conta potência = tensão × corrente. Na prática, não planeje usar o circuito no limite: vários aparelhos juntos, motor na partida e calor no conduíte pesam. E o disjuntor só pode ser de 20 A se o fio aguentar essa corrente, como o 2,5 mm² em conduíte embutido. Quem dimensiona o circuito é o eletricista.',
     },
     {
       q: 'Interruptor DR e disjuntor DR são a mesma coisa?',
-      a: 'Não. O interruptor DR só desliga o circuito quando percebe fuga de corrente, protegendo as pessoas contra choque, mas não protege o fio contra sobrecarga e curto; por isso trabalha junto com um disjuntor comum. O disjuntor DR (também chamado de DDR) junta as duas funções numa peça só. Para atender a NBR 5410 nas áreas molhadas, qualquer um dos dois precisa ser de 30 mA.',
+      a: 'Não são a mesma coisa: o interruptor DR só desliga o circuito quando percebe fuga de corrente, protegendo as pessoas contra choque, mas não protege o fio contra sobrecarga e curto, por isso trabalha junto com um disjuntor comum; já o disjuntor DR (também chamado de DDR) junta as duas funções numa peça só. Para atender a NBR 5410 nas áreas molhadas, qualquer um dos dois precisa ser de até 30 mA.',
     },
     {
       q: 'O que significam C20 e 3000 escritos no disjuntor?',
-      a: 'A letra e o número, como C20 ou B16, são a curva e a corrente nominal: C20 é curva C, 20 A. O número dentro de um retângulo, como 3000 ou 4500, é a capacidade de interrupção em ampères, o tamanho do curto que ele corta com segurança; o mínimo depende do ponto da instalação e quem define é o projeto. Confira também o número de polos e prefira disjuntor com selo do Inmetro.',
+      a: 'No disjuntor, <strong>C20</strong> quer dizer curva C e corrente nominal de 20 A (B16 seria curva B, 16 A), e o número dentro de um retângulo, como <strong>3000</strong> ou 4500, é a capacidade de interrupção em ampères, ou seja, o tamanho do curto-circuito que ele corta com segurança. O mínimo necessário depende do ponto da instalação e quem define é o projeto. Confira também o número de polos e só compre disjuntor com selo do Inmetro.',
     },
     {
       q: 'Qual a diferença entre disjuntor DIN e NEMA?',
@@ -71,7 +71,7 @@ export default {
     },
     {
       q: 'Quantos disjuntores preciso no quadro de uma casa?',
-      a: 'Você precisa de um disjuntor para cada circuito, e a quantidade de circuitos sai do projeto. Como regra, a NBR 5410 pede iluminação separada das tomadas, circuitos exclusivos para as tomadas de cozinha e área de serviço e circuito próprio para cada aparelho acima de 10 A, como chuveiro e ar-condicionado. Some o geral, o DR e o DPS, e deixe espaço sobrando no quadro para ampliações.',
+      a: 'Você precisa de um disjuntor para cada circuito, e a NBR 5410, como regra, separa iluminação de tomadas, pede circuitos exclusivos para as tomadas de cozinha e área de serviço e circuito próprio para cada aparelho acima de 10 A, como chuveiro e ar-condicionado. Some o geral, o DR e o DPS, deixe espaço sobrando no quadro para ampliações e peça ao eletricista o número exato, que sai do projeto.',
     },
   ],
   cta: {

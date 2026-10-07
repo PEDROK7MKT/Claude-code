@@ -19,7 +19,7 @@ export default {
   sections: [
     {
       h2: 'Qual a diferença entre tinta acrílica e látex PVA?',
-      html: '<p>A diferença está na resina: as duas são tintas à base de água e diluídas com água, mas o látex PVA usa acetato de polivinila, que forma uma película mais porosa e sensível à umidade, enquanto a tinta acrílica usa resina acrílica, que forma uma película mais fechada, flexível e resistente à água, ao sol e à limpeza.</p><p>Por isso, no balcão, a regra é simples: <strong>PVA é tinta de área interna e seca</strong> (teto, quarto, sala, corredor de pouco uso) e <strong>acrílica serve para dentro e fora de casa</strong>, inclusive banheiro, cozinha, lavanderia, fachada e muro.</p><p>As duas são "tinta látex", nome que vem da emulsão em água. Por isso cheiram menos que as tintas à base de solvente e as ferramentas se lavam com água. O PVA custa menos por litro e cobre bem em parede interna, mas aguenta pouco esfregão e amolece com umidade. A acrílica custa mais, porém dura mais em lugar exposto e, das duas, é a única indicada para área externa e úmida.</p>',
+      html: '<p>A diferença está na resina: as duas são tintas à base de água e diluídas com água, mas o látex PVA usa acetato de polivinila, que forma uma película mais porosa e sensível à umidade, enquanto a tinta acrílica usa resina acrílica, que forma uma película mais fechada, flexível e resistente à água, ao sol e à limpeza.</p><p>Por isso, no balcão, a regra é simples: <strong>PVA é tinta de área interna e seca</strong> (teto, quarto, sala, corredor de pouco uso) e <strong>acrílica serve para dentro e fora de casa</strong>, inclusive banheiro, cozinha, lavanderia, fachada e muro.</p><p>As duas são "tinta látex", nome que vem da emulsão em água. Por isso cheiram menos que as tintas à base de solvente e as ferramentas se lavam com água. O PVA custa menos por litro e atende bem a parede interna seca, mas aguenta menos esfregação e amolece com umidade. A acrílica custa mais, porém dura mais em lugar exposto e, das duas, é a única indicada para área externa e úmida.</p>',
     },
     {
       h2: 'Comparativo: tinta acrílica x látex PVA',
@@ -27,7 +27,7 @@ export default {
     },
     {
       h2: 'Lavabilidade: qual tinta aguenta ser lavada',
-      html: '<p>A tinta acrílica aguenta muito mais limpeza que o látex PVA: depois de curada, aceita pano úmido com sabão neutro e esponja macia sem a tinta sair, enquanto o PVA, em geral, só aceita limpeza leve e pode manchar ou sair no pano quando esfregado, principalmente nas linhas econômicas.</p><p>Três coisas aumentam a resistência à limpeza:</p><ul><li><strong>A classe da tinta</strong>: a premium aguenta mais esfregão que a standard, e a standard mais que a econômica.</li><li><strong>O acabamento</strong>: o semibrilho é o mais fácil de limpar, o acetinado vem logo atrás e o fosco é o que menos aguenta, mas disfarça melhor os defeitos da parede.</li><li><strong>A cura</strong>: a tinta seca ao toque em poucas horas, mas só chega à resistência total depois da cura completa, que leva semanas. Antes disso, nada de esfregar.</li></ul><p>Em casa com criança, cozinha, corredor e parede atrás da cama, onde a parede vive sendo tocada, uma acrílica acetinada ou semibrilho, standard ou premium, evita repintar tão cedo.</p>',
+      html: '<p>Na mesma classe, a tinta acrílica costuma aguentar mais limpeza que o látex PVA: depois de curada, aceita pano úmido com sabão neutro e esponja macia sem a tinta sair, enquanto o PVA, em geral, só aceita limpeza leve e pode manchar ou sair no pano quando esfregado, principalmente nas linhas econômicas.</p><p>Três coisas aumentam a resistência à limpeza:</p><ul><li><strong>A classe da tinta</strong>: a premium aguenta mais esfregação que a standard, e a standard mais que a econômica.</li><li><strong>O acabamento</strong>: o semibrilho é o mais fácil de limpar, o acetinado vem logo atrás e o fosco é o que menos aguenta, mas disfarça melhor os defeitos da parede.</li><li><strong>A cura</strong>: a tinta seca ao toque em poucas horas, mas só chega à resistência total depois da cura completa, que leva semanas. Antes disso, nada de esfregar.</li></ul><p>Em casa com criança e em cozinha, corredor e parede atrás da cama, que vivem sendo tocados, uma acrílica acetinada ou semibrilho, standard ou premium, evita repintar tão cedo.</p>',
     },
     {
       h2: 'Dentro, fora e área úmida: onde usar cada uma',
@@ -39,7 +39,7 @@ export default {
     },
     {
       h2: 'Sol forte e chuva em Barreiras: fachada pede acrílica',
-      html: '<p>Em Barreiras, a parede externa pega sol forte o ano inteiro, calor máximo entre setembro e outubro e chuva concentrada de novembro a março; por isso fachada, muro e toda parede que molha pedem tinta acrílica, de preferência standard ou premium, e o látex PVA não deve ser usado do lado de fora.</p><p>O sol resseca e degrada a película: tinta fraca desbota, fica com aspecto de giz e solta um pó branco quando você passa a mão (a chamada calcinação). Depois vem a chuva, que entra pelas falhas, mancha, cria mofo e faz a tinta descascar. A resina acrílica resiste melhor a esse ciclo de sol e água. Para a fachada durar mais:</p><ul><li>Prefira cores claras em parede muito exposta: cores escuras esquentam mais a parede e tendem a desbotar mais rápido.</li><li>Pinte com a parede na sombra, de manhã cedo ou no fim da tarde; no sol do meio-dia a tinta seca rápido demais e marca as emendas do rolo.</li><li>Na época das chuvas, só pinte área externa sem previsão de chuva para as horas seguintes e respeite os limites de temperatura e umidade da lata.</li><li>Reboco novo precisa curar antes da tinta e pede selador acrílico; reboco que solta pó pede fundo preparador.</li></ul>',
+      html: '<p>Em Barreiras, a parede externa pega sol forte o ano inteiro, calor máximo entre setembro e outubro e chuva concentrada de novembro a março; por isso fachada, muro e toda parede que molha pedem tinta acrílica, de preferência standard ou premium, e o látex PVA não deve ser usado do lado de fora.</p><p>O sol resseca e degrada a película: tinta fraca desbota, fica com aspecto de giz e solta um pó branco quando você passa a mão (a chamada calcinação). Depois vem a chuva, que entra pelas falhas, mancha, cria mofo e faz a tinta descascar. A resina acrílica resiste melhor a esse ciclo de sol e água. Para a fachada durar mais:</p><ul><li>Prefira cores claras em parede muito exposta: cores escuras esquentam mais a parede e tendem a desbotar mais rápido.</li><li>Pinte com a parede na sombra, de manhã cedo ou no fim da tarde; no sol do meio-dia a tinta seca rápido demais e marca as emendas do rolo.</li><li>Na época das chuvas, só pinte área externa sem previsão de chuva para as horas seguintes e respeite os limites de temperatura e umidade da lata.</li><li>Reboco novo precisa curar antes da tinta, em geral pelo menos 28 dias (confira a orientação do fabricante), e pede selador acrílico; reboco que solta pó pede fundo preparador.</li></ul>',
     },
     {
       h2: 'Qual comprar: a melhor escolha para cada caso',
@@ -51,7 +51,7 @@ export default {
   faq: [
     {
       q: 'Posso passar tinta acrílica por cima de látex PVA?',
-      a: '<strong>Pode</strong>, desde que a pintura antiga esteja firme. Raspe o que estiver solto, lixe de leve, tire o pó e, se a parede soltar pó branco na mão, aplique fundo preparador antes. Dentro de casa o resultado costuma ser bom. Em fachada que recebeu PVA e começou a descascar, remova tudo o que estiver soltando, porque a camada velha e fraca fica por baixo da acrílica e pode levar a tinta nova junto.',
+      a: '<strong>Pode</strong>: a tinta acrílica vai bem por cima do látex PVA, desde que a pintura antiga esteja firme, limpa e sem pó. Raspe o que estiver solto, lixe de leve, tire o pó e, se a parede soltar pó branco na mão, aplique fundo preparador antes. Dentro de casa o resultado costuma ser bom. Em fachada que recebeu PVA e começou a descascar, remova tudo o que estiver soltando, porque a camada velha e fraca fica por baixo da acrílica e pode levar a tinta nova junto.',
     },
     {
       q: 'Qual tinta usar no teto do banheiro?',
@@ -59,7 +59,7 @@ export default {
     },
     {
       q: 'Quanto tempo depois de pintar posso lavar a parede?',
-      a: 'Espere a <strong>cura completa</strong> indicada na embalagem antes de esfregar, que costuma levar semanas, embora a tinta seque ao toque em poucas horas. Antes disso, a película ainda está "verde" e pode marcar ou sair no pano. Depois da cura, use pano ou esponja macia com água e sabão neutro, sem produto abrasivo, e não esfregue com força parede pintada com PVA ou com tinta de linha econômica.',
+      a: 'Só depois da <strong>cura completa</strong> indicada na embalagem, que costuma levar algumas semanas, embora a tinta seque ao toque em poucas horas. Antes disso, a película ainda está "verde" e pode marcar ou sair no pano. Depois da cura, use pano ou esponja macia com água e sabão neutro, sem produto abrasivo, e não esfregue com força parede pintada com PVA ou com tinta de linha econômica.',
     },
     {
       q: 'Precisa diluir a tinta acrílica e o PVA?',
@@ -67,11 +67,11 @@ export default {
     },
     {
       q: 'Tinta acrílica econômica é melhor que PVA?',
-      a: 'Para área externa e úmida, a <strong>resina acrílica</strong> é a escolha certa, porque aguenta água e sol melhor que o PVA; só confira na lata se aquela linha econômica é indicada para uso externo. Como a classe econômica tem os mínimos mais baixos de cobertura e de resistência a esfregar da ABNT NBR 15079, ela pode pedir mais demãos. Em fachada, uma acrílica standard ou premium costuma compensar; em teto interno seco, o PVA pode ser a compra mais em conta.',
+      a: 'Depende do lugar: para área externa e úmida, sim, porque a <strong>resina acrílica</strong> aguenta água e sol melhor que o PVA, mas confira na lata se aquela linha econômica é indicada para uso externo. Como a classe econômica tem os mínimos mais baixos de cobertura e de resistência a esfregar da ABNT NBR 15079, ela pode pedir mais demãos. Em fachada, uma acrílica standard ou premium costuma compensar; em teto interno seco, o PVA pode ser a compra mais em conta.',
     },
     {
       q: 'Onde comprar tinta acrílica e látex PVA em Barreiras?',
-      a: 'Na <strong>Pereira Luz & Cor</strong>, na Rua São Francisco, 55, bairro Jardim Ouro Branco, em Barreiras. A loja é nova e trabalha com tinta acrílica, látex PVA, massa, selador e acessórios de pintura em várias linhas e embalagens. Monte sua lista aqui no site e envie pelo WhatsApp para receber o orçamento, ou passe no balcão para tirar dúvidas e confirmar a disponibilidade. Veja como chegar na página de <a href="/contato/">contato</a>.',
+      a: 'Você encontra tinta acrílica e látex PVA na <strong>Pereira Luz & Cor</strong>, na Rua São Francisco, 55, bairro Jardim Ouro Branco, em Barreiras. A loja é nova e trabalha com tinta acrílica, látex PVA, massa, selador e acessórios de pintura em várias linhas e embalagens. Monte sua lista aqui no site e envie pelo WhatsApp para receber o orçamento, ou passe no balcão para tirar dúvidas e confirmar a disponibilidade. Veja como chegar na página de <a href="/contato/">contato</a>.',
     },
   ],
   cta: {

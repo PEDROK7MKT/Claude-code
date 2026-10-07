@@ -758,7 +758,7 @@ Resposta rápida: Para saber quantas latas de tinta comprar, calcule a área das
 - Desconte 1,68 m² por porta e 1,20 m² por janela padrão.
 - Quarto de 3 × 4 m: 6,7 L só nas paredes (2 galões); com o teto, 9,1 L.
 - De cor escura para clara, conte 3 demãos em vez de 2.
-- Passou de 12,6 L, a lata de 18 L costuma compensar mais que galões.
+- Passou de 14,4 L, a lata de 18 L costuma compensar mais que galões.
 
 ### Como calcular quanta tinta comprar, passo a passo
 
@@ -782,17 +782,17 @@ Descontos1,68 (porta) + 1,20 (janela)− 2,88 m²
 Tinta, 2 demãos, parede lisa33,52 × 2 ÷ 116,09 L
 Com 10% de folga6,09 × 1,1≈ 6,7 L
 Sem o teto: 6,7 litros cabem em 2 galões de 3,6 L (7,2 L), com meio litro de sobra para retoque.
-Com o teto: some 3 × 4 = 12 m² e a área vai a 45,52 m². São 45,52 × 2 ÷ 11 = 8,28 L e, com a folga, ≈ 9,1 L. A calculadora sugere 2 galões + 3 quartos de 0,9 L (9,9 L); 3 galões (10,8 L) é a alternativa prática, com mais sobra e diferença mínima de custo na estimativa da calculadora. Nem toda linha e cor vem em quarto: confirme no orçamento.
-Teto branco e parede colorida? Calcule separado: 6,7 L da cor para as paredes e 2,4 L de branco para o teto (12 × 2 ÷ 11 × 1,1), que a calculadora resolve com 3 quartos ou, com sobra, 1 galão.
+Com o teto: some 3 × 4 = 12 m² e a área vai a 45,52 m². São 45,52 × 2 ÷ 11 = 8,28 L e, com a folga, ≈ 9,1 L. A calculadora sugere 3 galões (10,8 L); 2 galões + 3 quartos de 0,9 L (9,9 L) deixam menos sobra, mas saem um pouco mais caros na estimativa da calculadora. Nem toda linha e cor vem em quarto: confirme no orçamento.
+Teto branco e parede colorida? Calcule separado: 6,7 L da cor para as paredes e 2,4 L de branco para o teto (12 × 2 ÷ 11 × 1,1), que a calculadora resolve com 1 galão; 3 quartos (2,7 L) sobram menos, mas custam mais na estimativa dela.
 
 ### Tabela: quanta tinta para cada cômodo
 
 Com pé-direito de 2,60 m, parede lisa e duas demãos, um banheiro pequeno pede cerca de 3,6 litros, um quarto de 3 × 4 m uns 6,7 litros e uma sala de 4 × 5 m perto de 8,4 litros, contando só as paredes. Os valores usam as constantes da calculadora, já com 10% de folga.
 CômodoParedeSó paredesParedes + teto
 Banheiro 1,5 × 2,5 m, 1 porta, 1 janela17,92 m²3,6 L: 1 galão4,3 L: 1 galão + 1 quarto
-Quarto 3 × 3 m, 1 porta, 1 janela28,32 m²5,7 L: 1 galão + 3 quartos7,5 L: 2 galões + 1 quarto
-Cozinha 3 × 3,5 m, 2 portas, 1 janela29,24 m²5,8 L: 1 galão + 3 quartos7,9 L: 2 galões + 1 quarto
-Quarto 3 × 4 m, 1 porta, 1 janela33,52 m²6,7 L: 2 galões9,1 L: 2 galões + 3 quartos
+Quarto 3 × 3 m, 1 porta, 1 janela28,32 m²5,7 L: 2 galões7,5 L: 2 galões + 1 quarto
+Cozinha 3 × 3,5 m, 2 portas, 1 janela29,24 m²5,8 L: 2 galões7,9 L: 2 galões + 1 quarto
+Quarto 3 × 4 m, 1 porta, 1 janela33,52 m²6,7 L: 2 galões9,1 L: 3 galões
 Suíte 4 × 4 m, 2 portas, 1 janela37,04 m²7,4 L: 2 galões + 1 quarto10,6 L: 3 galões
 Sala 4 × 5 m, 2 portas, 1 janela42,24 m²8,4 L: 2 galões + 2 quartos12,4 L: 3 galões + 2 quartos
 Em banheiro e cozinha com azulejo, meça só a área que vai receber tinta, use o modo “Já sei a área” e prefira tinta acrílica (veja tinta acrílica ou látex PVA).
@@ -803,19 +803,19 @@ O número de demãos, o tipo de superfície e a troca de cor são o que mais mex
 Situação (quarto 3 × 4 m)ContaLitrosSugestão
 Parede lisa, 2 demãos33,52 × 2 ÷ 11 × 1,16,7 L2 galões
 Parede lisa, 3 demãos (escuro para claro)33,52 × 3 ÷ 11 × 1,110,1 L3 galões
-Reboco ou textura, 2 demãos33,52 × 2 ÷ 8 × 1,19,2 L2 galões + 3 quartos
-Paredes e teto lisos, 3 demãos45,52 × 3 ÷ 11 × 1,113,7 L1 lata de 18 L
+Reboco ou textura, 2 demãos33,52 × 2 ÷ 8 × 1,19,2 L3 galões
+Paredes e teto lisos, 3 demãos45,52 × 3 ÷ 11 × 1,113,7 L4 galões
 Demãos: duas é o padrão para manter a cor ou trocar por tom parecido; de escura para clara, conte três. Cores muito vivas, como vermelho e amarelo, podem pedir mais uma: siga a lata. A opção de 1 demão serve só para retoque.
 Superfície: parede lisa, com massa corrida ou já pintada em bom estado rende mais (11 m²/L na calculadora); reboco sem massa, parede áspera e textura “bebem” tinta (8 m²/L).
 Reboco novo: espere a cura (os fabricantes costumam pedir pelo menos 28 dias) e passe selador antes, para a parede não “sugar” a tinta.
 
 ### Lata, galão ou quarto: qual combinação comprar
 
-Compre pelo total de litros: até uns 12 litros, galões de 3,6 L com quartos de 0,9 L para completar evitam sobra; passou de 12,6 litros, a calculadora já indica a lata de 18 L, porque ela costuma sair mais em conta por litro do que juntar quatro galões.
+Compre pelo total de litros: até 14,4 litros, galões de 3,6 L, com quartos de 0,9 L para completar quando compensa, resolvem com pouca sobra; passou disso, a calculadora já indica a lata de 18 L, porque aí seria preciso juntar quatro galões e mais quartos, e a lata costuma sair mais em conta por litro.
 Quarto (0,9 L): retoque, porta, detalhe ou para completar a conta.
 Galão (3,6 L): cômodo pequeno ou médio. Para 4 L, 1 galão + 1 quarto; para 6,7 L, 2 galões.
-Lata (18 L): casa inteira, sala grande com teto, muro e fachada. A calculadora considera que uma lata custa mais ou menos o mesmo que 3,9 galões.
-Se vários cômodos vão levar a mesma cor, some as áreas e calcule tudo junto. Uma casa com banheiro, dois quartos (3 × 3 m e 3 × 4 m), cozinha e sala da tabela soma 151,24 m² de parede e pede 30,2 litros: a calculadora indica 1 lata + 3 galões + 2 quartos (30,6 L). Calculando cômodo por cômodo, você levaria 7 galões e 8 quartos (32,4 L), com mais sobra e mais custo. No orçamento pelo WhatsApp, a gente confirma quais embalagens a linha e a cor escolhidas têm.
+Lata (18 L): casa inteira, sala grande com teto, muro e fachada. A calculadora considera que uma lata custa mais ou menos o mesmo que 4 galões.
+Se vários cômodos vão levar a mesma cor, some as áreas e calcule tudo junto. Uma casa com banheiro, dois quartos (3 × 3 m e 3 × 4 m), cozinha e sala da tabela soma 151,24 m² de parede e pede 30,2 litros: a calculadora indica 1 lata + 3 galões + 2 quartos (30,6 L). Calculando cômodo por cômodo, você levaria 9 galões e 2 quartos (34,2 L), com mais sobra e mais custo. No orçamento pelo WhatsApp, a gente confirma quais embalagens a linha e a cor escolhidas têm.
 
 ### Por que a conta da calculadora é conservadora
 
@@ -1000,7 +1000,7 @@ Recado para o pintor: aprove a cor da parede olhando a amostra com luz do dia e 
 
 Antes de levar a lâmpada, confira três coisas na caixa: a tensão (bivolt ou só 127 V ou 220 V), o tipo de base e se ela pode ir na luminária que você tem em casa.
 Bivolt: a lâmpada marcada como bivolt (em geral 100 V a 240 V) funciona em 127 V e em 220 V. Se a caixa indicar uma tensão só, confirme a da sua casa antes.
-Rosca E27: é a rosca comum dos bocais no Brasil, a da lâmpada bulbo. Lustre e abajur costumam usar a E14, mais fina, e spots usam GU10 ou base de pino. Na dúvida, leve a lâmpada antiga ao balcão.
+Rosca E27: é a rosca comum dos bocais no Brasil, a da lâmpada bulbo. Alguns lustres e abajures usam a E14, mais fina, e spots usam GU10 ou base de pino. Na dúvida, leve a lâmpada antiga ao balcão.
 Luminária fechada: calor encurta a vida do LED. Em plafon fechado, globo de vidro ou arandela vedada, use lâmpada que a embalagem libere para esse uso e respeite a potência máxima da luminária. Aqui em Barreiras, com o calor forte de setembro e outubro, esse cuidado faz diferença.
 Área externa: a lâmpada bulbo comum não é à prova d'água. Em varanda descoberta, muro e fachada, ela vai dentro de arandela com proteção contra chuva; para quintal grande e galpão, use refletor LED IP65. Veja os modelos em iluminação e LED.
 
@@ -1019,7 +1019,7 @@ O Selo Procel, quando aparece, indica que o modelo está entre os mais eficiente
 ### Quanto se economiza trocando por LED
 
 Trocar uma incandescente de 60 W por uma LED de 9 W com luz parecida corta cerca de 85% do consumo daquele ponto de luz, e trocar uma fluorescente compacta de 15 W pela mesma LED corta perto de 40%, além de a LED durar bem mais.
-Lâmpada (cerca de 800 lm)PotênciaConsumo no mês (5 h por dia)Vida útil típica
+Lâmpada (cerca de 800 lm)PotênciaConsumo no mês (5 h por dia, 30 dias)Vida útil típica
 Incandescente60 W9 kWhcerca de 1.000 h
 Fluorescente compacta15 W2,25 kWhcerca de 6.000 a 10.000 h
 LED9 W1,35 kWhmuitas declaram de 15.000 a 25.000 h
@@ -1040,7 +1040,7 @@ As causas mais comuns são calor (lâmpada em luminária fechada sem ser indicad
 
 ### O que fazer com a lâmpada fluorescente velha?
 
-Não jogue no lixo comum nem quebre: a fluorescente tem mercúrio e entra na logística reversa prevista na Política Nacional de Resíduos Sólidos (Lei 12.305/2010). Guarde inteira, de preferência na caixa da lâmpada nova, e leve a um ponto de coleta de lâmpadas. Se quebrar, abra as janelas, saia do cômodo por alguns minutos e recolha os cacos com luva e papelão, sem usar vassoura ou aspirador.
+Não jogue no lixo comum nem quebre: a fluorescente tem mercúrio e entra na logística reversa prevista na Política Nacional de Resíduos Sólidos (Lei 12.305/2010). Guarde inteira, de preferência na caixa da lâmpada nova, e leve a um ponto de coleta de lâmpadas. Se quebrar, abra as janelas, saia do cômodo por uns 10 minutos e recolha os cacos com luva e papelão, sem usar vassoura ou aspirador; guarde tudo num pote ou saco bem fechado e pergunte no ponto de coleta ou na prefeitura onde entregar.
 
 ### Posso trocar a lâmpada sozinho ou preciso de eletricista?
 
@@ -1048,13 +1048,13 @@ Trocar a lâmpada no bocal você mesmo pode fazer, com alguns cuidados: desligue
 
 ### Lâmpada LED pode ficar acesa a noite toda no quintal?
 
-Pode, e gasta pouco: uma LED de 9 W acesa 12 horas por noite consome cerca de 3,2 kWh por mês, contra uns 21,6 kWh de uma incandescente de 60 W. Em quintal, garagem e sítio, vale ligar a luz numa fotocélula, que acende ao anoitecer e apaga ao amanhecer, ou num sensor de presença. Ao ar livre, a lâmpada precisa estar em luminária protegida da chuva.
+Pode, e gasta pouco: uma LED de 9 W acesa 12 horas por noite consome cerca de 3,2 kWh por mês, contra uns 21,6 kWh de uma incandescente de 60 W. Em quintal, garagem e sítio, vale ligar a luz numa fotocélula, que acende ao anoitecer e apaga ao amanhecer, ou num sensor de presença; confira na embalagem se o modelo é compatível com LED e chame um eletricista para a instalação. Ao ar livre, a lâmpada precisa estar em luminária protegida da chuva.
 
 ---
 
 ## Qual disco usar na esmerilhadeira (maquita)? Tabela por material — https://www.pereiraluzecor.com.br/guias/qual-disco-usar-na-esmerilhadeira/
 
-Resposta rápida: Use disco de corte para cortar ferro e metalon, disco de corte próprio para inox no aço inoxidável, disco de desbaste para tirar rebarba e solda, disco flap para lixar e dar acabamento e disco diamantado para piso, porcelanato, telha, pedra e concreto. Na serra mármore vai só disco diamantado. Em qualquer caso, a rotação máxima impressa no disco precisa ser igual ou maior que a da máquina.
+Resposta rápida: Use disco de corte para cortar ferro e metalon, disco fino marcado INOX para aço inoxidável, disco de desbaste para tirar rebarba e solda, disco flap para lixar e dar acabamento e disco diamantado para piso, porcelanato, telha, pedra e concreto. Na serra mármore vai só disco diamantado. Em qualquer caso, a rotação máxima impressa no disco precisa ser igual ou maior que a da máquina.
 
 - Maquita é apelido: vale tanto para a esmerilhadeira angular quanto para a serra mármore, e cada uma pede disco diferente.
 - Disco de corte só corta, de frente; desbaste, flap e escova de aço trabalham inclinados. Nunca desbaste com a lateral do disco de corte.
@@ -1065,23 +1065,23 @@ Resposta rápida: Use disco de corte para cortar ferro e metalon, disco de corte
 ### Maquita: esmerilhadeira ou serra mármore?
 
 Maquita é o apelido popular de duas máquinas diferentes: a esmerilhadeira angular, que aceita disco de corte, de desbaste, flap, diamantado e escova de aço, e a serra mármore, que tem uma base de apoio e trabalha só com disco diamantado para cortar piso, pedra e concreto em linha reta.
-O apelido vem da marca japonesa Makita, que virou nome de ferramenta, mas a sua máquina pode ser de qualquer fabricante. Aqui em Barreiras, para acertar o disco de primeira, saiba três coisas: qual é a máquina, o tamanho do disco e o material.
+O apelido vem da marca japonesa Makita, que virou nome de ferramenta, mas a sua máquina pode ser de qualquer fabricante. Para acertar o disco de primeira, no balcão ou na lista do WhatsApp, saiba três coisas: qual é a máquina, o tamanho do disco e o material.
 Esmerilhadeira angular: corpo comprido e disco na ponta, sem base de apoio. A mais comum é a de 4.1/2" (115 mm); para serviço pesado, existe a de 7" (180 mm).
 Serra mármore: tem uma sapata que apoia na peça e regula a profundidade, o que deixa o corte reto. Usa disco diamantado de 105 ou 110 mm, conforme o manual.
 
 ### Tabela: qual disco usar para cada material
 
-O disco certo depende do material e do serviço: disco de corte para ferro e metalon, disco de corte próprio para inox no aço inoxidável, disco de desbaste para rebarba e solda, flap para lixar, escova de aço para ferrugem e tinta velha, e disco diamantado para alvenaria, pedra, cerâmica e porcelanato.
+O disco certo depende do material e do serviço: disco de corte para ferro e metalon, disco fino marcado INOX para aço inoxidável, disco de desbaste para rebarba e solda, flap para lixar, escova de aço para ferrugem e tinta velha, e disco diamantado para alvenaria, pedra, cerâmica e porcelanato.
 Material ou serviçoDisco indicadoObservação
 Cortar ferro, vergalhão, metalon, cantoneira e chapaDisco de corte para aço (fino, de 1 a 3 mm)Corta só de frente; o mais fino corta mais rápido.
-Cortar aço inoxDisco de corte para inox (geralmente de 1 mm, marcado INOX)Sem ferro, enxofre e cloro, para não manchar nem enferrujar o inox.
+Cortar aço inoxDisco de corte para inox (fino, de 1 a 1,6 mm, marcado INOX)Sem ferro, enxofre e cloro, para não manchar nem enferrujar o inox.
 Tirar rebarba, cordão de solda e canto vivoDisco de desbaste (grosso, em torno de 6 mm)Trabalha inclinado. Nunca use disco de corte para esse serviço.
 Lixar, chanfrar e dar acabamento em metalDisco flap (grão 40 a 120)Grão 40 tira bastante material; 80 e 120 deixam a superfície lisa para pintar.
 Remover ferrugem, carepa e tinta velhaEscova de aço (copo ou circular)Em peça de inox, use escova de arame inox.
 Concreto, tijolo, bloco, telha e pedra brutaDiamantado segmentadoPróprio para corte a seco; rápido, com acabamento mais áspero.
 Granito, mármore, cerâmica e concreto (uso geral)Diamantado turboCorta rápido e deixa a borda mais limpa que o segmentado.
 Porcelanato, cerâmica esmaltada e azulejoDiamantado contínuo (borda lisa)Lasca menos; muitos são para corte com água: siga a marcação.
-Na serra mármore, só valem as três últimas linhas. Madeira ficou fora de propósito: disco de maquita não é para madeira (veja as perguntas no fim).
+Na serra mármore, só valem as três últimas linhas. A madeira ficou de fora da tabela de propósito: maquita não é ferramenta para cortar madeira (veja as perguntas no fim).
 
 ### Corte, desbaste, flap e escova: como usar cada um
 
@@ -1094,9 +1094,10 @@ Escova de aço: a de copo limpa áreas grandes; a circular entra melhor em canto
 ### Disco diamantado: segmentado, turbo ou contínuo?
 
 O disco diamantado corta os materiais duros da obra, e o formato da borda define o uso: o segmentado, com recortes, é o mais bruto, para concreto, tijolo e telha; o turbo, de borda ondulada, é o meio-termo para uso geral; e o contínuo, de borda lisa, é o que menos lasca, indicado para porcelanato e cerâmica.
-Seco ou com água: o disco informa se é para corte a seco, com água ou para os dois. Disco feito para corte úmido não deve trabalhar a seco. E só corte com água em máquina preparada para isso, do jeito que o manual mostra, ligada em tomada protegida por DR (dispositivo diferencial-residual), como a NBR 5410 exige para tomadas de áreas externas e molhadas.
+Seco ou com água: o disco informa se é para corte a seco, com água ou para os dois. Disco feito para corte úmido não deve trabalhar a seco. E só corte com água em máquina preparada para isso, do jeito que o manual mostra, ligada em tomada protegida por DR de 30 mA (dispositivo diferencial-residual), como a NBR 5410 exige para tomadas de áreas externas e molhadas; se o circuito não tiver DR, chame um eletricista qualificado para instalar antes de cortar com água.
 Tamanho e furo: na serra mármore, a maioria usa disco de 105 ou 110 mm com furo de 20 mm; na esmerilhadeira 4.1/2", o furo padrão é 22,23 mm. Alguns vêm com anel redutor para servir nas duas; o disco tem que encaixar justo, nunca folgado.
 Sentido de giro: se o disco tiver seta, monte com ela apontando para o mesmo lado da seta da máquina.
+Na esmerilhadeira: os fabricantes proíbem disco diamantado segmentado com vão entre os segmentos maior que 10 mm, porque ele engancha e dá tranco; use disco de vão estreito, turbo ou contínuo, próprio para a máquina.
 Poeira: cortar concreto, cerâmica e pedra levanta poeira com sílica, que pode causar silicose, doença pulmonar sem cura. Use máscara PFF2 e trabalhe em local ventilado.
 
 ### Tamanho, furo e rotação: o disco tem que combinar com a máquina
@@ -1128,7 +1129,7 @@ Não. Os fabricantes de esmerilhadeira proíbem disco de serra com dentes, como 
 
 ### Disco de corte de 1 mm ou de 3 mm: qual comprar?
 
-Para metalon, chapa fina, vergalhão e inox, o disco fino (de 1 a 1,6 mm) corta mais rápido, esquenta menos a peça, deixa menos rebarba e desperdiça menos material. O de 3 mm é mais robusto e aguenta melhor perfil grosso e serviço bruto, mas corta mais devagar. Nos dois casos, corte de frente, sem forçar de lado: quanto mais fino o disco, mais sensível ele é a torção dentro do corte.
+Para metalon, chapa fina, vergalhão e inox, o disco fino (de 1 a 1,6 mm) corta mais rápido, esquenta menos a peça, deixa menos rebarba e desperdiça menos material. O de 3 mm é mais robusto e aguenta melhor perfil grosso e serviço bruto, mas corta mais devagar. Nos dois casos, corte de frente, sem forçar de lado: quanto mais fino o disco, mais sensível ele é à torção dentro do corte.
 
 ### Disco de corte para inox serve para cortar ferro comum?
 
@@ -1136,7 +1137,7 @@ Em geral serve, e muitos discos para inox já vêm marcados para aço e inox, ma
 
 ### Por que o disco diamantado parou de cortar?
 
-Na maioria das vezes, o disco ficou "cego": a borda ficou lisa, os diamantes deixaram de aparecer e o corte fica lento e esquentando. Para reavivar, faça alguns cortes rasos num material abrasivo, como tijolo comum ou bloco de concreto. Se o disco esquentou demais e ficou azulado, trincou ou perdeu segmento, troque. Disco errado para o material, como segmentado em porcelanato, também corta mal e lasca a peça.
+Na maioria das vezes, o disco ficou "cego": a borda ficou lisa, os diamantes deixaram de aparecer e o corte fica lento enquanto o disco esquenta. Para reavivar, faça alguns cortes rasos num material abrasivo, como tijolo comum ou bloco de concreto. Se o disco esquentou demais e ficou azulado, trincou ou perdeu segmento, troque. Disco errado para o material, como segmentado em porcelanato, também corta mal e lasca a peça.
 
 ### Disco de corte tem validade?
 
@@ -1158,7 +1159,7 @@ Resposta rápida: Tinta acrílica e látex PVA são tintas à base de água, mas
 
 A diferença está na resina: as duas são tintas à base de água e diluídas com água, mas o látex PVA usa acetato de polivinila, que forma uma película mais porosa e sensível à umidade, enquanto a tinta acrílica usa resina acrílica, que forma uma película mais fechada, flexível e resistente à água, ao sol e à limpeza.
 Por isso, no balcão, a regra é simples: PVA é tinta de área interna e seca (teto, quarto, sala, corredor de pouco uso) e acrílica serve para dentro e fora de casa, inclusive banheiro, cozinha, lavanderia, fachada e muro.
-As duas são "tinta látex", nome que vem da emulsão em água. Por isso cheiram menos que as tintas à base de solvente e as ferramentas se lavam com água. O PVA custa menos por litro e cobre bem em parede interna, mas aguenta pouco esfregão e amolece com umidade. A acrílica custa mais, porém dura mais em lugar exposto e, das duas, é a única indicada para área externa e úmida.
+As duas são "tinta látex", nome que vem da emulsão em água. Por isso cheiram menos que as tintas à base de solvente e as ferramentas se lavam com água. O PVA custa menos por litro e atende bem a parede interna seca, mas aguenta menos esfregação e amolece com umidade. A acrílica custa mais, porém dura mais em lugar exposto e, das duas, é a única indicada para área externa e úmida.
 
 ### Comparativo: tinta acrílica x látex PVA
 
@@ -1176,12 +1177,12 @@ Melhor compra paraTeto e cômodos secos de pouco usoFachada, muro, área úmida 
 
 ### Lavabilidade: qual tinta aguenta ser lavada
 
-A tinta acrílica aguenta muito mais limpeza que o látex PVA: depois de curada, aceita pano úmido com sabão neutro e esponja macia sem a tinta sair, enquanto o PVA, em geral, só aceita limpeza leve e pode manchar ou sair no pano quando esfregado, principalmente nas linhas econômicas.
+Na mesma classe, a tinta acrílica costuma aguentar mais limpeza que o látex PVA: depois de curada, aceita pano úmido com sabão neutro e esponja macia sem a tinta sair, enquanto o PVA, em geral, só aceita limpeza leve e pode manchar ou sair no pano quando esfregado, principalmente nas linhas econômicas.
 Três coisas aumentam a resistência à limpeza:
-A classe da tinta: a premium aguenta mais esfregão que a standard, e a standard mais que a econômica.
+A classe da tinta: a premium aguenta mais esfregação que a standard, e a standard mais que a econômica.
 O acabamento: o semibrilho é o mais fácil de limpar, o acetinado vem logo atrás e o fosco é o que menos aguenta, mas disfarça melhor os defeitos da parede.
 A cura: a tinta seca ao toque em poucas horas, mas só chega à resistência total depois da cura completa, que leva semanas. Antes disso, nada de esfregar.
-Em casa com criança, cozinha, corredor e parede atrás da cama, onde a parede vive sendo tocada, uma acrílica acetinada ou semibrilho, standard ou premium, evita repintar tão cedo.
+Em casa com criança e em cozinha, corredor e parede atrás da cama, que vivem sendo tocados, uma acrílica acetinada ou semibrilho, standard ou premium, evita repintar tão cedo.
 
 ### Dentro, fora e área úmida: onde usar cada uma
 
@@ -1210,7 +1211,7 @@ O sol resseca e degrada a película: tinta fraca desbota, fica com aspecto de gi
 Prefira cores claras em parede muito exposta: cores escuras esquentam mais a parede e tendem a desbotar mais rápido.
 Pinte com a parede na sombra, de manhã cedo ou no fim da tarde; no sol do meio-dia a tinta seca rápido demais e marca as emendas do rolo.
 Na época das chuvas, só pinte área externa sem previsão de chuva para as horas seguintes e respeite os limites de temperatura e umidade da lata.
-Reboco novo precisa curar antes da tinta e pede selador acrílico; reboco que solta pó pede fundo preparador.
+Reboco novo precisa curar antes da tinta, em geral pelo menos 28 dias (confira a orientação do fabricante), e pede selador acrílico; reboco que solta pó pede fundo preparador.
 
 ### Qual comprar: a melhor escolha para cada caso
 
@@ -1223,7 +1224,7 @@ Em qualquer caso, confira na embalagem a classe, o rendimento por demão, a dilu
 
 ### Posso passar tinta acrílica por cima de látex PVA?
 
-Pode, desde que a pintura antiga esteja firme. Raspe o que estiver solto, lixe de leve, tire o pó e, se a parede soltar pó branco na mão, aplique fundo preparador antes. Dentro de casa o resultado costuma ser bom. Em fachada que recebeu PVA e começou a descascar, remova tudo o que estiver soltando, porque a camada velha e fraca fica por baixo da acrílica e pode levar a tinta nova junto.
+Pode: a tinta acrílica vai bem por cima do látex PVA, desde que a pintura antiga esteja firme, limpa e sem pó. Raspe o que estiver solto, lixe de leve, tire o pó e, se a parede soltar pó branco na mão, aplique fundo preparador antes. Dentro de casa o resultado costuma ser bom. Em fachada que recebeu PVA e começou a descascar, remova tudo o que estiver soltando, porque a camada velha e fraca fica por baixo da acrílica e pode levar a tinta nova junto.
 
 ### Qual tinta usar no teto do banheiro?
 
@@ -1231,7 +1232,7 @@ Use tinta acrílica, de preferência acetinada ou semibrilho e, se possível, de
 
 ### Quanto tempo depois de pintar posso lavar a parede?
 
-Espere a cura completa indicada na embalagem antes de esfregar, que costuma levar semanas, embora a tinta seque ao toque em poucas horas. Antes disso, a película ainda está "verde" e pode marcar ou sair no pano. Depois da cura, use pano ou esponja macia com água e sabão neutro, sem produto abrasivo, e não esfregue com força parede pintada com PVA ou com tinta de linha econômica.
+Só depois da cura completa indicada na embalagem, que costuma levar algumas semanas, embora a tinta seque ao toque em poucas horas. Antes disso, a película ainda está "verde" e pode marcar ou sair no pano. Depois da cura, use pano ou esponja macia com água e sabão neutro, sem produto abrasivo, e não esfregue com força parede pintada com PVA ou com tinta de linha econômica.
 
 ### Precisa diluir a tinta acrílica e o PVA?
 
@@ -1239,17 +1240,17 @@ Na maioria das linhas, sim: as duas são diluídas com água limpa, mas a propor
 
 ### Tinta acrílica econômica é melhor que PVA?
 
-Para área externa e úmida, a resina acrílica é a escolha certa, porque aguenta água e sol melhor que o PVA; só confira na lata se aquela linha econômica é indicada para uso externo. Como a classe econômica tem os mínimos mais baixos de cobertura e de resistência a esfregar da ABNT NBR 15079, ela pode pedir mais demãos. Em fachada, uma acrílica standard ou premium costuma compensar; em teto interno seco, o PVA pode ser a compra mais em conta.
+Depende do lugar: para área externa e úmida, sim, porque a resina acrílica aguenta água e sol melhor que o PVA, mas confira na lata se aquela linha econômica é indicada para uso externo. Como a classe econômica tem os mínimos mais baixos de cobertura e de resistência a esfregar da ABNT NBR 15079, ela pode pedir mais demãos. Em fachada, uma acrílica standard ou premium costuma compensar; em teto interno seco, o PVA pode ser a compra mais em conta.
 
 ### Onde comprar tinta acrílica e látex PVA em Barreiras?
 
-Na Pereira Luz & Cor, na Rua São Francisco, 55, bairro Jardim Ouro Branco, em Barreiras. A loja é nova e trabalha com tinta acrílica, látex PVA, massa, selador e acessórios de pintura em várias linhas e embalagens. Monte sua lista aqui no site e envie pelo WhatsApp para receber o orçamento, ou passe no balcão para tirar dúvidas e confirmar a disponibilidade. Veja como chegar na página de contato.
+Você encontra tinta acrílica e látex PVA na Pereira Luz & Cor, na Rua São Francisco, 55, bairro Jardim Ouro Branco, em Barreiras. A loja é nova e trabalha com tinta acrílica, látex PVA, massa, selador e acessórios de pintura em várias linhas e embalagens. Monte sua lista aqui no site e envie pelo WhatsApp para receber o orçamento, ou passe no balcão para tirar dúvidas e confirmar a disponibilidade. Veja como chegar na página de contato.
 
 ---
 
 ## Como escolher e instalar fita de LED: 12 V, 24 V ou 220 V? — https://www.pereiraluzecor.com.br/guias/fita-de-led-como-escolher-e-instalar/
 
-Resposta rápida: Para sanca, móvel e nicho, a escolha mais segura é a fita de LED de 12 V ou 24 V com fonte; a de 24 V aguenta trechos mais longos sem perder brilho. A fita de 127 V ou 220 V liga direto na rede e pede eletricista. Para a fonte, multiplique os watts por metro pelos metros e some cerca de 20% de folga. Corte só nas marcações.
+Resposta rápida: Para sanca, móvel e nicho, a escolha mais segura é a fita de LED de 12 V ou 24 V com fonte; a de 24 V perde menos brilho em trechos longos. A fita de 127 V ou 220 V liga direto na rede e pede eletricista. Para a fonte, multiplique os watts por metro pelos metros e some cerca de 20% de folga. Corte só nas marcações.
 
 - Fita de 12 V e 24 V precisa de fonte da mesma tensão; fita de 127 V ou 220 V liga na rede e deve ser instalada por eletricista.
 - Fonte = W/m × metros + cerca de 20% de folga. Exemplo: 8 m × 9,6 W/m = 76,8 W, então fonte de 100 W ou mais.
@@ -1260,11 +1261,11 @@ Resposta rápida: Para sanca, móvel e nicho, a escolha mais segura é a fita de
 ### 12 V, 24 V ou 127/220 V: qual fita de LED escolher?
 
 Para sanca, móvel planejado, nicho e prateleira, escolha fita de LED de 12 V ou 24 V, que trabalha com fonte e em extrabaixa tensão; deixe a fita de 127 V ou 220 V, que liga direto na rede, para contornos longos e fora do alcance das mãos, sempre instalada por eletricista.
-Na fita de 12 V ou 24 V, a fonte reduz a tensão e a fita tem risco de choque bem menor. Na fita de rede, a própria fita recebe 127 V ou 220 V, e qualquer ponta mal vedada é perigosa.
+Na fita de rede, a própria fita recebe 127 V ou 220 V, e qualquer ponta mal vedada é perigosa.
 Característica12 V24 V127 V / 220 V
 Precisa de fonte?Sim, de 12 VSim, de 24 VNão; usa plugue próprio com retificador
 Trecho por ponta (regra prática)Até uns 5 mAté uns 10 mBem maior (veja o manual)
-Ponto de corteEm geral, a cada 3 LEDsEm geral, a cada 6 LEDsEm geral, a cada 50 cm ou 1 m
+Ponto de corteEm geral, a cada 3 LEDsEm geral, a cada 6 LEDsVaria por modelo, muitas vezes a cada 50 cm ou 1 m
 Uso típicoMóvel, nicho, sanca pequenaSanca grande e trechos longosFachada, beiral e contorno externo alto
 
 ### Tipos de LED: SMD 3528, 2835, 5050 e COB
@@ -1279,11 +1280,11 @@ Mais LEDs por metro dão luz mais uniforme. A tabela traz médias de mercado: a 
 
 ### IP20, IP65 ou IP67: onde cada fita pode ficar
 
-Use fita IP20 só em ambiente interno e seco, como sanca, closet e dentro de móvel; em cozinha perto da pia, varanda, área de serviço e fachada, escolha IP65 ou superior, que tem capa de silicone e resiste a poeira, respingos e jatos de água.
+Use fita IP20 só em ambiente interno e seco, como sanca, closet e dentro de móvel; em cozinha perto da pia, varanda, área de serviço e fachada, escolha IP65 ou superior, que tem cobertura de silicone ou resina e resiste a poeira, respingos e jatos de água.
 IP20: sem proteção contra água; é a fita sem capa.
 IP65: totalmente protegida contra poeira e resistente a jatos de água. É a mais usada em área externa coberta.
 IP67: aguenta imersão temporária. Para piscina, espelho d'água ou lugar que alaga, só produto feito para isso e instalado por eletricista.
-Aqui no Oeste Baiano, a chuva forte vai de novembro a março e o resto do ano é de sol pesado. Silicone no sol direto pode amarelar e ressecar: deixe a fita sob o beiral ou dentro de perfil, com fonte própria para área externa ou em local abrigado.
+Aqui no Oeste Baiano, a chuva forte vai de novembro a março e o resto do ano é de sol pesado. A cobertura de silicone ou resina pode amarelar e ressecar no sol direto: deixe a fita sob o beiral ou dentro de perfil, com fonte própria para área externa ou em local abrigado.
 
 ### Cor da luz: quente, neutra, fria ou RGB
 
@@ -1302,7 +1303,7 @@ Consumo da fita9,6 W/m × 8 m76,8 W
 Folga de 20%76,8 W × 1,2Cerca de 92 W
 Corrente da fita76,8 W ÷ 12 V6,4 A
 FontePotência comercial acima de 92 W12 V de 100 W ou 12 V 10 A (120 W)
-Fonte maior que o cálculo pode, porque a fita só puxa o que precisa; menor, não, porque esquenta, desarma ou queima. Se a fonte tiver chave seletora de entrada (110/220 V), confira a posição antes de ligar. A fonte tipo colmeia, de grade metálica, é para local interno, ventilado e com acesso para manutenção.
+Fonte maior que o cálculo pode, porque a fita só puxa o que precisa; menor, não, porque esquenta, desarma ou queima. Se a fonte tiver chave seletora de entrada (110/220 V), confira a posição antes de ligar. A fonte tipo colmeia, de grade metálica, tem os bornes da rede expostos: fica em local interno, seco e ventilado, protegida, fora do alcance e com o terra ligado; quem a liga na rede é o eletricista.
 
 ### Queda de tensão: por que o fim da fita fica fraco
 
@@ -1349,7 +1350,7 @@ Na maioria das vezes, é fonte fraca ou superaquecida, que entra em proteção e
 
 ### Queimou um pedaço da fita de LED. Dá para trocar só ele?
 
-Sim. Na fita de 12 V ou 24 V, dá para cortar o segmento apagado nas marcas de tesoura e colocar no lugar um pedaço de fita igual: mesma tensão, mesmo tipo de LED, mesma quantidade de LEDs por metro e mesma cor de luz. A emenda pode ser feita com conector ou solda. Leve um pedaço da fita antiga ou uma foto da etiqueta para facilitar a comparação no balcão.
+Sim. Na fita de 12 V ou 24 V, dá para cortar o segmento apagado nas marcas de tesoura e colocar no lugar um pedaço de fita igual: mesma tensão, mesmo tipo de LED, mesma quantidade de LEDs por metro e mesma cor de luz. A emenda pode ser feita com conector ou solda; na fita de 127 V ou 220 V, a troca é do segmento inteiro entre marcas e fica com o eletricista. Leve um pedaço da fita antiga ou uma foto da etiqueta ao balcão.
 
 ### Onde comprar fita de LED, fonte e perfil em Barreiras?
 
@@ -1359,7 +1360,7 @@ Na Pereira Luz & Cor, na Rua São Francisco, 55, bairro Jardim Ouro Branco, em B
 
 ## Como escolher disjuntor: amperagem, curva, DR e DPS — https://www.pereiraluzecor.com.br/guias/como-escolher-disjuntor/
 
-Resposta rápida: Para escolher o disjuntor, comece pelo fio: pela NBR 5410, a amperagem tem que ser maior ou igual à corrente do circuito e menor ou igual à que o fio aguenta. Em casa, fio 1,5 mm² costuma levar 10 A e fio 2,5 mm², 16 A ou 20 A. Use curva B em cargas resistivas, curva C em motores e ar-condicionado, e DR de 30 mA nas áreas molhadas.
+Resposta rápida: Para escolher o disjuntor, comece pelo fio: pela NBR 5410, a corrente nominal tem que ficar entre a corrente do circuito e o que o fio aguenta. Em casa, fio 1,5 mm² costuma levar 10 A, e o de 2,5 mm², 16 A ou 20 A. Curva B para cargas resistivas, C para motores e ar-condicionado; DR de 30 mA nas áreas molhadas e DPS contra surtos.
 
 - O disjuntor protege o fio, não o aparelho: a amperagem nunca pode passar do que o fio aguenta.
 - Curva B para chuveiro, iluminação e tomadas comuns; curva C para ar-condicionado, bomba d'água e motores.
@@ -1398,7 +1399,7 @@ CurvaDesarme instantâneoUso mais comum
 B3 a 5 vezes a corrente nominalChuveiro, iluminação, aquecedor, tomadas comuns e circuitos longos
 C5 a 10 vezesAr-condicionado, geladeira, bomba d'água, máquina de lavar e tomadas onde se ligam aparelhos com motor
 D10 a 20 vezesMotores grandes, transformadores e máquinas de partida pesada (uso mais industrial)
-Aparelho com motor puxa um pico de corrente na partida e pode derrubar um curva B sem defeito nenhum, como acontece em tomada de obra com betoneira, compressor ou maquita (apelido, vindo da marca Makita, que o povo dá à esmerilhadeira e à serra mármore). Por isso, muitos eletricistas usam curva C também nas tomadas.
+Aparelho com motor puxa um pico de corrente na partida e pode derrubar um disjuntor curva B sem defeito nenhum, como acontece em tomada de obra com betoneira, compressor ou maquita (apelido, vindo da marca Makita, que o povo dá à esmerilhadeira e à serra mármore). Por isso, muitos eletricistas usam curva C também nas tomadas.
 
 ### Monopolar, bipolar ou tripolar?
 
@@ -1412,7 +1413,7 @@ Onde a tomada já é 220 V entre fase e neutro, o eletricista define o dispositi
 
 O DR (dispositivo diferencial residual) de 30 mA é obrigatório pela NBR 5410 nos circuitos que atendem áreas molhadas e externas, porque desliga a energia em fração de segundo quando percebe corrente fugindo pelo corpo de alguém ou por um defeito. O disjuntor comum não faz isso: ele protege o fio, e o DR protege as pessoas.
 A norma exige DR de alta sensibilidade (até 30 mA) em:
-circuitos que atendem locais com chuveiro ou banheira (a iluminação instalada a 2,50 m de altura ou mais pode ficar de fora);
+circuitos que atendem locais com chuveiro ou banheira;
 tomadas em áreas externas e tomadas internas que possam alimentar aparelhos do lado de fora;
 cozinha, copa-cozinha, lavanderia, área de serviço, garagem e outros cômodos molhados ou que são lavados.
 Um DR pode proteger um ou vários circuitos, e a corrente nominal dele (25 A, 40 A, 63 A) deve ser compatível com os disjuntores. Ele exige ligação correta, com o neutro passando por ele e sem neutro ligado ao terra depois dele. Aperte o botão de teste na frequência que o fabricante indicar; se não desarmar, chame o eletricista.
@@ -1424,24 +1425,24 @@ A NBR 5410 exige DPS, por exemplo, quando a instalação é alimentada por rede 
 
 ### Disjuntor caindo toda hora? Nunca troque por um maior
 
-Disjuntor que desarma com frequência está avisando que algo passou do limite: aparelhos demais no circuito, curto-circuito, mau contato ou fio fino demais. Trocar por um de amperagem maior não resolve; só tira a proteção do fio, que passa a esquentar além do que a isolação aguenta e pode derreter a capa e começar um incêndio dentro da parede.
+Disjuntor que desarma com frequência está avisando que algo passou do limite (aparelhos demais, curto-circuito, mau contato ou fio fino), e trocar por um de amperagem maior não resolve: só tira a proteção do fio, que esquenta além do que a isolação aguenta e pode derreter a capa e começar um incêndio dentro da parede.
 Sobrecarga: ferro de passar, micro-ondas e air fryer ligados juntos no mesmo circuito, ou benjamim com vários aparelhos.
 Curto-circuito: fio descascado, aparelho com defeito, umidade dentro da caixa de tomada.
 Mau contato: emenda ou borne frouxo esquenta e pode derrubar o disjuntor mesmo sem sobrecarga.
 Curva errada ou disjuntor gasto: motor derrubando curva B na partida, ou disjuntor velho desarmando abaixo do valor.
 Se quem cai é o DR, há fuga de corrente (resistência de chuveiro vazando, fio encostando em metal, umidade), e tirar o DR é tirar a proteção contra choque. Com segurança, você pode anotar qual circuito caiu e o que estava ligado, desligar alguns aparelhos e chamar um eletricista. Não abra o quadro nem troque disjuntor: mesmo com o geral desligado, os bornes de entrada continuam energizados.
 
-### Qual disjuntor usar para fio 2,5 mm²?
+### Quantos watts aguenta um disjuntor de 20 A?
 
-Em instalação residencial comum, com o fio em conduíte embutido na parede, o fio 2,5 mm² costuma ficar com disjuntor de 16 A ou 20 A, já que a NBR 5410 dá a ele cerca de 24 A de capacidade nessas condições. Disjuntor de 25 A ou mais nesse fio deixa o circuito sem proteção. Com vários circuitos no mesmo conduíte ou calor forte no caminho, o limite cai: confirme com o eletricista.
+Um disjuntor de 20 A suporta cerca de 2.540 W em 127 V e 4.400 W em 220 V, pela conta potência = tensão × corrente. Na prática, não planeje usar o circuito no limite: vários aparelhos juntos, motor na partida e calor no conduíte pesam. E o disjuntor só pode ser de 20 A se o fio aguentar essa corrente, como o 2,5 mm² em conduíte embutido. Quem dimensiona o circuito é o eletricista.
 
 ### Interruptor DR e disjuntor DR são a mesma coisa?
 
-Não. O interruptor DR só desliga o circuito quando percebe fuga de corrente, protegendo as pessoas contra choque, mas não protege o fio contra sobrecarga e curto; por isso trabalha junto com um disjuntor comum. O disjuntor DR (também chamado de DDR) junta as duas funções numa peça só. Para atender a NBR 5410 nas áreas molhadas, qualquer um dos dois precisa ser de 30 mA.
+Não são a mesma coisa: o interruptor DR só desliga o circuito quando percebe fuga de corrente, protegendo as pessoas contra choque, mas não protege o fio contra sobrecarga e curto, por isso trabalha junto com um disjuntor comum; já o disjuntor DR (também chamado de DDR) junta as duas funções numa peça só. Para atender a NBR 5410 nas áreas molhadas, qualquer um dos dois precisa ser de até 30 mA.
 
 ### O que significam C20 e 3000 escritos no disjuntor?
 
-A letra e o número, como C20 ou B16, são a curva e a corrente nominal: C20 é curva C, 20 A. O número dentro de um retângulo, como 3000 ou 4500, é a capacidade de interrupção em ampères, o tamanho do curto que ele corta com segurança; o mínimo depende do ponto da instalação e quem define é o projeto. Confira também o número de polos e prefira disjuntor com selo do Inmetro.
+No disjuntor, C20 quer dizer curva C e corrente nominal de 20 A (B16 seria curva B, 16 A), e o número dentro de um retângulo, como 3000 ou 4500, é a capacidade de interrupção em ampères, ou seja, o tamanho do curto-circuito que ele corta com segurança. O mínimo necessário depende do ponto da instalação e quem define é o projeto. Confira também o número de polos e só compre disjuntor com selo do Inmetro.
 
 ### Qual a diferença entre disjuntor DIN e NEMA?
 
@@ -1453,7 +1454,7 @@ Ficar levemente morno com o circuito trabalhando perto do limite pode acontecer,
 
 ### Quantos disjuntores preciso no quadro de uma casa?
 
-Você precisa de um disjuntor para cada circuito, e a quantidade de circuitos sai do projeto. Como regra, a NBR 5410 pede iluminação separada das tomadas, circuitos exclusivos para as tomadas de cozinha e área de serviço e circuito próprio para cada aparelho acima de 10 A, como chuveiro e ar-condicionado. Some o geral, o DR e o DPS, e deixe espaço sobrando no quadro para ampliações.
+Você precisa de um disjuntor para cada circuito, e a NBR 5410, como regra, separa iluminação de tomadas, pede circuitos exclusivos para as tomadas de cozinha e área de serviço e circuito próprio para cada aparelho acima de 10 A, como chuveiro e ar-condicionado. Some o geral, o DR e o DPS, deixe espaço sobrando no quadro para ampliações e peça ao eletricista o número exato, que sai do projeto.
 
 ---
 
@@ -1465,7 +1466,7 @@ Resposta rápida: Massa corrida e massa acrílica nivelam e alisam a parede ante
 - Massa não tapa buraco: ela corrige pequenas imperfeições em duas ou três camadas finas; rombo e desnível grande pedem argamassa antes.
 - Antes da massa, selador acrílico no reboco novo já curado e fundo preparador no reboco que solta pó, no gesso e na caiação.
 - Lixe com grão 150 a 180 entre as demãos, termine com 220 e tire todo o pó antes de pintar.
-- Em área úmida e externa, massa e tinta têm que ser acrílicas: massa corrida por baixo de tinta acrílica continua sendo o ponto fraco.
+- Em área úmida e externa, massa e tinta têm que ser acrílicas: tinta acrílica por cima não impede que a massa corrida estufe com a umidade.
 
 ### Qual a diferença entre massa corrida e massa acrílica?
 
@@ -1496,7 +1497,7 @@ Banheiro, parede e teto: massa acrílica. O vapor do banho chega no teto e nas p
 Cozinha e lavanderia: massa acrílica, porque a parede leva respingo e é lavada.
 Fachada, muro e varanda: massa acrílica, quando a ideia é acabamento liso. Muita gente prefere textura ou grafiato na área externa, que disfarçam o reboco e dispensam massa.
 Parede com infiltração: nenhuma massa resolve. Corrija a causa (vazamento, calha, impermeabilização) antes, senão a massa estufa e a tinta descasca junto.
-Atenção: massa corrida por baixo de tinta acrílica continua sendo o ponto fraco, então em banheiro e área externa massa e tinta precisam ser acrílicas. A escolha da tinta está no guia tinta acrílica ou látex PVA.
+Atenção: tinta acrílica por cima não protege a massa corrida da umidade, então em banheiro e área externa massa e tinta precisam ser acrílicas. A escolha da tinta está no guia tinta acrílica ou látex PVA.
 
 ### Selador e fundo: o que passar antes e depois da massa
 
@@ -1519,12 +1520,12 @@ Furo de prego, bucha e pequenas falhas se fecham em várias camadas finas, com s
 
 ### Qual lixa usar na massa
 
-Para lixar massa, use lixa para parede de grão médio, entre 150 e 180, para tirar as marcas da desempenadeira entre as demãos, e termine com grão 220 para deixar a parede lisa antes da tinta; quanto maior o número da lixa, mais fino é o grão e mais suave fica o acabamento.
+Para lixar massa, use lixa para parede de grão médio, entre 150 e 180, para tirar as marcas da desempenadeira entre as demãos, e termine com grão 220 antes da tinta; quanto maior o número, mais fino o grão, e vale conferir a indicação da embalagem da massa.
 EtapaLixaPara quê
 Rebarba e excesso de massa secaGrão 100 a 120Desbastar pontos altos, com cuidado para não riscar
 Entre demãosGrão 150 a 180Nivelar e apagar marcas da desempenadeira
 Acabamento antes da tintaGrão 220Deixar a superfície lisa, sobretudo para tinta acetinada ou semibrilho
-A massa acrílica é mais dura e pede mais tempo de lixa; a massa corrida é macia e risca fácil, então pegue leve. Use um suporte (taco) para lixa, sem forçar num ponto só, para não criar ondas. Depois, tire todo o pó com escova macia ou pano bem torcido, porque tinta sobre pó descasca. Lixar massa levanta muito pó fino: use máscara PFF2 e óculos, que estão em utilidades e EPI.
+A massa acrílica é mais dura e pede mais tempo de lixa; a massa corrida é macia e risca fácil, então pegue leve. Use um suporte (taco) para lixa, sem forçar num ponto só, para não criar ondas. Depois, tire todo o pó com escova macia ou pano bem torcido, porque tinta sobre pó descasca. Lixar massa levanta muito pó fino: use máscara PFF2 e óculos, que você encontra em utilidades e EPI.
 
 ### Erros comuns com massa e como evitar
 
@@ -1535,11 +1536,11 @@ Massa em reboco sem cura: o reboco ainda solta umidade e sais, e podem surgir ma
 Pular selador ou fundo: a parede absorve de forma desigual e a aderência piora.
 Lixar antes da hora: massa mal seca embola na lixa e arranca.
 Deixar o pó: a tinta gruda no pó, não na massa, e descasca.
-Aqui em Barreiras, entre setembro e outubro, a parede esquenta e o ar fica seco, então a massa puxa rápido demais e pode trincar. Trabalhe com a parede na sombra, de manhã cedo ou no fim da tarde. Na época das chuvas, de novembro a março, só passe massa acrílica do lado de fora com tempo firme, respeitando os limites de temperatura e umidade da lata. O passo a passo da pintura está no guia como pintar parede.
+Aqui em Barreiras, na seca, e mais ainda em setembro e outubro, a parede esquenta e o ar fica seco, então a massa puxa rápido demais e pode trincar. Trabalhe com a parede na sombra, de manhã cedo ou no fim da tarde. Na época das chuvas, de novembro a março, só passe massa acrílica do lado de fora com tempo firme, respeitando os limites de temperatura e umidade da lata. O passo a passo da pintura está no guia como pintar parede.
 
 ### Posso passar massa corrida direto no reboco?
 
-O ideal é não passar direto. Espere o reboco curar, em geral pelo menos 28 dias (confira a orientação do fabricante), e verifique se está firme e seco. Depois, aplique uma demão de selador acrílico, que uniformiza a absorção e melhora a aderência da massa. Se o reboco esfarela e solta pó na mão, use fundo preparador no lugar do selador. E lembre: em reboco de área externa ou úmida, a massa tem que ser acrílica.
+Não direto: espere o reboco curar e ficar firme e seco, em geral pelo menos 28 dias (confira a orientação do fabricante), e aplique antes uma demão de selador acrílico, que uniformiza a absorção e melhora a aderência da massa. Se o reboco esfarela e solta pó na mão, use fundo preparador no lugar do selador. E lembre: em reboco de área externa ou úmida, a massa tem que ser acrílica.
 
 ### Quantas demãos de massa corrida precisa?
 
@@ -1547,7 +1548,7 @@ Em geral, duas a três demãos finas resolvem uma parede de reboco comum; parede
 
 ### Precisa passar massa para pintar a parede?
 
-Não é obrigatório. A massa serve para deixar a parede lisa; sem ela, a tinta acompanha a aspereza do reboco, o que é normal em garagem, muro, depósito e área externa. Ela vale a pena em quarto, sala e onde vai tinta acetinada ou semibrilho, que realçam defeitos. Sem massa, o reboco absorve mais tinta, então não pule o selador. Em fachada, muita gente usa textura ou grafiato no lugar da massa.
+Não é obrigatório: a massa só serve para deixar a parede lisa, e sem ela a tinta acompanha a aspereza do reboco, o que é normal em garagem, muro, depósito e área externa. Ela vale a pena em quarto, sala e onde vai tinta acetinada ou semibrilho, que realçam defeitos. Sem massa, o reboco absorve mais tinta, então não pule o selador. Em fachada, muita gente usa textura ou grafiato no lugar da massa.
 
 ### Posso passar massa acrílica em cima de massa corrida?
 
@@ -1677,7 +1678,7 @@ Resposta rápida: Para saber o tamanho da caixa d'água, multiplique o número d
 ### Quanta água uma pessoa gasta por dia?
 
 Para calcular a caixa d'água de uma casa, a referência mais usada no Brasil é de 150 a 200 litros por pessoa por dia, somando banho, descarga, cozinha, louça, roupa e limpeza: use 150 litros para uma casa econômica e 200 litros para ter folga.
-A média medida pelas companhias de saneamento, publicada pelo SNIS, fica perto de 150 litros por habitante por dia, e as tabelas clássicas de projeto usam valores parecidos: cerca de 120 litros para casa popular ou rural, 150 para residência e 200 para apartamento. O que puxa o consumo para cima:
+A média medida pelas companhias de saneamento, publicada pelo SNIS (hoje SINISA), fica perto de 150 litros por habitante por dia, e as tabelas clássicas de projeto usam valores parecidos: cerca de 120 litros para casa popular ou rural, 150 para residência e 200 para apartamento. O que puxa o consumo para cima:
 Banho demorado: o chuveiro costuma ser um dos maiores gastos da casa.
 Calor: em setembro e outubro, aqui no Oeste Baiano, é comum tomar mais de um banho por dia.
 Quintal, horta e criação: lavar área, molhar plantas e dar água aos animais somam bastante. Calcule à parte.
@@ -1691,7 +1692,7 @@ Mais nem sempre é melhor. Reserva para muitos dias deixa a água parada mais te
 
 ### Tabela: tamanho de caixa d'água por número de moradores
 
-Pela conta de 150 a 200 litros por pessoa por dia, uma casa com 2 moradores precisa de caixa de 500 litros para um dia de reserva, com 4 moradores, de 1.000 litros e com 6 moradores, de 1.500 litros; para dois dias, o volume dobra.
+Pela conta de 150 a 200 litros por pessoa por dia, uma casa com 2 moradores precisa de caixa de 500 litros para um dia de reserva; com 4 moradores, de 1.000 litros; e com 6 moradores, de 1.500 litros. Para dois dias, a quantidade de água necessária dobra.
 MoradoresConsumo por diaCaixa para 1 diaCaixa para 2 dias
 1150 a 200 L310 L500 L
 2300 a 400 L500 L750 a 1.000 L
@@ -1699,12 +1700,12 @@ MoradoresConsumo por diaCaixa para 1 diaCaixa para 2 dias
 4600 a 800 L1.000 L1.500 a 2.000 L
 5750 a 1.000 L1.000 a 1.500 L2.000 L ou mais
 6900 a 1.200 L1.500 L2.000 a 3.000 L
-Os tamanhos já estão arredondados para cima: a capacidade escrita na caixa não é toda aproveitável: a boia fecha a entrada abaixo da borda e a saída fica um pouco acima do fundo. Na dúvida, fique com o maior, se a estrutura aguentar.
+Os tamanhos já estão arredondados para cima porque a capacidade escrita na caixa não é toda aproveitável: a boia fecha a entrada abaixo da borda e a saída fica um pouco acima do fundo. Na dúvida, fique com o maior, se a estrutura aguentar.
 
 ### Exemplos de cálculo para 2, 4 e 6 pessoas
 
 A conta é sempre a mesma: moradores × consumo por pessoa × dias de reserva, usando 150 litros por pessoa para uma casa econômica e 200 litros para ter folga, e arredondando o resultado para o tamanho de caixa que existe no mercado, como nos três exemplos abaixo.
-Casal (2 pessoas): 2 × 150 = 300 litros por dia, ou 400 litros com folga. Para um dia, a caixa de 500 litros atende; a de 310 litros fica no limite. Para dois dias (600 a 800 litros), escolha a de 750 ou a de 1.000 litros.
+Casal (2 pessoas): 2 × 150 = 300 litros por dia, ou 400 litros com folga. Para um dia, a caixa de 500 litros atende; a de 310 litros fica curta. Para dois dias (600 a 800 litros), escolha a de 750 ou a de 1.000 litros.
 Família de 4 pessoas: 4 × 150 = 600 litros e 4 × 200 = 800 litros por dia. A caixa de 1.000 litros cobre um dia com folga. Para dois dias (1.200 a 1.600 litros), vá de 1.500 ou 2.000 litros, ou de duas caixas de 1.000.
 Casa com 6 pessoas: 6 × 150 = 900 litros e 6 × 200 = 1.200 litros por dia. Para um dia, a de 1.500 litros (a de 1.000 fica curta). Para dois dias (1.800 a 2.400 litros), pense em 2.000 a 3.000 litros, por exemplo duas caixas de 1.500 litros.
 
@@ -1722,7 +1723,7 @@ Peso: cada litro de água pesa cerca de 1 kg, então a caixa de 1.000 litros che
 Base: o fundo inteiro fica apoiado. Nada de ripas com vão, tijolos soltos ou apoio só nas bordas: o fundo deforma e pode romper.
 Altura e pressão: cada metro entre o nível da água e o chuveiro dá cerca de 1 metro de coluna d'água (m.c.a.) de pressão, um pouco menos com a água correndo. Confira a pressão mínima no manual do chuveiro.
 Ventilação e acesso: local arejado, com espaço acima da tampa para abrir e limpar, sem tapar o respiro.
-Conexões: torneira de boia na entrada, registro de gaveta na saída para a casa, saída de limpeza no fundo e o ladrão, com diâmetro maior que o da entrada, despejando onde você veja a água escorrer.
+Conexões: torneira de boia na entrada, registro de gaveta na saída para a casa, saída de limpeza na parte mais baixa da lateral, no ponto que o manual indicar para furo, e o ladrão, com diâmetro maior que o da entrada, despejando onde você veja a água escorrer.
 Tampa sempre travada e ladrão com tela na ponta: caixa aberta vira criadouro do mosquito da dengue, ainda mais nas chuvas, de novembro a março.
 A instalação deve ser feita por encanador ou pedreiro experiente, seguindo o manual do fabricante e a ABNT NBR 5626.
 
@@ -1734,12 +1735,12 @@ Tampe a saída para a casa com um pano limpo, para a sujeira não descer pelos c
 Esfregue paredes e fundo com escova macia ou esponja nova, só com a água que sobrou. Nada de sabão, detergente ou escova de aço.
 Retire a água suja com balde e pano, ou pela saída de limpeza.
 Desinfete com água sanitária comum, sem perfume, na dose e no tempo indicados no rótulo ou pela companhia de água. Não beba essa água e nunca misture água sanitária com outros produtos.
-Esvazie, destampe a saída, abra a entrada, deixe encher, trave a tampa e anote a data.
+Destampe a saída e esvazie a caixa pela saída de limpeza ou pelas torneiras da casa, sem beber essa água; depois abra a entrada, deixe encher, trave a tampa e anote a data.
 Use luvas e botas de borracha (veja utilidades e EPI). Caixa em telhado ou torre alta é serviço para profissional.
 
 ### Caixa d'água de 500 litros dá para quantas pessoas?
 
-Uma caixa de 500 litros atende de 2 a 3 pessoas por um dia, pela conta de 150 a 200 litros por pessoa. Para um casal econômico, ela segura perto de um dia e meio. Se a água falta com frequência na sua rua ou a família vai crescer, compensa partir para a de 750 ou de 1.000 litros, desde que a base e a estrutura aguentem o peso a mais.
+Uma caixa de 500 litros atende bem 2 pessoas por um dia, pela conta de 150 a 200 litros por pessoa. Para 3 pessoas, ela só dá conta se o consumo for bem econômico, perto de 150 litros cada, e fica no limite; o mais seguro é a de 750 litros. Para um casal econômico, ela segura perto de um dia e meio. Se a água falta com frequência na sua rua ou a família vai crescer, compensa partir para a de 750 ou de 1.000 litros, desde que a base e a estrutura aguentem o peso a mais.
 
 ### Posso colocar caixa d'água de 1.000 litros em cima da laje?
 
@@ -1755,11 +1756,11 @@ Pode, se o manual do modelo permitir, mas à sombra ela funciona melhor: a água
 
 ### Por que está saindo água pelo ladrão da caixa d'água?
 
-Água escorrendo pelo ladrão quase sempre quer dizer que a torneira de boia não está fechando: ela pode estar desregulada, presa, com o balão furado ou com a vedação gasta. Feche o registro de entrada e confira se a boia sobe livre e corta a água abaixo do nível do ladrão. Se continuar vazando, troque a torneira de boia pela mesma medida da entrada, de 1/2" ou 3/4".
+Água escorrendo pelo ladrão quase sempre quer dizer que a torneira de boia não está fechando: ela pode estar desregulada, presa, com o balão furado ou com a vedação gasta. Com a água entrando, levante a boia com a mão: se a água não parar, a vedação da torneira está gasta; se parar, regule a haste para a boia fechar alguns centímetros abaixo do ladrão e confira se o balão não está furado e cheio de água. Se continuar vazando, troque a torneira de boia pela mesma medida da entrada, de 1/2" ou 3/4".
 
 ### O que fazer com caixa d'água antiga de amianto?
 
-Não quebre, fure, lixe nem raspe a caixa: caixas antigas de fibrocimento podem conter amianto, material proibido no Brasil desde 2017, cujo pó faz mal quando é respirado. Se for trocar, retire a caixa inteira, com cuidado, usando luvas e máscara, e pergunte à prefeitura onde descartar esse tipo de resíduo. Na troca, aproveite para revisar a base, a boia e os registros.
+Não quebre, fure, lixe nem raspe a caixa: caixas antigas de fibrocimento podem conter amianto, material proibido no Brasil desde 2017, cujo pó faz mal quando é respirado. Se for trocar, retire a caixa inteira, sem quebrar, molhando a superfície antes e usando luvas e máscara PFF2, ou contrate quem faça esse tipo de remoção, e pergunte à prefeitura onde descartar esse tipo de resíduo. Na troca, aproveite para revisar a base, a boia e os registros.
 
 ---
 
@@ -1801,29 +1802,29 @@ Reboco novoEsperar a cura (os fabricantes costumam pedir pelo menos 28 dias) e p
 Reboco fraco, que esfarela ou solta pó na mãoEscovar e aplicar fundo preparador de paredes
 Caiação ou tinta velha que solta pó brancoRaspar o que estiver solto, escovar e aplicar fundo preparador
 GessoFundo preparador que traga indicação para gesso na embalagem
-Pintura antiga firmeLixar de leve e tirar o pó; os remendos de massa recebem antes um pouco de fundo ou de tinta, para não manchar
+Pintura antiga firmeLixar de leve e tirar o pó; remendo de massa leva antes um pouco de fundo, para não manchar
 Em reboco novo, o selador vem antes da massa. Massa corrida PVA é só para parede interna e seca; em área externa ou úmida, use massa acrílica (veja massa corrida ou massa acrílica). Aplique em camadas finas, lixe com lixa fina e tire todo o pó.
 
 ### Como fazer o recorte com trincha e passar o rolo
 
 Pinte primeiro o teto e depois as paredes, sempre de cima para baixo. Em cada parede, faça o recorte com trincha nos cantos, junto ao teto, ao rodapé e aos batentes, e logo em seguida passe o rolo, com a faixa da trincha ainda fresca, para as duas se misturarem sem deixar marca.
-Tinta: mexa bem antes e durante o uso e dilua só com o que a lata indica, na proporção indicada. Muitas linhas pedem diluição diferente na primeira demão.
+Tinta: mexa bem e dilua só como a lata indica (às vezes a primeira demão leva mais água).
 Recorte: faça uma faixa de uns 5 a 10 cm nos encontros e em volta das tomadas, carregando só a ponta das cerdas.
 Rolo: molhe na bandeja e rode na parte rugosa até tirar o excesso. Aplique em faixas de cerca de 1 m de largura, em movimento de W ou N, espalhe sem recarregar e termine com passadas leves de cima para baixo, num só sentido.
-Borda molhada: emende sempre na tinta ainda fresca e termine a parede inteira de uma vez; não volte o rolo sobre a parte que já começou a secar.
+Borda molhada: emende sempre na tinta fresca e termine a parede de uma vez, sem voltar o rolo onde já começou a secar.
 Não aperte o rolo: pressão demais espirra tinta e marca a parede. Entre uma demão e outra, embrulhe rolo e trincha em saco plástico para não secarem.
 
 ### Quanto tempo esperar entre uma demão e outra
 
 Espere o intervalo entre demãos impresso na lata antes de passar a próxima: em muitas tintas base água ele fica em torno de 4 horas, mas muda com a linha, a temperatura e a ventilação. A tinta seca ao toque bem antes disso, e a segunda demão aplicada cedo demais arrasta a primeira e deixa marcas.
 Número de demãos: duas é o padrão; de cor escura para clara, conte três. Cores muito vivas podem pedir mais uma: siga a lata.
-Cura: a tinta seca em horas, mas só chega à resistência total depois da cura, que leva semanas. Até lá, nada de esfregar ou lavar a parede.
+Cura: a tinta seca em horas, mas só atinge a resistência total depois da cura, que leva semanas; até lá, não esfregue a parede.
 Calor e ar seco secam a superfície mais rápido, mas não encurte o intervalo; só trabalhe em trechos menores para não perder a borda molhada.
 
 ### Melhor época para pintar em Barreiras
 
 A melhor época para pintar em Barreiras é a seca, de maio a setembro, principalmente fachada e muro, que assim secam e curam sem risco de chuva. Dentro de casa dá para pintar o ano todo, com o cômodo ventilado; fora, cuidado com o calor de setembro e outubro e com as chuvas, mais ou menos de novembro a março.
-Seca (maio a setembro): melhor fase para área externa. Evite dia de vento forte, que joga poeira na tinta fresca.
+Seca (maio a setembro): melhor fase para área externa; evite dia de vento forte, que joga poeira na tinta.
 Calor forte (setembro e outubro): parede no sol esquenta e a tinta seca rápido demais, marcando as emendas. Pinte a fachada de manhã cedo ou no fim da tarde, com a parede na sombra.
 Chuvas (novembro a março): só pinte área externa com a parede seca e sem previsão de chuva para as horas seguintes. Confira na lata os limites de temperatura e umidade.
 Na fachada, use sempre tinta acrílica; veja tinta acrílica ou látex PVA.
@@ -1888,7 +1889,7 @@ Resposta rápida: O WD-40 é um produto multiuso em spray que afasta a umidade d
 ### O que é o WD-40 e para que ele serve
 
 O WD-40 é um produto multiuso em spray, feito de solventes e óleos derivados de petróleo, que serve para afastar a umidade de peças de metal, ajudar a soltar parafuso e mecanismo emperrado, lubrificar de leve, deixar uma película fina contra a ferrugem e limpar resíduos como cola, graxa e piche.
-O nome vem do inglês Water Displacement (deslocamento de água). Segundo o fabricante, a fórmula foi criada em 1953, nos Estados Unidos, e deu certo na 40ª tentativa. WD-40 é marca registrada da WD-40 Company; o nome aparece aqui porque é assim que o produto é conhecido e pedido no balcão.
+O nome vem do inglês Water Displacement (deslocamento de água). Segundo o fabricante, a fórmula foi criada em 1953, nos Estados Unidos, e deu certo na 40ª tentativa. WD-40 é marca registrada da WD-40 Company.
 Afasta a umidade: ajuda a secar ferramenta e peça de metal que pegou chuva.
 Solta peça presa: penetra na ferrugem fina entre rosca e porca.
 Lubrifica de leve: acaba com o rangido de dobradiça, fechadura e cadeado.
@@ -1904,13 +1905,13 @@ Dê batidas leves na cabeça do parafuso ou na porca: a vibração ajuda o produ
 Use chave de boca, estrela ou soquete do tamanho exato; alicate espana o sextavado.
 Faça um vai e vem: aperte um pouquinho e depois solte.
 Na montagem, passe graxa ou óleo na rosca para não travar de novo.
-Se nada resolver e for preciso cortar o parafuso com a maquita (apelido da esmerilhadeira angular, que também é usado para a serra mármore), limpe o excesso de produto e espere evaporar antes: o spray é inflamável e a máquina solta faísca. Veja qual disco usar no guia de discos para esmerilhadeira.
+Se nada resolver, corte o parafuso com a esmerilhadeira e disco de corte para metal (a maquita; o apelido também vale para a serra mármore, que não serve para isso). Antes, limpe o excesso de produto e espere evaporar: o spray é inflamável e a máquina solta faísca. Use óculos de proteção. Veja qual disco usar no guia de discos para esmerilhadeira.
 
 ### Usos práticos em casa, na obra e na roça
 
 No dia a dia, o WD-40 resolve bem serviços rápidos, como dobradiça rangendo, cadeado e fechadura emperrados, parafuso preso, ferramenta que vai ficar guardada e resíduo de cola; na obra e na roça, ele ajuda a proteger ferramentas da ferrugem e a soltar peças de andaime, porteira e implemento.
 OndeUsoDica
-CasaDobradiça de porta e portão rangendo; cadeado, fechadura e trinco emperradosAplique pouco e tire o excesso. Para durar mais, óleo fino.
+CasaDobradiça de porta e portão rangendo; cadeado, fechadura e trinco emperradosAplique pouco e tire o excesso. Para durar mais: óleo fino na dobradiça, grafite no miolo.
 CasaCola de etiqueta, fita adesiva e piche em metal ou vidroEm plástico e pintura, teste antes num cantinho.
 ObraParafuso e porca de andaime, escora metálica, morsa e grampoSolta a peça travada; depois, proteja a rosca com graxa ou óleo.
 ObraColher de pedreiro, desempenadeira de aço, alicates e chaves no fim do serviçoLave e seque antes: o spray não tira cimento endurecido.
@@ -1955,20 +1956,20 @@ Na dúvida, siga o manual do equipamento e o rótulo do produto, ou mande uma fo
 
 ### WD-40 é a mesma coisa que desengripante?
 
-Na prática, muita gente chama o WD-40 de desengripante, e ele solta bem peça com ferrugem leve, mas o fabricante o apresenta como produto multiuso: também afasta umidade, protege e limpa. Os óleos vendidos como desengripante são feitos principalmente para penetrar na ferrugem e costumam render mais em parafuso muito travado. Em qualquer caso, depois de soltar a peça, lubrifique com o produto certo para o serviço, como graxa ou óleo.
+Não exatamente: o WD-40 é um produto multiuso que solta bem peça com ferrugem leve, mas também afasta umidade, protege e limpa, enquanto o óleo vendido como desengripante é feito principalmente para penetrar na ferrugem e costuma render mais em parafuso muito travado. Na prática, muita gente chama o WD-40 de desengripante. Em qualquer caso, depois de soltar a peça, lubrifique com o produto certo para o serviço, como graxa ou óleo.
 
 ### Posso passar WD-40 na corrente da bicicleta ou da moto?
 
-Pode usar para limpar a corrente e tirar a água depois da chuva, mas a película que fica é leve e sai rápido. Depois de limpar, aplique um lubrificante próprio para corrente. Na moto, siga o manual: corrente com retentor (o-ring) pede produto compatível com essas borrachas. E cuidado com o borrifo: disco, pastilha e lona de freio nunca podem receber óleo; se respingar, limpe antes de rodar.
+Pode usar o WD-40 para limpar a corrente da bicicleta ou da moto e tirar a água depois da chuva, mas a película que ele deixa é leve e sai rápido, então, depois de limpar e secar, aplique um lubrificante próprio para corrente. Na moto, siga o manual: corrente com retentor (o-ring) pede produto compatível com essas borrachas. E cuidado com o borrifo: disco, pastilha e lona de freio nunca podem receber óleo; se respingar, limpe antes de rodar.
 
 ### Posso usar WD-40 no portão eletrônico?
 
-Pode usar para soltar dobradiça, roldana ou trinco emperrados, mas desligue o motor do portão no disjuntor antes e não borrife no motor, na placa nem na fiação. Para cremalheira, engrenagem e partes do automatizador, siga o manual do fabricante ou a orientação do instalador, que costuma indicar graxa ou um lubrificante específico. Em lugar com muita poeira, tire o excesso de produto com pano.
+Pode usar o WD-40 para soltar dobradiça, roldana ou trinco emperrados do portão eletrônico, mas antes desligue o automatizador no disjuntor e não borrife no motor, na placa nem na fiação; para cremalheira e engrenagem, siga o manual do fabricante ou o instalador, que costuma indicar graxa ou lubrificante específico. Em lugar com muita poeira, tire o excesso de produto com pano.
 
 ### WD-40 tira ferrugem?
 
-Tira ferrugem leve, de superfície: aplique, espere alguns minutos, esfregue com escova de aço, palha de aço ou lixa e limpe com pano. Ferrugem grossa, que já descasca, precisa de escova de aço, lixa ou disco flap na esmerilhadeira. Se a peça for ser pintada, remova toda a película oleosa com desengraxante e aplique um fundo anticorrosivo antes da tinta, como pede a embalagem.
+O WD-40 tira só ferrugem leve, de superfície: aplique, espere alguns minutos, esfregue com escova de aço, palha de aço ou lixa e limpe com pano; ferrugem grossa, que já descasca, precisa de escova de aço tipo copo, lixa ou disco flap na esmerilhadeira. Se a peça for ser pintada, remova toda a película oleosa com desengraxante e aplique um fundo anticorrosivo antes da tinta, como pede a embalagem.
 
 ### Quanto tempo dura a proteção do WD-40 contra ferrugem?
 
-Não existe prazo fixo: depende do ambiente. Em ferramenta guardada em lugar coberto e seco, a película protege por mais tempo; em peça exposta a chuva, sereno, adubo ou terra úmida, ela some rápido e precisa ser reaplicada com frequência. Para guardar máquina ou implemento parado por meses, graxa ou óleo protetivo formam uma barreira mais grossa, e em estrutura fixa o caminho é fundo anticorrosivo e tinta.
+Não existe prazo fixo: a película do WD-40 é fina e dura bem mais em ferramenta guardada em lugar seco e coberto do que em peça exposta a chuva, sereno, adubo ou terra úmida, onde some rápido, por isso reaplique sempre que a peça molhar, for lavada ou começar a mostrar ferrugem. Para guardar máquina ou implemento parado por meses, graxa ou óleo protetivo formam uma barreira mais grossa, e em estrutura fixa o caminho é fundo anticorrosivo e tinta.

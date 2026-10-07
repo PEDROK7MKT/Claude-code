@@ -4,7 +4,7 @@ export default {
   title: 'Massa corrida ou massa acrílica: qual a diferença e onde usar?',
   seo: {
     title: 'Massa corrida ou acrílica: qual usar? | Pereira Luz & Cor',
-    description: 'Massa corrida ou acrílica? Veja onde usar cada uma, selador, lixa certa e erros comuns, com tabela. Monte sua lista e peça orçamento em Barreiras no WhatsApp.',
+    description: 'Massa corrida ou acrílica? Veja onde usar cada uma, o selador certo, a lixa e os erros que fazem a massa estufar. Peça orçamento em Barreiras no WhatsApp.',
   },
   kicker: 'Guia rápido · Tintas',
   readingMinutes: 7,
@@ -14,7 +14,7 @@ export default {
     'Massa não tapa buraco: ela corrige pequenas imperfeições em duas ou três camadas finas; rombo e desnível grande pedem argamassa antes.',
     'Antes da massa, selador acrílico no reboco novo já curado e fundo preparador no reboco que solta pó, no gesso e na caiação.',
     'Lixe com grão 150 a 180 entre as demãos, termine com 220 e tire todo o pó antes de pintar.',
-    'Em área úmida e externa, massa e tinta têm que ser acrílicas: massa corrida por baixo de tinta acrílica continua sendo o ponto fraco.',
+    'Em área úmida e externa, massa e tinta têm que ser acrílicas: tinta acrílica por cima não impede que a massa corrida estufe com a umidade.',
   ],
   sections: [
     {
@@ -27,7 +27,7 @@ export default {
     },
     {
       h2: 'Onde usar cada uma, cômodo por cômodo',
-      html: '<p>Use massa corrida só em parede e teto internos que ficam secos, como quarto, sala e corredor, e massa acrílica em tudo que pega água, vapor ou tempo: banheiro, cozinha, lavanderia, varanda, fachada e muro; na dúvida, a acrílica atende os dois casos, só que custa mais.</p><ul><li><strong>Quarto, sala e corredor</strong>: massa corrida resolve e sai mais em conta.</li><li><strong>Banheiro, parede e teto</strong>: massa acrílica. O vapor do banho chega no teto e nas paredes, mesmo longe do box.</li><li><strong>Cozinha e lavanderia</strong>: massa acrílica, porque a parede leva respingo e é lavada.</li><li><strong>Fachada, muro e varanda</strong>: massa acrílica, quando a ideia é acabamento liso. Muita gente prefere textura ou grafiato na área externa, que disfarçam o reboco e dispensam massa.</li><li><strong>Parede com infiltração</strong>: nenhuma massa resolve. Corrija a causa (vazamento, calha, impermeabilização) antes, senão a massa estufa e a tinta descasca junto.</li></ul><p>Atenção: massa corrida por baixo de tinta acrílica continua sendo o ponto fraco, então em banheiro e área externa massa e tinta precisam ser acrílicas. A escolha da tinta está no guia <a href="/guias/tinta-acrilica-ou-latex-pva/">tinta acrílica ou látex PVA</a>.</p>',
+      html: '<p>Use massa corrida só em parede e teto internos que ficam secos, como quarto, sala e corredor, e massa acrílica em tudo que pega água, vapor ou tempo: banheiro, cozinha, lavanderia, varanda, fachada e muro; na dúvida, a acrílica atende os dois casos, só que custa mais.</p><ul><li><strong>Quarto, sala e corredor</strong>: massa corrida resolve e sai mais em conta.</li><li><strong>Banheiro, parede e teto</strong>: massa acrílica. O vapor do banho chega no teto e nas paredes, mesmo longe do box.</li><li><strong>Cozinha e lavanderia</strong>: massa acrílica, porque a parede leva respingo e é lavada.</li><li><strong>Fachada, muro e varanda</strong>: massa acrílica, quando a ideia é acabamento liso. Muita gente prefere textura ou grafiato na área externa, que disfarçam o reboco e dispensam massa.</li><li><strong>Parede com infiltração</strong>: nenhuma massa resolve. Corrija a causa (vazamento, calha, impermeabilização) antes, senão a massa estufa e a tinta descasca junto.</li></ul><p>Atenção: tinta acrílica por cima não protege a massa corrida da umidade, então em banheiro e área externa massa e tinta precisam ser acrílicas. A escolha da tinta está no guia <a href="/guias/tinta-acrilica-ou-latex-pva/">tinta acrílica ou látex PVA</a>.</p>',
     },
     {
       h2: 'Selador e fundo: o que passar antes e depois da massa',
@@ -39,11 +39,11 @@ export default {
     },
     {
       h2: 'Qual lixa usar na massa',
-      html: '<p>Para lixar massa, use lixa para parede de grão médio, entre 150 e 180, para tirar as marcas da desempenadeira entre as demãos, e termine com grão 220 para deixar a parede lisa antes da tinta; quanto maior o número da lixa, mais fino é o grão e mais suave fica o acabamento.</p><table><thead><tr><th>Etapa</th><th>Lixa</th><th>Para quê</th></tr></thead><tbody><tr><td>Rebarba e excesso de massa seca</td><td>Grão 100 a 120</td><td>Desbastar pontos altos, com cuidado para não riscar</td></tr><tr><td>Entre demãos</td><td>Grão 150 a 180</td><td>Nivelar e apagar marcas da desempenadeira</td></tr><tr><td>Acabamento antes da tinta</td><td>Grão 220</td><td>Deixar a superfície lisa, sobretudo para tinta acetinada ou semibrilho</td></tr></tbody></table><p>A massa acrílica é mais dura e pede mais tempo de lixa; a massa corrida é macia e risca fácil, então pegue leve. Use um suporte (taco) para lixa, sem forçar num ponto só, para não criar ondas. Depois, tire todo o pó com escova macia ou pano bem torcido, porque tinta sobre pó descasca. Lixar massa levanta muito pó fino: use máscara PFF2 e óculos, que estão em <a href="/utilidades-e-epi/">utilidades e EPI</a>.</p>',
+      html: '<p>Para lixar massa, use lixa para parede de grão médio, entre 150 e 180, para tirar as marcas da desempenadeira entre as demãos, e termine com grão 220 antes da tinta; quanto maior o número, mais fino o grão, e vale conferir a indicação da embalagem da massa.</p><table><thead><tr><th>Etapa</th><th>Lixa</th><th>Para quê</th></tr></thead><tbody><tr><td>Rebarba e excesso de massa seca</td><td>Grão 100 a 120</td><td>Desbastar pontos altos, com cuidado para não riscar</td></tr><tr><td>Entre demãos</td><td>Grão 150 a 180</td><td>Nivelar e apagar marcas da desempenadeira</td></tr><tr><td>Acabamento antes da tinta</td><td>Grão 220</td><td>Deixar a superfície lisa, sobretudo para tinta acetinada ou semibrilho</td></tr></tbody></table><p>A massa acrílica é mais dura e pede mais tempo de lixa; a massa corrida é macia e risca fácil, então pegue leve. Use um suporte (taco) para lixa, sem forçar num ponto só, para não criar ondas. Depois, tire todo o pó com escova macia ou pano bem torcido, porque tinta sobre pó descasca. Lixar massa levanta muito pó fino: use máscara PFF2 e óculos, que você encontra em <a href="/utilidades-e-epi/">utilidades e EPI</a>.</p>',
     },
     {
       h2: 'Erros comuns com massa e como evitar',
-      html: '<p>Os erros que mais estragam o serviço são usar massa corrida em lugar úmido ou externo, aplicar camada grossa, passar massa em reboco sem cura ou sem selador e pintar sem tirar o pó; quase toda massa que trinca, estufa ou descasca tem um desses problemas por trás.</p><ul><li><strong>Massa corrida no banheiro ou na fachada</strong>: com a umidade ela amolece, estufa e leva a tinta junto.</li><li><strong>Camada grossa</strong>: demora para secar por dentro, trinca e afunda.</li><li><strong>Massa em reboco sem cura</strong>: o reboco ainda solta umidade e sais, e podem surgir manchas, bolhas e eflorescência, aquele pó branco.</li><li><strong>Pular selador ou fundo</strong>: a parede absorve de forma desigual e a aderência piora.</li><li><strong>Lixar antes da hora</strong>: massa mal seca embola na lixa e arranca.</li><li><strong>Deixar o pó</strong>: a tinta gruda no pó, não na massa, e descasca.</li></ul><p>Aqui em Barreiras, entre setembro e outubro, a parede esquenta e o ar fica seco, então a massa puxa rápido demais e pode trincar. Trabalhe com a parede na sombra, de manhã cedo ou no fim da tarde. Na época das chuvas, de novembro a março, só passe massa acrílica do lado de fora com tempo firme, respeitando os limites de temperatura e umidade da lata. O passo a passo da pintura está no guia <a href="/guias/como-pintar-parede-passo-a-passo/">como pintar parede</a>.</p>',
+      html: '<p>Os erros que mais estragam o serviço são usar massa corrida em lugar úmido ou externo, aplicar camada grossa, passar massa em reboco sem cura ou sem selador e pintar sem tirar o pó; quase toda massa que trinca, estufa ou descasca tem um desses problemas por trás.</p><ul><li><strong>Massa corrida no banheiro ou na fachada</strong>: com a umidade ela amolece, estufa e leva a tinta junto.</li><li><strong>Camada grossa</strong>: demora para secar por dentro, trinca e afunda.</li><li><strong>Massa em reboco sem cura</strong>: o reboco ainda solta umidade e sais, e podem surgir manchas, bolhas e eflorescência, aquele pó branco.</li><li><strong>Pular selador ou fundo</strong>: a parede absorve de forma desigual e a aderência piora.</li><li><strong>Lixar antes da hora</strong>: massa mal seca embola na lixa e arranca.</li><li><strong>Deixar o pó</strong>: a tinta gruda no pó, não na massa, e descasca.</li></ul><p>Aqui em Barreiras, na seca, e mais ainda em setembro e outubro, a parede esquenta e o ar fica seco, então a massa puxa rápido demais e pode trincar. Trabalhe com a parede na sombra, de manhã cedo ou no fim da tarde. Na época das chuvas, de novembro a março, só passe massa acrílica do lado de fora com tempo firme, respeitando os limites de temperatura e umidade da lata. O passo a passo da pintura está no guia <a href="/guias/como-pintar-parede-passo-a-passo/">como pintar parede</a>.</p>',
     },
   ],
   howTo: null,
@@ -51,7 +51,7 @@ export default {
   faq: [
     {
       q: 'Posso passar massa corrida direto no reboco?',
-      a: 'O ideal é <strong>não passar direto</strong>. Espere o reboco curar, em geral pelo menos 28 dias (confira a orientação do fabricante), e verifique se está firme e seco. Depois, aplique uma demão de selador acrílico, que uniformiza a absorção e melhora a aderência da massa. Se o reboco esfarela e solta pó na mão, use fundo preparador no lugar do selador. E lembre: em reboco de área externa ou úmida, a massa tem que ser acrílica.',
+      a: '<strong>Não direto:</strong> espere o reboco curar e ficar firme e seco, em geral pelo menos 28 dias (confira a orientação do fabricante), e aplique antes uma demão de selador acrílico, que uniformiza a absorção e melhora a aderência da massa. Se o reboco esfarela e solta pó na mão, use fundo preparador no lugar do selador. E lembre: em reboco de área externa ou úmida, a massa tem que ser acrílica.',
     },
     {
       q: 'Quantas demãos de massa corrida precisa?',
@@ -59,7 +59,7 @@ export default {
     },
     {
       q: 'Precisa passar massa para pintar a parede?',
-      a: '<strong>Não é obrigatório.</strong> A massa serve para deixar a parede lisa; sem ela, a tinta acompanha a aspereza do reboco, o que é normal em garagem, muro, depósito e área externa. Ela vale a pena em quarto, sala e onde vai tinta acetinada ou semibrilho, que realçam defeitos. Sem massa, o reboco absorve mais tinta, então não pule o selador. Em fachada, muita gente usa textura ou grafiato no lugar da massa.',
+      a: '<strong>Não é obrigatório:</strong> a massa só serve para deixar a parede lisa, e sem ela a tinta acompanha a aspereza do reboco, o que é normal em garagem, muro, depósito e área externa. Ela vale a pena em quarto, sala e onde vai tinta acetinada ou semibrilho, que realçam defeitos. Sem massa, o reboco absorve mais tinta, então não pule o selador. Em fachada, muita gente usa textura ou grafiato no lugar da massa.',
     },
     {
       q: 'Posso passar massa acrílica em cima de massa corrida?',

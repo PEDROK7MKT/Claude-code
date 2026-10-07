@@ -4,7 +4,7 @@ export default {
   title: 'Para que serve o WD-40? Usos, cuidados e alternativas',
   seo: {
     title: 'WD-40: para que serve e quando não usar | Pereira Luz & Cor',
-    description: 'WD-40 tira umidade, solta parafuso enferrujado, lubrifica de leve e protege contra ferrugem. Veja quando usar graxa. Peça no WhatsApp em Barreiras.',
+    description: 'WD-40 tira umidade, solta parafuso enferrujado, lubrifica de leve e protege contra ferrugem. Veja quando usar graxa. Peça orçamento no WhatsApp em Barreiras.',
   },
   kicker: 'Guia rápido · Lubrificantes',
   readingMinutes: 7,
@@ -19,15 +19,15 @@ export default {
   sections: [
     {
       h2: 'O que é o WD-40 e para que ele serve',
-      html: '<p>O WD-40 é um produto multiuso em spray, feito de solventes e óleos derivados de petróleo, que serve para afastar a umidade de peças de metal, ajudar a soltar parafuso e mecanismo emperrado, lubrificar de leve, deixar uma película fina contra a ferrugem e limpar resíduos como cola, graxa e piche.</p><p>O nome vem do inglês <em>Water Displacement</em> (deslocamento de água). Segundo o fabricante, a fórmula foi criada em 1953, nos Estados Unidos, e deu certo na 40ª tentativa. WD-40 é marca registrada da WD-40 Company; o nome aparece aqui porque é assim que o produto é conhecido e pedido no balcão.</p><ul><li><strong>Afasta a umidade:</strong> ajuda a secar ferramenta e peça de metal que pegou chuva.</li><li><strong>Solta peça presa:</strong> penetra na ferrugem fina entre rosca e porca.</li><li><strong>Lubrifica de leve:</strong> acaba com o rangido de dobradiça, fechadura e cadeado.</li><li><strong>Protege:</strong> deixa uma película oleosa que afasta a umidade do metal por um tempo.</li><li><strong>Limpa:</strong> tira cola de etiqueta, graxa e piche.</li></ul>',
+      html: '<p>O WD-40 é um produto multiuso em spray, feito de solventes e óleos derivados de petróleo, que serve para afastar a umidade de peças de metal, ajudar a soltar parafuso e mecanismo emperrado, lubrificar de leve, deixar uma película fina contra a ferrugem e limpar resíduos como cola, graxa e piche.</p><p>O nome vem do inglês <em>Water Displacement</em> (deslocamento de água). Segundo o fabricante, a fórmula foi criada em 1953, nos Estados Unidos, e deu certo na 40ª tentativa. WD-40 é marca registrada da WD-40 Company.</p><ul><li><strong>Afasta a umidade:</strong> ajuda a secar ferramenta e peça de metal que pegou chuva.</li><li><strong>Solta peça presa:</strong> penetra na ferrugem fina entre rosca e porca.</li><li><strong>Lubrifica de leve:</strong> acaba com o rangido de dobradiça, fechadura e cadeado.</li><li><strong>Protege:</strong> deixa uma película oleosa que afasta a umidade do metal por um tempo.</li><li><strong>Limpa:</strong> tira cola de etiqueta, graxa e piche.</li></ul>',
     },
     {
       h2: 'Como soltar parafuso, porca e peça enferrujada',
-      html: '<p>Para soltar parafuso enferrujado com WD-40, tire a sujeira solta, aplique o spray na junta entre a rosca e a porca, espere alguns minutos para o produto penetrar, dê batidas leves com o martelo e desaperte com a chave do tamanho exato, sem forçar tudo de uma vez.</p><ol><li>Tire o grosso da ferrugem e da terra com escova de aço.</li><li>Aplique com o canudinho direto na junta e deixe agir alguns minutos. Em ferrugem pesada, repita a aplicação e dê mais tempo, se puder até de um dia para o outro.</li><li>Dê batidas leves na cabeça do parafuso ou na porca: a vibração ajuda o produto a entrar.</li><li>Use chave de boca, estrela ou soquete do tamanho exato; alicate espana o sextavado.</li><li>Faça um vai e vem: aperte um pouquinho e depois solte.</li><li>Na montagem, passe graxa ou óleo na rosca para não travar de novo.</li></ol><p>Se nada resolver e for preciso cortar o parafuso com a maquita (apelido da esmerilhadeira angular, que também é usado para a serra mármore), limpe o excesso de produto e espere evaporar antes: o spray é inflamável e a máquina solta faísca. Veja qual disco usar no <a href="/guias/qual-disco-usar-na-esmerilhadeira/">guia de discos para esmerilhadeira</a>.</p>',
+      html: '<p>Para soltar parafuso enferrujado com WD-40, tire a sujeira solta, aplique o spray na junta entre a rosca e a porca, espere alguns minutos para o produto penetrar, dê batidas leves com o martelo e desaperte com a chave do tamanho exato, sem forçar tudo de uma vez.</p><ol><li>Tire o grosso da ferrugem e da terra com escova de aço.</li><li>Aplique com o canudinho direto na junta e deixe agir alguns minutos. Em ferrugem pesada, repita a aplicação e dê mais tempo, se puder até de um dia para o outro.</li><li>Dê batidas leves na cabeça do parafuso ou na porca: a vibração ajuda o produto a entrar.</li><li>Use chave de boca, estrela ou soquete do tamanho exato; alicate espana o sextavado.</li><li>Faça um vai e vem: aperte um pouquinho e depois solte.</li><li>Na montagem, passe graxa ou óleo na rosca para não travar de novo.</li></ol><p>Se nada resolver, corte o parafuso com a esmerilhadeira e disco de corte para metal (a <em>maquita</em>; o apelido também vale para a serra mármore, que não serve para isso). Antes, limpe o excesso de produto e espere evaporar: o spray é inflamável e a máquina solta faísca. Use óculos de proteção. Veja qual disco usar no <a href="/guias/qual-disco-usar-na-esmerilhadeira/">guia de discos para esmerilhadeira</a>.</p>',
     },
     {
       h2: 'Usos práticos em casa, na obra e na roça',
-      html: '<p>No dia a dia, o WD-40 resolve bem serviços rápidos, como dobradiça rangendo, cadeado e fechadura emperrados, parafuso preso, ferramenta que vai ficar guardada e resíduo de cola; na obra e na roça, ele ajuda a proteger ferramentas da ferrugem e a soltar peças de andaime, porteira e implemento.</p><table><thead><tr><th>Onde</th><th>Uso</th><th>Dica</th></tr></thead><tbody><tr><td>Casa</td><td>Dobradiça de porta e portão rangendo; cadeado, fechadura e trinco emperrados</td><td>Aplique pouco e tire o excesso. Para durar mais, óleo fino.</td></tr><tr><td>Casa</td><td>Cola de etiqueta, fita adesiva e piche em metal ou vidro</td><td>Em plástico e pintura, teste antes num cantinho.</td></tr><tr><td>Obra</td><td>Parafuso e porca de andaime, escora metálica, morsa e grampo</td><td>Solta a peça travada; depois, proteja a rosca com graxa ou óleo.</td></tr><tr><td>Obra</td><td>Colher de pedreiro, desempenadeira de aço, alicates e chaves no fim do serviço</td><td>Lave e seque antes: o spray não tira cimento endurecido.</td></tr><tr><td>Roça</td><td>Enxada, foice, facão e tesoura de poda que vão ficar guardados</td><td>Limpe, seque, aplique camada fina e guarde no coberto.</td></tr><tr><td>Roça</td><td>Cadeado e dobradiça de porteira, parafusos de implemento, motor estacionário que pegou chuva</td><td>Sempre com o motor desligado e frio. Ponto de graxa (graxeira) continua levando graxa.</td></tr></tbody></table><p>Aqui no Oeste Baiano, as chuvas vão mais ou menos de novembro a março. Outubro é uma boa época para revisar ferramentas antes da umidade chegar. No período seco o problema é outro: a poeira gruda em qualquer óleo e vira uma pasta que desgasta a peça, então use pouco produto e tire o excesso.</p>',
+      html: '<p>No dia a dia, o WD-40 resolve bem serviços rápidos, como dobradiça rangendo, cadeado e fechadura emperrados, parafuso preso, ferramenta que vai ficar guardada e resíduo de cola; na obra e na roça, ele ajuda a proteger ferramentas da ferrugem e a soltar peças de andaime, porteira e implemento.</p><table><thead><tr><th>Onde</th><th>Uso</th><th>Dica</th></tr></thead><tbody><tr><td>Casa</td><td>Dobradiça de porta e portão rangendo; cadeado, fechadura e trinco emperrados</td><td>Aplique pouco e tire o excesso. Para durar mais: óleo fino na dobradiça, grafite no miolo.</td></tr><tr><td>Casa</td><td>Cola de etiqueta, fita adesiva e piche em metal ou vidro</td><td>Em plástico e pintura, teste antes num cantinho.</td></tr><tr><td>Obra</td><td>Parafuso e porca de andaime, escora metálica, morsa e grampo</td><td>Solta a peça travada; depois, proteja a rosca com graxa ou óleo.</td></tr><tr><td>Obra</td><td>Colher de pedreiro, desempenadeira de aço, alicates e chaves no fim do serviço</td><td>Lave e seque antes: o spray não tira cimento endurecido.</td></tr><tr><td>Roça</td><td>Enxada, foice, facão e tesoura de poda que vão ficar guardados</td><td>Limpe, seque, aplique camada fina e guarde no coberto.</td></tr><tr><td>Roça</td><td>Cadeado e dobradiça de porteira, parafusos de implemento, motor estacionário que pegou chuva</td><td>Sempre com o motor desligado e frio. Ponto de graxa (graxeira) continua levando graxa.</td></tr></tbody></table><p>Aqui no Oeste Baiano, as chuvas vão mais ou menos de novembro a março. Outubro é uma boa época para revisar ferramentas antes da umidade chegar. No período seco o problema é outro: a poeira gruda em qualquer óleo e vira uma pasta que desgasta a peça, então use pouco produto e tire o excesso.</p>',
     },
     {
       h2: 'Quando o WD-40 não é o ideal',
@@ -47,34 +47,34 @@ export default {
   faq: [
     {
       q: 'WD-40 é a mesma coisa que desengripante?',
-      a: 'Na prática, muita gente chama o WD-40 de desengripante, e ele solta bem peça com ferrugem leve, mas o fabricante o apresenta como produto multiuso: também afasta umidade, protege e limpa. Os óleos vendidos como desengripante são feitos principalmente para penetrar na ferrugem e costumam render mais em parafuso muito travado. Em qualquer caso, depois de soltar a peça, lubrifique com o produto certo para o serviço, como graxa ou óleo.',
+      a: 'Não exatamente: o WD-40 é um produto multiuso que solta bem peça com ferrugem leve, mas também afasta umidade, protege e limpa, enquanto o óleo vendido como desengripante é feito principalmente para penetrar na ferrugem e costuma render mais em parafuso muito travado. Na prática, muita gente chama o WD-40 de desengripante. Em qualquer caso, depois de soltar a peça, lubrifique com o produto certo para o serviço, como graxa ou óleo.',
     },
     {
       q: 'Posso passar WD-40 na corrente da bicicleta ou da moto?',
-      a: 'Pode usar para limpar a corrente e tirar a água depois da chuva, mas a película que fica é leve e sai rápido. Depois de limpar, aplique um lubrificante próprio para corrente. Na moto, siga o manual: corrente com retentor (o-ring) pede produto compatível com essas borrachas. E cuidado com o borrifo: disco, pastilha e lona de freio nunca podem receber óleo; se respingar, limpe antes de rodar.',
+      a: 'Pode usar o WD-40 para limpar a corrente da bicicleta ou da moto e tirar a água depois da chuva, mas a película que ele deixa é leve e sai rápido, então, depois de limpar e secar, aplique um lubrificante próprio para corrente. Na moto, siga o manual: corrente com retentor (o-ring) pede produto compatível com essas borrachas. E cuidado com o borrifo: disco, pastilha e lona de freio nunca podem receber óleo; se respingar, limpe antes de rodar.',
     },
     {
       q: 'Posso usar WD-40 no portão eletrônico?',
-      a: 'Pode usar para soltar dobradiça, roldana ou trinco emperrados, mas desligue o motor do portão no disjuntor antes e não borrife no motor, na placa nem na fiação. Para cremalheira, engrenagem e partes do automatizador, siga o manual do fabricante ou a orientação do instalador, que costuma indicar graxa ou um lubrificante específico. Em lugar com muita poeira, tire o excesso de produto com pano.',
+      a: 'Pode usar o WD-40 para soltar dobradiça, roldana ou trinco emperrados do portão eletrônico, mas antes desligue o automatizador no disjuntor e não borrife no motor, na placa nem na fiação; para cremalheira e engrenagem, siga o manual do fabricante ou o instalador, que costuma indicar graxa ou lubrificante específico. Em lugar com muita poeira, tire o excesso de produto com pano.',
     },
     {
       q: 'WD-40 tira ferrugem?',
-      a: 'Tira ferrugem leve, de superfície: aplique, espere alguns minutos, esfregue com escova de aço, palha de aço ou lixa e limpe com pano. Ferrugem grossa, que já descasca, precisa de escova de aço, lixa ou disco flap na esmerilhadeira. Se a peça for ser pintada, remova toda a película oleosa com desengraxante e aplique um fundo anticorrosivo antes da tinta, como pede a embalagem.',
+      a: 'O WD-40 tira só ferrugem leve, de superfície: aplique, espere alguns minutos, esfregue com escova de aço, palha de aço ou lixa e limpe com pano; ferrugem grossa, que já descasca, precisa de escova de aço tipo copo, lixa ou disco flap na esmerilhadeira. Se a peça for ser pintada, remova toda a película oleosa com desengraxante e aplique um fundo anticorrosivo antes da tinta, como pede a embalagem.',
     },
     {
       q: 'Quanto tempo dura a proteção do WD-40 contra ferrugem?',
-      a: 'Não existe prazo fixo: depende do ambiente. Em ferramenta guardada em lugar coberto e seco, a película protege por mais tempo; em peça exposta a chuva, sereno, adubo ou terra úmida, ela some rápido e precisa ser reaplicada com frequência. Para guardar máquina ou implemento parado por meses, graxa ou óleo protetivo formam uma barreira mais grossa, e em estrutura fixa o caminho é fundo anticorrosivo e tinta.',
+      a: 'Não existe prazo fixo: a película do WD-40 é fina e dura bem mais em ferramenta guardada em lugar seco e coberto do que em peça exposta a chuva, sereno, adubo ou terra úmida, onde some rápido, por isso reaplique sempre que a peça molhar, for lavada ou começar a mostrar ferrugem. Para guardar máquina ou implemento parado por meses, graxa ou óleo protetivo formam uma barreira mais grossa, e em estrutura fixa o caminho é fundo anticorrosivo e tinta.',
     },
   ],
   cta: {
     title: 'Vai precisar de WD-40, graxa ou óleo?',
     text: 'Monte sua lista no site com o que vai usar e envie pelo WhatsApp para orçamento, ou passe no balcão da Rua São Francisco, 55, no Jardim Ouro Branco, e confirme a disponibilidade.',
     items: [
-      'WD-40 spray',
-      'Óleo desengripante spray',
-      'Graxa de lítio (pote)',
-      'Óleo lubrificante fino (almotolia)',
-      'Lubrificante de silicone spray',
+      'WD-40 em spray',
+      'Desengripante em spray',
+      'Graxa multiuso de lítio (pote)',
+      'Óleo fino lubrificante (frasco com bico)',
+      'Lubrificante spray de silicone',
       'Escova de aço manual',
     ],
   },

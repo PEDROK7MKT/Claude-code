@@ -20,7 +20,7 @@ export default {
     {
       h2: 'Quanta água uma pessoa gasta por dia?',
       html: `<p>Para calcular a caixa d'água de uma casa, a referência mais usada no Brasil é de <strong>150 a 200 litros por pessoa por dia</strong>, somando banho, descarga, cozinha, louça, roupa e limpeza: use 150 litros para uma casa econômica e 200 litros para ter folga.</p>
-<p>A média medida pelas companhias de saneamento, publicada pelo SNIS, fica perto de 150 litros por habitante por dia, e as tabelas clássicas de projeto usam valores parecidos: cerca de 120 litros para casa popular ou rural, 150 para residência e 200 para apartamento. O que puxa o consumo para cima:</p>
+<p>A média medida pelas companhias de saneamento, publicada pelo SNIS (hoje SINISA), fica perto de 150 litros por habitante por dia, e as tabelas clássicas de projeto usam valores parecidos: cerca de 120 litros para casa popular ou rural, 150 para residência e 200 para apartamento. O que puxa o consumo para cima:</p>
 <ul>
 <li><strong>Banho demorado</strong>: o chuveiro costuma ser um dos maiores gastos da casa.</li>
 <li><strong>Calor</strong>: em setembro e outubro, aqui no Oeste Baiano, é comum tomar mais de um banho por dia.</li>
@@ -36,7 +36,7 @@ export default {
     },
     {
       h2: `Tabela: tamanho de caixa d'água por número de moradores`,
-      html: `<p>Pela conta de 150 a 200 litros por pessoa por dia, uma casa com <strong>2 moradores</strong> precisa de caixa de <strong>500 litros</strong> para um dia de reserva, com <strong>4 moradores</strong>, de <strong>1.000 litros</strong> e com <strong>6 moradores</strong>, de <strong>1.500 litros</strong>; para dois dias, o volume dobra.</p>
+      html: `<p>Pela conta de 150 a 200 litros por pessoa por dia, uma casa com <strong>2 moradores</strong> precisa de caixa de <strong>500 litros</strong> para um dia de reserva; com <strong>4 moradores</strong>, de <strong>1.000 litros</strong>; e com <strong>6 moradores</strong>, de <strong>1.500 litros</strong>. Para dois dias, a quantidade de água necessária dobra.</p>
 <table>
 <thead><tr><th>Moradores</th><th>Consumo por dia</th><th>Caixa para 1 dia</th><th>Caixa para 2 dias</th></tr></thead>
 <tbody>
@@ -48,13 +48,13 @@ export default {
 <tr><td>6</td><td>900 a 1.200 L</td><td>1.500 L</td><td>2.000 a 3.000 L</td></tr>
 </tbody>
 </table>
-<p>Os tamanhos já estão arredondados para cima: a capacidade escrita na caixa não é toda aproveitável: a boia fecha a entrada abaixo da borda e a saída fica um pouco acima do fundo. Na dúvida, fique com o maior, se a estrutura aguentar.</p>`,
+<p>Os tamanhos já estão arredondados para cima porque a capacidade escrita na caixa não é toda aproveitável: a boia fecha a entrada abaixo da borda e a saída fica um pouco acima do fundo. Na dúvida, fique com o maior, se a estrutura aguentar.</p>`,
     },
     {
       h2: 'Exemplos de cálculo para 2, 4 e 6 pessoas',
       html: `<p>A conta é sempre a mesma: <strong>moradores × consumo por pessoa × dias de reserva</strong>, usando 150 litros por pessoa para uma casa econômica e 200 litros para ter folga, e arredondando o resultado para o tamanho de caixa que existe no mercado, como nos três exemplos abaixo.</p>
 <ul>
-<li><strong>Casal (2 pessoas)</strong>: 2 × 150 = 300 litros por dia, ou 400 litros com folga. Para um dia, a caixa de 500 litros atende; a de 310 litros fica no limite. Para dois dias (600 a 800 litros), escolha a de 750 ou a de 1.000 litros.</li>
+<li><strong>Casal (2 pessoas)</strong>: 2 × 150 = 300 litros por dia, ou 400 litros com folga. Para um dia, a caixa de 500 litros atende; a de 310 litros fica curta. Para dois dias (600 a 800 litros), escolha a de 750 ou a de 1.000 litros.</li>
 <li><strong>Família de 4 pessoas</strong>: 4 × 150 = 600 litros e 4 × 200 = 800 litros por dia. A caixa de 1.000 litros cobre um dia com folga. Para dois dias (1.200 a 1.600 litros), vá de 1.500 ou 2.000 litros, ou de duas caixas de 1.000.</li>
 <li><strong>Casa com 6 pessoas</strong>: 6 × 150 = 900 litros e 6 × 200 = 1.200 litros por dia. Para um dia, a de 1.500 litros (a de 1.000 fica curta). Para dois dias (1.800 a 2.400 litros), pense em 2.000 a 3.000 litros, por exemplo duas caixas de 1.500 litros.</li>
 </ul>`,
@@ -76,7 +76,7 @@ export default {
 <li><strong>Base</strong>: o fundo inteiro fica apoiado. Nada de ripas com vão, tijolos soltos ou apoio só nas bordas: o fundo deforma e pode romper.</li>
 <li><strong>Altura e pressão</strong>: cada metro entre o nível da água e o chuveiro dá cerca de 1 metro de coluna d'água (m.c.a.) de pressão, um pouco menos com a água correndo. Confira a pressão mínima no manual do chuveiro.</li>
 <li><strong>Ventilação e acesso</strong>: local arejado, com espaço acima da tampa para abrir e limpar, sem tapar o respiro.</li>
-<li><strong>Conexões</strong>: torneira de boia na entrada, registro de gaveta na saída para a casa, saída de limpeza no fundo e o ladrão, com diâmetro maior que o da entrada, despejando onde você veja a água escorrer.</li>
+<li><strong>Conexões</strong>: torneira de boia na entrada, registro de gaveta na saída para a casa, saída de limpeza na parte mais baixa da lateral, no ponto que o manual indicar para furo, e o ladrão, com diâmetro maior que o da entrada, despejando onde você veja a água escorrer.</li>
 <li><strong>Tampa sempre travada</strong> e ladrão com tela na ponta: caixa aberta vira criadouro do mosquito da dengue, ainda mais nas chuvas, de novembro a março.</li>
 </ul>
 <p>A instalação deve ser feita por encanador ou pedreiro experiente, seguindo o manual do fabricante e a ABNT NBR 5626.</p>`,
@@ -90,7 +90,7 @@ export default {
 <li>Esfregue paredes e fundo com escova macia ou esponja nova, só com a água que sobrou. Nada de sabão, detergente ou escova de aço.</li>
 <li>Retire a água suja com balde e pano, ou pela saída de limpeza.</li>
 <li>Desinfete com água sanitária comum, sem perfume, na dose e no tempo indicados no rótulo ou pela companhia de água. Não beba essa água e nunca misture água sanitária com outros produtos.</li>
-<li>Esvazie, destampe a saída, abra a entrada, deixe encher, trave a tampa e anote a data.</li>
+<li>Destampe a saída e esvazie a caixa pela saída de limpeza ou pelas torneiras da casa, sem beber essa água; depois abra a entrada, deixe encher, trave a tampa e anote a data.</li>
 </ol>
 <p>Use luvas e botas de borracha (veja <a href="/utilidades-e-epi/">utilidades e EPI</a>). Caixa em telhado ou torre alta é serviço para profissional.</p>`,
     },
@@ -100,7 +100,7 @@ export default {
   faq: [
     {
       q: `Caixa d'água de 500 litros dá para quantas pessoas?`,
-      a: `Uma caixa de 500 litros atende de 2 a 3 pessoas por um dia, pela conta de 150 a 200 litros por pessoa. Para um casal econômico, ela segura perto de um dia e meio. Se a água falta com frequência na sua rua ou a família vai crescer, compensa partir para a de 750 ou de 1.000 litros, desde que a base e a estrutura aguentem o peso a mais.`,
+      a: `Uma caixa de 500 litros atende bem 2 pessoas por um dia, pela conta de 150 a 200 litros por pessoa. Para 3 pessoas, ela só dá conta se o consumo for bem econômico, perto de 150 litros cada, e fica no limite; o mais seguro é a de 750 litros. Para um casal econômico, ela segura perto de um dia e meio. Se a água falta com frequência na sua rua ou a família vai crescer, compensa partir para a de 750 ou de 1.000 litros, desde que a base e a estrutura aguentem o peso a mais.`,
     },
     {
       q: `Posso colocar caixa d'água de 1.000 litros em cima da laje?`,
@@ -116,11 +116,11 @@ export default {
     },
     {
       q: `Por que está saindo água pelo ladrão da caixa d'água?`,
-      a: `Água escorrendo pelo ladrão quase sempre quer dizer que a torneira de boia não está fechando: ela pode estar desregulada, presa, com o balão furado ou com a vedação gasta. Feche o registro de entrada e confira se a boia sobe livre e corta a água abaixo do nível do ladrão. Se continuar vazando, troque a torneira de boia pela mesma medida da entrada, de 1/2" ou 3/4".`,
+      a: `Água escorrendo pelo ladrão quase sempre quer dizer que a torneira de boia não está fechando: ela pode estar desregulada, presa, com o balão furado ou com a vedação gasta. Com a água entrando, levante a boia com a mão: se a água não parar, a vedação da torneira está gasta; se parar, regule a haste para a boia fechar alguns centímetros abaixo do ladrão e confira se o balão não está furado e cheio de água. Se continuar vazando, troque a torneira de boia pela mesma medida da entrada, de 1/2" ou 3/4".`,
     },
     {
       q: `O que fazer com caixa d'água antiga de amianto?`,
-      a: `Não quebre, fure, lixe nem raspe a caixa: caixas antigas de fibrocimento podem conter amianto, material proibido no Brasil desde 2017, cujo pó faz mal quando é respirado. Se for trocar, retire a caixa inteira, com cuidado, usando luvas e máscara, e pergunte à prefeitura onde descartar esse tipo de resíduo. Na troca, aproveite para revisar a base, a boia e os registros.`,
+      a: `Não quebre, fure, lixe nem raspe a caixa: caixas antigas de fibrocimento podem conter amianto, material proibido no Brasil desde 2017, cujo pó faz mal quando é respirado. Se for trocar, retire a caixa inteira, sem quebrar, molhando a superfície antes e usando luvas e máscara PFF2, ou contrate quem faça esse tipo de remoção, e pergunte à prefeitura onde descartar esse tipo de resíduo. Na troca, aproveite para revisar a base, a boia e os registros.`,
     },
   ],
   cta: {
@@ -138,7 +138,7 @@ export default {
   relatedGuides: ['furadeira-parafusadeira-ou-martelete', 'qual-fio-usar-no-chuveiro-eletrico'],
   sources: [
     { name: 'ABNT NBR 5626 – Sistemas prediais de água fria e água quente: projeto, execução, operação e manutenção', url: '' },
-    { name: 'SNIS – Diagnóstico dos Serviços de Água e Esgotos (Ministério das Cidades)', url: '' },
+    { name: 'SNIS/SINISA – Diagnóstico dos Serviços de Água e Esgotos (Ministério das Cidades)', url: '' },
     { name: 'CREDER, Hélio. Instalações Hidráulicas e Sanitárias. Rio de Janeiro: LTC', url: '' },
     { name: `Manuais de instalação e limpeza dos fabricantes de caixas d'água de polietileno e de fibra de vidro`, url: '' },
     { name: `Ministério da Saúde – orientações de prevenção à dengue (vedação de caixas d'água)`, url: '' },

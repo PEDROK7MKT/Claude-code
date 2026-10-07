@@ -3,7 +3,7 @@
 // (assets/js/site.js → bestPack): parede = perímetro × pé-direito − portas (1,68 m²)
 // − janelas (1,20 m²); teto = largura × comprimento; litros = área × demãos ÷
 // rendimento (11 m²/L liso; 8 m²/L reboco) × 1,1; embalagens 18 L / 3,6 L / 0,9 L
-// com custo relativo lata = 3,9 galões e quarto = 0,32 galão.
+// com custo relativo lata = 4 galões e quarto = 0,38 galão (lata só acima de 14,4 L).
 // Se mudar a calculadora, refaça as tabelas abaixo.
 export default {
   slug: 'quantas-latas-de-tinta-preciso',
@@ -22,7 +22,7 @@ export default {
     'Desconte 1,68 m² por porta e 1,20 m² por janela padrão.',
     'Quarto de 3 × 4 m: 6,7 L só nas paredes (2 galões); com o teto, 9,1 L.',
     'De cor escura para clara, conte 3 demãos em vez de 2.',
-    'Passou de 12,6 L, a lata de 18 L costuma compensar mais que galões.',
+    'Passou de 14,4 L, a lata de 18 L costuma compensar mais que galões.',
   ],
   sections: [
     {
@@ -53,8 +53,8 @@ export default {
 </tbody>
 </table>
 <p><strong>Sem o teto:</strong> 6,7 litros cabem em <strong>2 galões de 3,6 L</strong> (7,2 L), com meio litro de sobra para retoque.</p>
-<p><strong>Com o teto:</strong> some 3 × 4 = 12 m² e a área vai a 45,52 m². São 45,52 × 2 ÷ 11 = 8,28 L e, com a folga, <strong>≈ 9,1 L</strong>. A calculadora sugere <strong>2 galões + 3 quartos de 0,9 L</strong> (9,9 L); <strong>3 galões</strong> (10,8 L) é a alternativa prática, com mais sobra e diferença mínima de custo na estimativa da calculadora. Nem toda linha e cor vem em quarto: confirme no orçamento.</p>
-<p>Teto branco e parede colorida? Calcule separado: 6,7 L da cor para as paredes e 2,4 L de branco para o teto (12 × 2 ÷ 11 × 1,1), que a calculadora resolve com 3 quartos ou, com sobra, 1 galão.</p>`,
+<p><strong>Com o teto:</strong> some 3 × 4 = 12 m² e a área vai a 45,52 m². São 45,52 × 2 ÷ 11 = 8,28 L e, com a folga, <strong>≈ 9,1 L</strong>. A calculadora sugere <strong>3 galões</strong> (10,8 L); <strong>2 galões + 3 quartos de 0,9 L</strong> (9,9 L) deixam menos sobra, mas saem um pouco mais caros na estimativa da calculadora. Nem toda linha e cor vem em quarto: confirme no orçamento.</p>
+<p>Teto branco e parede colorida? Calcule separado: 6,7 L da cor para as paredes e 2,4 L de branco para o teto (12 × 2 ÷ 11 × 1,1), que a calculadora resolve com 1 galão; 3 quartos (2,7 L) sobram menos, mas custam mais na estimativa dela.</p>`,
     },
     {
       h2: 'Tabela: quanta tinta para cada cômodo',
@@ -63,9 +63,9 @@ export default {
 <thead><tr><th>Cômodo</th><th>Parede</th><th>Só paredes</th><th>Paredes + teto</th></tr></thead>
 <tbody>
 <tr><td>Banheiro 1,5 × 2,5 m, 1 porta, 1 janela</td><td>17,92 m²</td><td>3,6 L: 1 galão</td><td>4,3 L: 1 galão + 1 quarto</td></tr>
-<tr><td>Quarto 3 × 3 m, 1 porta, 1 janela</td><td>28,32 m²</td><td>5,7 L: 1 galão + 3 quartos</td><td>7,5 L: 2 galões + 1 quarto</td></tr>
-<tr><td>Cozinha 3 × 3,5 m, 2 portas, 1 janela</td><td>29,24 m²</td><td>5,8 L: 1 galão + 3 quartos</td><td>7,9 L: 2 galões + 1 quarto</td></tr>
-<tr><td>Quarto 3 × 4 m, 1 porta, 1 janela</td><td>33,52 m²</td><td>6,7 L: 2 galões</td><td>9,1 L: 2 galões + 3 quartos</td></tr>
+<tr><td>Quarto 3 × 3 m, 1 porta, 1 janela</td><td>28,32 m²</td><td>5,7 L: 2 galões</td><td>7,5 L: 2 galões + 1 quarto</td></tr>
+<tr><td>Cozinha 3 × 3,5 m, 2 portas, 1 janela</td><td>29,24 m²</td><td>5,8 L: 2 galões</td><td>7,9 L: 2 galões + 1 quarto</td></tr>
+<tr><td>Quarto 3 × 4 m, 1 porta, 1 janela</td><td>33,52 m²</td><td>6,7 L: 2 galões</td><td>9,1 L: 3 galões</td></tr>
 <tr><td>Suíte 4 × 4 m, 2 portas, 1 janela</td><td>37,04 m²</td><td>7,4 L: 2 galões + 1 quarto</td><td>10,6 L: 3 galões</td></tr>
 <tr><td>Sala 4 × 5 m, 2 portas, 1 janela</td><td>42,24 m²</td><td>8,4 L: 2 galões + 2 quartos</td><td>12,4 L: 3 galões + 2 quartos</td></tr>
 </tbody>
@@ -80,8 +80,8 @@ export default {
 <tbody>
 <tr><td>Parede lisa, 2 demãos</td><td>33,52 × 2 ÷ 11 × 1,1</td><td>6,7 L</td><td>2 galões</td></tr>
 <tr><td>Parede lisa, 3 demãos (escuro para claro)</td><td>33,52 × 3 ÷ 11 × 1,1</td><td>10,1 L</td><td>3 galões</td></tr>
-<tr><td>Reboco ou textura, 2 demãos</td><td>33,52 × 2 ÷ 8 × 1,1</td><td>9,2 L</td><td>2 galões + 3 quartos</td></tr>
-<tr><td>Paredes e teto lisos, 3 demãos</td><td>45,52 × 3 ÷ 11 × 1,1</td><td>13,7 L</td><td>1 lata de 18 L</td></tr>
+<tr><td>Reboco ou textura, 2 demãos</td><td>33,52 × 2 ÷ 8 × 1,1</td><td>9,2 L</td><td>3 galões</td></tr>
+<tr><td>Paredes e teto lisos, 3 demãos</td><td>45,52 × 3 ÷ 11 × 1,1</td><td>13,7 L</td><td>4 galões</td></tr>
 </tbody>
 </table>
 <ul>
@@ -92,13 +92,13 @@ export default {
     },
     {
       h2: 'Lata, galão ou quarto: qual combinação comprar',
-      html: `<p>Compre pelo total de litros: até uns 12 litros, galões de 3,6 L com quartos de 0,9 L para completar evitam sobra; passou de 12,6 litros, a calculadora já indica a lata de 18 L, porque ela costuma sair mais em conta por litro do que juntar quatro galões.</p>
+      html: `<p>Compre pelo total de litros: até 14,4 litros, galões de 3,6 L, com quartos de 0,9 L para completar quando compensa, resolvem com pouca sobra; passou disso, a calculadora já indica a lata de 18 L, porque aí seria preciso juntar quatro galões e mais quartos, e a lata costuma sair mais em conta por litro.</p>
 <ul>
 <li><strong>Quarto (0,9 L)</strong>: retoque, porta, detalhe ou para completar a conta.</li>
 <li><strong>Galão (3,6 L)</strong>: cômodo pequeno ou médio. Para 4 L, 1 galão + 1 quarto; para 6,7 L, 2 galões.</li>
-<li><strong>Lata (18 L)</strong>: casa inteira, sala grande com teto, muro e fachada. A calculadora considera que uma lata custa mais ou menos o mesmo que 3,9 galões.</li>
+<li><strong>Lata (18 L)</strong>: casa inteira, sala grande com teto, muro e fachada. A calculadora considera que uma lata custa mais ou menos o mesmo que 4 galões.</li>
 </ul>
-<p>Se vários cômodos vão levar a mesma cor, some as áreas e calcule tudo junto. Uma casa com banheiro, dois quartos (3 × 3 m e 3 × 4 m), cozinha e sala da tabela soma 151,24 m² de parede e pede 30,2 litros: a calculadora indica <strong>1 lata + 3 galões + 2 quartos</strong> (30,6 L). Calculando cômodo por cômodo, você levaria 7 galões e 8 quartos (32,4 L), com mais sobra e mais custo. No orçamento pelo WhatsApp, a gente confirma quais embalagens a linha e a cor escolhidas têm.</p>`,
+<p>Se vários cômodos vão levar a mesma cor, some as áreas e calcule tudo junto. Uma casa com banheiro, dois quartos (3 × 3 m e 3 × 4 m), cozinha e sala da tabela soma 151,24 m² de parede e pede 30,2 litros: a calculadora indica <strong>1 lata + 3 galões + 2 quartos</strong> (30,6 L). Calculando cômodo por cômodo, você levaria 9 galões e 2 quartos (34,2 L), com mais sobra e mais custo. No orçamento pelo WhatsApp, a gente confirma quais embalagens a linha e a cor escolhidas têm.</p>`,
     },
     {
       h2: 'Por que a conta da calculadora é conservadora',
