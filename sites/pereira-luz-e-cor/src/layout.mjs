@@ -7,6 +7,7 @@ const year = new Date(site.contentDate).getFullYear()
 
 const head = ({ path, title, description, ogImage, ogType, noindex, jsonld, assets, extraHead = '' }) => `
 <meta charset="utf-8">
+<script>document.documentElement.classList.replace('no-js','js')</script>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>${esc(title)}</title>
 <meta name="description" content="${esc(description)}">
@@ -62,21 +63,21 @@ const megaMenu = (cats) => `
 </div>`
 
 const header = (path, cats) => {
-  const is = (p) => (path === p || (p !== '/' && path.startsWith(p)) ? ' aria-current="page"' : '')
+  const is = (p) => (path === p ? ' aria-current="page"' : p !== '/' && path.startsWith(p) ? ' aria-current="true"' : '')
   const inCats = cats.some((c) => path.startsWith(`/${c.slug}/`))
   return `
 <a class="skip" href="#conteudo">Pular para o conteúdo</a>
-<div class="topbar">
+<div class="topbar" role="region" aria-label="Informações da loja">
   <div class="wrap topbar__in">
-    <a class="topbar__addr" href="${directionsUrl()}" target="_blank" rel="noopener">${icon('pin', { size: 15 })}<span>Loja nova · ${esc(site.address.street)} – ${esc(site.address.neighborhood)}, ${esc(site.address.city)}-${esc(site.address.state)}</span></a>
+    <a class="topbar__addr" href="${directionsUrl()}" target="_blank" rel="noopener">${icon('pin', { size: 15 })}<span class="topbar__long">Loja nova · ${esc(site.address.street)} – ${esc(site.address.neighborhood)}, ${esc(site.address.city)}-${esc(site.address.state)}</span><span class="topbar__short">${esc(site.address.street.replace('Rua ', 'R. '))} · ${esc(site.address.neighborhood.replace('Jardim ', 'Jd. '))}</span></a>
     <span class="open-badge" data-open-badge>${icon('clock', { size: 15 })}<span>${esc(hoursRows()[0].label)}: ${esc(hoursRows()[0].value)}</span></span>
-    <a class="topbar__wa" href="${wa()}" target="_blank" rel="noopener" data-track="wa-topbar">${icon('whatsapp', { size: 15 })}<span>${esc(site.phoneDisplay)}</span></a>
+    <a class="topbar__wa" href="${wa()}" target="_blank" rel="noopener" data-track="wa-topbar">${icon('whatsapp', { size: 15 })}<span><span class="nw">${esc(site.phoneDisplay)}</span></span></a>
   </div>
 </div>
 <header class="hdr" data-hdr>
   <div class="wrap hdr__in">
     <a class="brand" href="/" aria-label="${esc(site.name)} — página inicial">
-      <img src="/assets/img/logo-pereira.svg" alt="${esc(site.name)}" width="172" height="60" fetchpriority="high">
+      <img src="/assets/img/logo-pereira-360.webp" alt="${esc(site.name)}" width="172" height="60">
       <span class="brand__sub">Luz <b>&amp;</b> Cor</span>
     </a>
     <nav class="nav" aria-label="Principal">
@@ -93,8 +94,8 @@ const header = (path, cats) => {
     </nav>
     <div class="hdr__actions">
       <button class="icon-btn" data-search-open aria-label="Buscar produtos">${icon('search', { size: 21 })}</button>
-      <button class="icon-btn icon-btn--list" data-list-open aria-label="Abrir lista de orçamento">${icon('list', { size: 21 })}<span class="badge" data-list-count hidden>0</span></button>
-      <a class="btn btn--wa btn--sm hdr__cta" href="${wa()}" target="_blank" rel="noopener" data-track="wa-header">${icon('whatsapp', { size: 18 })}<span>Orçamento</span></a>
+      <button class="icon-btn icon-btn--list" data-list-open aria-label="Minha lista de orçamento">${icon('list', { size: 21 })}<span class="badge" data-list-count hidden>0</span></button>
+      <a class="btn btn--wa btn--sm hdr__cta" href="${wa()}" target="_blank" rel="noopener" data-track="wa-header" aria-label="Orçamento pelo WhatsApp">${icon('whatsapp', { size: 18 })}<span>Orçamento</span></a>
       <button class="icon-btn hdr__burger" data-menu-open aria-label="Abrir menu" aria-expanded="false" aria-controls="menu-mobile">${icon('menu', { size: 24 })}</button>
     </div>
   </div>
@@ -102,7 +103,7 @@ const header = (path, cats) => {
 <div class="mnav" id="menu-mobile" data-menu hidden>
   <div class="mnav__panel" role="dialog" aria-modal="true" aria-label="Menu">
     <div class="mnav__top">
-      <img src="/assets/img/logo-pereira.svg" alt="" width="140" height="49">
+      <img src="/assets/img/logo-pereira-360.webp" alt="" width="140" height="49">
       <button class="icon-btn" data-menu-close aria-label="Fechar menu">${icon('x', { size: 24 })}</button>
     </div>
     <p class="mnav__label">Produtos</p>
@@ -126,7 +127,7 @@ const footer = (cats, guides) => `
   <div class="hazard hazard--thin" aria-hidden="true"></div>
   <div class="wrap ftr__grid">
     <div class="ftr__brand">
-      <img src="/assets/img/logo-pereira.svg" alt="${esc(site.name)}" width="200" height="70" loading="lazy">
+      <img src="/assets/img/logo-pereira-360.webp" alt="${esc(site.name)}" width="200" height="70" loading="lazy">
       <p>${esc(site.name)} — ${esc(site.tagline.toLowerCase())}, hidráulica e ferragens no bairro ${esc(site.address.neighborhood)}, em ${esc(site.address.city)}-${esc(site.address.state)}.</p>
       <div class="ftr__social">
         ${site.social.instagram ? `<a href="${site.social.instagram}" target="_blank" rel="noopener" aria-label="Instagram">${icon('instagram')}</a>` : ''}
@@ -148,7 +149,7 @@ const footer = (cats, guides) => `
     <div class="ftr__nap">
       <p class="ftr__title">Visite a loja</p>
       <p class="ftr__line">${icon('pin', { size: 18 })}<span>${esc(addressLine())}</span></p>
-      <p class="ftr__line">${icon('whatsapp', { size: 18 })}<a href="${wa()}" target="_blank" rel="noopener">${esc(site.phoneDisplay)}</a></p>
+      <p class="ftr__line">${icon('whatsapp', { size: 18 })}<a href="${wa()}" target="_blank" rel="noopener"><span class="nw">${esc(site.phoneDisplay)}</span></a></p>
       <div class="ftr__line">${icon('clock', { size: 18 })}<ul class="ftr__hours">${hoursRows().map((r) => `<li><span>${esc(r.label)}</span><span>${esc(r.value)}</span></li>`).join('')}</ul></div>
       <a class="btn btn--ghost btn--sm" href="${directionsUrl()}" target="_blank" rel="noopener">${icon('route', { size: 16 })}Como chegar</a>
     </div>
@@ -158,17 +159,17 @@ const footer = (cats, guides) => `
   </div>
   <div class="wrap ftr__bottom">
     <p>© ${year} ${esc(site.name)}${site.cnpj ? ` · CNPJ ${esc(site.cnpj)}` : ''}. Todos os direitos reservados.</p>
-    <p><a href="/sobre/">A loja</a> · <a href="/contato/">Contato</a> · <a href="/perguntas-frequentes/">Dúvidas</a>${site.agency.name ? ` · Site por <a href="${site.agency.url}" target="_blank" rel="noopener">${esc(site.agency.name)}</a>` : ''}</p>
+    <p><button type="button" class="motion-btn" data-motion-toggle aria-pressed="false">Pausar animações</button> · <a href="/sobre/">A loja</a> · <a href="/contato/">Contato</a> · <a href="/perguntas-frequentes/">Dúvidas</a>${site.agency.name ? ` · Site por <a href="${site.agency.url}" target="_blank" rel="noopener">${esc(site.agency.name)}</a>` : ''}</p>
   </div>
 </footer>`
 
 const overlays = () => `
 <a class="fab-wa" href="${wa()}" target="_blank" rel="noopener" aria-label="Falar no WhatsApp" data-track="wa-fab">${icon('whatsapp', { size: 30 })}<span class="fab-wa__tip">Fale com a gente</span></a>
-<button class="fab-list" data-list-open aria-label="Abrir lista de orçamento" hidden>${icon('list', { size: 22 })}<span>Minha lista</span><b data-list-count>0</b></button>
+<button class="fab-list" data-list-open hidden>${icon('list', { size: 22 })}<span>Minha lista</span><b data-list-count>0</b><span class="sr-only"> itens</span></button>
 
 <div class="drawer" data-list hidden>
   <div class="drawer__scrim" data-list-close></div>
-  <aside class="drawer__panel" role="dialog" aria-modal="true" aria-labelledby="lista-titulo">
+  <div class="drawer__panel" role="dialog" aria-modal="true" aria-labelledby="lista-titulo">
     <div class="drawer__head">
       <div>
         <p class="eyebrow">${icon('list', { size: 16 })} Orçamento pelo WhatsApp</p>
@@ -196,8 +197,9 @@ const overlays = () => `
     <div class="drawer__foot">
       <button class="btn btn--wa btn--block btn--lg" data-list-send>${icon('whatsapp', { size: 22 })}Enviar lista no WhatsApp</button>
       <button class="link-btn" data-list-clear>${icon('trash', { size: 15 })}Limpar lista</button>
+      <button class="link-btn" data-list-undo hidden>Desfazer limpeza</button>
     </div>
-  </aside>
+  </div>
 </div>
 
 <div class="search" data-search hidden>
@@ -208,18 +210,20 @@ const overlays = () => `
       <input type="search" data-search-input placeholder="O que você precisa? Ex.: disjuntor 40 A" aria-label="Buscar produtos" autocomplete="off" enterkeyhint="search">
       <button class="icon-btn" data-search-close aria-label="Fechar busca">${icon('x', { size: 22 })}</button>
     </div>
-    <div class="search__results" data-search-results role="listbox" aria-label="Resultados"></div>
+    <div class="search__results" data-search-results></div>
+    <p class="sr-only" role="status" data-search-status></p>
   </div>
 </div>
 <div class="toast" data-toast role="status" aria-live="polite"></div>`
 
-export const siteData = () =>
+export const siteData = (ctx = {}) =>
   JSON.stringify({
     name: site.name,
     wa: site.whatsapp,
     tz: site.timezone,
     hours: site.hours,
     phone: site.phoneDisplay,
+    searchV: ctx.searchV,
   })
 
 /**
@@ -238,7 +242,7 @@ ${body}
 </main>
 ${footer(ctx.categories, ctx.guides)}
 ${overlays()}
-<script type="application/json" id="site-data">${siteData()}</script>
+<script type="application/json" id="site-data">${siteData(ctx)}</script>
 <script src="${ctx.assets.js}" defer></script>
 </body>
 </html>

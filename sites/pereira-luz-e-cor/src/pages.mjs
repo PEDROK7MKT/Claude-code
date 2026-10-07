@@ -3,7 +3,7 @@ import { site, esc, wa, abs, addressLine, hoursRows, hoursText, directionsUrl, f
 import { icon } from './icons.mjs'
 import {
   breadcrumb, sectionHead, addChip, categoryCard, guideCard, faqList, hoursList, mapBlock, ctaBand,
-  paintCalculator, toc,
+  paintCalculator, toc, wrapTables,
 } from './components.mjs'
 import { storeEntity, websiteEntity, webPage, breadcrumbList, faqPage, article, howTo, itemList, jsonld } from './schema.mjs'
 
@@ -15,15 +15,15 @@ const HOME = { name: 'Início', path: '/' }
 export const storeFaq = (cats) => [
   {
     q: `Onde fica a ${site.name} em ${site.address.city}?`,
-    a: `<p>A ${site.name} fica na <strong>${esc(site.address.street)}, bairro ${esc(site.address.neighborhood)}, em ${esc(site.address.city)}-${site.address.state}</strong>. É uma loja nova de materiais elétricos, tintas e ferramentas. Para traçar a rota, use o botão <a href="/contato/">Como chegar</a> ou chame no WhatsApp ${esc(site.phoneDisplay)}.</p>`,
+    a: `<p>A ${site.name} fica na <strong>${esc(site.address.street)}, bairro ${esc(site.address.neighborhood)}, em ${esc(site.address.city)}-${site.address.state}</strong>. É uma loja nova de materiais elétricos, tintas e ferramentas. Para traçar a rota, use o botão <a href="/contato/">Como chegar</a> ou chame no WhatsApp <span class="nw">${esc(site.phoneDisplay)}</span>.</p>`,
   },
   {
     q: `Qual o horário de funcionamento da ${site.name}?`,
-    a: `<p>O horário de atendimento é: <strong>${esc(hoursText())}</strong>. Fora do horário, você pode deixar sua lista de material no WhatsApp ${esc(site.phoneDisplay)} e a equipe responde assim que a loja abrir.</p>`,
+    a: `<p>O horário de atendimento é: <strong>${esc(hoursText())}</strong>. Fora do horário, você pode deixar sua lista de material no WhatsApp <span class="nw">${esc(site.phoneDisplay)}</span> e a equipe responde assim que a loja abrir.</p>`,
   },
   {
     q: 'Como faço um orçamento pelo WhatsApp?',
-    a: `<p>É simples: navegue pelos produtos do site e toque no <strong>+</strong> de cada item para montar sua lista. Depois abra <strong>Minha lista</strong> e toque em <strong>Enviar lista no WhatsApp</strong> — a mensagem vai pronta, com quantidades e observações. Se preferir, mande uma foto da sua lista escrita à mão para ${esc(site.phoneDisplay)}.</p>`,
+    a: `<p>É simples: navegue pelos produtos do site e toque no <strong>+</strong> de cada item para montar sua lista. Depois abra <strong>Minha lista</strong> e toque em <strong>Enviar lista no WhatsApp</strong> — a mensagem vai pronta, com quantidades e observações. Se preferir, mande uma foto da sua lista escrita à mão para <span class="nw">${esc(site.phoneDisplay)}</span>.</p>`,
   },
   {
     q: `O que a ${site.name} vende?`,
@@ -129,7 +129,7 @@ const storeSection = () => `
   <div class="wrap store__grid">
     <figure class="store__photo" data-reveal>
       <picture>
-        <source type="image/webp" srcset="/assets/img/loja-pereira-fachada-480.webp 480w, /assets/img/loja-pereira-fachada-800.webp 800w, /assets/img/loja-pereira-fachada-1280.webp 1280w" sizes="(min-width: 960px) 50vw, 100vw">
+        <source type="image/webp" srcset="/assets/img/loja-pereira-fachada-480.webp 480w, /assets/img/loja-pereira-fachada-800.webp 800w, /assets/img/loja-pereira-fachada-1280.webp 1280w" sizes="(min-width: 1021px) min(560px, 46vw), calc(100vw - 32px)">
         <img src="/assets/img/loja-pereira-fachada-1280.jpg" alt="Fachada preta e amarela da loja ${esc(site.name)} na ${esc(site.address.street)}, bairro ${esc(site.address.neighborhood)}, em ${esc(site.address.city)}-BA" width="1280" height="960" loading="lazy" decoding="async">
       </picture>
       <figcaption><span class="tape">Loja nova</span> ${esc(site.address.street)} · ${esc(site.address.neighborhood)}</figcaption>
@@ -143,7 +143,7 @@ const storeSection = () => `
       </div>
       <div class="store__btns" data-reveal>
         <a class="btn btn--yellow btn--lg" href="${directionsUrl()}" target="_blank" rel="noopener">${icon('route', { size: 20 })}Como chegar</a>
-        <a class="btn btn--ghost btn--lg" href="${wa()}" target="_blank" rel="noopener" data-track="wa-store">${icon('whatsapp', { size: 20 })}${esc(site.phoneDisplay)}</a>
+        <a class="btn btn--ghost btn--lg" href="${wa()}" target="_blank" rel="noopener" data-track="wa-store">${icon('whatsapp', { size: 20 })}<span class="nw">${esc(site.phoneDisplay)}</span></a>
       </div>
     </div>
   </div>
@@ -227,7 +227,7 @@ ${storeSection()}
 </section>
 <section class="section faq-home" aria-labelledby="faq-titulo">
   <div class="wrap faq-home__grid">
-    ${sectionHead({ eyebrow: `${icon('info', { size: 16 })} Perguntas frequentes`, title: 'Dúvidas sobre a loja', id: 'faq-titulo', text: `Não achou a resposta? Chame no WhatsApp <a href="${wa()}" target="_blank" rel="noopener">${esc(site.phoneDisplay)}</a> ou veja <a href="/perguntas-frequentes/">todas as perguntas</a>.` })}
+    ${sectionHead({ eyebrow: `${icon('info', { size: 16 })} Perguntas frequentes`, title: 'Dúvidas sobre a loja', id: 'faq-titulo', text: `Não achou a resposta? Chame no WhatsApp <a href="${wa()}" target="_blank" rel="noopener"><span class="nw">${esc(site.phoneDisplay)}</span></a> ou veja <a href="/perguntas-frequentes/">todas as perguntas</a>.` })}
     ${faqList(faq, { id: 'faq-loja' })}
   </div>
 </section>
@@ -397,7 +397,7 @@ export function guide(g, ctx) {
     ${g.sections.length > 3 ? toc(g.sections) : ''}
     ${g.widget === 'paint-calculator' ? `<div class="guide__widget"><h2 id="calculadora">Calculadora de tinta</h2>${paintCalculator()}</div>` : ''}
     <div class="prose">
-      ${g.sections.map((s) => `<section><h2 id="${slugify(s.h2)}">${esc(s.h2)}</h2>${s.html}</section>`).join('')}
+      ${g.sections.map((s) => `<section><h2 id="${slugify(s.h2)}">${esc(s.h2)}</h2>${wrapTables(s.html, `Tabela: ${s.h2}`)}</section>`).join('')}
     </div>
     ${howToBlock}
     <aside class="gcta">
@@ -653,7 +653,7 @@ export function about(ctx) {
   <div class="wrap about__grid">
     <figure class="store__photo" data-reveal>
       <picture>
-        <source type="image/webp" srcset="/assets/img/loja-pereira-fachada-480.webp 480w, /assets/img/loja-pereira-fachada-800.webp 800w, /assets/img/loja-pereira-fachada-1280.webp 1280w" sizes="(min-width: 960px) 50vw, 100vw">
+        <source type="image/webp" srcset="/assets/img/loja-pereira-fachada-480.webp 480w, /assets/img/loja-pereira-fachada-800.webp 800w, /assets/img/loja-pereira-fachada-1280.webp 1280w" sizes="(min-width: 1021px) min(560px, 46vw), calc(100vw - 32px)">
         <img src="/assets/img/loja-pereira-fachada-1280.jpg" alt="Fachada da ${esc(site.name)} em ${esc(site.address.city)}-BA" width="1280" height="960" loading="lazy" decoding="async">
       </picture>
       <figcaption><span class="tape">Nossa casa</span> ${esc(site.address.street)} · ${esc(site.address.neighborhood)}</figcaption>
@@ -664,7 +664,7 @@ export function about(ctx) {
       <h2>Como a gente atende</h2>
       <ul>
         <li><strong>No balcão, com orientação:</strong> antes de vender, a equipe ajuda a conferir medida, bitola, voltagem e o tipo certo de tinta para cada parede.</li>
-        <li><strong>Pelo WhatsApp:</strong> monte sua lista aqui no site, envie para ${esc(site.phoneDisplay)} e receba o orçamento. Depois é só passar para retirar.</li>
+        <li><strong>Pelo WhatsApp:</strong> monte sua lista aqui no site, envie para <span class="nw">${esc(site.phoneDisplay)}</span> e receba o orçamento. Depois é só passar para retirar.</li>
         <li><strong>Para profissionais:</strong> eletricistas, pintores, pedreiros e encanadores mandam a lista da obra inteira de uma vez.</li>
       </ul>
       <h2>Por que “Luz &amp; Cor”</h2>
@@ -718,15 +718,15 @@ export function contact(ctx) {
     <div class="phero__in">
       <p class="eyebrow">${icon('pin', { size: 16 })} Contato</p>
       <h1 class="phero__title">Contato e como chegar</h1>
-      <p class="phero__lead">A ${esc(site.name)} fica na <strong>${esc(site.address.street)}, bairro ${esc(site.address.neighborhood)}, ${esc(site.address.city)}-${site.address.state}</strong>. O jeito mais rápido de falar com a loja é pelo WhatsApp <strong>${esc(site.phoneDisplay)}</strong>.</p>
+      <p class="phero__lead">A ${esc(site.name)} fica na <strong>${esc(site.address.street)}, bairro ${esc(site.address.neighborhood)}, ${esc(site.address.city)}-${site.address.state}</strong>. O jeito mais rápido de falar com a loja é pelo WhatsApp <strong><span class="nw">${esc(site.phoneDisplay)}</span></strong>.</p>
     </div>
   </div>
 </section>
 <section class="section contact">
   <div class="wrap contact__grid">
     <div class="contact__cards">
-      <a class="ccontact ccontact--wa" href="${wa()}" target="_blank" rel="noopener" data-track="wa-contact" data-reveal>${icon('whatsapp', { size: 30 })}<div><b>WhatsApp</b><span>${esc(site.phoneDisplay)}</span><small>Orçamentos, dúvidas e disponibilidade</small></div>${icon('arrow', { size: 20 })}</a>
-      <a class="ccontact" href="tel:${site.phoneE164}" data-reveal>${icon('phone', { size: 28 })}<div><b>Telefone</b><span>${esc(site.phoneDisplay)}</span><small>Ligue no horário de atendimento</small></div>${icon('arrow', { size: 20 })}</a>
+      <a class="ccontact ccontact--wa" href="${wa()}" target="_blank" rel="noopener" data-track="wa-contact" data-reveal>${icon('whatsapp', { size: 30 })}<div><b>WhatsApp</b><span><span class="nw">${esc(site.phoneDisplay)}</span></span><small>Orçamentos, dúvidas e disponibilidade</small></div>${icon('arrow', { size: 20 })}</a>
+      <a class="ccontact" href="tel:${site.phoneE164}" data-reveal>${icon('phone', { size: 28 })}<div><b>Telefone</b><span><span class="nw">${esc(site.phoneDisplay)}</span></span><small>Ligue no horário de atendimento</small></div>${icon('arrow', { size: 20 })}</a>
       <a class="ccontact" href="${directionsUrl()}" target="_blank" rel="noopener" data-reveal>${icon('route', { size: 28 })}<div><b>Endereço</b><span>${esc(site.address.street)}</span><small>${esc(site.address.neighborhood)} · ${esc(site.address.city)}-${site.address.state}${site.address.postalCode ? ` · CEP ${esc(site.address.postalCode)}` : ''}</small></div>${icon('arrow', { size: 20 })}</a>
       ${site.social.instagram ? `<a class="ccontact" href="${site.social.instagram}" target="_blank" rel="noopener" data-reveal>${icon('instagram', { size: 28 })}<div><b>Instagram</b><span>Novidades e ofertas</span></div>${icon('arrow', { size: 20 })}</a>` : ''}
       <div class="infocard infocard--big" data-reveal>${icon('clock', { size: 24 })}<div><b>Horário de funcionamento <span class="open-badge open-badge--inline" data-open-badge></span></b>${hoursList()}</div></div>
@@ -750,7 +750,7 @@ export function contact(ctx) {
       <h2 id="como-chegar">Como chegar à loja</h2>
       <p>A ${esc(site.name)} fica no <strong>número 55 da Rua São Francisco</strong>, no lado ímpar da rua, que pertence ao bairro <strong>${esc(site.address.neighborhood)}</strong>. A Rua São Francisco faz a divisa entre o ${esc(site.address.neighborhood)} e o Sandra Regina, numa região de comércio próxima ao Centro de ${esc(site.address.city)}.</p>
       <p>Procure a <strong>fachada preta com faixa amarela</strong> e o letreiro “Pereira”. No celular, toque em <a href="${directionsUrl()}" target="_blank" rel="noopener">Traçar rota</a> para abrir o caminho no Google Maps a partir de onde você estiver.</p>
-      <p>Se estiver vindo de outra cidade da região, mande sua lista antes pelo WhatsApp <strong>${esc(site.phoneDisplay)}</strong>: a equipe confirma o que tem disponível e separa o material para você retirar sem perder viagem.</p>
+      <p>Se estiver vindo de outra cidade da região, mande sua lista antes pelo WhatsApp <strong><span class="nw">${esc(site.phoneDisplay)}</span></strong>: a equipe confirma o que tem disponível e separa o material para você retirar sem perder viagem.</p>
     </div>
     ${faqList(storeFaq(ctx.categories).slice(0, 3), { id: 'faq-contato' })}
   </div>

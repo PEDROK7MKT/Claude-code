@@ -82,7 +82,18 @@ const assets = {
   js: `/assets/js/site.js?v=${hash(jsSrc)}`,
 }
 
-const ctx = { categories, catMap, guides, guideMap, assets }
+// ---------------------------------------------------------------- busca
+const index = []
+for (const c of categories)
+  for (const g of c.groups)
+    for (const it of g.items) index.push({ n: it, g: g.name, c: c.name, u: `/${c.slug}/#${slugify(g.name)}`, k: normalize(`${it} ${g.name} ${c.name}`) })
+for (const g of guides) index.push({ n: g.title, g: 'Guia', c: g.categoryShort, u: `/guias/${g.slug}/`, k: normalize(`${g.title} ${g.kicker}`), t: 'guia' })
+index.push({ n: 'Calculadora de tinta', g: 'Ferramenta', c: 'Tintas', u: '/calculadora-de-tinta/', k: normalize('calculadora de tinta quantas latas litros'), t: 'guia' })
+const indexJson = JSON.stringify(index)
+writeFileSync(join(OUT, 'assets/search-index.json'), indexJson)
+
+
+const ctx = { categories, catMap, guides, guideMap, assets, searchV: hash(indexJson) }
 
 // ---------------------------------------------------------------- páginas
 const built = []
@@ -214,15 +225,6 @@ const full = [
 ].join('\n\n---\n\n')
 writeFileSync(join(OUT, 'llms-full.txt'), full + '\n')
 
-// ---------------------------------------------------------------- busca
-const index = []
-for (const c of categories)
-  for (const g of c.groups)
-    for (const it of g.items) index.push({ n: it, g: g.name, c: c.name, u: `/${c.slug}/#${slugify(g.name)}`, k: normalize(`${it} ${g.name} ${c.name}`) })
-for (const g of guides) index.push({ n: g.title, g: 'Guia', c: g.categoryShort, u: `/guias/${g.slug}/`, k: normalize(`${g.title} ${g.kicker}`), t: 'guia' })
-index.push({ n: 'Calculadora de tinta', g: 'Ferramenta', c: 'Tintas', u: '/calculadora-de-tinta/', k: normalize('calculadora de tinta quantas latas litros'), t: 'guia' })
-writeFileSync(join(OUT, 'assets/search-index.json'), JSON.stringify(index))
-
 // ---------------------------------------------------------------- PWA / hosts
 writeFileSync(
   join(OUT, 'site.webmanifest'),
@@ -256,7 +258,8 @@ writeFileSync(
       cleanUrls: true,
       trailingSlash: true,
       headers: [
-        { source: '/assets/(.*)', headers: [{ key: 'Cache-Control', value: 'public, max-age=31536000, immutable' }] },
+        { source: '/assets/(css|js|fonts)/(.*)', headers: [{ key: 'Cache-Control', value: 'public, max-age=31536000, immutable' }] },
+        { source: '/assets/(img|search-index.json)(.*)', headers: [{ key: 'Cache-Control', value: 'public, max-age=604800' }] },
         { source: '/(.*)', headers: [{ key: 'X-Content-Type-Options', value: 'nosniff' }, { key: 'Referrer-Policy', value: 'strict-origin-when-cross-origin' }] },
       ],
     },
@@ -265,7 +268,7 @@ writeFileSync(
   ),
 )
 // Netlify / Cloudflare Pages
-writeFileSync(join(OUT, '_headers'), `/assets/*\n  Cache-Control: public, max-age=31536000, immutable\n/*\n  X-Content-Type-Options: nosniff\n  Referrer-Policy: strict-origin-when-cross-origin\n`)
+writeFileSync(join(OUT, '_headers'), `/assets/css/*\n  Cache-Control: public, max-age=31536000, immutable\n/assets/js/*\n  Cache-Control: public, max-age=31536000, immutable\n/assets/fonts/*\n  Cache-Control: public, max-age=31536000, immutable\n/assets/img/*\n  Cache-Control: public, max-age=604800\n/*\n  X-Content-Type-Options: nosniff\n  Referrer-Policy: strict-origin-when-cross-origin\n`)
 
 // ---------------------------------------------------------------- relatório
 const size = (p) => statSync(p).size
