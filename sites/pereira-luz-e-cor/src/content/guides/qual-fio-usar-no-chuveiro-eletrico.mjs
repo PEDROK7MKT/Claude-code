@@ -32,10 +32,10 @@ export default {
     },
     {
       h2: 'Distância do quadro e calor: quando o fio precisa ser mais grosso',
-      html: '<p>Quanto mais longe o chuveiro fica do quadro, mais grosso o fio precisa ser, porque o fio comprido perde tensão no caminho: chega menos tensão ao chuveiro, ele esquenta menos a água e parte da energia vira calor ao longo do fio. Por isso os manuais trazem, ao lado de cada bitola, uma distância máxima; passou dela, sobe para a medida seguinte (4, 6, 10, 16 mm²).</p>'
+      html: '<p>Quanto mais longe o chuveiro fica do quadro, mais grosso o fio precisa ser, porque o fio comprido perde tensão no caminho: chega menos tensão ao chuveiro e ele esquenta menos a água. Por isso os manuais trazem, ao lado de cada bitola, uma distância máxima; passou dela, sobe para a medida seguinte (4, 6, 10, 16 mm²).</p>'
         + '<ul>'
         + '<li><strong>Queda de tensão:</strong> a NBR 5410 limita a queda de tensão nos circuitos terminais a 4%. Em 127 V o problema aparece mais cedo: um chuveiro de 5.500 W puxa cerca de 43 A e, com fio de 10 mm², uns 25 metros de distância já deixam a perda perto desse limite.</li>'
-        + '<li><strong>Calor:</strong> as capacidades citadas acima (32, 41 e 57 A) valem para ambiente de até 30 °C. Em Barreiras, o forro e o espaço sobre a laje, debaixo de telhado quente, passam fácil disso, principalmente em setembro e outubro; aí a norma manda reduzir a capacidade do fio. No chuveiro de 7.500 a 7.800 W em 220 V, o fio de 6 mm² já trabalha perto do limite e, nesse caso, costuma ir para 10 mm².</li>'
+        + '<li><strong>Calor:</strong> as capacidades citadas acima (32, 41 e 57 A) valem para ambiente de até 30 °C. Em Barreiras, o forro e o vão sobre a laje, debaixo de telhado quente, passam fácil disso, principalmente em setembro e outubro, e a norma manda reduzir a capacidade do fio. Com disjuntor de 40 A, o fio de 6 mm² fica sem folga; no chuveiro de 7.500 a 7.800 W em 220 V, costuma ir para 10 mm².</li>'
         + '<li><strong>Vários circuitos no mesmo eletroduto:</strong> fios agrupados esquentam um ao outro e perdem capacidade; o ideal é o chuveiro ter eletroduto só dele.</li>'
         + '</ul>'
         + '<p>Na dúvida entre duas bitolas, fique com a maior; quem mede o trajeto e faz a conta é o eletricista.</p>',

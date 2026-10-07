@@ -869,9 +869,9 @@ Valores de referência para fio de cobre com isolação de PVC, em eletroduto em
 
 ### Distância do quadro e calor: quando o fio precisa ser mais grosso
 
-Quanto mais longe o chuveiro fica do quadro, mais grosso o fio precisa ser, porque o fio comprido perde tensão no caminho: chega menos tensão ao chuveiro, ele esquenta menos a água e parte da energia vira calor ao longo do fio. Por isso os manuais trazem, ao lado de cada bitola, uma distância máxima; passou dela, sobe para a medida seguinte (4, 6, 10, 16 mm²).
+Quanto mais longe o chuveiro fica do quadro, mais grosso o fio precisa ser, porque o fio comprido perde tensão no caminho: chega menos tensão ao chuveiro e ele esquenta menos a água. Por isso os manuais trazem, ao lado de cada bitola, uma distância máxima; passou dela, sobe para a medida seguinte (4, 6, 10, 16 mm²).
 Queda de tensão: a NBR 5410 limita a queda de tensão nos circuitos terminais a 4%. Em 127 V o problema aparece mais cedo: um chuveiro de 5.500 W puxa cerca de 43 A e, com fio de 10 mm², uns 25 metros de distância já deixam a perda perto desse limite.
-Calor: as capacidades citadas acima (32, 41 e 57 A) valem para ambiente de até 30 °C. Em Barreiras, o forro e o espaço sobre a laje, debaixo de telhado quente, passam fácil disso, principalmente em setembro e outubro; aí a norma manda reduzir a capacidade do fio. No chuveiro de 7.500 a 7.800 W em 220 V, o fio de 6 mm² já trabalha perto do limite e, nesse caso, costuma ir para 10 mm².
+Calor: as capacidades citadas acima (32, 41 e 57 A) valem para ambiente de até 30 °C. Em Barreiras, o forro e o vão sobre a laje, debaixo de telhado quente, passam fácil disso, principalmente em setembro e outubro, e a norma manda reduzir a capacidade do fio. Com disjuntor de 40 A, o fio de 6 mm² fica sem folga; no chuveiro de 7.500 a 7.800 W em 220 V, costuma ir para 10 mm².
 Vários circuitos no mesmo eletroduto: fios agrupados esquentam um ao outro e perdem capacidade; o ideal é o chuveiro ter eletroduto só dele.
 Na dúvida entre duas bitolas, fique com a maior; quem mede o trajeto e faz a conta é o eletricista.
 
@@ -1776,22 +1776,22 @@ Resposta rápida: Para pintar parede, proteja piso, móveis e rodapés, raspe e 
 ### Antes de começar: material e quantidade de tinta
 
 Antes de pintar, separe tudo o que a parede vai pedir (tinta, selador ou fundo, massa, lixa, fita crepe, lona, rolo, trincha e bandeja) e calcule a tinta pela área real. Compre tudo de uma vez, para não parar o serviço no meio nem arriscar um lote com tom diferente.
-A calculadora de tinta faz assim: perímetro × pé-direito, menos 1,68 m² por porta e 1,20 m² por janela, × demãos ÷ rendimento por demão (11 m²/L em parede lisa, 8 m²/L em reboco) + 10% de folga.
+A calculadora de tinta faz assim: perímetro × pé-direito, menos 1,68 m² por porta (0,80 × 2,10 m) e 1,20 m² por janela (1,20 × 1,00 m), mais o teto (largura × comprimento) se ele entrar na pintura; essa área × demãos ÷ rendimento por demão (11 m²/L em parede lisa ou emassada, 8 m²/L em reboco ou textura) + 10% de folga.
 Quarto 3 × 4 m, pé-direito 2,60 m, 1 porta, 1 janelaÁreaTintaSugestão da calculadora
 Paredes lisas, 2 demãos33,52 m²≈ 6,7 L2 galões de 3,6 L
-Paredes e teto lisos, 2 demãos45,52 m²≈ 9,1 L2 galões + 3 quartos, ou 3 galões (10,8 L) com mais sobra
-Paredes em reboco, 2 demãos33,52 m²≈ 9,2 L2 galões + 3 quartos
+Paredes e teto lisos, 2 demãos45,52 m²≈ 9,1 L3 galões (10,8 L)
+Paredes em reboco, 2 demãos33,52 m²≈ 9,2 L3 galões (10,8 L)
 Paredes lisas, de escuro para claro (3 demãos)33,52 m²≈ 10,1 L3 galões
 A conta é conservadora: o rendimento real muda com a marca e a linha e vem impresso na lata (linhas premium costumam render mais). Selador, fundo e massa têm rendimento próprio. O cálculo completo está em quantas latas de tinta preciso.
 
-### Preparo da parede: proteger, lixar, limpar e tratar trincas
+### Preparo da parede: proteger, lixar, tratar trincas e limpar
 
-A preparação é o que faz a pintura durar: proteja piso, móveis e rodapés, raspe o que estiver soltando, lixe, limpe pó e gordura, trate mofo e trincas e só pinte com a parede firme, limpa e seca. Tinta sobre parede suja ou esfarelando descasca junto.
+A preparação é o que faz a pintura durar: proteja piso, móveis e rodapés, raspe o que estiver soltando, lixe, trate furos e trincas, limpe pó, gordura e mofo e só pinte com a parede firme, limpa e seca. Tinta sobre parede suja ou esfarelando descasca junto.
 Proteção: junte os móveis no centro, cubra com lona, forre o piso e passe fita crepe em rodapé e batente. Para tirar espelhos de tomada, desligue antes o disjuntor do circuito; na dúvida, só cubra com fita.
 Lixa: raspe a tinta solta e lixe a parede de leve (quanto maior o número do grão, mais fina a lixa). Acetinado ou semibrilho deve ser lixado até ficar fosco, para a tinta nova aderir. Use óculos e máscara contra pó.
+Furos e fissuras finas: abra de leve com a ponta da espátula, tire o pó e preencha com massa ou com selante acrílico próprio para trincas. Depois de seco, lixe rente e tire o pó.
 Limpeza: tire o pó com escova ou pano; gordura sai com água e detergente neutro. Mofo se limpa com água sanitária diluída na proporção da ficha técnica da tinta, com luvas e janela aberta; enxágue e deixe secar bem. Nunca misture água sanitária com outros produtos de limpeza.
-Furos e fissuras finas: abra de leve com a ponta da espátula, tire o pó e preencha com massa ou com selante acrílico próprio para trincas. Depois de seco, lixe rente.
-Chame um profissional se a trinca é larga, corre na diagonal a partir do canto de porta ou janela, aumenta ou volta depois de consertada, ou se o mofo sempre volta e a tinta estufa: pode ser estrutura ou umidade, e tinta não resolve. Um engenheiro ou pedreiro de confiança deve avaliar antes.
+Chame um profissional se a trinca for larga, correr na diagonal a partir do canto de porta ou janela, aumentar ou voltar depois de consertada, ou se o mofo sempre voltar e a tinta estufar: pode ser problema de estrutura ou de umidade, e tinta não resolve. Peça a avaliação de um engenheiro antes de pintar.
 
 ### Selador, fundo preparador ou massa: o que vai antes da tinta
 
@@ -1801,14 +1801,14 @@ Reboco novoEsperar a cura (os fabricantes costumam pedir pelo menos 28 dias) e p
 Reboco fraco, que esfarela ou solta pó na mãoEscovar e aplicar fundo preparador de paredes
 Caiação ou tinta velha que solta pó brancoRaspar o que estiver solto, escovar e aplicar fundo preparador
 GessoFundo preparador que traga indicação para gesso na embalagem
-Pintura antiga firmeLixar de leve e tirar o pó; remendo de massa leva antes um pouco de fundo, para não manchar
+Pintura antiga firmeLixar de leve e tirar o pó; sobre remendo de massa, já seco e lixado, passar uma demão do fundo ou selador indicado na embalagem antes da tinta, para não manchar
 Em reboco novo, o selador vem antes da massa. Massa corrida PVA é só para parede interna e seca; em área externa ou úmida, use massa acrílica (veja massa corrida ou massa acrílica). Aplique em camadas finas, lixe com lixa fina e tire todo o pó.
 
 ### Como fazer o recorte com trincha e passar o rolo
 
-Pinte primeiro o teto e depois as paredes, sempre de cima para baixo. Em cada parede, faça o recorte com trincha nos cantos, junto ao teto, ao rodapé e aos batentes, e logo em seguida passe o rolo, com a faixa da trincha ainda fresca, para as duas se misturarem sem deixar marca.
+Para fazer o recorte e passar o rolo, pinte uma parede de cada vez: com a trincha, faça uma faixa de 5 a 10 cm nos cantos, junto ao teto, ao rodapé e aos batentes, e logo em seguida passe o rolo com essa faixa ainda fresca, para as duas se misturarem sem deixar marca. Comece pelo teto e trabalhe sempre de cima para baixo.
 Tinta: mexa bem e dilua só como a lata indica (às vezes a primeira demão leva mais água).
-Recorte: faça uma faixa de uns 5 a 10 cm nos encontros e em volta das tomadas, carregando só a ponta das cerdas.
+Recorte: contorne também as tomadas e carregue só a ponta das cerdas.
 Rolo: molhe na bandeja e rode na parte rugosa até tirar o excesso. Aplique em faixas de cerca de 1 m de largura, em movimento de W ou N, espalhe sem recarregar e termine com passadas leves de cima para baixo, num só sentido.
 Borda molhada: emende sempre na tinta fresca e termine a parede de uma vez, sem voltar o rolo onde já começou a secar.
 Não aperte o rolo: pressão demais espirra tinta e marca a parede. Entre uma demão e outra, embrulhe rolo e trincha em saco plástico para não secarem.
@@ -1831,7 +1831,7 @@ Na fachada, use sempre tinta acrílica; veja tinta acrílica ou látex PVA.
 ### Limpeza das ferramentas e descarte da sobra
 
 Limpe as ferramentas assim que terminar: com tinta base água, tire o excesso do rolo e da trincha na borda da lata ou em jornal e lave num balde com água e sabão; com esmalte e verniz base solvente, use o diluente indicado na lata. Nunca jogue tinta, água de lavagem ou solvente no ralo, na pia ou na terra.
-Água de lavagem: deixe descansar até a tinta assentar e descarte o resíduo como orientam o fabricante e a prefeitura.
+Água de lavagem: deixe descansar no balde até a tinta assentar no fundo; para a água que fica por cima, siga a orientação da embalagem e da prefeitura e nunca a jogue em bueiro, rio ou terra; deixe secar o resíduo do fundo e jogue no lixo.
 Sobra de tinta: feche bem e guarde em local fresco e longe de crianças, com a cor anotada na tampa.
 Lata vazia: deixe o restinho secar com a lata aberta, em local ventilado e fora do alcance de crianças e animais, e descarte conforme a coleta da sua cidade.
 Panos e estopas com solvente: deixe secar abertos, ao ar livre e longe de fogo, antes de jogar fora.
@@ -1842,9 +1842,9 @@ Panos e estopas com solvente: deixe secar abertos, ao ar livre e longe de fogo, 
 2. Esvazie e proteja o cômodo: Tire ou junte os móveis no centro, cubra com lona e forre o piso. Passe fita crepe em rodapés, batentes e janelas. Para tirar espelhos de tomada e interruptor, desligue antes o disjuntor do circuito; na dúvida, só cubra com fita.
 3. Raspe, lixe e trate furos e trincas: Raspe a tinta solta com espátula, lixe a parede de leve e tire o brilho de acabamento acetinado ou semibrilho. Preencha furos e fissuras finas com massa ou selante acrílico e lixe rente depois de seco. Trinca larga ou que volta pede avaliação de um profissional.
 4. Limpe a parede e deixe secar: Tire o pó com escova ou pano, lave gordura com água e detergente neutro e trate o mofo com água sanitária diluída conforme a ficha técnica, enxaguando depois. Só siga com a parede bem seca.
-5. Aplique selador ou fundo, se precisar: Reboco novo e curado leva selador acrílico; reboco que solta pó, caiação e gesso levam fundo preparador. Pintura antiga firme dispensa esta etapa. Respeite a secagem indicada na embalagem.
+5. Aplique selador ou fundo, se precisar: Reboco novo e curado leva selador acrílico; reboco que solta pó, caiação e gesso levam fundo preparador. Pintura antiga firme dispensa esta etapa, a não ser sobre os remendos de massa. Respeite a secagem indicada na embalagem.
 6. Passe massa onde for preciso: Para deixar a parede lisa, aplique massa corrida (área interna e seca) ou massa acrílica (área externa e úmida) em camadas finas com desempenadeira de aço. Depois de seca, lixe com lixa fina e tire todo o pó.
-7. Prepare a tinta e o rolo: Mexa bem a tinta, dilua só com o que a lata indica e na proporção indicada e despeje uma parte na bandeja. Enrole fita crepe no rolo de lã novo e puxe para tirar os pelos soltos.
+7. Prepare a tinta e o rolo: Mexa bem a tinta, dilua só com o produto e na proporção que a lata indica e despeje uma parte na bandeja. Enrole fita crepe no rolo de lã novo e puxe para tirar os pelos soltos.
 8. Faça o recorte com trincha: Comece pelo teto. Com trincha ou pincel, pinte uma faixa de 5 a 10 cm nos cantos, junto ao teto, ao rodapé, aos batentes e em volta das tomadas, uma parede de cada vez.
 9. Passe o rolo e repita as demãos: Logo depois do recorte, passe o rolo em faixas de cerca de 1 m, em W ou N, espalhe e termine de cima para baixo, sem parar no meio da parede. Espere o intervalo da lata e aplique a segunda demão; de escuro para claro, conte três.
 10. Tire a fita, limpe e guarde: Retire a fita crepe depois da última demão, com a tinta ainda fresca, puxando devagar. Lave as ferramentas num balde, nunca no ralo, guarde a sobra bem fechada e deixe o cômodo ventilado.

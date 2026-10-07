@@ -3,7 +3,7 @@
 // calculadora (assets/js/site.js → bestPack): parede = perímetro × pé-direito −
 // portas (1,68 m²) − janelas (1,20 m²); teto = largura × comprimento; litros =
 // área × demãos ÷ rendimento (11 m²/L liso; 8 m²/L reboco) × 1,1; embalagens
-// 18 L / 3,6 L / 0,9 L com custo relativo lata = 3,9 galões e quarto = 0,32 galão.
+// 18 L / 3,6 L / 0,9 L com custo relativo lata = 4 galões e quarto = 0,38 galão (PACKS em assets/js/site.js).
 // Se mudar a calculadora, refaça a tabela da 1ª seção e a FAQ de escuro para claro.
 export default {
   slug: 'como-pintar-parede-passo-a-passo',
@@ -28,28 +28,28 @@ export default {
     {
       h2: 'Antes de começar: material e quantidade de tinta',
       html: `<p>Antes de pintar, separe tudo o que a parede vai pedir (tinta, selador ou fundo, massa, lixa, fita crepe, lona, rolo, trincha e bandeja) e calcule a tinta pela área real. Compre tudo de uma vez, para não parar o serviço no meio nem arriscar um lote com tom diferente.</p>
-<p>A <a href="/calculadora-de-tinta/">calculadora de tinta</a> faz assim: perímetro × pé-direito, menos 1,68 m² por porta e 1,20 m² por janela, × demãos ÷ rendimento por demão (11 m²/L em parede lisa, 8 m²/L em reboco) + 10% de folga.</p>
+<p>A <a href="/calculadora-de-tinta/">calculadora de tinta</a> faz assim: perímetro × pé-direito, menos 1,68 m² por porta (0,80 × 2,10 m) e 1,20 m² por janela (1,20 × 1,00 m), mais o teto (largura × comprimento) se ele entrar na pintura; essa área × demãos ÷ rendimento por demão (11 m²/L em parede lisa ou emassada, 8 m²/L em reboco ou textura) + 10% de folga.</p>
 <table>
 <thead><tr><th>Quarto 3 × 4 m, pé-direito 2,60 m, 1 porta, 1 janela</th><th>Área</th><th>Tinta</th><th>Sugestão da calculadora</th></tr></thead>
 <tbody>
 <tr><td>Paredes lisas, 2 demãos</td><td>33,52 m²</td><td>≈ 6,7 L</td><td>2 galões de 3,6 L</td></tr>
-<tr><td>Paredes e teto lisos, 2 demãos</td><td>45,52 m²</td><td>≈ 9,1 L</td><td>2 galões + 3 quartos, ou 3 galões (10,8 L) com mais sobra</td></tr>
-<tr><td>Paredes em reboco, 2 demãos</td><td>33,52 m²</td><td>≈ 9,2 L</td><td>2 galões + 3 quartos</td></tr>
+<tr><td>Paredes e teto lisos, 2 demãos</td><td>45,52 m²</td><td>≈ 9,1 L</td><td>3 galões (10,8 L)</td></tr>
+<tr><td>Paredes em reboco, 2 demãos</td><td>33,52 m²</td><td>≈ 9,2 L</td><td>3 galões (10,8 L)</td></tr>
 <tr><td>Paredes lisas, de escuro para claro (3 demãos)</td><td>33,52 m²</td><td>≈ 10,1 L</td><td>3 galões</td></tr>
 </tbody>
 </table>
 <p>A conta é conservadora: o rendimento real muda com a marca e a linha e vem impresso na lata (linhas premium costumam render mais). Selador, fundo e massa têm rendimento próprio. O cálculo completo está em <a href="/guias/quantas-latas-de-tinta-preciso/">quantas latas de tinta preciso</a>.</p>`,
     },
     {
-      h2: 'Preparo da parede: proteger, lixar, limpar e tratar trincas',
-      html: `<p>A preparação é o que faz a pintura durar: proteja piso, móveis e rodapés, raspe o que estiver soltando, lixe, limpe pó e gordura, trate mofo e trincas e só pinte com a parede firme, limpa e seca. Tinta sobre parede suja ou esfarelando descasca junto.</p>
+      h2: 'Preparo da parede: proteger, lixar, tratar trincas e limpar',
+      html: `<p>A preparação é o que faz a pintura durar: proteja piso, móveis e rodapés, raspe o que estiver soltando, lixe, trate furos e trincas, limpe pó, gordura e mofo e só pinte com a parede firme, limpa e seca. Tinta sobre parede suja ou esfarelando descasca junto.</p>
 <ul>
 <li><strong>Proteção</strong>: junte os móveis no centro, cubra com lona, forre o piso e passe fita crepe em rodapé e batente. Para tirar espelhos de tomada, desligue antes o disjuntor do circuito; na dúvida, só cubra com fita.</li>
 <li><strong>Lixa</strong>: raspe a tinta solta e lixe a parede de leve (quanto maior o número do grão, mais fina a lixa). Acetinado ou semibrilho deve ser lixado até ficar fosco, para a tinta nova aderir. Use óculos e máscara contra pó.</li>
+<li><strong>Furos e fissuras finas</strong>: abra de leve com a ponta da espátula, tire o pó e preencha com massa ou com selante acrílico próprio para trincas. Depois de seco, lixe rente e tire o pó.</li>
 <li><strong>Limpeza</strong>: tire o pó com escova ou pano; gordura sai com água e detergente neutro. Mofo se limpa com água sanitária diluída na proporção da ficha técnica da tinta, com luvas e janela aberta; enxágue e deixe secar bem. Nunca misture água sanitária com outros produtos de limpeza.</li>
-<li><strong>Furos e fissuras finas</strong>: abra de leve com a ponta da espátula, tire o pó e preencha com massa ou com selante acrílico próprio para trincas. Depois de seco, lixe rente.</li>
 </ul>
-<p><strong>Chame um profissional</strong> se a trinca é larga, corre na diagonal a partir do canto de porta ou janela, aumenta ou volta depois de consertada, ou se o mofo sempre volta e a tinta estufa: pode ser estrutura ou umidade, e tinta não resolve. Um engenheiro ou pedreiro de confiança deve avaliar antes.</p>`,
+<p><strong>Chame um profissional</strong> se a trinca for larga, correr na diagonal a partir do canto de porta ou janela, aumentar ou voltar depois de consertada, ou se o mofo sempre voltar e a tinta estufar: pode ser problema de estrutura ou de umidade, e tinta não resolve. Peça a avaliação de um engenheiro antes de pintar.</p>`,
     },
     {
       h2: 'Selador, fundo preparador ou massa: o que vai antes da tinta',
@@ -61,17 +61,17 @@ export default {
 <tr><td>Reboco fraco, que esfarela ou solta pó na mão</td><td>Escovar e aplicar fundo preparador de paredes</td></tr>
 <tr><td>Caiação ou tinta velha que solta pó branco</td><td>Raspar o que estiver solto, escovar e aplicar fundo preparador</td></tr>
 <tr><td>Gesso</td><td>Fundo preparador que traga indicação para gesso na embalagem</td></tr>
-<tr><td>Pintura antiga firme</td><td>Lixar de leve e tirar o pó; remendo de massa leva antes um pouco de fundo, para não manchar</td></tr>
+<tr><td>Pintura antiga firme</td><td>Lixar de leve e tirar o pó; sobre remendo de massa, já seco e lixado, passar uma demão do fundo ou selador indicado na embalagem antes da tinta, para não manchar</td></tr>
 </tbody>
 </table>
 <p>Em reboco novo, o selador vem antes da massa. Massa corrida PVA é só para parede interna e seca; em área externa ou úmida, use massa acrílica (veja <a href="/guias/massa-corrida-ou-massa-acrilica/">massa corrida ou massa acrílica</a>). Aplique em camadas finas, lixe com lixa fina e tire todo o pó.</p>`,
     },
     {
       h2: 'Como fazer o recorte com trincha e passar o rolo',
-      html: `<p>Pinte primeiro o teto e depois as paredes, sempre de cima para baixo. Em cada parede, faça o recorte com trincha nos cantos, junto ao teto, ao rodapé e aos batentes, e logo em seguida passe o rolo, com a faixa da trincha ainda fresca, para as duas se misturarem sem deixar marca.</p>
+      html: `<p>Para fazer o recorte e passar o rolo, pinte uma parede de cada vez: com a trincha, faça uma faixa de 5 a 10 cm nos cantos, junto ao teto, ao rodapé e aos batentes, e logo em seguida passe o rolo com essa faixa ainda fresca, para as duas se misturarem sem deixar marca. Comece pelo teto e trabalhe sempre de cima para baixo.</p>
 <ul>
 <li><strong>Tinta</strong>: mexa bem e dilua só como a lata indica (às vezes a primeira demão leva mais água).</li>
-<li><strong>Recorte</strong>: faça uma faixa de uns 5 a 10 cm nos encontros e em volta das tomadas, carregando só a ponta das cerdas.</li>
+<li><strong>Recorte</strong>: contorne também as tomadas e carregue só a ponta das cerdas.</li>
 <li><strong>Rolo</strong>: molhe na bandeja e rode na parte rugosa até tirar o excesso. Aplique em faixas de cerca de 1 m de largura, em movimento de W ou N, espalhe sem recarregar e termine com passadas leves de cima para baixo, num só sentido.</li>
 <li><strong>Borda molhada</strong>: emende sempre na tinta fresca e termine a parede de uma vez, sem voltar o rolo onde já começou a secar.</li>
 </ul>
@@ -100,7 +100,7 @@ export default {
       h2: 'Limpeza das ferramentas e descarte da sobra',
       html: `<p>Limpe as ferramentas assim que terminar: com tinta base água, tire o excesso do rolo e da trincha na borda da lata ou em jornal e lave num balde com água e sabão; com esmalte e verniz base solvente, use o diluente indicado na lata. Nunca jogue tinta, água de lavagem ou solvente no ralo, na pia ou na terra.</p>
 <ul>
-<li><strong>Água de lavagem</strong>: deixe descansar até a tinta assentar e descarte o resíduo como orientam o fabricante e a prefeitura.</li>
+<li><strong>Água de lavagem</strong>: deixe descansar no balde até a tinta assentar no fundo; para a água que fica por cima, siga a orientação da embalagem e da prefeitura e nunca a jogue em bueiro, rio ou terra; deixe secar o resíduo do fundo e jogue no lixo.</li>
 <li><strong>Sobra de tinta</strong>: feche bem e guarde em local fresco e longe de crianças, com a cor anotada na tampa.</li>
 <li><strong>Lata vazia</strong>: deixe o restinho secar com a lata aberta, em local ventilado e fora do alcance de crianças e animais, e descarte conforme a coleta da sua cidade.</li>
 <li><strong>Panos e estopas com solvente</strong>: deixe secar abertos, ao ar livre e longe de fogo, antes de jogar fora.</li>
@@ -149,7 +149,7 @@ export default {
       },
       {
         name: 'Aplique selador ou fundo, se precisar',
-        text: 'Reboco novo e curado leva selador acrílico; reboco que solta pó, caiação e gesso levam fundo preparador. Pintura antiga firme dispensa esta etapa. Respeite a secagem indicada na embalagem.',
+        text: 'Reboco novo e curado leva selador acrílico; reboco que solta pó, caiação e gesso levam fundo preparador. Pintura antiga firme dispensa esta etapa, a não ser sobre os remendos de massa. Respeite a secagem indicada na embalagem.',
       },
       {
         name: 'Passe massa onde for preciso',
@@ -157,7 +157,7 @@ export default {
       },
       {
         name: 'Prepare a tinta e o rolo',
-        text: 'Mexa bem a tinta, dilua só com o que a lata indica e na proporção indicada e despeje uma parte na bandeja. Enrole fita crepe no rolo de lã novo e puxe para tirar os pelos soltos.',
+        text: 'Mexa bem a tinta, dilua só com o produto e na proporção que a lata indica e despeje uma parte na bandeja. Enrole fita crepe no rolo de lã novo e puxe para tirar os pelos soltos.',
       },
       {
         name: 'Faça o recorte com trincha',
