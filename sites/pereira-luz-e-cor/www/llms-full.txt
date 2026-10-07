@@ -1587,7 +1587,7 @@ Martelete: um pistão empurra um colchão de ar e dá golpes bem mais fortes; a 
 Lado a lado, a furadeira de impacto é a mais versátil para casa, a parafusadeira a bateria ganha em parafuso, montagem e lugar sem tomada, e o martelete ganha com folga em concreto, laje e demolição leve. Os números são faixas comuns de mercado: confira a caixa e o manual do modelo.
 FerramentaPara que serveMedidas comunsBroca ou encaixeNão é para
 Furadeira de impactoFurar madeira, metal, tijolo e pouco concreto500 a 1.000 W; mandril 3/8" ou 1/2"Vídia, aço rápido, madeira, serra copoMuito furo em laje
-Parafusadeira/furadeira a bateriaParafusar, montar móveis, furar madeira e metal12 V ou 18 V; bateria de 1,5 a 5 AhBits, aço rápido, madeira; vídia se tiver impactoConcreto duro
+Parafusadeira/furadeira a bateriaParafusar, montar móveis, furar madeira e metal12 V ou 18 V; bateria de 1,5 a 5 AhBits, aço rápido, madeira e vídia (sem impacto, só tijolo furado)Concreto duro
 Parafusadeira de impactoParafuso longo e autobrocante12 V ou 18 V; encaixe sextavado 1/4"Bits e brocas sextavadasFurar alvenaria
 Martelete SDS-plusMuitos furos em concreto; com rompedor, quebrar reboco e piso650 a 1.000 W; cerca de 1,5 a 3 J nos modelos levesBroca, talhadeira e ponteiro SDS-plusParafusar
 Martelete SDS-maxFuro grande e demolição pesadaCerca de 1.000 W ou mais; em geral 5 J ou maisBroca e ponteiro SDS-maxServiço doméstico
@@ -1616,40 +1616,40 @@ Na ferramenta a bateria, os volts (V) indicam a força da máquina e os amperes-
 12 V ou 10,8 V; 18 V ou 20 V: em geral é a mesma classe. Uma marca anuncia a tensão máxima da bateria cheia ("máx."), outra a tensão nominal.
 Energia em Wh: multiplique V por Ah. Uma bateria de 18 V e 4 Ah guarda 72 Wh, o dobro de uma de 18 V e 2 Ah.
 Duas baterias: uma trabalha enquanto a outra carrega. E, em geral, a bateria de uma marca não serve na máquina de outra.
-Com o calor forte de Barreiras, principalmente em setembro e outubro, não deixe a bateria de lítio no sol nem no painel do carro. Carregue na sombra, com o carregador original, e espere ela esfriar depois do serviço.
+Com o calor forte de Barreiras, principalmente em setembro e outubro, não deixe a bateria de lítio no sol nem no painel do carro, e espere ela esfriar antes de carregar.
 
 ### Qual broca usar em concreto, tijolo, madeira e metal
 
-A broca certa depende do material: vídia (ponta de metal duro) para concreto, tijolo e reboco; SDS-plus no martelete; aço rápido para ferro e metal; broca com ponta centralizadora para madeira; e broca diamantada ou própria para cerâmica no azulejo e no porcelanato, sempre sem impacto.
+A broca certa depende do material: vídia (ponta de metal duro) para concreto, tijolo e reboco; SDS-plus no martelete; aço rápido para ferro e metal; broca com ponta centralizadora para madeira; e broca para vidro e cerâmica no azulejo e diamantada (ou própria para porcelanato) no porcelanato, sempre sem impacto.
 MaterialBrocaImpactoDica
 Concreto, laje e vigaVídia ou SDS-plusLigadoSe bater em ferro, pare e mude o ponto
 Tijolo maciço e rebocoVídiaLigadoBucha e broca do mesmo número
 Tijolo furado (bloco cerâmico)VídiaDesligadoO impacto estoura o bloco e a bucha fica frouxa
 Madeira e MDFBroca para madeira; chata ou serra copo para furo grandeDesligadoApoie uma tábua atrás para não lascar a saída
 Ferro, metalon e chapaAço rápido (HSS); com cobalto para inoxDesligadoMarque com punção, use rotação baixa e óleo de corte
-Azulejo e porcelanatoDiamantada ou própria para vidro e cerâmicaDesligadoComece devagar; depois da peça, troque pela vídia
+Azulejo e porcelanatoAzulejo: para vidro e cerâmica; porcelanato: diamantadaDesligadoComece devagar e, na diamantada, molhe a ponta se o fabricante pedir; depois da peça, troque pela vídia
 Buchas e parafusos ficam em Fixação, Colas e Lubrificantes.
 
 ### Segurança antes, durante e depois do furo
 
 Para furar com segurança, use óculos de proteção, protetor auricular e, no pó de concreto, máscara PFF2; antes de furar a parede, desvie da linha das tomadas, interruptores, registros e chuveiro, onde costumam passar fio e cano; e tire a máquina da tomada, ou a bateria, antes de trocar a broca.
 Fio e cano escondidos: o eletroduto costuma correr na vertical a partir de tomadas e interruptores, e os canos ligam registro, chuveiro e torneira. Perto dessas linhas, desligue o disjuntor do circuito e, na dúvida, chame um eletricista qualificado.
-Duas mãos na máquina: use a empunhadura lateral. Se a broca travar no concreto ou no ferro, a máquina gira no seu punho, e a embreagem de segurança do martelete não elimina esse risco. Na escada, fique firme.
+Duas mãos na máquina: use a empunhadura lateral. Se a broca travar no concreto ou no ferro, a máquina gira de repente e pode torcer seu punho, e a embreagem de segurança do martelete não elimina esse risco. Na escada, não se estique para os lados.
 Roupa e cabelo: nada de manga larga, pulseira, cabelo solto ou luva folgada perto da broca girando.
 Depois do furo: a broca sai quente. Com a máquina desligada, limpe a ventilação e guarde tudo seco.
 Veja os EPIs em Utilidades e EPI.
 
 ### Dá para furar concreto com parafusadeira a bateria?
 
-Só se ela tiver função de impacto (a chamada parafusadeira e furadeira de impacto), e mesmo assim para poucos furos pequenos, como bucha 6 em tijolo ou reboco. Em concreto de laje e viga, ela esquenta, gasta bateria e a broca quase não avança. Para esse serviço, use furadeira de impacto com broca de vídia ou, se forem muitos furos, martelete com broca SDS-plus. Parafusadeira sem impacto não fura alvenaria.
+Só para poucos furos pequenos, e só se ela tiver função de impacto (a parafusadeira e furadeira de impacto, com mandril), usando broca de vídia: dá para uma bucha 6 ou 8. Em laje e viga, ela esquenta, gasta bateria e a broca quase não avança; para isso, use furadeira de impacto ou, se forem muitos furos, martelete com broca SDS-plus. Não confunda com a parafusadeira de impacto de encaixe sextavado, que não fura concreto. Sem impacto, na alvenaria a parafusadeira só fura tijolo furado, devagar e com vídia.
 
 ### Posso usar broca de vídia comum no martelete?
 
-Pode, mas só com o adaptador SDS-plus com mandril e com o impacto desligado, apenas girando: os fabricantes avisam que a broca de haste lisa e o mandril adaptador se danificam no modo martelo ou rompedor. Para furar concreto com o martelete, use broca SDS-plus, que tem as ranhuras no encaixe. O adaptador serve para madeira, metal e furo fino. Confira no manual do seu modelo.
+Pode, mas só com o adaptador SDS-plus com mandril e com o impacto desligado, apenas girando: os fabricantes avisam que a broca de haste lisa e o mandril adaptador se danificam no modo martelo ou rompedor. Para furar concreto com o martelete, use broca SDS-plus, que tem as ranhuras no encaixe. Com o adaptador, a vídia serve para tijolo furado, e as brocas de madeira e aço rápido para madeira e metal. Confira no manual do seu modelo.
 
 ### Por que a broca não entra no concreto?
 
-Na maioria das vezes é broca errada ou gasta: só vídia e SDS-plus furam concreto, e a ponta de vídia arredondada perde o corte. Confira também se o impacto está ligado, se a rotação não ficou invertida e, no martelete, se você não está empurrando com força demais, o que atrapalha o golpe. Se a broca bater em ferro dentro da laje ou da viga, pare e mude o ponto: não fure ferragem da estrutura sem orientação de um engenheiro.
+Na maioria das vezes é broca errada ou gasta: em furadeira e martelete, só broca de ponta de vídia (a SDS-plus também é) fura concreto, e a ponta arredondada perde o corte. Confira também se o impacto está ligado, se a rotação não ficou invertida e, no martelete, se você não está empurrando com força demais, o que atrapalha o golpe. Se a broca bater em ferro dentro da laje ou da viga, pare e mude o ponto: não fure ferragem da estrutura sem orientação de um engenheiro.
 
 ### Furadeira de impacto serve para misturar tinta e argamassa?
 
