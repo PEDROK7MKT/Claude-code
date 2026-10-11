@@ -1,0 +1,9 @@
+@import url(fonts/fonts.css);
+:root{--navy:#0A0F2C;--navy2:#111a48;--blue:#1E50E6;--lime:#B7E400;--light:#F4F6FF;--red:#FF4A4A;--mute:#9FA8CF}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--navy);color:#fff;font-family:"Plus Jakarta Sans",sans-serif;-webkit-font-smoothing:antialiased}
+.H{font-family:"Space Grotesk",sans-serif;font-weight:700;text-transform:uppercase;letter-spacing:-.025em;line-height:.98}
+.lime{color:var(--lime)}.blue{color:var(--blue)}
+.chip{display:inline-block;font:700 22px "Space Grotesk";letter-spacing:.14em;text-transform:uppercase;padding:10px 18px;border-radius:999px;background:rgba(183,228,0,.12);color:var(--lime);border:2px solid rgba(183,228,0,.45)}
+.grid{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.045) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.045) 1px,transparent 1px);background-size:54px 54px;pointer-events:none}
+.glow{position:absolute;border-radius:50%;filter:blur(80px);pointer-events:none}
