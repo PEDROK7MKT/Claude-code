@@ -1,0 +1,189 @@
+<!doctype html><html lang="pt-BR"><head><meta charset="utf-8">
+<link rel="stylesheet" href="fonts2/fonts2.css">
+<style>
+/* ===== PADRÃO PK7 v2 (ref. "Marketing & Conteúdo") ===== */
+:root{
+  --navy:#0C2257;      /* fundo dos slides de texto */
+  --deep:#06122F;      /* sombra / overlay de foto */
+  --blue:#2D66F6;      /* palavra gigante, tarjas, cubos */
+  --sky:#5CC6FF;       /* ênfase em itálico */
+  --lime:#B7E400;      /* só chamada e ✓ */
+  --ink:#fff;
+}
+@page{size:1080px 1350px;margin:0}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:1080px;background:#000}
+body{font-family:"Plus Jakarta Sans",sans-serif;color:var(--ink);-webkit-font-smoothing:antialiased}
+.s{position:relative;width:1080px;height:1350px;overflow:hidden;background:var(--navy);page-break-after:always;break-after:page}
+/* cabeçalho fixo */
+.hd{position:absolute;left:84px;right:84px;top:78px;display:flex;justify-content:space-between;font-size:28px;font-weight:500;letter-spacing:.01em;opacity:.92;z-index:5}
+/* tipografia */
+em{font-style:italic;font-weight:800}
+.sky{color:var(--sky)}
+.serif{font-family:"Instrument Serif",serif;font-style:italic;font-weight:400;letter-spacing:-.005em}
+.giant{font-weight:800;color:var(--blue);letter-spacing:-.055em;line-height:.86}
+.t1{font-size:112px;font-weight:800;letter-spacing:-.035em;line-height:1}
+.body{font-size:53px;font-weight:500;line-height:1.18;letter-spacing:-.015em}
+.body em{color:var(--sky)}
+/* tarja azul (marca-texto) */
+.hl{font-size:48px;font-weight:500;line-height:1.5;letter-spacing:-.01em}
+.hl span{background:var(--blue);padding:4px 14px;-webkit-box-decoration-break:clone;box-decoration-break:clone}
+.hl em{color:#fff}
+/* pílula de "arraste" */
+.swipe{display:inline-flex;align-items:center;justify-content:center;width:170px;height:62px;border:3px solid #fff;border-radius:999px}
+.swipe i{display:block;width:96px;height:3px;background:linear-gradient(90deg,#fff,var(--blue));position:relative}
+.swipe i:after{content:"";position:absolute;right:-2px;top:-7px;width:14px;height:14px;border-right:3px solid var(--blue);border-top:3px solid var(--blue);transform:rotate(45deg)}
+/* foto de fundo */
+.photo{position:absolute;inset:0;background-size:cover;filter:brightness(.62) saturate(.75) contrast(1.05)}
+.tint{position:absolute;inset:0;background:linear-gradient(180deg,rgba(6,18,47,.55) 0%,rgba(6,18,47,.05) 30%,rgba(6,18,47,.35) 55%,rgba(6,18,47,.94) 78%,var(--deep) 100%)}
+/* cubos 3D */
+.stack{position:absolute;perspective:1600px}
+.cube{position:absolute;transform-style:preserve-3d}
+.cube .f{position:absolute;inset:0;display:grid;place-items:center;backface-visibility:hidden}
+.cube .fr{background:linear-gradient(160deg,#4F86FF 0%,#2D66F6 55%,#2152D8 100%)}
+.cube .rt{background:linear-gradient(160deg,#2A5BE0 0%,#1B43B5 100%)}
+.cube .tp{background:linear-gradient(135deg,#8DB2FF 0%,#5A8BFF 100%)}
+.cube svg{width:58%;height:58%;fill:#fff;stroke:#fff}
+.shadow{position:absolute;border-radius:50%;background:radial-gradient(closest-side,rgba(0,0,0,.55),transparent);filter:blur(6px)}
+.lime-cube .fr{background:linear-gradient(160deg,#CFF54A 0%,#B7E400 60%,#9FC800 100%)}
+.lime-cube .rt{background:linear-gradient(160deg,#9CC400 0%,#7FA200 100%)}
+.lime-cube .tp{background:linear-gradient(135deg,#E3FF8A,#C9F23A)}
+.lime-cube svg{fill:var(--navy);stroke:var(--navy)}
+/* colunas do slide de texto */
+.txt{position:absolute;left:470px;right:70px;top:370px}
+.foot{position:absolute;left:84px;right:84px;bottom:96px}
+.n{display:inline-block;font-size:28px;font-weight:700;letter-spacing:.12em;color:var(--sky);margin-bottom:22px}
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:22px 30px;margin-top:40px}
+.stats b{display:block;font-size:62px;font-weight:800;letter-spacing:-.04em;line-height:1}
+.stats span{display:block;font-size:26px;font-weight:500;opacity:.8;margin-top:6px}
+.cta{display:inline-flex;align-items:center;gap:16px;background:var(--lime);color:var(--deep);font-size:40px;font-weight:800;letter-spacing:-.01em;padding:22px 38px;border-radius:999px}
+</style></head><body>
+
+<!-- ================= 1 · CAPA (foto) ================= -->
+<section class="s" style="background:var(--deep)">
+  <div class="photo" style="background-image:url(pedro-r-gomes-pk7.jpg);background-position:50% 18%"></div>
+  <div class="tint"></div>
+  <div class="hd"><span>Pedro R Gomes | PK7</span><span>Marketing &amp; Vendas com IA</span></div>
+  <div style="position:absolute;left:0;right:0;top:820px;text-align:center">
+    <div style="font-size:54px;font-weight:500;letter-spacing:-.015em">Um aviso <em>honesto</em>:</div>
+    <div class="giant" style="font-size:168px;margin-top:8px">não contrate</div>
+    <div style="font-size:54px;font-weight:500;letter-spacing:-.015em;margin-top:14px">a PK7 <em>se você for</em> <span class="serif" style="font-size:70px">um desses 4</span></div>
+    <div style="margin-top:44px"><span class="swipe"><i></i></span></div>
+  </div>
+</section>
+
+<!-- ================= 2-5 · OS 4 ================= -->
+<section class="s">
+  <div class="hd"><span>Pedro R Gomes | PK7</span><span>Marketing &amp; Vendas com IA</span></div>
+  <div class="stack" id="st2" style="left:70px;top:400px;width:340px;height:520px" data-icon="heart"></div>
+  <div class="txt">
+    <span class="n">01 / 04</span>
+    <div class="t1">Curtida</div>
+    <p class="body" style="margin-top:30px">Você quer <em>aplauso</em>,<br>não cliente.</p>
+    <p class="body" style="margin-top:34px">Post bonito, alcance alto e caixa parado.</p>
+  </div>
+  <div class="foot"><p class="hl"><span>Se o objetivo é <em>curtida</em>, eu não</span><br><span>sou a pessoa certa.</span></p></div>
+</section>
+
+<section class="s">
+  <div class="hd"><span>Pedro R Gomes | PK7</span><span>Marketing &amp; Vendas com IA</span></div>
+  <div class="stack" id="st3" style="left:70px;top:400px;width:340px;height:520px" data-icon="chart"></div>
+  <div class="txt">
+    <span class="n">02 / 04</span>
+    <div class="t1">Relatório<br>bonito</div>
+    <p class="body" style="margin-top:30px">Gráfico colorido todo mês <em>não paga boleto</em>.</p>
+  </div>
+  <div class="foot"><p class="hl"><span>Eu meço do <em>anúncio</em></span><br><span><em>ao contrato assinado</em>.</span></p></div>
+</section>
+
+<section class="s">
+  <div class="hd"><span>Pedro R Gomes | PK7</span><span>Marketing &amp; Vendas com IA</span></div>
+  <div class="stack" id="st4" style="left:70px;top:400px;width:340px;height:520px" data-icon="box"></div>
+  <div class="txt">
+    <span class="n">03 / 04</span>
+    <div class="t1">Pacote<br>pronto</div>
+    <p class="body" style="margin-top:30px">Plano <em>de prateleira</em>, igual pra todo mundo.</p>
+  </div>
+  <div class="foot"><p class="hl"><span>O plano nasce do <em>seu gargalo</em>,</span><br><span>não de uma tabela.</span></p></div>
+</section>
+
+<section class="s">
+  <div class="hd"><span>Pedro R Gomes | PK7</span><span>Marketing &amp; Vendas com IA</span></div>
+  <div class="stack" id="st5" style="left:70px;top:400px;width:340px;height:520px" data-icon="user"></div>
+  <div class="txt">
+    <span class="n">04 / 04</span>
+    <div class="t1">Estagiário</div>
+    <p class="body" style="margin-top:30px">Vendedor brilhante na reunião. <em>Outra pessoa</em> depois.</p>
+  </div>
+  <div class="foot"><p class="hl"><span>Comigo você fala</span><br><span><em>direto com o Pedro</em>.</span></p></div>
+</section>
+
+<!-- ================= 6 · A VIRADA ================= -->
+<section class="s">
+  <div class="hd"><span>Pedro R Gomes | PK7</span><span>Marketing &amp; Vendas com IA</span></div>
+  <div class="stack lime" id="st6" style="left:70px;top:400px;width:340px;height:520px" data-icon="check"></div>
+  <div class="txt" style="top:350px">
+    <div class="t1">Agora…</div>
+    <p class="body" style="margin-top:26px">se você quer<br><em>o contrário</em>, a PK7<br>é <span class="serif" style="font-size:70px">pra você.</span></p>
+    <p class="body" style="margin-top:34px;font-size:42px;line-height:1.45">✓ Foco em <em>faturar</em><br>✓ Time <em>sob medida</em><br>✓ Fala <em>direto com o Pedro</em></p>
+  </div>
+  <div class="foot"><p class="hl"><span>Tráfego, IA e automação medidos</span><br><span>pelo <em>contrato</em>, não pelo clique.</span></p></div>
+</section>
+
+<!-- ================= 7 · PROVA ================= -->
+<section class="s">
+  <div class="hd"><span>Pedro R Gomes | PK7</span><span>Marketing &amp; Vendas com IA</span></div>
+  <div class="shadow" style="left:70px;top:930px;width:340px;height:60px"></div>
+  <img src="placa-appmax-100-mil.jpg" alt="" style="position:absolute;left:96px;top:370px;width:300px;border:12px solid #fff;border-radius:16px;transform:perspective(1200px) rotateY(18deg) rotateZ(-4deg);box-shadow:30px 40px 60px -20px rgba(0,0,0,.6)">
+  <div class="txt">
+    <span class="n">PROVA, NÃO PROMESSA</span>
+    <div class="t1">R$ 100 mil</div>
+    <p class="body" style="margin-top:26px">foi só o <span class="serif" style="font-size:66px">primeiro marco.</span></p>
+    <div class="stats">
+      <div><b>+40</b><span>clientes</span></div>
+      <div><b>3</b><span>continentes</span></div>
+      <div><b>7 anos</b><span>de mídia paga</span></div>
+    </div>
+  </div>
+  <div class="foot"><p class="hl"><span>Hoje: <em>+R$ 500 mil</em> em e-commerce</span><br><span>próprio. Foto real da placa Appmax.</span></p></div>
+</section>
+
+<!-- ================= 8 · CHAMADA (foto) ================= -->
+<section class="s" style="background:var(--deep)">
+  <div class="photo" style="background-image:url(pedro-r-gomes-pk7.jpg);background-position:50% 70%"></div>
+  <div class="tint" style="background:linear-gradient(180deg,rgba(6,18,47,.6) 0%,rgba(6,18,47,.2) 25%,rgba(6,18,47,.6) 50%,rgba(6,18,47,.95) 72%,var(--deep) 100%)"></div>
+  <div class="hd"><span>Pedro R Gomes | PK7</span><span>Marketing &amp; Vendas com IA</span></div>
+  <div style="position:absolute;left:0;right:0;top:760px;text-align:center">
+    <div style="font-size:56px;font-weight:500;letter-spacing:-.015em">Ainda</div>
+    <div class="giant" style="font-size:190px;margin-top:4px">tá aqui?</div>
+    <div style="font-size:52px;font-weight:500;margin-top:18px">Então você <em>não é</em> <span class="serif" style="font-size:68px">nenhum dos 4.</span></div>
+    <div style="margin-top:48px"><span class="cta">Comenta “MÁQUINA”</span></div>
+    <div style="font-size:28px;font-weight:500;opacity:.85;margin-top:26px">e eu te chamo pro diagnóstico gratuito · pk7.com.br</div>
+  </div>
+</section>
+
+<script>
+const ICONS={
+ heart:'<svg viewBox="0 0 24 24"><path stroke="none" d="M12 21s-7.6-4.7-9.6-9.4C1.1 8.4 3.3 4.8 6.9 4.8c2 0 3.4 1.1 5.1 3 1.7-1.9 3.1-3 5.1-3 3.6 0 5.8 3.6 4.5 6.8C19.6 16.3 12 21 12 21z"/></svg>',
+ chart:'<svg viewBox="0 0 24 24"><rect x="3" y="12" width="4" height="9" rx="1" stroke="none"/><rect x="10" y="7" width="4" height="14" rx="1" stroke="none"/><rect x="17" y="3" width="4" height="18" rx="1" stroke="none"/></svg>',
+ box:'<svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linejoin="round"><path d="M3 7.5 12 3l9 4.5v9L12 21l-9-4.5z" style="fill:none"/><path d="M3 7.5 12 12l9-4.5M12 12v9" style="fill:none"/></svg>',
+ user:'<svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4.2" stroke="none"/><path stroke="none" d="M3.5 21c.8-4.6 4.2-7.2 8.5-7.2s7.7 2.6 8.5 7.2z"/></svg>',
+ check:'<svg viewBox="0 0 24 24" fill="none" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 12.5 10 18 19.5 6.5" style="fill:none"/></svg>'
+};
+function cube(x,y,s,rx,ry,icon,lime){
+  const h=s/2;
+  return `<div class="cube ${lime?'lime-cube':''}" style="left:${x}px;top:${y}px;width:${s}px;height:${s}px;transform:rotateX(${rx}deg) rotateY(${ry}deg)">
+   <div class="f fr" style="transform:translateZ(${h}px)">${ICONS[icon]}</div>
+   <div class="f rt" style="transform:rotateY(90deg) translateZ(${h}px)">${ICONS[icon]}</div>
+   <div class="f tp" style="transform:rotateX(90deg) translateZ(${h}px)"></div></div>`;
+}
+document.querySelectorAll('.stack').forEach(st=>{
+  const ic=st.dataset.icon, lime=st.classList.contains('lime');
+  st.innerHTML=
+    '<div class="shadow" style="left:-10px;top:500px;width:360px;height:60px"></div>'+
+    cube(40,330,170,-16,-28,ic,lime)+
+    cube(30,160,160,-16,-12,ic,lime)+
+    cube(60,0,150,-16,-34,ic,lime);
+});
+</script>
+</body></html>
