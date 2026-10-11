@@ -1,45 +1,48 @@
-# Padrão visual PK7: carrosséis (v2)
+# Padrão visual PK7: carrosséis (v3, identidade própria)
 
-**Referência:** os prints do Pinterest no estilo "Marketing & Conteúdo", com foto escura na capa, palavra gigante em azul, itálico serifado, objeto 3D e texto com tarja azul. Esse estilo foi adaptado às cores da PK7.
+## De onde vem
+- **Da referência do Pinterest ficaram só os princípios:**
+  - foto real na capa e no fechamento;
+  - uma frase curta e grande por slide;
+  - uma única ênfase por slide.
+- **O visual vem do que já é da PK7:**
+  - **do site:** navy, grade fina no fundo, verde-limão e a fonte Space Grotesk em maiúsculas;
+  - **dos Reels:** carimbo vermelho "NÃO" e ✕, cartões de cena com a etiqueta "exemplo", e ✓ verde-limão na virada.
 
-O modelo editável é `fonte/carrossel_v2.html`. Cada carrossel novo é uma cópia desse arquivo com os textos trocados.
+**Ficou de fora de propósito, para não parecer cópia:** cubos 3D, tarja azul atrás do texto, itálico serifado, cabeçalho "nome | categoria" e pílula de arraste.
+
+O modelo editável é `fonte/carrossel_v3.html`. Cada carrossel novo é uma cópia desse arquivo com os textos e as cenas trocados.
 
 ## Formato
 - **Tamanho:** 1080 × 1350 px (4:5). Exporta em PNG por slide e em PDF para o LinkedIn.
-- **Margens:** 84 px nas laterais. O cabeçalho fica a 78 px do topo e a tarja de rodapé a 96 px da base.
-- **Cabeçalho, igual em todos os slides:** "Pedro R Gomes | PK7" à esquerda e "Marketing & Vendas com IA" à direita, em 28 px, peso 500, branco.
+- **Margem lateral:** 80 px.
+- **Topo (assinatura):** selo **PK7** verde-limão e "PEDRO R GOMES" em maiúsculas espaçadas.
+- **Base (assinatura):** **barra de progresso** com um segmento por slide, preenchida em verde-limão até o slide atual. Na capa vem o texto "ARRASTE →".
 
 ## Cores
 | Nome | Hex | Uso |
 |---|---|---|
-| Navy | `#0C2257` | fundo dos slides de texto |
-| Deep | `#06122F` | sombra e escurecimento das fotos |
-| Azul | `#2D66F6` | palavra gigante, tarjas e cubos |
-| Céu | `#5CC6FF` | ênfase em itálico negrito no texto corrido |
-| Lime | `#B7E400` | **só** no botão de chamada e nos ✓ da virada |
-| Branco | `#FFFFFF` | texto |
+| Navy | `#0A0F2C` | fundo, com grade de 60 px e brilho azul no canto superior direito |
+| Navy 2 | `#121A46` | caixas de lista e de números |
+| Verde-limão | `#B7E400` | selo PK7, palavra positiva, números, marca-texto, ✓, botão, barra |
+| Vermelho | `#FF4A4A` | palavra negativa, carimbo e ✕ (só nos "erros") |
+| Azul | `#1E50E6` | detalhes dentro dos cartões |
+| Papel | `#F4F6FF` | cartões de cena |
 
 ## Tipografia
-- **Plus Jakarta Sans:**
-  - palavra gigante: 800, letras bem juntas (−5,5%), em minúsculas;
-  - título: 112 px, 800;
-  - texto: 53 px, 500;
-  - ênfase: *itálico 800* na cor céu.
-- **Instrument Serif Italic:** o "toque elegante". É **uma** expressão curta por slide, como "um desses 4", "pra você." ou "primeiro marco.".
-- **Regra:** no máximo 3 estilos por slide (normal, ênfase e serifa). Nunca use a serifa em frase longa.
+- **Space Grotesk 700, MAIÚSCULAS:** títulos (118 a 150 px), números e rótulos (26 px, espaçados).
+- **Plus Jakarta Sans:** texto corrido (46 px, 500) com negrito 800 branco.
+- **Ênfase:** marca-texto verde-limão por baixo de 2 a 5 palavras. **Uma por slide.**
 
 ## Tipos de slide
-1. **Capa (foto):** foto real escurecida, com degradê para o escuro embaixo. O título fica no centro-baixo: linha pequena, palavra gigante azul e linha com serifa. Termina com a pílula "arraste" (contorno branco com seta).
-2. **Texto + objeto:** o objeto 3D fica à esquerda (pilha de 3 cubos azuis com ícone branco). À direita vão o número, o título, o texto e a ênfase. A tarja azul de rodapé leva a frase de efeito.
-3. **Virada:** igual ao 2, com cubos **lime** e ✓ no lugar dos ícones.
-4. **Prova:** uma foto real inclinada no lugar dos cubos (placa, print, painel), mais número grande e mini-estatísticas.
-5. **Chamada (foto):** igual à capa, com uma pergunta na palavra gigante e o botão lime "Comenta 'PALAVRA'".
-
-## Ícones dos cubos já prontos
-`heart` (curtida), `chart` (relatório/números), `box` (pacote/produto), `user` (pessoa/atendimento), `check` (virada).
+1. **Capa (foto):** foto real escurecida, rótulo "⚠", carimbo vermelho e título com a palavra-chave em verde-limão.
+2. **Erro:** cartão de cena no alto (post, relatório, chat, esteira), com ✕ ou carimbo vermelho e a etiqueta "exemplo" ou "cena ilustrativa". Embaixo vêm o número ("01 de 04"), o título com a palavra vermelha e uma linha com marca-texto.
+3. **Virada:** título com a palavra em verde-limão e 3 caixas com ✓.
+4. **Prova:** foto real inclinada (placa, print), número grande e grade de 4 números.
+5. **Chamada (foto):** pergunta grande, marca-texto e botão verde-limão "Comenta 'PALAVRA'".
 
 ## Regras de conteúdo
-- No máximo **25 palavras por slide**, sem contar o cabeçalho.
-- **Números** só os confirmados: +40 clientes, 3 continentes, 7 anos de mídia paga, +R$ 500 mil em e-commerce próprio e a placa Appmax de R$ 100 mil.
-- **Fotos:** sempre reais (suas, da placa, prints com dados borrados). Nada de foto de banco de imagem fingindo ser cliente.
-- **Clientes:** nunca aparece nome de cliente sem autorização.
+- No máximo **25 palavras por slide**.
+- Números só os confirmados: +40 clientes, 3 continentes, 7 anos de mídia paga, +R$ 500 mil em e-commerce próprio e a placa Appmax de R$ 100 mil.
+- Toda cena inventada leva a etiqueta "exemplo" ou "cena ilustrativa". Toda foto real leva "foto real".
+- Nunca aparece nome de cliente sem autorização.

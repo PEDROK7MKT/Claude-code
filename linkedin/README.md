@@ -9,9 +9,10 @@
 | `PERFIL_PRONTO.md` | Os textos do perfil, campo por campo: nome, título, sobre, experiência, competências, destaques, serviços e versão em inglês |
 | `PROMPT_CLAUDE_CHROME_LINKEDIN.md` | Prompt para o Claude for Chrome aplicar o perfil enquanto você supervisiona. Ele gera `EXECUCAO_LINKEDIN_PK7.md` |
 | `banner_linkedin_1584x396.png` | A imagem de capa, no tamanho oficial |
-| `carrossel_v2_nao_contrate_a_pk7.pdf` + `carrossel_v2_png/` | **Carrossel no padrão novo (v2)**, 8 páginas (post 2): o PDF é para anexar como documento, os PNGs são para conferir |
+| `carrossel_v3_nao_contrate_a_pk7.pdf` + `carrossel_v3_png/` | **Carrossel oficial (v3, identidade própria)**, 8 páginas (post 2): o PDF é para anexar como documento, os PNGs são para conferir |
+| `carrossel_v2_…` | Versão 2 (muito parecida com a referência do Pinterest), não usar |
 | `PADRAO_VISUAL.md` | O padrão visual dos carrosséis: cores, fontes, tipos de slide e regras |
-| `carrossel_nao_contrate_a_pk7.pdf` + `carrossel_png/` | Versão 1 (antiga), guardada para comparar |
+| `carrossel_nao_contrate_a_pk7.pdf` + `carrossel_png/` | Versão 1 (antiga), não usar |
 | `POSTS_4_SEMANAS.md` | 12 posts prontos (3 por semana), rotina diária de 20 min, modelos de convite e de resposta |
 | `fonte/` | O HTML do banner e do carrossel, a foto e a placa, para editar depois |
 

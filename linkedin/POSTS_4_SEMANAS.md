@@ -49,7 +49,7 @@ Me segue se você vende pelo WhatsApp ou por call.
 **Imagem:** a sua foto do site (a do notebook).
 
 ### Post 2 (quarta): carrossel
-**Anexe** `carrossel_v2_nao_contrate_a_pk7.pdf` como **documento**, com o título "Não contrate a PK7 (se você for um desses 4)".
+**Anexe** `carrossel_v3_nao_contrate_a_pk7.pdf` como **documento**, com o título "Não contrate a PK7 (se você for um desses 4)".
 ```
 Um conselho honesto: não me contrate.
 

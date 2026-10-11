@@ -1,0 +1,177 @@
+<!doctype html><html lang="pt-BR"><head><meta charset="utf-8">
+<link rel="stylesheet" href="fonts/fonts.css">
+<link rel="stylesheet" href="fonts2/fonts2.css">
+<style>
+/* ===== PADRÃO PK7 v3: identidade própria (site + Reels) ===== */
+:root{--navy:#0A0F2C;--navy2:#121a46;--blue:#1E50E6;--sky:#7FA6FF;--lime:#B7E400;--red:#FF4A4A;--paper:#F4F6FF;--mute:#9FA8CF}
+@page{size:1080px 1350px;margin:0}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:1080px;background:#000}
+body{font-family:"Plus Jakarta Sans",sans-serif;color:#fff;-webkit-font-smoothing:antialiased}
+.s{position:relative;width:1080px;height:1350px;overflow:hidden;background:radial-gradient(120% 70% at 100% 0%,#17246a 0%,var(--navy) 58%);page-break-after:always;break-after:page}
+.grid{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.045) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.045) 1px,transparent 1px);background-size:60px 60px}
+.G{font-family:"Space Grotesk",sans-serif;font-weight:700;text-transform:uppercase;letter-spacing:-.03em;line-height:.95}
+/* marca PK7 no topo */
+.hd{position:absolute;left:80px;right:80px;top:72px;display:flex;align-items:center;gap:16px;z-index:5}
+.hd .mk{font:700 26px "Space Grotesk";background:var(--lime);color:var(--navy);padding:6px 12px;border-radius:8px;letter-spacing:.02em}
+.hd .nm{font:700 24px "Space Grotesk";letter-spacing:.14em;text-transform:uppercase;opacity:.9}
+/* barra de progresso (assinatura) */
+.prog{position:absolute;left:80px;right:80px;bottom:70px;display:flex;gap:10px;z-index:5}
+.prog i{flex:1;height:8px;border-radius:4px;background:rgba(255,255,255,.18)}
+.prog i.on{background:var(--lime)}
+.swipe{position:absolute;right:80px;bottom:100px;font:700 24px "Space Grotesk";letter-spacing:.14em;color:var(--lime);text-transform:uppercase;z-index:5}
+/* textos */
+.k{font:700 26px "Space Grotesk";letter-spacing:.16em;text-transform:uppercase;color:var(--lime)}
+.ttl{font-size:118px;margin-top:18px}
+.p{font-size:46px;font-weight:500;line-height:1.25;color:#dfe4fa;letter-spacing:-.01em}
+.p b{color:#fff;font-weight:800}
+/* marca-texto lime (sublinhado grosso), em vez de tarja */
+.mt{background:linear-gradient(transparent 62%,rgba(183,228,0,.55) 62%,rgba(183,228,0,.55) 92%,transparent 92%);padding:0 4px;color:#fff;font-weight:800}
+/* carimbo dos Reels */
+.stamp{display:inline-block;border:9px solid var(--red);color:var(--red);padding:2px 24px 0;border-radius:16px;transform:rotate(-6deg)}
+.xbadge{position:absolute;width:118px;height:118px;border-radius:30px;background:var(--red);display:grid;place-items:center;font:700 80px "Space Grotesk";color:#fff;box-shadow:0 18px 40px -12px rgba(255,74,74,.7);transform:rotate(8deg)}
+.tag{position:absolute;font:700 20px "Space Grotesk";letter-spacing:.14em;text-transform:uppercase;color:var(--mute);background:rgba(255,255,255,.07);border:2px solid rgba(255,255,255,.12);padding:6px 12px;border-radius:10px}
+/* cartões de cena (mesma linguagem do Reels 4) */
+.card{position:absolute;background:var(--paper);color:var(--navy);border-radius:30px;box-shadow:0 40px 80px -30px rgba(0,0,0,.75)}
+.card .lbl{font:700 22px "Space Grotesk";letter-spacing:.12em;text-transform:uppercase;color:#6b7194}
+.photo{position:absolute;inset:0;background-size:cover;filter:brightness(.6) saturate(.8)}
+.fade{position:absolute;inset:0;background:linear-gradient(180deg,rgba(10,15,44,.55) 0%,rgba(10,15,44,0) 26%,rgba(10,15,44,.25) 45%,rgba(10,15,44,.93) 68%,var(--navy) 100%)}
+.btn{display:inline-block;background:var(--lime);color:var(--navy);font:700 40px "Space Grotesk";text-transform:uppercase;padding:24px 38px;border-radius:999px;letter-spacing:.01em}
+</style></head><body>
+
+<!-- 1 · CAPA -->
+<section class="s">
+  <div class="photo" style="background-image:url(pedro-r-gomes-pk7.jpg);background-position:50% 15%"></div>
+  <div class="fade"></div>
+  <div class="hd"><span class="mk">PK7</span><span class="nm">Pedro R Gomes</span></div>
+  <div style="position:absolute;left:80px;right:80px;top:600px">
+    <div class="k">⚠ Aviso honesto</div>
+    <div class="G" style="font-size:150px;margin-top:22px"><span class="stamp">Não</span></div>
+    <div class="G" style="font-size:140px;margin-top:10px">contrate<br><span style="color:var(--lime)">a PK7</span></div>
+    <p class="p" style="margin-top:26px;font-size:48px">…se você for <span class="mt">um desses 4</span>.</p>
+  </div>
+  <div class="swipe">arraste →</div>
+  <div class="prog"><i class="on"></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+</section>
+
+<!-- 2 · CURTIDA -->
+<section class="s"><div class="grid"></div>
+  <div class="hd"><span class="mk">PK7</span><span class="nm">Pedro R Gomes</span></div>
+  <div class="card" style="left:120px;top:190px;width:560px;height:430px;transform:rotate(-4deg);padding:34px">
+    <div class="lbl">Post de hoje</div>
+    <div class="G" style="font-size:64px;margin-top:16px;color:var(--blue)">Promo de hoje!</div>
+    <div style="display:flex;gap:30px;margin-top:40px;font:700 40px 'Space Grotesk'"><span>❤ 2.341</span><span>💬 187</span></div>
+    <div style="margin-top:34px;padding:18px 22px;border-radius:18px;background:#ffe3e3;color:#c22;font:700 34px 'Space Grotesk'">Vendas hoje: R$ 0</div>
+  </div>
+  <div class="xbadge" style="left:620px;top:140px">✕</div>
+  <div class="tag" style="left:120px;top:660px">exemplo</div>
+  <div style="position:absolute;left:80px;right:80px;top:770px">
+    <div class="k">01 de 04</div>
+    <div class="G ttl">Você quer <span style="color:var(--red)">curtida</span></div>
+    <p class="p" style="margin-top:26px">Alcance alto e caixa parado. Se o objetivo é aplauso, <span class="mt">eu não sou a pessoa certa</span>.</p>
+  </div>
+  <div class="prog"><i class="on"></i><i class="on"></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+</section>
+
+<!-- 3 · RELATÓRIO -->
+<section class="s"><div class="grid"></div>
+  <div class="hd"><span class="mk">PK7</span><span class="nm">Pedro R Gomes</span></div>
+  <div class="card" style="left:110px;top:190px;width:580px;height:430px;transform:rotate(3deg);padding:34px">
+    <div class="lbl">Relatório mensal ✨</div>
+    <svg viewBox="0 0 500 200" style="width:100%;height:200px;margin-top:20px"><g fill="#1E50E6"><rect x="10" y="120" width="70" height="80" rx="10"/><rect x="110" y="80" width="70" height="120" rx="10"/><rect x="210" y="95" width="70" height="105" rx="10"/><rect x="310" y="40" width="70" height="160" rx="10"/><rect x="410" y="10" width="70" height="190" rx="10" fill="#B7E400"/></g></svg>
+    <div class="G" style="font-size:52px;margin-top:20px;color:var(--blue)">Lindo!</div>
+  </div>
+  <div style="position:absolute;left:600px;top:470px;width:300px;padding:28px;background:#FFE76A;color:#3a3300;font:700 38px 'Space Grotesk';transform:rotate(-7deg);box-shadow:0 24px 40px -18px rgba(0,0,0,.6)">…e as vendas?</div>
+  <div class="tag" style="left:110px;top:660px">exemplo</div>
+  <div style="position:absolute;left:80px;right:80px;top:770px">
+    <div class="k">02 de 04</div>
+    <div class="G ttl">Quer <span style="color:var(--red)">relatório bonito</span></div>
+    <p class="p" style="margin-top:26px">Gráfico colorido não paga boleto. Eu meço <span class="mt">do anúncio ao contrato assinado</span>.</p>
+  </div>
+  <div class="prog"><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i><i></i><i></i><i></i></div>
+</section>
+
+<!-- 4 · PACOTE -->
+<section class="s"><div class="grid"></div>
+  <div class="hd"><span class="mk">PK7</span><span class="nm">Pedro R Gomes</span></div>
+  <div style="position:absolute;left:80px;top:250px;width:920px;height:360px">
+    <div style="position:absolute;left:0;right:0;top:300px;height:26px;border-radius:13px;background:repeating-linear-gradient(90deg,#2a356e 0 40px,#1d2656 40px 80px)"></div>
+    <div class="card" style="left:20px;top:110px;width:230px;height:190px;border-radius:22px;display:grid;place-items:center"><span class="G" style="font-size:34px;color:#6b7194">Pacote</span></div>
+    <div class="card" style="left:345px;top:110px;width:230px;height:190px;border-radius:22px;display:grid;place-items:center"><span class="G" style="font-size:34px;color:#6b7194">Pacote</span></div>
+    <div class="card" style="left:670px;top:110px;width:230px;height:190px;border-radius:22px;display:grid;place-items:center"><span class="G" style="font-size:34px;color:#6b7194">Pacote</span></div>
+    <div class="G stamp" style="position:absolute;left:330px;top:0;font-size:84px;background:rgba(10,15,44,.85)">Padrão</div>
+  </div>
+  <div class="tag" style="left:80px;top:660px">cena ilustrativa</div>
+  <div style="position:absolute;left:80px;right:80px;top:770px">
+    <div class="k">03 de 04</div>
+    <div class="G ttl">Quer <span style="color:var(--red)">pacote pronto</span></div>
+    <p class="p" style="margin-top:26px">Igual pra todo mundo. Aqui o plano nasce <span class="mt">do seu gargalo</span>, não de uma tabela.</p>
+  </div>
+  <div class="prog"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i><i></i><i></i></div>
+</section>
+
+<!-- 5 · ESTAGIÁRIO -->
+<section class="s"><div class="grid"></div>
+  <div class="hd"><span class="mk">PK7</span><span class="nm">Pedro R Gomes</span></div>
+  <div class="card" style="left:150px;top:170px;width:620px;height:470px;padding:30px;background:#ECE5DD">
+    <div style="display:flex;align-items:center;gap:16px;padding-bottom:18px;border-bottom:2px solid rgba(0,0,0,.08)"><div style="width:60px;height:60px;border-radius:50%;background:#25D366"></div><div><div style="font:700 30px 'Plus Jakarta Sans'">Atendimento</div><div style="font-size:22px;color:#667">online</div></div></div>
+    <div style="margin-top:26px;background:#fff;border-radius:18px;padding:18px 22px;width:78%;font-size:30px">Vou te passar pro nosso time, tá? 😊</div>
+    <div style="margin-top:20px;background:#fff;border-radius:18px;padding:18px 22px;width:88%;font-size:30px;color:#888;font-style:italic">Transferindo seu atendimento…</div>
+    <div style="margin-top:20px;background:#fff;border-radius:18px;padding:18px 22px;width:72%;font-size:30px;white-space:nowrap">Oi! Sou o estagiário 👋</div>
+  </div>
+  <div class="tag" style="left:150px;top:665px">cena ilustrativa</div>
+  <div style="position:absolute;left:80px;right:80px;top:745px">
+    <div class="k">04 de 04</div>
+    <div class="G ttl">Aceita o <span style="color:var(--red)">estagiário</span></div>
+    <p class="p" style="margin-top:26px">Vendedor brilhante na reunião, outra pessoa depois. Comigo você fala <span class="mt">direto com o Pedro</span>.</p>
+  </div>
+  <div class="prog"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i><i></i></div>
+</section>
+
+<!-- 6 · VIRADA -->
+<section class="s"><div class="grid"></div>
+  <div class="hd"><span class="mk">PK7</span><span class="nm">Pedro R Gomes</span></div>
+  <div style="position:absolute;left:80px;right:80px;top:200px">
+    <div class="k">Agora, se você quer o contrário</div>
+    <div class="G" style="font-size:130px;margin-top:20px">A PK7 é<br><span style="color:var(--lime)">pra você.</span></div>
+  </div>
+  <div style="position:absolute;left:80px;right:80px;top:600px;display:grid;gap:22px">
+    <div style="display:flex;gap:26px;align-items:center;background:var(--navy2);border:2px solid rgba(183,228,0,.35);border-radius:24px;padding:26px 30px"><span style="flex:none;width:70px;height:70px;border-radius:18px;background:var(--lime);color:var(--navy);display:grid;place-items:center;font:700 44px 'Space Grotesk'">✓</span><div><div class="G" style="font-size:48px">Quer faturar</div><div style="font-size:28px;color:var(--mute);margin-top:6px">Tráfego, IA e automação medidos pelo contrato</div></div></div>
+    <div style="display:flex;gap:26px;align-items:center;background:var(--navy2);border:2px solid rgba(183,228,0,.35);border-radius:24px;padding:26px 30px"><span style="flex:none;width:70px;height:70px;border-radius:18px;background:var(--lime);color:var(--navy);display:grid;place-items:center;font:700 44px 'Space Grotesk'">✓</span><div><div class="G" style="font-size:48px">Quer time sob medida</div><div style="font-size:28px;color:var(--mute);margin-top:6px">Especialistas montados para o seu problema</div></div></div>
+    <div style="display:flex;gap:26px;align-items:center;background:var(--navy2);border:2px solid rgba(183,228,0,.35);border-radius:24px;padding:26px 30px"><span style="flex:none;width:70px;height:70px;border-radius:18px;background:var(--lime);color:var(--navy);display:grid;place-items:center;font:700 44px 'Space Grotesk'">✓</span><div><div class="G" style="font-size:48px">Quer falar com o Pedro</div><div style="font-size:28px;color:var(--mute);margin-top:6px">Antes e depois de fechar</div></div></div>
+  </div>
+  <div class="prog"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i></div>
+</section>
+
+<!-- 7 · PROVA -->
+<section class="s"><div class="grid"></div>
+  <div class="hd"><span class="mk">PK7</span><span class="nm">Pedro R Gomes</span></div>
+  <img src="placa-appmax-100-mil.jpg" alt="" style="position:absolute;right:90px;top:170px;width:330px;border:12px solid #fff;border-radius:16px;transform:rotate(5deg);box-shadow:0 40px 70px -24px rgba(0,0,0,.75)">
+  <div class="tag" style="right:110px;top:690px">foto real</div>
+  <div style="position:absolute;left:80px;width:560px;top:230px">
+    <div class="k">Prova, não promessa</div>
+    <div class="G" style="font-size:104px;margin-top:20px;white-space:nowrap">R$ 100 mil</div>
+    <p class="p" style="margin-top:22px">foi só o <span class="mt">primeiro marco</span> do e-commerce próprio.</p>
+  </div>
+  <div style="position:absolute;left:80px;right:80px;top:820px;display:grid;grid-template-columns:repeat(2,1fr);gap:22px">
+    <div style="background:var(--navy2);border-radius:24px;padding:26px 30px"><div class="G" style="font-size:66px;color:var(--lime)">+R$ 500 mil</div><div style="font-size:28px;color:var(--mute);margin-top:8px">em e-commerce próprio</div></div>
+    <div style="background:var(--navy2);border-radius:24px;padding:26px 30px"><div class="G" style="font-size:66px;color:var(--lime)">+40</div><div style="font-size:28px;color:var(--mute);margin-top:8px">clientes atendidos</div></div>
+    <div style="background:var(--navy2);border-radius:24px;padding:26px 30px"><div class="G" style="font-size:66px;color:var(--lime)">3</div><div style="font-size:28px;color:var(--mute);margin-top:8px">continentes</div></div>
+    <div style="background:var(--navy2);border-radius:24px;padding:26px 30px"><div class="G" style="font-size:66px;color:var(--lime)">7 anos</div><div style="font-size:28px;color:var(--mute);margin-top:8px">de mídia paga</div></div>
+  </div>
+  <div class="prog"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i></div>
+</section>
+
+<!-- 8 · CHAMADA -->
+<section class="s">
+  <div class="photo" style="background-image:url(pedro-r-gomes-pk7.jpg);background-position:50% 55%"></div>
+  <div class="fade" style="background:linear-gradient(180deg,rgba(10,15,44,.6) 0%,rgba(10,15,44,.15) 22%,rgba(10,15,44,.55) 42%,rgba(10,15,44,.95) 62%,var(--navy) 100%)"></div>
+  <div class="hd"><span class="mk">PK7</span><span class="nm">Pedro R Gomes</span></div>
+  <div style="position:absolute;left:80px;right:80px;top:700px">
+    <div class="G" style="font-size:150px">Ainda<br><span style="color:var(--lime)">tá aqui?</span></div>
+    <p class="p" style="margin-top:24px;font-size:48px">Então você <span class="mt">não é nenhum dos 4</span>.</p>
+    <div style="margin-top:40px;display:flex;align-items:center;gap:26px;flex-wrap:wrap"><span class="btn">Comenta “Máquina”</span><span style="font-size:28px;color:#dfe4fa;max-width:330px;line-height:1.3">e eu te chamo pro diagnóstico gratuito</span></div>
+  </div>
+  <div class="prog"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></div>
+</section>
+</body></html>
