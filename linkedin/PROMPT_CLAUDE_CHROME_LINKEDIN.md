@@ -28,7 +28,7 @@ PASSO 1: INTRODUÇÃO (ícone de lápis no topo do perfil)
 Salve.
 
 PASSO 2: FOTO E BANNER
-1. Abra a edição da imagem de capa (banner) e me peça para escolher o arquivo banner_linkedin_1584x396.png. Espere.
+1. Abra a edição da imagem de capa (banner) e me peça para escolher o arquivo banner_linkedin_v2_1584x396.png. Espere.
 2. Pergunte se eu quero trocar a foto de perfil pela do site. Se eu disser sim, abra a edição e me peça o arquivo.
 
 PASSO 3: SOBRE

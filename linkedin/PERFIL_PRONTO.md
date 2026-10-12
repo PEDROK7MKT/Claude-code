@@ -23,7 +23,7 @@ Itens com **[CONFIRME]** são dados que eu não tenho (datas e cargos). Preencha
 | Link personalizado no topo do perfil | URL `https://www.pk7.com.br/` · texto `pk7.com.br · Diagnóstico gratuito` |
 
 - **Foto de perfil:** a mesma do site e do Google (`fonte/pedro-r-gomes-pk7.jpg`), recortada no rosto. Assim o Google, o site e o LinkedIn mostram a mesma pessoa.
-- **Banner:** `banner_linkedin_1584x396.png` (já no tamanho certo).
+- **Banner:** `banner_linkedin_v2_1584x396.png` (já no tamanho certo).
 
 ## 2. Sobre (até 2.600 caracteres)
 

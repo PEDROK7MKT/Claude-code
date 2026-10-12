@@ -8,7 +8,8 @@
 |---|---|
 | `PERFIL_PRONTO.md` | Os textos do perfil, campo por campo: nome, título, sobre, experiência, competências, destaques, serviços e versão em inglês |
 | `PROMPT_CLAUDE_CHROME_LINKEDIN.md` | Prompt para o Claude for Chrome aplicar o perfil enquanto você supervisiona. Ele gera `EXECUCAO_LINKEDIN_PK7.md` |
-| `banner_linkedin_1584x396.png` | A imagem de capa, no tamanho oficial |
+| `banner_linkedin_v2_1584x396.png` | **Banner oficial (v2)**: a máquina de vendas em 4 etapas. `preview_perfil_banner_v2.png` mostra como fica no perfil |
+| `banner_linkedin_1584x396.png` | Banner v1 (antigo) |
 | `carrossel_v3_nao_contrate_a_pk7.pdf` + `carrossel_v3_png/` | **Carrossel oficial (v3, identidade própria)**, 8 páginas (post 2): o PDF é para anexar como documento, os PNGs são para conferir |
 | `carrossel_v2_…` | Versão 2 (muito parecida com a referência do Pinterest), não usar |
 | `PADRAO_VISUAL.md` | O padrão visual dos carrosséis: cores, fontes, tipos de slide e regras |

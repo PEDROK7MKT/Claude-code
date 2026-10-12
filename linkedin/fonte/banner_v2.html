@@ -1,0 +1,74 @@
+<!doctype html><html lang="pt-BR"><head><meta charset="utf-8">
+<link rel="stylesheet" href="fonts/fonts.css"><link rel="stylesheet" href="fonts2/fonts2.css">
+<style>
+:root{--navy:#0A0F2C;--navy2:#121a46;--blue:#1E50E6;--lime:#B7E400;--paper:#F4F6FF;--mute:#9FA8CF;--wa:#25D366}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:1584px;height:396px;overflow:hidden}
+body{font-family:"Plus Jakarta Sans",sans-serif;color:#fff;-webkit-font-smoothing:antialiased}
+.st{position:relative;width:1584px;height:396px;overflow:hidden;background:radial-gradient(70% 140% at 78% 40%,#1a2a7a 0%,#0f1747 40%,var(--navy) 75%)}
+.grid{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.05) 1px,transparent 1px);background-size:44px 44px;-webkit-mask-image:linear-gradient(90deg,transparent 0,#000 30%,#000 100%);mask-image:linear-gradient(90deg,transparent 0,#000 30%,#000 100%)}
+.glow{position:absolute;border-radius:50%;filter:blur(70px)}
+.G{font-family:"Space Grotesk",sans-serif;font-weight:700;text-transform:uppercase;letter-spacing:-.03em;line-height:.95}
+/* bloco de texto */
+.txt{position:absolute;left:440px;top:66px;width:580px}
+.k{display:flex;align-items:center;gap:12px;font:700 17px "Space Grotesk";letter-spacing:.16em;text-transform:uppercase;color:#dfe4fa}
+.k .mk{background:var(--lime);color:var(--navy);padding:4px 9px;border-radius:6px;letter-spacing:.02em;font-size:18px}
+h1{font-size:54px;margin-top:22px;white-space:nowrap}
+h1 .l{color:var(--lime)}
+.sub{margin-top:20px;font-size:20px;font-weight:600;color:#c9d0f0;letter-spacing:-.005em}
+.sub b{color:#fff}
+.stats{display:flex;gap:26px;margin-top:22px;font-size:17px;color:var(--mute);font-weight:500}
+.stats b{font:700 26px "Space Grotesk";color:#fff;letter-spacing:-.02em;margin-right:6px}
+/* máquina (cards) */
+.card{position:absolute;background:var(--paper);color:var(--navy);border-radius:18px;box-shadow:0 22px 40px -18px rgba(0,0,0,.8);padding:14px 16px;font-size:16px}
+.card .lb{font:700 12px "Space Grotesk";letter-spacing:.14em;text-transform:uppercase;color:#6b7194;display:flex;align-items:center;gap:8px}
+.card .n{font:700 13px "Space Grotesk";width:22px;height:22px;border-radius:6px;background:var(--navy);color:var(--lime);display:grid;place-items:center;letter-spacing:0}
+.dot{display:inline-block;width:9px;height:9px;border-radius:50%;background:var(--wa)}
+svg.flow{position:absolute;left:0;top:0;width:1584px;height:396px;overflow:visible}
+.url{position:absolute;right:46px;bottom:26px;font:700 20px "Space Grotesk";letter-spacing:.08em;color:var(--lime)}
+</style></head><body><div class="st">
+<div class="glow" style="width:520px;height:300px;left:1040px;top:40px;background:rgba(30,80,230,.55)"></div>
+<div class="glow" style="width:260px;height:180px;left:1360px;top:250px;background:rgba(183,228,0,.22)"></div>
+<div class="grid"></div>
+
+<!-- linha que liga as etapas -->
+<svg class="flow" viewBox="0 0 1584 396">
+  <defs><marker id="ar" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#B7E400"/></marker></defs>
+  <path d="M1170 104 C1210 104 1220 104 1262 104" fill="none" stroke="#B7E400" stroke-width="3" stroke-dasharray="7 7" marker-end="url(#ar)"/>
+  <path d="M1400 150 C1430 190 1430 200 1400 236" fill="none" stroke="#B7E400" stroke-width="3" stroke-dasharray="7 7" marker-end="url(#ar)"/>
+  <path d="M1262 288 C1222 288 1212 288 1176 288" fill="none" stroke="#B7E400" stroke-width="3" stroke-dasharray="7 7" marker-end="url(#ar)"/>
+</svg>
+
+<!-- 1 anúncio -->
+<div class="card" style="left:1030px;top:52px;width:140px;height:108px;transform:rotate(-3deg)">
+  <div class="lb"><span class="n">1</span>Anúncio</div>
+  <svg viewBox="0 0 100 40" style="width:100%;height:38px;margin-top:10px"><g fill="#1E50E6"><rect x="2" y="24" width="16" height="16" rx="3"/><rect x="28" y="16" width="16" height="24" rx="3"/><rect x="54" y="8" width="16" height="32" rx="3"/><rect x="80" y="0" width="16" height="40" rx="3" fill="#B7E400"/></g></svg>
+  <div style="font:700 12px 'Space Grotesk';margin-top:6px;letter-spacing:.04em">META · GOOGLE</div>
+</div>
+<!-- 2 IA no WhatsApp -->
+<div class="card" style="left:1272px;top:40px;width:250px;height:118px;background:#ECE5DD;transform:rotate(2deg)">
+  <div class="lb"><span class="n">2</span>IA no WhatsApp <span class="dot"></span></div>
+  <div style="margin-top:10px;background:#fff;border-radius:12px;padding:8px 11px;font-size:15px;font-weight:600;line-height:1.25">Oi! Quer agendar o diagnóstico? <span style="color:#53bdeb;font-size:13px">✓✓ 03:12</span></div>
+</div>
+<!-- 3 agenda -->
+<div class="card" style="left:1272px;top:236px;width:250px;height:108px;transform:rotate(-2deg)">
+  <div class="lb"><span class="n">3</span>Agenda</div>
+  <div style="display:flex;align-items:center;gap:12px;margin-top:10px">
+    <div style="flex:none;width:52px;height:52px;border-radius:12px;background:var(--blue);color:#fff;display:grid;place-items:center;font:700 22px 'Space Grotesk';line-height:1;text-align:center">09<br><span style="font-size:11px;letter-spacing:.1em">h</span></div>
+    <div style="font-weight:700;line-height:1.2">Reunião marcada<br><span style="color:#6b7194;font-weight:500;font-size:14px">antes do lead esfriar</span></div>
+  </div>
+</div>
+<!-- 4 contrato -->
+<div class="card" style="left:1016px;top:236px;width:170px;height:108px;background:var(--lime);transform:rotate(3deg)">
+  <div class="lb" style="color:#3f4f00"><span class="n">4</span>Contrato</div>
+  <div class="G" style="font-size:27px;margin-top:14px;line-height:1;white-space:nowrap">Assinado ✓</div><div style="font-size:13px;font-weight:700;margin-top:8px;color:#3f4f00;white-space:nowrap">é isso que importa</div>
+</div>
+
+<div class="txt">
+  <div class="k"><span class="mk">PK7</span>Pedro R Gomes · fundador</div>
+  <h1 class="G">Do anúncio ao<br><span class="l">contrato assinado.</span></h1>
+  <div class="sub"><b>Tráfego pago</b> que atrai · <b>IA no WhatsApp</b> que qualifica · <b>automação</b> que agenda</div>
+  <div class="stats"><span><b>+40</b>clientes</span><span><b>3</b>continentes</span><span><b>7 anos</b>de mídia paga</span></div>
+</div>
+<div class="url">pk7.com.br</div>
+</div></body></html>
