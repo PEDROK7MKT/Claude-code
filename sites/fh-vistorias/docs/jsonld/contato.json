@@ -1,0 +1,213 @@
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": [
+        "LocalBusiness",
+        "AutomotiveBusiness"
+      ],
+      "@id": "https://fhvistorias.com.br/#organization",
+      "name": "FH Vistorias",
+      "alternateName": "FH Vistorias LEM-BA",
+      "description": "Empresa credenciada pelo DETRAN-BA que realiza vistoria veicular de transferência para carros, motos e caminhões em Luís Eduardo Magalhães, Bahia, com laudo emitido na hora e sem agendamento.",
+      "slogan": "Confiança que te move.",
+      "url": "https://fhvistorias.com.br/",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://fhvistorias.com.br/images/logo-fh-vistorias.png",
+        "width": 512,
+        "height": 512
+      },
+      "image": [
+        "https://fhvistorias.com.br/images/og-fh-vistorias.png"
+      ],
+      "telephone": "+55-77-99122-8535",
+      "priceRange": "R$ 237",
+      "currenciesAccepted": "BRL",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Rua São Francisco, 1516",
+        "addressLocality": "Luís Eduardo Magalhães",
+        "addressRegion": "BA",
+        "postalCode": "47850-000",
+        "addressCountry": "BR"
+      },
+      "openingHoursSpecification": [
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": [
+            "Monday",
+            "Tuesday",
+            "Wednesday",
+            "Thursday",
+            "Friday"
+          ],
+          "opens": "07:30",
+          "closes": "12:10"
+        },
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": [
+            "Monday",
+            "Tuesday",
+            "Wednesday",
+            "Thursday",
+            "Friday"
+          ],
+          "opens": "14:00",
+          "closes": "17:30"
+        }
+      ],
+      "areaServed": {
+        "@type": "City",
+        "name": "Luís Eduardo Magalhães",
+        "containedInPlace": {
+          "@type": "State",
+          "name": "Bahia"
+        }
+      },
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "telephone": "+55-77-99122-8535",
+        "contactType": "customer service",
+        "availableLanguage": "pt-BR",
+        "url": "https://wa.me/5577991228535?text=Ol%C3%A1!%20Vim%20pelo%20site%20e%20quero%20fazer%20uma%20vistoria.%20Pode%20me%20orientar%3F"
+      },
+      "knowsAbout": [
+        "Vistoria veicular",
+        "Vistoria de transferência de propriedade",
+        "Vistoria de moto",
+        "Vistoria de caminhão e reboque",
+        "Laudo de vistoria DETRAN-BA"
+      ],
+      "sameAs": [
+        "https://www.instagram.com/fhvistorialem/",
+        "https://wa.me/message/G4ILNTLOXS4JB1"
+      ],
+      "hasOfferCatalog": {
+        "@type": "OfferCatalog",
+        "name": "Serviços de vistoria veicular",
+        "itemListElement": [
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Vistoria veicular de carro",
+              "url": "https://fhvistorias.com.br/vistoria-de-carro"
+            },
+            "price": "237.00",
+            "priceCurrency": "BRL"
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Vistoria veicular de moto",
+              "url": "https://fhvistorias.com.br/vistoria-de-moto"
+            },
+            "price": "237.00",
+            "priceCurrency": "BRL"
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Vistoria de caminhão e reboque",
+              "url": "https://fhvistorias.com.br/vistoria-de-caminhao"
+            },
+            "price": "237.00",
+            "priceCurrency": "BRL"
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Segunda via de vistoria",
+              "url": "https://fhvistorias.com.br/segunda-via-de-vistoria"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://fhvistorias.com.br/#website",
+      "url": "https://fhvistorias.com.br/",
+      "name": "FH Vistorias",
+      "inLanguage": "pt-BR",
+      "publisher": {
+        "@id": "https://fhvistorias.com.br/#organization"
+      }
+    },
+    {
+      "@type": "ContactPage",
+      "@id": "https://fhvistorias.com.br/contato#webpage",
+      "url": "https://fhvistorias.com.br/contato",
+      "name": "Contato e Endereço | FH Vistorias em LEM-BA",
+      "description": "FH Vistorias: Rua São Francisco, 1516, Centro, Luís Eduardo Magalhães-BA. WhatsApp (77) 99122-8535. Seg a sex, 7h30–12h10 e 14h–17h30.",
+      "inLanguage": "pt-BR",
+      "isPartOf": {
+        "@id": "https://fhvistorias.com.br/#website"
+      },
+      "about": {
+        "@id": "https://fhvistorias.com.br/#organization"
+      },
+      "dateModified": "2026-10-12",
+      "primaryImageOfPage": {
+        "@type": "ImageObject",
+        "url": "https://fhvistorias.com.br/images/og-fh-vistorias.png"
+      },
+      "breadcrumb": {
+        "@id": "https://fhvistorias.com.br/contato#breadcrumb"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://fhvistorias.com.br/contato#breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Início",
+          "item": "https://fhvistorias.com.br/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Contato",
+          "item": "https://fhvistorias.com.br/contato"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://fhvistorias.com.br/contato#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Qual o horário de funcionamento da FH Vistorias?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Segunda a sexta, das 7h30 às 12h10 e das 14h às 17h30. Sábados, domingos e feriados: consulte pelo WhatsApp."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Preciso agendar a vistoria?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Não. A FH Vistorias atende sem agendamento durante o horário de funcionamento: segunda a sexta, das 7h30 às 12h10 e das 14h às 17h30. Se quiser saber como está o movimento antes de sair, chame no WhatsApp."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Moro em outra cidade da região. Posso fazer a vistoria na FH?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "A FH Vistorias atende na unidade de Luís Eduardo Magalhães. Se você mora em outra cidade do Oeste da Bahia, chame no WhatsApp para confirmar se a vistoria feita em LEM atende ao seu caso antes de se deslocar."
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "name": "FH Vistorias — Vistoria veicular em LEM",
+  "short_name": "FH Vistorias",
+  "description": "Vistoria veicular credenciada pelo DETRAN-BA em Luís Eduardo Magalhães (BA).",
+  "start_url": "/",
+  "display": "standalone",
+  "lang": "pt-BR",
+  "background_color": "#111111",
+  "theme_color": "#111111",
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    },
+    {
+      "src": "/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}

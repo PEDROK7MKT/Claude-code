@@ -51,3 +51,9 @@ Vite sozinho (build `npm run build`, output `dist`). Nada mais a configurar.
 
 No celular, abra a URL publicada e use "Adicionar à tela de início" para ter
 o app com ícone próprio.
+
+## Sites de clientes
+
+- [`sites/fh-vistorias`](sites/fh-vistorias) — site estático da **FH Vistorias** (vistoria veicular
+  em Luís Eduardo Magalhães – BA) com SEO local, GEO/AIO, JSON-LD, `llms.txt` e kit do Google
+  Perfil de Empresa. Independente do app principal: veja o README da pasta para build e deploy.

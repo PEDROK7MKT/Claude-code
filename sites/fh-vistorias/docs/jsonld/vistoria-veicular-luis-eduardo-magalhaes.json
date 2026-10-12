@@ -1,0 +1,276 @@
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": [
+        "LocalBusiness",
+        "AutomotiveBusiness"
+      ],
+      "@id": "https://fhvistorias.com.br/#organization",
+      "name": "FH Vistorias",
+      "alternateName": "FH Vistorias LEM-BA",
+      "description": "Empresa credenciada pelo DETRAN-BA que realiza vistoria veicular de transferência para carros, motos e caminhões em Luís Eduardo Magalhães, Bahia, com laudo emitido na hora e sem agendamento.",
+      "slogan": "Confiança que te move.",
+      "url": "https://fhvistorias.com.br/",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://fhvistorias.com.br/images/logo-fh-vistorias.png",
+        "width": 512,
+        "height": 512
+      },
+      "image": [
+        "https://fhvistorias.com.br/images/og-fh-vistorias.png"
+      ],
+      "telephone": "+55-77-99122-8535",
+      "priceRange": "R$ 237",
+      "currenciesAccepted": "BRL",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Rua São Francisco, 1516",
+        "addressLocality": "Luís Eduardo Magalhães",
+        "addressRegion": "BA",
+        "postalCode": "47850-000",
+        "addressCountry": "BR"
+      },
+      "openingHoursSpecification": [
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": [
+            "Monday",
+            "Tuesday",
+            "Wednesday",
+            "Thursday",
+            "Friday"
+          ],
+          "opens": "07:30",
+          "closes": "12:10"
+        },
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": [
+            "Monday",
+            "Tuesday",
+            "Wednesday",
+            "Thursday",
+            "Friday"
+          ],
+          "opens": "14:00",
+          "closes": "17:30"
+        }
+      ],
+      "areaServed": {
+        "@type": "City",
+        "name": "Luís Eduardo Magalhães",
+        "containedInPlace": {
+          "@type": "State",
+          "name": "Bahia"
+        }
+      },
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "telephone": "+55-77-99122-8535",
+        "contactType": "customer service",
+        "availableLanguage": "pt-BR",
+        "url": "https://wa.me/5577991228535?text=Ol%C3%A1!%20Vim%20pelo%20site%20e%20quero%20fazer%20uma%20vistoria.%20Pode%20me%20orientar%3F"
+      },
+      "knowsAbout": [
+        "Vistoria veicular",
+        "Vistoria de transferência de propriedade",
+        "Vistoria de moto",
+        "Vistoria de caminhão e reboque",
+        "Laudo de vistoria DETRAN-BA"
+      ],
+      "sameAs": [
+        "https://www.instagram.com/fhvistorialem/",
+        "https://wa.me/message/G4ILNTLOXS4JB1"
+      ],
+      "hasOfferCatalog": {
+        "@type": "OfferCatalog",
+        "name": "Serviços de vistoria veicular",
+        "itemListElement": [
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Vistoria veicular de carro",
+              "url": "https://fhvistorias.com.br/vistoria-de-carro"
+            },
+            "price": "237.00",
+            "priceCurrency": "BRL"
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Vistoria veicular de moto",
+              "url": "https://fhvistorias.com.br/vistoria-de-moto"
+            },
+            "price": "237.00",
+            "priceCurrency": "BRL"
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Vistoria de caminhão e reboque",
+              "url": "https://fhvistorias.com.br/vistoria-de-caminhao"
+            },
+            "price": "237.00",
+            "priceCurrency": "BRL"
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Segunda via de vistoria",
+              "url": "https://fhvistorias.com.br/segunda-via-de-vistoria"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://fhvistorias.com.br/#website",
+      "url": "https://fhvistorias.com.br/",
+      "name": "FH Vistorias",
+      "inLanguage": "pt-BR",
+      "publisher": {
+        "@id": "https://fhvistorias.com.br/#organization"
+      }
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://fhvistorias.com.br/vistoria-veicular-luis-eduardo-magalhaes#webpage",
+      "url": "https://fhvistorias.com.br/vistoria-veicular-luis-eduardo-magalhaes",
+      "name": "Vistoria Veicular em LEM-BA: Valor, Horário e Local",
+      "description": "Tudo sobre vistoria veicular em Luís Eduardo Magalhães: onde fazer, valor, documentos e horário. FH Vistorias, credenciada DETRAN-BA.",
+      "inLanguage": "pt-BR",
+      "isPartOf": {
+        "@id": "https://fhvistorias.com.br/#website"
+      },
+      "about": {
+        "@id": "https://fhvistorias.com.br/#organization"
+      },
+      "dateModified": "2026-10-12",
+      "primaryImageOfPage": {
+        "@type": "ImageObject",
+        "url": "https://fhvistorias.com.br/images/og-fh-vistorias.png"
+      },
+      "breadcrumb": {
+        "@id": "https://fhvistorias.com.br/vistoria-veicular-luis-eduardo-magalhaes#breadcrumb"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://fhvistorias.com.br/vistoria-veicular-luis-eduardo-magalhaes#breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Início",
+          "item": "https://fhvistorias.com.br/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Vistoria veicular em LEM",
+          "item": "https://fhvistorias.com.br/vistoria-veicular-luis-eduardo-magalhaes"
+        }
+      ]
+    },
+    {
+      "@type": "Service",
+      "@id": "https://fhvistorias.com.br/vistoria-veicular-luis-eduardo-magalhaes#service",
+      "name": "Vistoria veicular em Luís Eduardo Magalhães",
+      "serviceType": "Vistoria veicular",
+      "description": "Vistoria veicular credenciada pelo DETRAN-BA para carros, motos e caminhões em Luís Eduardo Magalhães (BA), com laudo emitido na hora.",
+      "url": "https://fhvistorias.com.br/vistoria-veicular-luis-eduardo-magalhaes",
+      "provider": {
+        "@id": "https://fhvistorias.com.br/#organization"
+      },
+      "areaServed": {
+        "@type": "City",
+        "name": "Luís Eduardo Magalhães"
+      },
+      "availableChannel": {
+        "@type": "ServiceChannel",
+        "serviceLocation": {
+          "@id": "https://fhvistorias.com.br/#organization"
+        },
+        "servicePhone": {
+          "@type": "ContactPoint",
+          "telephone": "+55-77-99122-8535"
+        }
+      },
+      "offers": {
+        "@type": "Offer",
+        "price": "237.00",
+        "priceCurrency": "BRL",
+        "url": "https://fhvistorias.com.br/valores"
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://fhvistorias.com.br/vistoria-veicular-luis-eduardo-magalhaes#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Onde fazer vistoria veicular em Luís Eduardo Magalhães?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Na FH Vistorias, empresa credenciada pelo DETRAN-BA, na Rua São Francisco, 1516, Centro, em Luís Eduardo Magalhães (BA). O atendimento é de segunda a sexta, das 7h30 às 12h10 e das 14h às 17h30, sem agendamento."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Quanto custa a vistoria veicular em LEM?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Na FH Vistorias, a vistoria custa R$ 237,00 para carro, moto e caminhão/reboque. Se o veículo for reprovado, o retorno em até 30 dias úteis não tem custo adicional. As taxas do DETRAN-BA para a transferência são pagas ao órgão, à parte."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Preciso agendar a vistoria?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Não. A FH Vistorias atende sem agendamento durante o horário de funcionamento: segunda a sexta, das 7h30 às 12h10 e das 14h às 17h30. Se quiser saber como está o movimento antes de sair, chame no WhatsApp."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "A FH Vistorias é credenciada pelo DETRAN-BA?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Sim. A FH Vistorias é uma empresa credenciada pelo DETRAN-BA para vistoria de veículos em Luís Eduardo Magalhães, e o laudo emitido é aceito pelo órgão de trânsito."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Perdi o documento ou vou colocar placa Mercosul. Preciso de vistoria?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Pode precisar. Segundo orientação publicada pela FH Vistorias, a vistoria costuma ser exigida em casos como segunda via de documento, troca para placa Mercosul, placa perdida ou danificada, troca de motor e mudança de característica. Como cada caso segue regras próprias do DETRAN-BA, confirme o seu pelo WhatsApp."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Quanto tempo demora a vistoria?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Depende do tipo de veículo e do movimento do dia. Como não precisa agendar, a dica é chamar no WhatsApp antes de sair para saber como está o atendimento naquele momento. O laudo é emitido na hora, assim que a vistoria termina."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Moro em outra cidade da região. Posso fazer a vistoria na FH?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "A FH Vistorias atende na unidade de Luís Eduardo Magalhães. Se você mora em outra cidade do Oeste da Bahia, chame no WhatsApp para confirmar se a vistoria feita em LEM atende ao seu caso antes de se deslocar."
+          }
+        }
+      ]
+    }
+  ]
+}
