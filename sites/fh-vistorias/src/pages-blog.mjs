@@ -22,7 +22,7 @@ export const posts = [
     body: `
 <section class="sec">
   <div class="wrap prose">
-    <p class="answer">Depois de comprar um veículo usado, o caminho é: <strong>conferir os documentos</strong>, fazer a <strong>vistoria de transferência</strong> em uma empresa credenciada pelo DETRAN-BA e <strong>concluir a transferência</strong> no órgão. O Código de Trânsito Brasileiro dá ao comprador 30 dias para providenciar a transferência — passar do prazo pode gerar multa.</p>
+    <p class="answer">Depois de comprar um veículo usado, o caminho é: <strong>conferir os documentos</strong>, fazer a <strong>vistoria de transferência</strong> em uma empresa credenciada pelo DETRAN-BA e <strong>concluir a transferência</strong> no órgão. O Código de Trânsito Brasileiro dá ao comprador 30 dias para providenciar a transferência. Passar do prazo pode gerar multa.</p>
     <nav class="toc" aria-label="Neste artigo"><b>Neste artigo</b>
       <ol><li><a href="#antes">Antes de pagar: o que conferir</a></li><li><a href="#vistoria">A vistoria de transferência</a></li><li><a href="#depois">Depois do laudo</a></li><li><a href="#erros">Erros que atrasam a transferência</a></li></ol>
     </nav>
@@ -33,7 +33,7 @@ export const posts = [
       <li><strong>Documento do veículo:</strong> nome do proprietário, placa, chassi e características batendo com o veículo.</li>
       <li><strong>Débitos:</strong> consulte IPVA, licenciamento e multas nos canais oficiais do DETRAN-BA e da SEFAZ-BA.</li>
       <li><strong>Restrições:</strong> verifique se há financiamento ativo, bloqueio ou outra restrição.</li>
-      <li><strong>Estado do veículo:</strong> luzes, placas e itens de segurança — eles também serão conferidos na vistoria.</li>
+      <li><strong>Estado do veículo:</strong> luzes, placas e itens de segurança. Eles também são conferidos na vistoria.</li>
     </ul>
     <p>Comprou de revenda ou de particular, o cuidado é o mesmo: documento em ordem é o que garante que a transferência vai andar.</p>
 
@@ -51,10 +51,10 @@ export const posts = [
 
     <h2 id="erros">Erros que atrasam a transferência</h2>
     <ul>
-      <li><strong>Deixar a vistoria para o último dia</strong> — se houver reprovação, falta tempo para regularizar.</li>
-      <li><strong>Vir sem o documento certo</strong> — confirme a lista em <a href="/documentos-necessarios">documentos necessários</a>.</li>
-      <li><strong>Lâmpada queimada ou placa danificada</strong> — são correções simples que evitam a reprovação.</li>
-      <li><strong>Alteração sem documento</strong> — troca de motor ou de característica precisa estar regularizada.</li>
+      <li><strong>Deixar a vistoria para o último dia:</strong> se houver reprovação, falta tempo para regularizar.</li>
+      <li><strong>Vir sem o documento certo:</strong> confirme a lista em <a href="/documentos-necessarios">documentos necessários</a>.</li>
+      <li><strong>Lâmpada queimada ou placa danificada:</strong> são correções simples que evitam a reprovação.</li>
+      <li><strong>Alteração sem documento:</strong> troca de motor ou de característica precisa estar regularizada.</li>
     </ul>
     ${returnCard()}
     <div class="btns" style="margin-top:20px">${btnWa('Tirar dúvida no WhatsApp', 'Olá! Comprei um veículo e quero fazer a vistoria de transferência. Pode me orientar?', 'btn btn-wa', 'blog_compra')}</div>
@@ -79,11 +79,11 @@ export const posts = [
     <p class="answer">A <strong>vistoria de transferência</strong> é <strong>obrigatória</strong>: o DETRAN exige para registrar o veículo no nome do novo dono. A <strong>vistoria cautelar</strong> é <strong>opcional</strong>: uma avaliação feita antes da compra para checar histórico e estrutura do veículo. Uma não substitui a outra.</p>
 
     <h2>O que é a vistoria de transferência?</h2>
-    <p class="answer">É a conferência técnica feita por empresa credenciada pelo DETRAN para confirmar a identidade do veículo — chassi, motor, placas e características — e as condições exigidas pelo órgão. O resultado é o laudo usado no processo de transferência.</p>
+    <p class="answer">É a conferência técnica feita por empresa credenciada pelo DETRAN para confirmar a identidade do veículo (chassi, motor, placas e características) e as condições exigidas pelo órgão. O resultado é o laudo usado no processo de transferência.</p>
     <p>Em ${BIZ.city}, a <a href="/vistoria-de-transferencia">vistoria de transferência na FH Vistorias</a> custa ${PRICE.display}, não precisa de agendamento e o laudo sai na hora.</p>
 
     <h2>O que é a vistoria cautelar?</h2>
-    <p class="answer">É uma avaliação voluntária, contratada por quem vai comprar, para investigar o histórico e a estrutura do veículo — por exemplo, sinais de batida, repintura ou registros de leilão. Ela ajuda a decidir a compra, mas não substitui a vistoria exigida pelo DETRAN.</p>
+    <p class="answer">É uma avaliação voluntária, contratada por quem vai comprar, para investigar o histórico e a estrutura do veículo, como sinais de batida, repintura ou registros de leilão. Ela ajuda a decidir a compra, mas não substitui a vistoria exigida pelo DETRAN.</p>
 
     <h2>Comparando lado a lado</h2>
     <div class="table-wrap">
@@ -116,8 +116,7 @@ export const blogIndex = {
   h1: 'Blog da FH Vistorias',
   trail: [HOME, BLOG],
   pageType: 'CollectionPage',
-  eyebrow: `${icon('doc')} Guias práticos`,
-  lead: 'Orientações diretas sobre vistoria, transferência e documentos — para resolver a sua situação no DETRAN sem dor de cabeça.',
+  lead: 'Orientações diretas sobre vistoria, transferência e documentos, para resolver a sua situação no DETRAN sem dor de cabeça.',
   heroSide: 'none',
   priority: '0.6',
   get body() {

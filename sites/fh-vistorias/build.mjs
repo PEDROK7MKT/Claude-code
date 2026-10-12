@@ -54,8 +54,8 @@ function render(p) {
   <div class="wrap${heroFacts ? ' split' : ''}">
     <div>
       ${isHome ? '' : ui.crumbs(p.trail)}
-      ${p.eyebrow ? `<p class="eyebrow">${p.eyebrow}</p>` : ''}
       <h1>${p.h1}</h1>
+      ${p.tagline ? `<p class="tagline">${p.tagline}</p>` : ''}
       ${p.lead ? `<p class="lead">${p.lead}</p>` : ''}
       ${published}
       <div class="btns" style="margin-top:22px">${p.heroButtons || `${ui.btnWa('Chamar no WhatsApp', undefined, 'btn btn-wa', 'hero')}${ui.btnRoute('Como chegar', 'btn btn-ghost', 'hero')}`}</div>

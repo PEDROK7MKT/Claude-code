@@ -59,11 +59,15 @@ export const btnPhone = (label = BIZ.phoneDisplay, cls = 'btn btn-line', where =
   `<a class="${cls}" href="${tel}" data-ev="phone_click" data-ev-where="${where}">${icon('phone')}<span>${label}</span></a>`;
 
 // As 4 perguntas que todo cliente de vistoria faz: onde, quanto, o que levar, precisa agendar.
-export const quickFacts = (layout = 'stack') => `<div class="facts${layout === 'row' ? ' facts-row' : ''}" role="list" aria-label="Respostas rápidas">
-  <div class="fact" role="listitem"><div class="ico-wrap">${icon('pin')}</div><div><b>Onde</b><span>${BIZ.street}, ${BIZ.district} — ${BIZ.city} (${BIZ.state})</span></div></div>
-  <div class="fact" role="listitem"><div class="ico-wrap">${icon('coin')}</div><div><b>Quanto</b><span>${PRICE.display} — carro, moto ou caminhão</span></div></div>
-  <div class="fact" role="listitem"><div class="ico-wrap">${icon('doc')}</div><div><b>O que levar</b><span>O veículo e os documentos — <a href="/documentos-necessarios" style="color:var(--orange-hi)">ver lista</a></span></div></div>
-  <div class="fact" role="listitem"><div class="ico-wrap">${icon('calendar')}</div><div><b>Precisa agendar?</b><span>Não. ${HOURS.textShort}</span></div></div>
+// Visual de ficha/laudo (papel branco, linhas tracejadas, check laranja), como a prancheta das artes da FH.
+export const quickFacts = () => `<div class="ficha">
+  <div class="ficha-head"><span>Antes de vir</span><span>${BIZ.cityShort}-${BIZ.state}</span></div>
+  <dl>
+    <div><dt>Onde fica</dt><dd>${BIZ.street}, ${BIZ.district}</dd></div>
+    <div><dt>Quanto custa</dt><dd>${PRICE.display} <small>carro, moto ou caminhão</small></dd></div>
+    <div><dt>O que levar</dt><dd>O veículo e os documentos <a href="/documentos-necessarios">ver lista</a></dd></div>
+    <div><dt>Precisa agendar?</dt><dd>Não. <small>Seg a sex, 7h30–12h10 e 14h–17h30</small></dd></div>
+  </dl>
 </div>`;
 
 export const NAV = [
@@ -109,7 +113,7 @@ export const faqBlock = (faqs, title = 'Perguntas frequentes') => `<section clas
 </section>`;
 
 export const napBlock = () => `<address class="nap">
-  <div class="row">${icon('pin')}<div><strong>${BIZ.name}</strong><br>${BIZ.street} — ${BIZ.district}<br>${BIZ.city} — ${BIZ.state}, ${BIZ.postalCode}</div></div>
+  <div class="row">${icon('pin')}<div><strong>${BIZ.name}</strong><br>${BIZ.street}, ${BIZ.district}<br>${BIZ.city}-${BIZ.state}, ${BIZ.postalCode}</div></div>
   <div class="row">${icon('phone')}<div><a href="${tel}" data-ev="phone_click" data-ev-where="nap">${BIZ.phoneDisplay}</a> (telefone e WhatsApp)</div></div>
   <div class="row">${icon('clock')}<div>${HOURS.text}.<br>${HOURS.weekendText}.</div></div>
 </address>`;

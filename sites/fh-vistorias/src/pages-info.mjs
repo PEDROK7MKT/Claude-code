@@ -13,7 +13,6 @@ export const infoPages = [
     description: `Carro, moto e caminhão: ${PRICE.display}. Preço transparente, informado antes de começar. Retorno grátis em 30 dias úteis.`,
     h1: 'Valor da vistoria veicular em LEM',
     trail: [HOME, ['valores', 'Valores']],
-    eyebrow: `${icon('tag')} Preço transparente`,
     lead: `Um valor só para carro, moto e caminhão/reboque: <strong>${PRICE.display}</strong>. E se for reprovado, o retorno em até ${RETURN_POLICY.days} dias úteis não tem custo adicional.`,
     heroSide: 'facts',
     priority: '0.9',
@@ -25,7 +24,7 @@ export const infoPages = [
       <p class="answer">A vistoria veicular na FH Vistorias custa <strong>${PRICE.display}</strong> para <strong>carro, moto e caminhão/reboque</strong>. O valor inclui a vistoria e a emissão do laudo na hora. Se o veículo for reprovado, o retorno em até ${RETURN_POLICY.days} dias úteis é sem custo adicional.</p>
       <div class="table-wrap">
         <table class="table">
-          <caption>Tabela de valores — FH Vistorias, ${BIZ.city} (BA)</caption>
+          <caption>Tabela de valores da FH Vistorias, ${BIZ.city} (BA)</caption>
           <thead><tr><th scope="col">Serviço</th><th scope="col">Valor</th></tr></thead>
           <tbody>
             ${PRICE.table.map((r) => `<tr><th scope="row" style="font-weight:600"><a href="/${r.slug}">${r.item}</a></th><td class="num">${r.price.replace('R$ ', () => 'R$&nbsp;')}</td></tr>`).join('\n            ')}
@@ -52,10 +51,10 @@ export const infoPages = [
       ${updated()}
     </div>
     <aside>
-      <div class="card">
-        <p style="margin:0 0 4px;font-weight:700;color:var(--ink)">Carro, moto ou caminhão</p>
+      <div class="price-box">
+        <p class="pb-label">Carro, moto ou caminhão</p>
         <div class="price-tag">${PRICE.display}</div>
-        <p style="margin:8px 0 14px">Sem agendamento · laudo na hora</p>
+        <p>Sem agendamento. Laudo na hora.</p>
         ${btnWa('Chamar no WhatsApp', 'Olá! Vi o valor no site e quero fazer a vistoria. Pode me orientar?', 'btn btn-wa', 'valores_card')}
       </div>
       <div style="height:16px"></div>
@@ -74,7 +73,6 @@ export const infoPages = [
     description: 'Passo a passo da vistoria na FH Vistorias em LEM: chegada, atendimento, vistoria e laudo emitido na hora. Sem agendamento.',
     h1: 'Como funciona a vistoria veicular na FH',
     trail: [HOME, ['como-funciona', 'Como funciona']],
-    eyebrow: `${icon('clipboard')} Passo a passo`,
     lead: 'Quatro etapas, do momento em que você chega até o laudo na mão. Sem agendamento e sem complicação.',
     heroSide: 'facts',
     howto: STEPS,
@@ -103,7 +101,7 @@ export const infoPages = [
     </div>
     <div class="prose">
       <h2>E depois do laudo?</h2>
-      <p class="answer">Com o laudo emitido, você segue com o processo no DETRAN-BA — por exemplo, a transferência do veículo para o nome do novo dono. O laudo tem validade imediata para o órgão de trânsito.</p>
+      <p class="answer">Com o laudo emitido, você segue com o processo no DETRAN-BA, como a transferência do veículo para o nome do novo dono. O laudo tem validade imediata para o órgão de trânsito.</p>
       <p>Se o veículo for reprovado, você tem até ${RETURN_POLICY.days} dias úteis para regularizar e voltar sem custo adicional. <a href="/vistoria-reprovada-o-que-fazer">Saiba mais</a>.</p>
     </div>
   </div>
@@ -120,15 +118,14 @@ export const infoPages = [
     description: 'Quais documentos levar para a vistoria em Luís Eduardo Magalhães: transferência, placa Mercosul, segunda via, troca de motor e mais.',
     h1: 'Documentos necessários para a vistoria',
     trail: [HOME, ['documentos-necessarios', 'Documentos necessários']],
-    eyebrow: `${icon('doc')} O que levar`,
-    lead: 'O que separar antes de vir, por situação. Na dúvida, confirme pelo WhatsApp — assim você não perde a viagem.',
+    lead: 'O que separar antes de vir, por situação. Na dúvida, confirme pelo WhatsApp para não perder a viagem.',
     heroSide: 'facts',
     body: `
 <section class="sec">
   <div class="wrap two">
     <div class="prose">
       <h2>Quais documentos levar para a vistoria?</h2>
-      <p class="answer">Em geral, traga: <strong>o próprio veículo</strong> (a vistoria é presencial), o <strong>documento do veículo</strong> — CRLV e/ou o documento de transferência, conforme o caso — e um <strong>documento oficial de identificação com foto</strong> de quem está levando o veículo.</p>
+      <p class="answer">Em geral, traga: <strong>o próprio veículo</strong> (a vistoria é presencial), o <strong>documento do veículo</strong> (CRLV e/ou o documento de transferência, conforme o caso) e um <strong>documento oficial de identificação com foto</strong> de quem está levando o veículo.</p>
       <ul class="check">
         <li>O veículo a ser vistoriado;</li>
         <li>Documento do veículo (CRLV e/ou documento de transferência);</li>
@@ -148,7 +145,7 @@ export const infoPages = [
   <div class="wrap">
     <div class="sec-head prose">
       <h2>Documentos por situação</h2>
-      <p>Situações em que a FH Vistorias orienta a fazer vistoria, segundo publicação da própria empresa. Cada caso segue regras do DETRAN-BA — confirme o seu antes de vir.</p>
+      <p>Situações em que a FH Vistorias orienta a fazer vistoria, segundo publicação da própria empresa. Cada caso segue regras do DETRAN-BA, então confirme o seu antes de vir.</p>
     </div>
     <div class="table-wrap">
       <table class="table">
@@ -177,7 +174,6 @@ export const infoPages = [
     description: 'Documentos, prazo, preço, reprovação e agendamento. Respostas diretas da FH Vistorias, empresa credenciada em LEM-BA.',
     h1: 'Perguntas frequentes sobre vistoria veicular',
     trail: [HOME, ['perguntas-frequentes', 'Perguntas frequentes']],
-    eyebrow: `${icon('info')} Respostas diretas`,
     lead: 'Tudo o que os clientes mais perguntam sobre vistoria em Luís Eduardo Magalhães, respondido de forma direta.',
     heroSide: 'facts',
     priority: '0.8',
@@ -195,7 +191,6 @@ export const infoPages = [
     h1: 'Sobre a FH Vistorias',
     trail: [HOME, ['sobre', 'Sobre']],
     pageType: 'AboutPage',
-    eyebrow: `${icon('shield')} ${BIZ.slogan}`,
     lead: `Empresa de vistoria veicular credenciada pelo DETRAN-BA em ${BIZ.city}. Segurança para você, tranquilidade para todos.`,
     heroSide: 'facts',
     body: `
@@ -213,10 +208,10 @@ export const infoPages = [
 
       <h2>Nossos pilares</h2>
       <ul class="check">
-        <li><strong>Segurança</strong> — vistoria feita conforme as exigências do DETRAN-BA.</li>
-        <li><strong>Agilidade</strong> — sem agendamento e com laudo na hora.</li>
-        <li><strong>Confiança</strong> — atendimento claro do começo ao fim.</li>
-        <li><strong>Transparência</strong> — preço informado antes, sem surpresa.</li>
+        <li><strong>Segurança:</strong> vistoria feita conforme as exigências do DETRAN-BA.</li>
+        <li><strong>Agilidade:</strong> sem agendamento e com laudo na hora.</li>
+        <li><strong>Confiança:</strong> atendimento claro do começo ao fim.</li>
+        <li><strong>Transparência:</strong> preço informado antes, sem surpresa.</li>
       </ul>
       ${updated()}
     </div>
@@ -254,8 +249,7 @@ export const infoPages = [
     h1: 'Contato e localização',
     trail: [HOME, ['contato', 'Contato']],
     pageType: 'ContactPage',
-    eyebrow: `${icon('pin')} ${BIZ.cityShort}-${BIZ.state}`,
-    lead: `Estamos na ${BIZ.street}, ${BIZ.district}, em ${BIZ.city}. Fale com a gente pelo WhatsApp ou venha direto — não precisa agendar.`,
+    lead: `Estamos na ${BIZ.street}, ${BIZ.district}, em ${BIZ.city}. Fale com a gente pelo WhatsApp ou venha direto. Não precisa agendar.`,
     heroSide: 'facts',
     priority: '0.8',
     body: `
@@ -287,7 +281,7 @@ export const infoPages = [
         <div>
           ${icon('pin')}
           <h3 style="color:#fff;margin:8px 0 0">${BIZ.street}</h3>
-          <p>${BIZ.district} · ${BIZ.city} — ${BIZ.state} · ${BIZ.postalCode}</p>
+          <p>${BIZ.district} · ${BIZ.city}-${BIZ.state} · ${BIZ.postalCode}</p>
           <div class="btns" style="justify-content:center">
             <button type="button" class="btn btn-wa btn-sm" data-map-load>Carregar mapa</button>
             ${btnRoute('Abrir no Google Maps', 'btn btn-ghost btn-sm', 'contato_mapa')}
@@ -316,7 +310,7 @@ export const infoPages = [
     body: `
 <section class="sec">
   <div class="wrap prose">
-    <p>Esta política explica como a ${BIZ.legalName || BIZ.name}${BIZ.cnpj ? ` (CNPJ ${BIZ.cnpj})` : ''}, com endereço na ${BIZ.street}, ${BIZ.district}, ${BIZ.city} — ${BIZ.state}, trata dados pessoais neste site, em conformidade com a Lei Geral de Proteção de Dados (Lei nº 13.709/2018 — LGPD).</p>
+    <p>Esta política explica como a ${BIZ.legalName || BIZ.name}${BIZ.cnpj ? ` (CNPJ ${BIZ.cnpj})` : ''}, com endereço na ${BIZ.street}, ${BIZ.district}, ${BIZ.city}-${BIZ.state}, trata dados pessoais neste site, em conformidade com a Lei Geral de Proteção de Dados (LGPD, Lei nº 13.709/2018).</p>
     <h2>Quais dados coletamos no site</h2>
     <p>Este site não tem formulários nem área de login. Não coletamos nome, CPF ou outros dados pessoais diretamente pelo site.</p>
     <ul>

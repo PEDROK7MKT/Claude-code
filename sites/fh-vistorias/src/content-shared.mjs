@@ -18,17 +18,17 @@ export const stepsHtml = (four = true) => `<ol class="steps${four ? ' four' : ''
 </ol>`;
 
 export const PERKS = [
-  ['shield', 'Credenciada pelo DETRAN-BA', 'Vistoria reconhecida pelo órgão de trânsito da Bahia, feita por equipe técnica.'],
+  ['shield', 'Credenciada pelo DETRAN-BA', 'O laudo vale para o processo no órgão de trânsito da Bahia.'],
   ['calendar', 'Sem agendamento', `Chegou, foi atendido. ${HOURS.textShort}.`],
-  ['tag', `Preço transparente: ${PRICE.display}`, 'O mesmo valor para carro, moto e caminhão/reboque, informado antes de começar.'],
-  ['bolt', 'Laudo emitido na hora', 'Terminou a vistoria, o laudo sai na hora, com validade imediata para o DETRAN.'],
-  ['retry', 'Reprovou? Retorno gratuito', `Até ${RETURN_POLICY.days} dias úteis para regularizar e voltar sem custo adicional.`],
-  ['car', 'Carro, moto e caminhão', 'Atendemos veículos leves, motocicletas, caminhões e reboques.'],
+  ['tag', `${PRICE.display}, preço fechado`, 'O mesmo valor para carro, moto e caminhão/reboque. Você sabe quanto vai pagar antes de começar.'],
+  ['bolt', 'Laudo na hora', 'Terminou a vistoria, o laudo já sai, valendo para o DETRAN.'],
+  ['retry', 'Reprovou? Volta sem pagar', `Você tem até ${RETURN_POLICY.days} dias úteis para arrumar o que foi apontado e voltar sem custo.`],
+  ['car', 'Carro, moto e caminhão', 'Também reboque e semirreboque. Vai trazer veículo grande? Avise no WhatsApp.'],
 ];
 
-export const perksHtml = (dark = false) => `<div class="grid grid-3">
-  ${PERKS.map(([ic, t, d]) => `<div class="card"><div class="ico-wrap">${icon(ic)}</div><h3>${t}</h3><p>${d}</p></div>`).join('\n  ')}
-</div>`;
+export const perksHtml = () => `<dl class="ruled">
+  ${PERKS.map(([, t, d]) => `<div><dt>${t}</dt><dd>${d}</dd></div>`).join('\n  ')}
+</dl>`;
 
 export const SERVICES = [
   ['vistoria-de-transferencia', 'clipboard', 'Vistoria de transferência', 'Obrigatória para passar o veículo para o nome do novo dono.'],
@@ -39,11 +39,11 @@ export const SERVICES = [
   ['vistoria-reprovada-o-que-fazer', 'retry', 'Vistoria reprovada', `Regularize e volte em até ${RETURN_POLICY.days} dias úteis sem pagar de novo.`],
 ];
 
-export const servicesHtml = (exclude = '') => `<div class="grid grid-3">
+export const servicesHtml = (exclude = '') => `<ul class="svc">
   ${SERVICES.filter(([s]) => s !== exclude)
-    .map(([s, ic, t, d]) => `<a class="card" href="/${s}"><div class="ico-wrap">${icon(ic)}</div><h3>${t}</h3><p>${d}</p><span class="more">Saiba mais ${icon('arrow')}</span></a>`)
+    .map(([s, ic, t, d]) => `<li><a href="/${s}">${icon(ic, 'svc-ico')}<span class="svc-t">${t}</span><span class="svc-d">${d}</span>${icon('arrow', 'svc-go')}</a></li>`)
     .join('\n  ')}
-</div>`;
+</ul>`;
 
 const waLink = (label, msg) => `<a href="${esc(wa(msg))}" target="_blank" rel="noopener" data-ev="whatsapp_click" data-ev-where="faq">${label}</a>`;
 
