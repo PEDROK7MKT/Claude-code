@@ -1,4 +1,4 @@
-# PK7 · Criativo 5: "SÓ TRÁFEGO NÃO VENDE" · Reels 9:16 · 36 s
+# PK7 · Criativo 5: "SÓ TRÁFEGO NÃO VENDE" · Reels 9:16 · 36,9 s
 
 ## A ideia
 É um vídeo educativo e atemporal, para qualquer pessoa. Dá para reaproveitar em Reels, stories, anúncio, site e proposta.
@@ -16,12 +16,12 @@ O vídeo termina dizendo que é por isso que a PK7 não vende só tráfego: ela 
 | Tempo | Cena | Na tela |
 |---|---|---|
 | 0–3,2 s | Gancho | **SÓ TRÁFEGO** + carimbo vermelho **NÃO VENDE.** · painel de campanha com alcance e cliques subindo e **Vendas: 0** (etiqueta "exemplo") |
-| 3,3–8,3 s | O balde furado | "O ANÚNCIO TRAZ GENTE. SÓ QUE ELA **VAZA**." · o anúncio despeja gente num balde que vai abrindo furos: ✕ sem pixel · ✕ sem remarketing · ✕ sem atendimento · ✕ sem oferta · a água nunca sobe · **💸 dinheiro vazando** |
-| 8,5–11 s | A virada | "O PROBLEMA NÃO É **O TRÁFEGO.** É A FALTA DE **ESTRUTURA.**" (só tipografia, depois silêncio) |
-| 11,2–19,9 s | A máquina | "A SOLUÇÃO: A MÁQUINA DE VENDAS." · as 5 peças acendem com o ponto (o lead) descendo a trilha, uma explicação por peça (lista abaixo) |
-| 19,9–23 s | Resultado | cartão verde-limão **TRÁFEGO + ESTRUTURA = VENDA.** · "AGORA SIM, O TRÁFEGO VENDE." |
-| 23–27 s | Prova | **+R$ 500 MIL** (contando) **FATURADOS NA APPMAX** · troféus **+ DIVERSAS PREMIAÇÕES** · selo do Pedro comemorando |
-| 27–36 s | Fechamento | "POR ISSO A PK7 NÃO VENDE **SÓ** TRÁFEGO." · as 5 peças se juntam em **⚙ MÁQUINA DE VENDAS** · "ELA MONTA A MÁQUINA INTEIRA." · cartão **QUER MONTAR A SUA? · MANDA "MÁQUINA" NO DIRECT · ou acesse pk7.com.br** · selo do Pedro apontando |
+| 3,3–9,2 s | O balde furado | "O ANÚNCIO TRAZ GENTE. SÓ QUE ELA **VAZA**." · o anúncio despeja gente num balde que vai abrindo furos: ✕ sem pixel · ✕ sem remarketing · ✕ sem atendimento · ✕ sem oferta · a água nunca sobe · **💸 dinheiro vazando** |
+| 9,4–11,9 s | A virada | "O PROBLEMA NÃO É **O TRÁFEGO.** É A FALTA DE **ESTRUTURA.**" (só tipografia, depois silêncio) |
+| 12,1–20,8 s | A máquina | "A SOLUÇÃO: A MÁQUINA DE VENDAS." · as 5 peças acendem com o ponto (o lead) descendo a trilha, uma explicação por peça (lista abaixo) |
+| 20,8–23,9 s | Resultado | cartão verde-limão **TRÁFEGO + ESTRUTURA = VENDA.** · "AGORA SIM, O TRÁFEGO VENDE." |
+| 23,9–27,9 s | Prova | **+R$ 500 MIL** (contando) **FATURADOS NA APPMAX** · troféus **+ DIVERSAS PREMIAÇÕES** · selo do Pedro comemorando |
+| 27,9–36,9 s | Fechamento | "POR ISSO A PK7 NÃO VENDE **SÓ** TRÁFEGO." · as 5 peças se juntam em **⚙ MÁQUINA DE VENDAS** · "ELA MONTA A MÁQUINA INTEIRA." · cartão **QUER MONTAR A SUA? · MANDA "MÁQUINA" NO DIRECT · ou acesse pk7.com.br** · selo do Pedro apontando |
 
 **As 5 peças da máquina:**
 1. **Estratégia e oferta:** anúncio certo pra pessoa certa, com motivo pra comprar.
@@ -38,6 +38,8 @@ O texto está em `NARRACAO_ELEVENLABS.txt` (copie e cole inteiro).
 - **Depois de gerar:** me mande o áudio. Eu encaixo cada frase na janela da cena (`legendas_narracao.srt`) e faço a mixagem final.
 
 ## Arquivos
+- **`PK7_so_trafego_nao_vende_FINAL_com_voz.mp4`: versão final com a narração da Raquel**, −14 LUFS e −3,2 dBTP. A voz fica de 6 a 12 dB acima da trilha em todas as falas.
+- `voz_alinhada.wav`: a narração já encaixada nas cenas. A voz original de 41,5 s foi acelerada em no máximo 1,2× por frase, e as pausas longas de respiração foram encurtadas.
 - `PK7_so_trafego_nao_vende_completo.mp4`: trilha e efeitos, −14 LUFS, −3,2 dBTP. Pode postar sem narração.
 - `PK7_so_trafego_nao_vende_narracao.mp4`: trilha baixa, para receber a voz.
 - `trilha.wav` e `efeitos_sonoros.wav`: os stems. Todo o áudio é sintetizado do zero, sem direitos autorais.
