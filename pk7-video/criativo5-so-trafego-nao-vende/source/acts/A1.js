@@ -3,11 +3,11 @@
 (()=>{
 const M0=[18430,1248];                       // alcance / cliques (exemplo)
 const fmtN=n=>Math.round(n).toLocaleString('pt-BR');
-const POUR=3.55, HOLES=[{x:372,y:800,d:-1,l:'Sem pixel',t:4.55,cy:766},{x:708,y:800,d:1,l:'Sem remarketing',t:5.25,cy:766},
- {x:396,y:1040,d:-1,l:'Sem atendimento',t:5.95,cy:1006},{x:684,y:1040,d:1,l:'Sem oferta',t:6.65,cy:1006}];
-const NIN=34,NLK=9,BEND=8.30;
+const POUR=3.55, HOLES=[{x:372,y:800,d:-1,l:'Sem pixel',t:4.55,cy:766},{x:708,y:800,d:1,l:'Sem remarketing',t:5.35,cy:766},
+ {x:396,y:1040,d:-1,l:'Sem atendimento',t:6.15,cy:1006},{x:684,y:1040,d:1,l:'Sem oferta',t:6.95,cy:1006}];
+const NIN=34,NLK=9,BEND=9.20;
 const vis=(el,on)=>{el.style.visibility=on?'visible':'hidden';};
-ACTS.push({id:'A1',t0:0,t1:11.55,z:1,
+ACTS.push({id:'A1',t0:0,t1:12.45,z:1,
 html:`
  ${HL('a1_h1',300,132,'SÓ TRÁFEGO')}
  <div class="a c5lost" id="a1_no" style="top:450px"><span class="stamp" style="transform:rotate(-5deg);font-size:104px">NÃO VENDE.</span></div>
@@ -57,15 +57,15 @@ init(){
  ev('a1_src',3.45,'pop',.34); S(3.45,'pop',.6,0,2);
  ev('a1_bk',3.40,'rise',.5,{dy:900}); S(3.40,'whoosh',.6,.2);
  HOLES.forEach((h,i)=>{ev(`a1_lb${i}`,h.t,'pop',.34);S(h.t,'pop',.8,h.d*.4,1+i);S(h.t+.02,'crack',.35,h.d*.4);});
- ev('a1_cap',7.30,'stamp',.3); S(7.30,'slam',.7);
+ ev('a1_cap',7.90,'stamp',.3); S(7.90,'slam',.7);
  const X=BEND;
  linOut('a1_k1',X); linOut('a1_k2',X); ev('a1_src',X,'sout',.24); ev('a1_bk',X,'whipOutU',.38);
  HOLES.forEach((h,i)=>ev(`a1_lb${i}`,X,'whipOutU',.38)); ev('a1_cap',X,'whipOutU',.38); S(X,'whooshBig',.8);
  BLUR.push([3.40,3.85,24],[X,X+.42,32]);
  // S3 · a virada (só tipografia)
- lin('a1_s1',8.62); lin('a1_s2',8.80,.42); S(8.80,'thock',.8);
- lin('a1_s3',9.70); lin('a1_s4',9.88,.42); S(9.88,'impact',.8);
- linOut('a1_s1',10.86); linOut('a1_s2',10.86); linOut('a1_s3',10.86); linOut('a1_s4',10.86);
+ lin('a1_s1',9.52); lin('a1_s2',9.70,.42); S(9.70,'thock',.8);
+ lin('a1_s3',10.60); lin('a1_s4',10.78,.42); S(10.78,'impact',.8);
+ linOut('a1_s1',11.76); linOut('a1_s2',11.76); linOut('a1_s3',11.76); linOut('a1_s4',11.76);
 },
 render(T,TF){
  const on=T>=3.40&&T<BEND+.45;
@@ -79,5 +79,5 @@ render(T,TF){
   for(let j=0;j<NLK;j++){const el=$(`a1_pl${i}_${j}`),u=(T-h.t)/.85+j/NLK-1;const show=on&&op&&u>=0;vis(el,show);if(!show)continue;
    const s=u-Math.floor(u);el.style.left=(h.x+h.d*(22+110*s)-7)+'px';el.style.top=(h.y+20*s+520*s*s-7)+'px';el.style.opacity=1-s*.6;}});
 }});
-TRANS.push({t:11.35,cw:.18,out:'A1',inc:'A2'});
+TRANS.push({t:12.25,cw:.18,out:'A1',inc:'A2'});
 })();

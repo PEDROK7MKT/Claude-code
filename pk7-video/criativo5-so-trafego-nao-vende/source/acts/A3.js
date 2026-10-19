@@ -3,7 +3,7 @@
 const CH=['🎯 Estratégia','👁 Pixel','↺ Remarketing','🤖 Atendimento com IA','📈 Funil e painel'];
 const SEAL=30.60,STING=34.90;
 const vis=(el,on)=>{el.style.visibility=on?'visible':'hidden';};
-ACTS.push({id:'A3',t0:22.77,t1:36.0,z:3,bg:true,
+ACTS.push({id:'A3',t0:22.77,t1:36.0,dt:.9,z:3,bg:true,
 html:`
  <div class="a c5kick" id="a3_k" style="top:250px"><span>Não é promessa</span></div>
  ${HL('a3_h',340,150,'<span id="a3_num">+R$ 0 MIL</span>')}

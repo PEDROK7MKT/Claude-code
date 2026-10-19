@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""PK7 criativo 5 "SÓ TRÁFEGO NÃO VENDE" (36.0 s): trilha + efeitos, reaproveitando os instrumentos, os efeitos, o ducking,
+"""PK7 criativo 5 "SÓ TRÁFEGO NÃO VENDE" (36.9 s): trilha + efeitos, reaproveitando os instrumentos, os efeitos, o ducking,
 o limitador e os relatórios do audio8.py (criativo 4) com a linha do tempo do criativo 5.
 
   0.00-10.90  tensão (Ré menor): baixo abafado + pizz, relógio; a partir de 6.60 bumbo suave e pad crescendo;
@@ -26,14 +26,14 @@ import numpy as np
 from scipy import signal
 import audio8 as a
 
-G0, G1 = 11.00, 11.17
-DROP, WIN, SEAL, STING = 11.70, 19.90, 30.60, 34.90
-STAMP2 = 8.30
+G0, G1 = 11.90, 12.07
+DROP, WIN, SEAL, STING = 12.60, 20.80, 31.50, 35.80
+STAMP2 = 9.20
 # ---- linha do tempo do criativo 5 nos globais do audio8 (gates, âncoras, camadas, relatórios)
 a.GATE0, a.GATE1 = G0, G1; a.HOLE = (G0, G1); a.VACUO = (G0, G1)
 a.RISER0, a.RISER1 = G1, DROP - .05
 a.DROP_T = a.BAR0 = DROP
-a.HATS_T, a.CLAP_T, a.SYNB_T, a.CHORD_T, a.FULL_T = 12.90, 14.30, 15.70, 17.10, WIN
+a.HATS_T, a.CLAP_T, a.SYNB_T, a.CHORD_T, a.FULL_T = 13.80, 15.20, 16.60, 18.00, WIN
 a.SCRATCH_T, a.LP_BACK, a.SEAL_T, a.STING_T = 99.0, 99.0, SEAL, STING
 a.HERO_NOMINAL = (0.0, DROP, SEAL, STING)
 a.HERO_TIMES = a._hero_times()

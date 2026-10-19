@@ -7,7 +7,7 @@ curl -s -o /dev/null http://127.0.0.1:8098/core.css || (nohup python3 -m http.se
 python3 build.py --acts A1,A2,A3 --out index.html
 NODE_PATH=$NODE_PATH node cues.js index.html
 rm -rf frames; mkdir -p frames/sub
-NF=1080
+NF=1107
 python3 -c "
 n=$NF;step=20
 for s in range(0,n,step): print(s,min(n,s+step))" | xargs -P 4 -n 2 sh -c 'VAR=org OUT=frames node frames2.js $0 $1'

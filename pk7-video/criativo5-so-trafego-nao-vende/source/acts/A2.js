@@ -15,7 +15,7 @@ const NODES=[
 ];
 const vis=(el,on)=>{el.style.visibility=on?'visible':'hidden';};
 const popq=(el,t0,T)=>{const q=P(T,t0,t0+.36);vis(el,T>=t0-1e-6);el.style.transform=`scale(${.5+.5*eb(q)})`;};
-ACTS.push({id:'A2',t0:11.17,t1:23.15,z:2,bg:true,
+ACTS.push({id:'A2',t0:11.17,t1:23.15,dt:.9,z:2,bg:true,
 html:`
  <div class="a c5kick" id="a2_kick" style="top:240px"><span>A solução:</span></div>
  ${HL('a2_h',320,112,'A MÁQUINA')}
@@ -66,5 +66,5 @@ render(T,TF){
  const dim=eo(P(T,WIN-.05,WIN+.3));$('a2_all').style.opacity=1-.72*dim;$('a2_all').style.filter=dim>.01?`blur(${3*dim}px)`:'none';
  const g=$('a2_glow');g.style.opacity=dim*(.85+.15*Math.sin(T*5));g.style.transform=`scale(${.7+.3*eo(P(T,WIN,WIN+.6))})`;
 }});
-TRANS.push({t:22.95,cw:.18,out:'A2',inc:'A3'});
+TRANS.push({t:23.85,cw:.18,out:'A2',inc:'A3'});
 })();

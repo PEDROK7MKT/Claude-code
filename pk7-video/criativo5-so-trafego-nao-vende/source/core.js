@@ -9,14 +9,15 @@ const eo=t=>1-Math.pow(1-t,3), ei=t=>t*t*t, eio=t=>t<.5?4*t*t*t:1-Math.pow(-2*t+
 const eb=(t,s=1.70158)=>{const c3=s+1;return 1+c3*Math.pow(t-1,3)+s*Math.pow(t-1,2)};   // outBack
 const lerp=(a,b,p)=>a+(b-a)*p;
 const rnd=i=>{let x=Math.sin(i*127.1+311.7)*43758.5453;return x-Math.floor(x);};     // deterministic 0..1
-const TOTAL=36.0, FPS=30, EPS=1e-6;
+const TOTAL=36.9, FPS=30, EPS=1e-6;
 const fq=t=>Math.round(t*FPS)/FPS;   // quantize a time to the frame grid
 
 // ---------------------------------------------------------------- registries filled by the acts
 const ACTS=[];        // {id,t0,t1,z,html,init(),render(T,TF)}
 const TRANS=[];       // slash wipes {t,cw,out,inc}
 const BLUR=[];        // motion-blur windows [t0,t1,K] (frames2.js takes the max K of the windows containing a frame)
-const CUES=[]; const S=(t,n,v=1,p=0,d)=>CUES.push(Object.assign({t:+(+t).toFixed(3),n,v,p},d!==undefined?{d:+(+d).toFixed(3)}:{}));
+let DT=0;   // per-act time offset (act.dt): everything an act registers in init() is shifted by it
+const CUES=[]; const S=(t,n,v=1,p=0,d)=>CUES.push(Object.assign({t:+(+t+DT).toFixed(3),n,v,p},d!==undefined?{d:+(+d).toFixed(3)}:{}));
 
 // ---------------------------------------------------------------- avatar assets (EDGE=1 swaps in copies whose
 // border pixels are pure magenta, so an automated check can prove no hard image edge is ever on screen)
@@ -25,8 +26,8 @@ const POPURL=pose=>`cut/${pose}-pop.png`;
 
 // ---------------------------------------------------------------- declarative timeline (optional; an element is
 // driven EITHER by ev() events OR by an act's render(), never both)
-const EV=[]; const ev=(id,t,a,d=.5,o={})=>{EV.push(Object.assign({id,t,a,d},o));};
-const TX=[]; const txt=(id,t,s)=>TX.push({id,t,s});
+const EV=[]; const ev=(id,t,a,d=.5,o={})=>{EV.push(Object.assign({id,t:t+DT,a,d},o));};
+const TX=[]; const txt=(id,t,s)=>TX.push({id,t:t+DT,s});
 const fsz=el=>{let f=parseFloat(getComputedStyle(el).fontSize);const c=el.firstElementChild;if(c){const g=parseFloat(getComputedStyle(c).fontSize);if(g>f)f=g;}return f;};
 const lis=id=>[...document.querySelectorAll(`#${id} .li`)];
 const lin=(id,t,d=.42,st=.07)=>{lis(id).forEach((el,i)=>ev(el.id,t+i*st,'maskUp',d,{h:fsz(el)*1.62,fs:fsz(el)}));};
@@ -217,7 +218,8 @@ function boot(){
  if(EDGE)document.body.classList.add('edge');
  document.querySelectorAll('.ml').forEach(el=>{el.innerHTML=el.innerHTML.split(/<br\s*\/?>/i).map((h,i)=>`<span class="ln"><span class="li" id="${el.id}_l${i}">${h}</span></span>`).join('');});
  document.querySelectorAll('[data-stk]').forEach(mountSeal);
- for(const a of ACTS)if(a.init)a.init();
+ for(const a of ACTS){if(a.dt){a.t0+=a.dt;a.t1+=a.dt;}DT=a.dt||0;BLUR.push=(...w)=>Array.prototype.push.apply(BLUR,w.map(([x,y,k])=>[x+DT,y+DT,k]));
+  if(a.init)a.init();DT=0;delete BLUR.push;}
  BYID={};EV.forEach(e=>{(BYID[e.id]=BYID[e.id]||[]).push(e);});Object.values(BYID).forEach(a=>a.sort((x,y)=>x.t-y.t));
  TXI={};TX.forEach(x=>{if(!(x.id in TXI))TXI[x.id]=$(x.id).textContent;});
  CUES.sort((a,b)=>a.t-b.t);
@@ -235,6 +237,6 @@ window.render=function(T){
    cur.style.display='block';cur.style.transform=`translateX(${Xc}px) skewX(-12deg)`;}
  for(const id in BYID)apply(id,T,TF);
  for(const id in TXI){let s=TXI[id];for(const x of TX)if(x.id===id&&TF>=x.t-EPS)s=x.s;$(id).textContent=s;}
- for(const a of ACTS)if(a.el.style.display==='block'&&a.render)a.render(T,TF);
+ for(const a of ACTS)if(a.el.style.display==='block'&&a.render){const d=a.dt||0;a.render(T-d,fq(TF-d));}
  $('grain').style.backgroundPosition=`${(Math.round(T*30)*137)%540}px ${(Math.round(T*30)*251)%960}px`;
 };
