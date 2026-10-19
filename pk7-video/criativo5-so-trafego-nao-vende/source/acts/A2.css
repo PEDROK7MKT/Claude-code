@@ -1,0 +1,44 @@
+/* A2 · a máquina liga */
+.c5kick{position:absolute;left:0;width:1080px;display:flex;justify-content:center}
+.c5kick span{background:var(--lime);color:var(--navy);font:700 32px "Space Grotesk";letter-spacing:.08em;text-transform:uppercase;padding:12px 26px;border-radius:12px}
+.c5rail{position:absolute;left:94px;width:6px;border-radius:3px;background:rgba(10,15,44,.12)}
+.c5railf{position:absolute;left:94px;width:6px;border-radius:3px;background:var(--navy);box-shadow:0 0 18px rgba(183,228,0,.9);transform-origin:50% 0}
+.c5dot{position:absolute;left:79px;width:36px;height:36px;border-radius:50%;background:var(--lime);border:5px solid var(--navy);box-shadow:0 0 0 10px rgba(183,228,0,.35),0 0 40px 10px rgba(183,228,0,.6);z-index:4}
+.c5node{position:absolute;left:140px;width:860px;height:196px;border-radius:30px;color:#F4F6FF;background:linear-gradient(165deg,#1B2667 0%,#121A46 100%);
+ border:3px solid rgba(255,255,255,.1);box-shadow:0 30px 60px -30px rgba(10,15,44,.55)}
+.c5node .no{position:absolute;left:30px;top:30px;width:56px;height:56px;border-radius:16px;border:3px solid rgba(255,255,255,.25);
+ display:grid;place-items:center;font:700 30px "Space Grotesk";color:rgba(244,246,255,.7)}
+.c5node .ti{position:absolute;left:110px;top:28px;font:700 46px "Space Grotesk";text-transform:uppercase;letter-spacing:-.01em;white-space:nowrap}
+.c5node .su{position:absolute;left:110px;top:90px;width:390px;font:600 29px/1.3 "Plus Jakarta Sans";color:#AFC0FF}
+.c5node .ok{position:absolute;right:26px;top:26px;width:52px;height:52px;border-radius:50%;background:var(--lime);color:var(--navy);
+ display:grid;place-items:center;font:700 32px "Space Grotesk"}
+.c5node.on{border-color:var(--lime);box-shadow:0 0 0 6px rgba(183,228,0,.15),0 30px 60px -24px rgba(0,0,0,.8),0 0 60px -10px rgba(183,228,0,.45)}
+.c5node.on .no{background:var(--lime);border-color:var(--lime);color:var(--navy)}
+.c5w{position:absolute}
+.c5bars{left:560px;top:96px;width:200px;height:76px;display:flex;align-items:flex-end;gap:12px}
+.c5bars i{flex:1;border-radius:8px 8px 3px 3px;background:#3A63F0;transform-origin:50% 100%}
+.c5bars i:last-child{background:var(--lime)}
+.c5bub{left:530px;top:80px;background:#DCF8C6;color:#111;border-radius:18px 18px 4px 18px;padding:12px 18px 8px;font:600 27px/1.22 "Plus Jakarta Sans";white-space:nowrap}
+.c5bub small{display:block;text-align:right;font:600 20px "Plus Jakarta Sans";color:#5f7a62}
+.c5bub small b{color:#34B7F1}
+.c5cal{left:540px;top:104px;display:flex;align-items:center;gap:12px;background:#F4F6FF;color:var(--navy);border-radius:16px;padding:12px 18px;font:700 28px "Space Grotesk";white-space:nowrap}
+.c5cal em{font-style:normal;background:var(--lime);border-radius:8px;padding:2px 8px}
+.c5spark{left:540px;top:86px;width:260px;height:96px}
+.c5win{position:absolute;left:140px;top:740px;width:800px;height:420px;border-radius:40px;background:var(--lime);color:var(--navy);
+ display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;box-shadow:0 0 0 14px rgba(183,228,0,.18),0 50px 110px -30px rgba(0,0,0,.9),0 0 160px rgba(183,228,0,.45);z-index:6}
+.c5win .ck{width:110px;height:110px;border-radius:50%;background:var(--navy);color:var(--lime);display:grid;place-items:center;font:700 70px "Space Grotesk"}
+.c5win b{font:700 70px "Space Grotesk";text-transform:uppercase;letter-spacing:-.02em}
+.c5win span{font:700 32px "Plus Jakarta Sans";opacity:.8}
+.c5glow{position:absolute;left:40px;top:540px;width:1000px;height:820px;border-radius:50%;background:radial-gradient(closest-side,rgba(183,228,0,.32),rgba(183,228,0,0));z-index:5}
+/* v2 educativo: 5 peças mais baixas */
+.c5node.sm{height:160px}
+.c5node.sm .no{top:24px;width:52px;height:52px;font-size:28px}
+.c5node.sm .ti{top:20px;font-size:42px}
+.c5node.sm .su{top:74px;width:420px;font-size:26px;line-height:1.28}
+.c5chips{left:600px;top:44px;width:240px;display:flex;flex-direction:column;gap:8px;align-items:flex-start}
+.c5chips span{background:#F4F6FF;color:var(--navy);border-radius:12px;padding:6px 12px;font:700 23px "Plus Jakarta Sans";white-space:nowrap}
+.c5chips span.lm{background:var(--lime)}
+.c5re{left:600px;top:34px;width:230px;display:flex;align-items:center;gap:12px}
+.c5re svg{flex:none;width:86px;height:86px}
+.c5re span{font:700 24px/1.2 "Plus Jakarta Sans";color:#E6EBFF}
+.c5win b.eq{font-size:62px}

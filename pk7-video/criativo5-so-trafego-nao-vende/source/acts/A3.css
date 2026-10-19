@@ -1,0 +1,18 @@
+/* A3 · prova + chamada (responder com 1 palavra) */
+.c5plq{position:absolute;left:90px;top:600px;width:400px;border:14px solid #fff;border-radius:20px;box-shadow:0 40px 80px -24px rgba(0,0,0,.85)}
+.c5stat{position:absolute;left:540px;width:450px;height:170px;border-radius:28px;background:linear-gradient(165deg,#1B2667 0%,#121A46 100%);
+ border:2px solid rgba(255,255,255,.12);padding:22px 30px;box-shadow:0 30px 60px -24px rgba(0,0,0,.8)}
+.c5stat b{display:block;font:700 66px "Space Grotesk";color:var(--lime);letter-spacing:-.03em;line-height:1;white-space:nowrap}
+.c5stat span{display:block;font:600 28px "Plus Jakarta Sans";color:#AFC0FF;margin-top:12px}
+.c5opt{position:absolute;left:110px;width:860px;height:170px;border-radius:30px;display:flex;align-items:center;gap:28px;padding:0 36px;box-shadow:0 30px 60px -30px rgba(10,15,44,.45)}
+.c5opt .w{flex:none;width:370px;font:700 66px "Space Grotesk";text-transform:uppercase;letter-spacing:-.03em;white-space:nowrap}
+.c5opt .d{font:600 29px/1.28 "Plus Jakarta Sans"}
+.c5opt .dt{flex:none;width:30px;height:30px;border-radius:50%}
+.c5opt.o0{background:var(--lime);color:var(--navy)}.c5opt.o0 .dt{background:var(--navy)}
+.c5opt.o1{background:#FFFFFF;color:var(--navy);border:3px solid #DDE3F6}.c5opt.o1 .dt{background:#FFB020}.c5opt.o1 .d{color:#3b4270}
+.c5opt.o2{background:rgba(10,15,44,.03);border:3px dashed rgba(10,15,44,.35);color:var(--navy);box-shadow:none}.c5opt.o2 .dt{background:rgba(10,15,44,.35)}.c5opt.o2 .d{color:#52566E}
+.c5rep{position:absolute;left:470px;top:1210px;width:560px}
+.c5rep b{display:block;font:700 62px/1.02 "Space Grotesk";text-transform:uppercase;letter-spacing:-.02em;color:var(--navy)}
+.c5rep span{display:block;font:600 28px "Plus Jakarta Sans";color:#52566E;margin-top:14px}
+.c5arr{position:absolute;left:640px;top:1420px;width:120px;height:120px}
+.c5ring{position:absolute;left:96px;width:888px;height:198px;border-radius:40px;border:6px solid var(--navy);box-shadow:0 0 0 6px rgba(183,228,0,.7);pointer-events:none}

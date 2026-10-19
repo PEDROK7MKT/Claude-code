@@ -1,0 +1,47 @@
+/* A1 · gancho, decisão pendente, lead perdido */
+.c5pill{position:absolute;left:0;width:1080px;display:flex;justify-content:center}
+.c5pill span{display:inline-flex;align-items:center;gap:14px;background:var(--navy);border:3px solid var(--navy);color:var(--lime);
+ font:700 30px "Space Grotesk";letter-spacing:.06em;text-transform:uppercase;padding:14px 28px;border-radius:999px}
+.c5pill i{width:18px;height:18px;border-radius:50%;background:#2BD96B;box-shadow:0 0 0 6px rgba(43,217,107,.25)}
+.c5tag{position:absolute;font:700 22px "Space Grotesk";letter-spacing:.14em;text-transform:uppercase;color:rgba(10,15,44,.6);
+ background:rgba(10,15,44,.05);border:2px solid rgba(10,15,44,.14);padding:6px 14px;border-radius:10px}
+/* proposta */
+.c5doc{position:absolute;background:#FFFFFF;color:var(--navy);border-radius:34px;border:2px solid #DDE3F6;box-shadow:0 50px 100px -40px rgba(10,15,44,.45);overflow:hidden}
+.c5doc .top{position:absolute;left:44px;right:44px;top:40px;display:flex;align-items:center;gap:16px}
+.c5doc .lg{background:var(--lime);color:var(--navy);font:700 30px "Space Grotesk";padding:6px 14px;border-radius:10px}
+.c5doc .ty{font:700 26px "Space Grotesk";letter-spacing:.14em;color:#6b7194}
+.c5doc .tt{position:absolute;left:44px;right:44px;top:120px;font:800 46px "Plus Jakarta Sans";letter-spacing:-.02em;line-height:1.1}
+.c5doc .ln2{position:absolute;left:44px;height:16px;border-radius:8px;background:#DDE2F2}
+.c5doc .st{position:absolute;left:44px;top:330px;display:inline-flex;align-items:center;gap:12px;background:#FFF1D6;color:#9A5B00;
+ font:700 28px "Space Grotesk";letter-spacing:.04em;text-transform:uppercase;padding:12px 20px;border-radius:14px}
+.c5doc .bar{position:absolute;left:44px;right:44px;top:440px;height:28px;border-radius:14px;background:#E3E7F5;overflow:hidden}
+.c5doc .bar i{position:absolute;left:0;top:0;bottom:0;width:87%;border-radius:14px;background:linear-gradient(90deg,#FFB020,#FFC95C)}
+.c5doc .bar b{position:absolute;top:0;bottom:0;width:120px;background:linear-gradient(90deg,rgba(255,255,255,0),rgba(255,255,255,.7),rgba(255,255,255,0))}
+.c5doc .bl{position:absolute;left:44px;right:44px;top:490px;display:flex;justify-content:space-between;font:700 26px "Plus Jakarta Sans";color:#6b7194}
+.c5doc .bl b{color:var(--navy)}
+.c5spin{width:30px;height:30px;border-radius:50%;border:5px solid rgba(154,91,0,.25);border-top-color:#9A5B00}
+/* chat */
+.c5chat{position:absolute;background:#ECE5DD;border-radius:34px;box-shadow:0 50px 100px -40px rgba(10,15,44,.5);overflow:hidden;color:#111}
+.c5chat .hd{position:absolute;left:0;right:0;top:0;height:120px;background:#075E54;display:flex;align-items:center;gap:20px;padding:0 34px;color:#fff}
+.c5chat .cav{width:70px;height:70px;border-radius:50%;background:#C9D3DC;display:grid;place-items:center;font:700 34px "Plus Jakarta Sans";color:#5d6b78}
+.c5chat .nm{font:700 34px "Plus Jakarta Sans"}.c5chat .sb{font:500 24px "Plus Jakarta Sans";opacity:.8}
+.c5b{position:absolute;max-width:680px;background:#fff;border-radius:22px;padding:20px 26px 14px;font:500 40px/1.3 "Plus Jakarta Sans";box-shadow:0 2px 0 rgba(0,0,0,.08)}
+.c5b small{display:block;text-align:right;font:500 22px "Plus Jakarta Sans";color:#7b8790;margin-top:6px}
+.c5wait{position:absolute;left:0;right:0;display:flex;justify-content:center}
+.c5wait span{display:inline-flex;align-items:center;gap:12px;background:rgba(0,0,0,.08);color:#4b565f;font:700 28px "Plus Jakarta Sans";padding:10px 22px;border-radius:999px}
+.c5lost{position:absolute;left:0;width:1080px;display:flex;justify-content:center;z-index:8}
+.c5lost .stamp{font:700 84px "Space Grotesk";text-transform:uppercase;letter-spacing:-.01em;padding:8px 30px 4px}
+/* v2 educativo: anúncio, balde furado */
+.c5ad{position:absolute;background:#fff;border-radius:34px;border:2px solid #DDE3F6;box-shadow:0 50px 100px -40px rgba(10,15,44,.45);color:var(--navy);overflow:hidden}
+.c5ad .hd{position:absolute;left:40px;right:40px;top:34px;display:flex;align-items:center;gap:16px;font:700 34px "Plus Jakarta Sans"}
+.c5ad .hd em{margin-left:auto;font:700 24px "Space Grotesk";font-style:normal;letter-spacing:.06em;text-transform:uppercase;color:#18A957;background:#E2F7EA;padding:8px 16px;border-radius:999px}
+.c5ad .rw{position:absolute;left:40px;right:40px;height:96px;display:flex;align-items:center;justify-content:space-between;border-top:2px solid #EEF1F7;font:600 34px "Plus Jakarta Sans";color:#52566E}
+.c5ad .rw b{font:700 54px "Space Grotesk";color:var(--navy);letter-spacing:-.02em}
+.c5ad .rw.z b{color:var(--loss)}
+.c5chipR{position:absolute;display:flex;align-items:center;gap:10px;background:#FFE3E6;color:#C8283A;border:3px solid #FF9AA5;font:700 26px "Space Grotesk";letter-spacing:0;text-transform:uppercase;padding:10px 14px;border-radius:14px;white-space:nowrap}
+.c5src{position:absolute;left:0;width:1080px;display:flex;justify-content:center}
+.c5src span{background:var(--navy);color:#fff;font:700 30px "Space Grotesk";letter-spacing:.06em;text-transform:uppercase;padding:12px 24px;border-radius:14px}
+.c5p{position:absolute;width:16px;height:16px;border-radius:50%;background:var(--navy)}
+.c5p.r{background:var(--loss);width:14px;height:14px}
+.c5cap{position:absolute;left:0;width:1080px;display:flex;justify-content:center}
+.c5cap span{background:var(--loss);color:#fff;font:700 40px "Space Grotesk";text-transform:uppercase;letter-spacing:.01em;padding:14px 28px;border-radius:16px;box-shadow:0 20px 40px -18px rgba(255,77,94,.7)}
