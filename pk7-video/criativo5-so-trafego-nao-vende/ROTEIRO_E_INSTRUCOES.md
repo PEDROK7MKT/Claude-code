@@ -10,7 +10,7 @@ O argumento é que o anúncio sozinho traz gente, mas sem estrutura essa gente v
 - atendimento com IA;
 - funil e painel.
 
-O vídeo termina dizendo que é por isso que a PK7 não vende só tráfego: monta a máquina inteira.
+O vídeo termina dizendo que é por isso que a PK7 não vende só tráfego: ela monta a máquina inteira. A narração fica em terceira pessoa ("a PK7"), porque a voz é a Raquel.
 
 ## Roteiro
 | Tempo | Cena | Na tela |
@@ -21,7 +21,7 @@ O vídeo termina dizendo que é por isso que a PK7 não vende só tráfego: mont
 | 11,2–19,9 s | A máquina | "A SOLUÇÃO: A MÁQUINA DE VENDAS." · as 5 peças acendem com o ponto (o lead) descendo a trilha, uma explicação por peça (lista abaixo) |
 | 19,9–23 s | Resultado | cartão verde-limão **TRÁFEGO + ESTRUTURA = VENDA.** · "AGORA SIM, O TRÁFEGO VENDE." |
 | 23–27 s | Prova | **+R$ 500 MIL** (contando) **FATURADOS NA APPMAX** · troféus **+ DIVERSAS PREMIAÇÕES** · selo do Pedro comemorando |
-| 27–36 s | Fechamento | "POR ISSO EU NÃO VENDO **SÓ** TRÁFEGO." · as 5 peças se juntam em **⚙ MÁQUINA DE VENDAS** · "EU MONTO A MÁQUINA INTEIRA." · cartão **QUER MONTAR A SUA? · MANDA "MÁQUINA" NO DIRECT · ou acesse pk7.com.br** · selo do Pedro apontando |
+| 27–36 s | Fechamento | "POR ISSO A PK7 NÃO VENDE **SÓ** TRÁFEGO." · as 5 peças se juntam em **⚙ MÁQUINA DE VENDAS** · "ELA MONTA A MÁQUINA INTEIRA." · cartão **QUER MONTAR A SUA? · MANDA "MÁQUINA" NO DIRECT · ou acesse pk7.com.br** · selo do Pedro apontando |
 
 **As 5 peças da máquina:**
 1. **Estratégia e oferta:** anúncio certo pra pessoa certa, com motivo pra comprar.

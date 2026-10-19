@@ -1,4 +1,4 @@
-// A3 · 22.77–36.00 — PROVA (+R$ 500 mil na Appmax + diversas premiações) → POR ISSO EU NÃO VENDO SÓ TRÁFEGO → EU MONTO A MÁQUINA INTEIRA → CTA aberta
+// A3 · 22.77–36.00 — PROVA (+R$ 500 mil na Appmax + diversas premiações) → POR ISSO A PK7 NÃO VENDE SÓ TRÁFEGO → ELA MONTA A MÁQUINA INTEIRA → CTA aberta
 (()=>{
 const CH=['🎯 Estratégia','👁 Pixel','↺ Remarketing','🤖 Atendimento com IA','📈 Funil e painel'];
 const SEAL=30.60,STING=34.90;
@@ -15,9 +15,9 @@ html:`
  ${sealHTML({id:'a3_cel',pose:'pose-celebrate',x:540,y:1260,s:.82,rot:-2,theme:'lime',ring:'PEDRO R GOMES • PK7',ringAt:90,z:6})}
 
 
- ${HL('a3_c1',270,76,'POR ISSO EU NÃO VENDO')}
- ${HL('a3_c2',365,76,'<span class="R">SÓ</span> TRÁFEGO.')}
- ${HL('a3_c3',270,80,'EU MONTO A')}
+ ${HL('a3_c1',270,76,'POR ISSO A PK7')}
+ ${HL('a3_c2',365,72,'NÃO VENDE <span class="R">SÓ</span> TRÁFEGO.')}
+ ${HL('a3_c3',270,80,'ELA MONTA A')}
  ${HL('a3_c4',365,80,'<span class="L">MÁQUINA INTEIRA.</span>')}
  <div style="position:absolute;left:110px;top:540px;width:860px;display:flex;flex-wrap:wrap;gap:18px;justify-content:center">
   ${CH.map((c,i)=>`<span class="a" id="a3_ch${i}" style="position:relative;background:#fff;border:3px solid #DDE3F6;border-radius:18px;padding:16px 26px;font:700 38px 'Plus Jakarta Sans';color:#0A0F2C;box-shadow:0 20px 40px -26px rgba(10,15,44,.5)">${c}</span>`).join('')}
