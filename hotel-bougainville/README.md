@@ -38,6 +38,18 @@ https://hotelbougainvillebarreiras.com.br/
 
 Se o novo site mudar as URLs, fazer redirect 301 das cinco páginas acima.
 
+## Domínio (consulta Registro.br/RDAP em 20/10/2026)
+
+| | |
+|---|---|
+| Titular | **Hotel Bougainville LTDA — CNPJ 13.212.889/0001-12** |
+| Contato administrativo e técnico | Melquisedeque Mano dos Santos (ID `MMS875`, webdesigner@hotmail.com) — o dev antigo |
+| Registrado em | 31/01/2012 |
+| **Expira em** | **31/01/2027** |
+| DNS | dns1–dns4.uni5.net (hospedagem Uni5) |
+
+O domínio pertence à empresa, mas quem tem o login e administra é o dev.
+
 ## Ficha do hotel
 
 | | |
