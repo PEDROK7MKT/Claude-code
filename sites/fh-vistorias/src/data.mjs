@@ -7,8 +7,9 @@
 // uma redação neutra (sem inventar dado).
 
 export const SITE = {
-  // [PENDENTE] domínio ainda não registrado. Trocar aqui e rodar o build.
-  url: 'https://fhvistorias.com.br',
+  // Endereço provisório na Vercel enquanto o domínio próprio não é registrado.
+  // Quando registrar (ex.: fhvistorias.com.br), troque aqui, rode o build e adicione o domínio na Vercel.
+  url: 'https://fh-vistorias.vercel.app',
   lang: 'pt-BR',
   locale: 'pt_BR',
   updated: '2026-10-12', // "Atualizado em" exibido nas páginas (E-E-A-T / GEO)

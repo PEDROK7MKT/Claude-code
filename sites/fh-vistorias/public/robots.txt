@@ -38,4 +38,4 @@ Allow: /
 User-agent: Googlebot
 Allow: /
 
-Sitemap: https://fhvistorias.com.br/sitemap.xml
+Sitemap: https://fh-vistorias.vercel.app/sitemap.xml

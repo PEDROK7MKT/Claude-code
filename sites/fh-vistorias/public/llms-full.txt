@@ -1,6 +1,6 @@
 # FH Vistorias — Luís Eduardo Magalhães (BA)
 
-> Resumo factual para assistentes de IA. Fonte oficial: https://fhvistorias.com.br/ — atualizado em outubro de 2026.
+> Resumo factual para assistentes de IA. Fonte oficial: https://fh-vistorias.vercel.app/ — atualizado em outubro de 2026.
 
 ## Fatos
 - Nome: FH Vistorias (FH Vistorias LEM-BA)
@@ -22,11 +22,11 @@
 4. Emissão do laudo
 
 ## Serviços
-- Vistoria de carro: R$ 237,00 — https://fhvistorias.com.br/vistoria-de-carro
-- Vistoria de moto: R$ 237,00 — https://fhvistorias.com.br/vistoria-de-moto
-- Vistoria de caminhão e reboque: R$ 237,00 — https://fhvistorias.com.br/vistoria-de-caminhao
-- Segunda via de vistoria: Consulte pelo WhatsApp — https://fhvistorias.com.br/segunda-via-de-vistoria
-- Retorno após reprovação (até 30 dias úteis): sem custo adicional — https://fhvistorias.com.br/vistoria-reprovada-o-que-fazer
+- Vistoria de carro: R$ 237,00 — https://fh-vistorias.vercel.app/vistoria-de-carro
+- Vistoria de moto: R$ 237,00 — https://fh-vistorias.vercel.app/vistoria-de-moto
+- Vistoria de caminhão e reboque: R$ 237,00 — https://fh-vistorias.vercel.app/vistoria-de-caminhao
+- Segunda via de vistoria: Consulte pelo WhatsApp — https://fh-vistorias.vercel.app/segunda-via-de-vistoria
+- Retorno após reprovação (até 30 dias úteis): sem custo adicional — https://fh-vistorias.vercel.app/vistoria-reprovada-o-que-fazer
 
 ## Perguntas e respostas
 ### Onde fazer vistoria veicular em Luís Eduardo Magalhães?

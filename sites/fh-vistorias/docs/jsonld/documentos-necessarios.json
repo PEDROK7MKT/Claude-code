@@ -6,20 +6,20 @@
         "LocalBusiness",
         "AutomotiveBusiness"
       ],
-      "@id": "https://fhvistorias.com.br/#organization",
+      "@id": "https://fh-vistorias.vercel.app/#organization",
       "name": "FH Vistorias",
       "alternateName": "FH Vistorias LEM-BA",
       "description": "Empresa credenciada pelo DETRAN-BA que realiza vistoria veicular de transferência para carros, motos e caminhões em Luís Eduardo Magalhães, Bahia, com laudo emitido na hora e sem agendamento.",
       "slogan": "Confiança que te move.",
-      "url": "https://fhvistorias.com.br/",
+      "url": "https://fh-vistorias.vercel.app/",
       "logo": {
         "@type": "ImageObject",
-        "url": "https://fhvistorias.com.br/images/logo-fh-vistorias.png",
+        "url": "https://fh-vistorias.vercel.app/images/logo-fh-vistorias.png",
         "width": 512,
         "height": 512
       },
       "image": [
-        "https://fhvistorias.com.br/images/og-fh-vistorias.png"
+        "https://fh-vistorias.vercel.app/images/og-fh-vistorias.png"
       ],
       "telephone": "+55-77-99122-8535",
       "priceRange": "R$ 237",
@@ -93,7 +93,7 @@
             "itemOffered": {
               "@type": "Service",
               "name": "Vistoria veicular de carro",
-              "url": "https://fhvistorias.com.br/vistoria-de-carro"
+              "url": "https://fh-vistorias.vercel.app/vistoria-de-carro"
             },
             "price": "237.00",
             "priceCurrency": "BRL"
@@ -103,7 +103,7 @@
             "itemOffered": {
               "@type": "Service",
               "name": "Vistoria veicular de moto",
-              "url": "https://fhvistorias.com.br/vistoria-de-moto"
+              "url": "https://fh-vistorias.vercel.app/vistoria-de-moto"
             },
             "price": "237.00",
             "priceCurrency": "BRL"
@@ -113,7 +113,7 @@
             "itemOffered": {
               "@type": "Service",
               "name": "Vistoria de caminhão e reboque",
-              "url": "https://fhvistorias.com.br/vistoria-de-caminhao"
+              "url": "https://fh-vistorias.vercel.app/vistoria-de-caminhao"
             },
             "price": "237.00",
             "priceCurrency": "BRL"
@@ -123,7 +123,7 @@
             "itemOffered": {
               "@type": "Service",
               "name": "Segunda via de vistoria",
-              "url": "https://fhvistorias.com.br/segunda-via-de-vistoria"
+              "url": "https://fh-vistorias.vercel.app/segunda-via-de-vistoria"
             }
           }
         ]
@@ -131,57 +131,57 @@
     },
     {
       "@type": "WebSite",
-      "@id": "https://fhvistorias.com.br/#website",
-      "url": "https://fhvistorias.com.br/",
+      "@id": "https://fh-vistorias.vercel.app/#website",
+      "url": "https://fh-vistorias.vercel.app/",
       "name": "FH Vistorias",
       "inLanguage": "pt-BR",
       "publisher": {
-        "@id": "https://fhvistorias.com.br/#organization"
+        "@id": "https://fh-vistorias.vercel.app/#organization"
       }
     },
     {
       "@type": "WebPage",
-      "@id": "https://fhvistorias.com.br/documentos-necessarios#webpage",
-      "url": "https://fhvistorias.com.br/documentos-necessarios",
+      "@id": "https://fh-vistorias.vercel.app/documentos-necessarios#webpage",
+      "url": "https://fh-vistorias.vercel.app/documentos-necessarios",
       "name": "Documentos para Vistoria Veicular em LEM | FH",
       "description": "Quais documentos levar para a vistoria em Luís Eduardo Magalhães: transferência, placa Mercosul, segunda via, troca de motor e mais.",
       "inLanguage": "pt-BR",
       "isPartOf": {
-        "@id": "https://fhvistorias.com.br/#website"
+        "@id": "https://fh-vistorias.vercel.app/#website"
       },
       "about": {
-        "@id": "https://fhvistorias.com.br/#organization"
+        "@id": "https://fh-vistorias.vercel.app/#organization"
       },
       "dateModified": "2026-10-12",
       "primaryImageOfPage": {
         "@type": "ImageObject",
-        "url": "https://fhvistorias.com.br/images/og-fh-vistorias.png"
+        "url": "https://fh-vistorias.vercel.app/images/og-fh-vistorias.png"
       },
       "breadcrumb": {
-        "@id": "https://fhvistorias.com.br/documentos-necessarios#breadcrumb"
+        "@id": "https://fh-vistorias.vercel.app/documentos-necessarios#breadcrumb"
       }
     },
     {
       "@type": "BreadcrumbList",
-      "@id": "https://fhvistorias.com.br/documentos-necessarios#breadcrumb",
+      "@id": "https://fh-vistorias.vercel.app/documentos-necessarios#breadcrumb",
       "itemListElement": [
         {
           "@type": "ListItem",
           "position": 1,
           "name": "Início",
-          "item": "https://fhvistorias.com.br/"
+          "item": "https://fh-vistorias.vercel.app/"
         },
         {
           "@type": "ListItem",
           "position": 2,
           "name": "Documentos necessários",
-          "item": "https://fhvistorias.com.br/documentos-necessarios"
+          "item": "https://fh-vistorias.vercel.app/documentos-necessarios"
         }
       ]
     },
     {
       "@type": "FAQPage",
-      "@id": "https://fhvistorias.com.br/documentos-necessarios#faq",
+      "@id": "https://fh-vistorias.vercel.app/documentos-necessarios#faq",
       "mainEntity": [
         {
           "@type": "Question",

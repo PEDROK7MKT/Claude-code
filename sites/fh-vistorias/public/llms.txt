@@ -16,25 +16,25 @@
 - Instagram: https://www.instagram.com/fhvistorialem/
 
 ## Páginas principais
-- [Vistoria veicular em Luís Eduardo Magalhães — Credenciada pelo DETRAN-BA](https://fhvistorias.com.br/): Vistoria credenciada pelo DETRAN-BA em LEM. Carro, moto e caminhão. Sem agendamento, laudo na hora. Chame no WhatsApp!
-- [Vistoria veicular em Luís Eduardo Magalhães (BA)](https://fhvistorias.com.br/vistoria-veicular-luis-eduardo-magalhaes): Tudo sobre vistoria veicular em Luís Eduardo Magalhães: onde fazer, valor, documentos e horário. FH Vistorias, credenciada DETRAN-BA.
-- [Vistoria de transferência de veículo em LEM](https://fhvistorias.com.br/vistoria-de-transferencia): Como fazer a vistoria de transferência em Luís Eduardo Magalhães: documentos, valor e passo a passo. Laudo emitido na hora.
-- [Vistoria de carro em Luís Eduardo Magalhães](https://fhvistorias.com.br/vistoria-de-carro): Vistoria de carro credenciada DETRAN-BA em LEM por R$ 237,00. Sem agendamento e laudo na hora. Rua São Francisco, 1516, Centro.
-- [Vistoria de moto em Luís Eduardo Magalhães](https://fhvistorias.com.br/vistoria-de-moto): Vistoria de moto credenciada DETRAN-BA em LEM por R$ 237,00. Sem agendamento, laudo na hora e retorno grátis em 30 dias úteis.
-- [Vistoria de caminhão e reboque em LEM](https://fhvistorias.com.br/vistoria-de-caminhao): Vistoria de caminhão, reboque e semirreboque credenciada DETRAN-BA em Luís Eduardo Magalhães. R$ 237,00, laudo emitido na hora.
-- [Segunda via de vistoria em Luís Eduardo Magalhães](https://fhvistorias.com.br/segunda-via-de-vistoria): Precisa da segunda via do laudo de vistoria em Luís Eduardo Magalhães? Veja como pedir na FH Vistorias, credenciada pelo DETRAN-BA.
-- [Vistoria reprovada: o que fazer](https://fhvistorias.com.br/vistoria-reprovada-o-que-fazer): Vistoria reprovada em LEM? Na FH Vistorias você tem até 30 dias úteis para regularizar e voltar sem custo adicional. Veja o que fazer.
-- [Valor da vistoria veicular em LEM](https://fhvistorias.com.br/valores): Carro, moto e caminhão: R$ 237,00. Preço transparente, informado antes de começar. Retorno grátis em 30 dias úteis.
-- [Como funciona a vistoria veicular na FH](https://fhvistorias.com.br/como-funciona): Passo a passo da vistoria na FH Vistorias em LEM: chegada, atendimento, vistoria e laudo emitido na hora. Sem agendamento.
-- [Documentos necessários para a vistoria](https://fhvistorias.com.br/documentos-necessarios): Quais documentos levar para a vistoria em Luís Eduardo Magalhães: transferência, placa Mercosul, segunda via, troca de motor e mais.
-- [Perguntas frequentes sobre vistoria veicular](https://fhvistorias.com.br/perguntas-frequentes): Documentos, prazo, preço, reprovação e agendamento. Respostas diretas da FH Vistorias, empresa credenciada em LEM-BA.
-- [Sobre a FH Vistorias](https://fhvistorias.com.br/sobre): Conheça a FH Vistorias: empresa de vistoria veicular credenciada pelo DETRAN-BA em Luís Eduardo Magalhães. Segurança, agilidade e confiança.
-- [Contato e localização](https://fhvistorias.com.br/contato): FH Vistorias: Rua São Francisco, 1516, Centro, Luís Eduardo Magalhães-BA. WhatsApp (77) 99122-8535. Seg a sex, 7h30–12h10 e 14h–17h30.
-- [Blog da FH Vistorias](https://fhvistorias.com.br/blog): Guias práticos sobre vistoria veicular, transferência de veículo e documentos em Luís Eduardo Magalhães, pela FH Vistorias.
+- [Vistoria veicular em Luís Eduardo Magalhães — Credenciada pelo DETRAN-BA](https://fh-vistorias.vercel.app/): Vistoria credenciada pelo DETRAN-BA em LEM. Carro, moto e caminhão. Sem agendamento, laudo na hora. Chame no WhatsApp!
+- [Vistoria veicular em Luís Eduardo Magalhães (BA)](https://fh-vistorias.vercel.app/vistoria-veicular-luis-eduardo-magalhaes): Tudo sobre vistoria veicular em Luís Eduardo Magalhães: onde fazer, valor, documentos e horário. FH Vistorias, credenciada DETRAN-BA.
+- [Vistoria de transferência de veículo em LEM](https://fh-vistorias.vercel.app/vistoria-de-transferencia): Como fazer a vistoria de transferência em Luís Eduardo Magalhães: documentos, valor e passo a passo. Laudo emitido na hora.
+- [Vistoria de carro em Luís Eduardo Magalhães](https://fh-vistorias.vercel.app/vistoria-de-carro): Vistoria de carro credenciada DETRAN-BA em LEM por R$ 237,00. Sem agendamento e laudo na hora. Rua São Francisco, 1516, Centro.
+- [Vistoria de moto em Luís Eduardo Magalhães](https://fh-vistorias.vercel.app/vistoria-de-moto): Vistoria de moto credenciada DETRAN-BA em LEM por R$ 237,00. Sem agendamento, laudo na hora e retorno grátis em 30 dias úteis.
+- [Vistoria de caminhão e reboque em LEM](https://fh-vistorias.vercel.app/vistoria-de-caminhao): Vistoria de caminhão, reboque e semirreboque credenciada DETRAN-BA em Luís Eduardo Magalhães. R$ 237,00, laudo emitido na hora.
+- [Segunda via de vistoria em Luís Eduardo Magalhães](https://fh-vistorias.vercel.app/segunda-via-de-vistoria): Precisa da segunda via do laudo de vistoria em Luís Eduardo Magalhães? Veja como pedir na FH Vistorias, credenciada pelo DETRAN-BA.
+- [Vistoria reprovada: o que fazer](https://fh-vistorias.vercel.app/vistoria-reprovada-o-que-fazer): Vistoria reprovada em LEM? Na FH Vistorias você tem até 30 dias úteis para regularizar e voltar sem custo adicional. Veja o que fazer.
+- [Valor da vistoria veicular em LEM](https://fh-vistorias.vercel.app/valores): Carro, moto e caminhão: R$ 237,00. Preço transparente, informado antes de começar. Retorno grátis em 30 dias úteis.
+- [Como funciona a vistoria veicular na FH](https://fh-vistorias.vercel.app/como-funciona): Passo a passo da vistoria na FH Vistorias em LEM: chegada, atendimento, vistoria e laudo emitido na hora. Sem agendamento.
+- [Documentos necessários para a vistoria](https://fh-vistorias.vercel.app/documentos-necessarios): Quais documentos levar para a vistoria em Luís Eduardo Magalhães: transferência, placa Mercosul, segunda via, troca de motor e mais.
+- [Perguntas frequentes sobre vistoria veicular](https://fh-vistorias.vercel.app/perguntas-frequentes): Documentos, prazo, preço, reprovação e agendamento. Respostas diretas da FH Vistorias, empresa credenciada em LEM-BA.
+- [Sobre a FH Vistorias](https://fh-vistorias.vercel.app/sobre): Conheça a FH Vistorias: empresa de vistoria veicular credenciada pelo DETRAN-BA em Luís Eduardo Magalhães. Segurança, agilidade e confiança.
+- [Contato e localização](https://fh-vistorias.vercel.app/contato): FH Vistorias: Rua São Francisco, 1516, Centro, Luís Eduardo Magalhães-BA. WhatsApp (77) 99122-8535. Seg a sex, 7h30–12h10 e 14h–17h30.
+- [Blog da FH Vistorias](https://fh-vistorias.vercel.app/blog): Guias práticos sobre vistoria veicular, transferência de veículo e documentos em Luís Eduardo Magalhães, pela FH Vistorias.
 
 ## Artigos
-- [Comprei um veículo usado em LEM. E agora?](https://fhvistorias.com.br/blog/comprei-veiculo-usado-o-que-fazer): Comprou carro, moto ou caminhão usado em Luís Eduardo Magalhães? Veja o passo a passo até colocar o veículo no seu nome, com vistoria.
-- [Vistoria de transferência x vistoria cautelar: qual a diferença?](https://fhvistorias.com.br/blog/vistoria-de-transferencia-ou-cautelar): Vistoria de transferência é exigida pelo DETRAN; a cautelar é opcional, antes da compra. Entenda a diferença e quando fazer cada uma.
+- [Comprei um veículo usado em LEM. E agora?](https://fh-vistorias.vercel.app/blog/comprei-veiculo-usado-o-que-fazer): Comprou carro, moto ou caminhão usado em Luís Eduardo Magalhães? Veja o passo a passo até colocar o veículo no seu nome, com vistoria.
+- [Vistoria de transferência x vistoria cautelar: qual a diferença?](https://fh-vistorias.vercel.app/blog/vistoria-de-transferencia-ou-cautelar): Vistoria de transferência é exigida pelo DETRAN; a cautelar é opcional, antes da compra. Entenda a diferença e quando fazer cada uma.
 
 ## Opcional
-- [Versão completa em texto para IA](https://fhvistorias.com.br/llms-full.txt)
+- [Versão completa em texto para IA](https://fh-vistorias.vercel.app/llms-full.txt)
