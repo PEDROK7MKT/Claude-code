@@ -91,6 +91,11 @@ com o parâmetro `link_location` (hero, header, barra_mobile, faq…). Marque-os
 
 ## Deploy (Vercel)
 
+**No ar em:** https://fh-vistorias.vercel.app (projeto `fh-vistorias` na Vercel, publicado a partir da
+branch `claude/jolly-heisenberg-xic1ac`). O projeto ainda não está ligado ao Git para deploy automático:
+cada atualização precisa de um novo deploy de produção (ou ligue o repositório em Settings → Git).
+
+
 1. Em vercel.com → **Add New → Project**, importe este repositório.
 2. **Root Directory:** `sites/fh-vistorias`. O `vercel.json` já define build (`node build.mjs`),
    saída (`public`), URLs limpas, redirecionamento `www → sem www` e cabeçalhos de cache/segurança.

@@ -14,7 +14,7 @@
 | **Endereço** | Rua São Francisco, 1516 — Centro, Luís Eduardo Magalhães — BA, 47850-000 |
 | **Área de atendimento** | **Não preencher** — o cliente vai até a unidade (loja física). |
 | **Telefone** | (77) 99122-8535 |
-| **Site** | `https://fhvistorias.com.br/?utm_source=google&utm_medium=organic&utm_campaign=gbp` |
+| **Site** | `https://fh-vistorias.vercel.app/?utm_source=google&utm_medium=organic&utm_campaign=gbp` |
 | **Link de agendamento/mensagem** | `https://wa.me/5577991228535` (ativar também "Mensagens" se disponível) |
 | **Horário** | Seg a sex: 07:30–12:10 e 14:00–17:30 (dois turnos no mesmo dia). Sáb e dom: fechado **[confirmar]**. Cadastrar horários especiais em todo feriado. |
 | **Data de abertura** | **[confirmar]** |
@@ -97,7 +97,7 @@ Vistoria veicular credenciada DETRAN-BA
 Sem agendamento · Laudo na hora
 🕗 Seg–Sex 7h30–12h10 · 14h–17h30
 ```
-- Link na bio: `https://fhvistorias.com.br/?utm_source=instagram&utm_medium=social&utm_campaign=bio`
+- Link na bio: `https://fh-vistorias.vercel.app/?utm_source=instagram&utm_medium=social&utm_campaign=bio`
 - Destaques: Valores · Como funciona · Documentos · Localização · Avaliações
 - Categoria do perfil comercial: serviço automotivo; endereço preenchido.
 
@@ -109,7 +109,7 @@ Sem agendamento · Laudo na hora
 FH Vistorias
 Rua São Francisco, 1516 — Centro, Luís Eduardo Magalhães — BA, 47850-000
 (77) 99122-8535
-https://fhvistorias.com.br
+https://fh-vistorias.vercel.app
 ```
 
 - [ ] Bing Places (dá para importar do Google)
