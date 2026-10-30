@@ -61,11 +61,13 @@ atualização, que foram os problemas do site antigo.
 - Recepção (ligação e WhatsApp): (77) 99944-3086
 - Check-in 13h, check-out 11h
 - Café da manhã incluso na diária
+- Pagamento: cartão, PIX e dinheiro
+- Lavanderia: sim. "Serviço de quarto" é só limpeza/arrumação (sem entrega de comida)
+- WhatsApp: só o (77) 99944-3086 no site; o fixo 3613-2429 também tem WhatsApp, mas fica só como telefone para não dividir o contato
 
 ### Confirmar com o hotel antes de publicar
+- [ ] Aceita pets?
 - [ ] Quádruplo: 1 casal + 3 solteiro — confere? Quantas pessoas no máximo?
-- [ ] Lavanderia e serviço de quarto ainda existem?
-- [ ] Aceita pets? Formas de pagamento? (não estão no site por falta de dado)
 - [ ] Instagram do hotel (para colocar no rodapé e no schema).
 - [ ] Foto atual da fachada inteira (as 3 de fachada são antigas, da Wego).
 - [ ] Logo em vetor (o ícone do site é um desenho provisório inspirado na flor).
@@ -166,7 +168,7 @@ mesa de trabalho, guarda-roupa, TV a cabo, quartos família.
 ### Serviços e estrutura
 
 Café da manhã (buffet com pratos quentes) · Recepção 24h · Wi-Fi grátis em
-todo o hotel · Estacionamento gratuito · Serviço de quarto · Lavanderia ·
+todo o hotel · Estacionamento gratuito · Limpeza do quarto · Lavanderia ·
 Elevador · Quartos não fumantes · Acessibilidade · Espaço com computador.
 
 ### Reputação (para selos/depoimentos)

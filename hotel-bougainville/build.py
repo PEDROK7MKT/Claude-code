@@ -45,6 +45,8 @@ HOTEL = {
     "checkin_txt": "13h",
     "checkout_txt": "11h",
     "facebook": "https://www.facebook.com/hotelbougainvillebarreiras/",
+    "payment": "cartão, PIX e dinheiro",
+    "payment_schema": "Cartão, PIX, Dinheiro",
 }
 H = HOTEL
 CHECK_TXT = f"Check-in a partir das {H['checkin_txt']} e check-out até as {H['checkout_txt']}"
@@ -121,7 +123,7 @@ AMENITIES = [  # (schema name, icon, title, text)
     ("Wi-Fi gratuito", "wifi", "Wi-Fi grátis", "Internet sem fio em todo o hotel, nos quartos e nas áreas comuns."),
     ("Ar-condicionado", "snow", "Ar-condicionado", "Todos os apartamentos têm ar-condicionado split."),
     ("Elevador", "elevator", "Elevador", "Acesso fácil a todos os andares, inclusive com bagagem."),
-    ("Serviço de quarto", "bell", "Serviço de quarto", "Atendimento no apartamento quando você precisar."),
+    ("Limpeza do quarto", "bell", "Limpeza do apartamento", "Arrumação e limpeza do apartamento durante a sua estadia."),
     ("Lavanderia", "shirt", "Lavanderia", "Serviço de lavanderia para estadias mais longas."),
     ("Quartos não fumantes", "nosmoke", "Ambiente não fumante", "Apartamentos livres de fumo, mais saudáveis e sem cheiro."),
 ]
@@ -145,6 +147,10 @@ FAQ = [
      "Sim. Os apartamentos Triplo e Quádruplo acomodam famílias e grupos no mesmo quarto."),
     ("Como faço uma reserva?",
      f"Você pode reservar pelo número da recepção {H['whatsapp']} (ligação ou WhatsApp), pelos telefones fixos {H['phone']} e {H['phone2']} ou pelo e-mail {H['email']}. No site, o formulário de reserva já monta a mensagem com as suas datas."),
+    ("Quais formas de pagamento o hotel aceita?",
+     f"O Hotel Bougainville aceita {H['payment']}."),
+    ("O hotel tem lavanderia?",
+     "Sim, o hotel oferece serviço de lavanderia para os hóspedes."),
     ("Tem elevador?",
      "Sim, o hotel tem elevador com acesso a todos os andares."),
     ("É permitido fumar nos quartos?",
@@ -312,6 +318,7 @@ def hotel_schema():
         "smokingAllowed": False,
         "availableLanguage": ["pt-BR"],
         "currenciesAccepted": "BRL",
+        "paymentAccepted": H["payment_schema"],
         "amenityFeature": [{"@type": "LocationFeatureSpecification", "name": a[0], "value": True} for a in AMENITIES],
         "containsPlace": [room_schema(r) for r in ROOMS],
         "areaServed": {"@type": "City", "name": "Barreiras"},
@@ -392,7 +399,7 @@ def footer():
       </div>
       <div>
         <h2>Horários</h2>
-        <ul><li>Recepção 24 horas</li><li>Check-in a partir das {H['checkin_txt']}</li><li>Check-out até as {H['checkout_txt']}</li></ul>
+        <ul><li>Recepção 24 horas</li><li>Check-in a partir das {H['checkin_txt']}</li><li>Check-out até as {H['checkout_txt']}</li><li>Pagamento: {H['payment']}</li></ul>
         <p><a href="{H['facebook']}" rel="noopener" target="_blank">Facebook</a></p>
       </div>
     </div>
@@ -698,7 +705,7 @@ def servicos():
 </div></section>
 {cta_band()}"""
     return page("/servicos/", "Serviços e café da manhã | Hotel Bougainville Barreiras",
-                "Recepção 24h, café da manhã com pratos regionais, estacionamento grátis, Wi-Fi, elevador e lavanderia no Hotel Bougainville, em Barreiras-BA.",
+                "Recepção 24h, café da manhã incluso, estacionamento grátis, Wi-Fi, elevador, lavanderia e limpeza do quarto no Hotel Bougainville, em Barreiras-BA.",
                 body, ld=[crumbs_schema(trail)])
 
 
@@ -743,6 +750,7 @@ def contato():
 <li>{icon('mail')}<div><strong>E-mail</strong><a href="mailto:{H['email']}">{H['email']}</a></div></li>
 <li>{icon('pin')}<div><strong>Endereço</strong>{H['street']}<br>{H['city']} – {H['state_name']} – CEP {H['cep']}<br><a href="{MAPS_DIR}" rel="noopener" target="_blank">Traçar rota no Google Maps</a></div></li>
 <li>{icon('clock')}<div><strong>Horários</strong>Recepção 24 horas · Check-in a partir das {H['checkin_txt']} · Check-out até as {H['checkout_txt']}</div></li>
+<li>{icon('star')}<div><strong>Pagamento</strong>Aceitamos {H['payment']}</div></li>
 </ul>
 <h3 class="mt">Distâncias</h3>
 {distances_html()}
@@ -808,6 +816,7 @@ Sitemap: {H['url']}/sitemap.xml
 - Reservas: recepção (ligação e WhatsApp) {H['whatsapp']} · Telefones fixos {H['phone']} e {H['phone2']} · {H['email']}
 - Check-in: a partir das {H['checkin_txt']} · Check-out: até as {H['checkout_txt']} · Recepção 24 horas
 - Café da manhã: incluso na diária
+- Pagamento: {H['payment']}
 - Site: {H['url']}/
 
 ## Apartamentos
