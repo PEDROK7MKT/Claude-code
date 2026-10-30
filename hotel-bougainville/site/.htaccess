@@ -1,0 +1,68 @@
+# Hotel Bougainville – configuração Apache (cPanel / hospedagem compartilhada)
+Options -Indexes
+DirectoryIndex index.html
+ErrorDocument 404 /404.html
+
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+
+  # HTTPS e domínio sem www
+  RewriteCond %{HTTPS} off [OR]
+  RewriteCond %{HTTP_HOST} ^www\. [NC]
+  RewriteRule ^ https://hotelbougainvillebarreiras.com.br%{REQUEST_URI} [L,R=301]
+
+  # Páginas antigas do site WordPress
+  RewriteRule ^about-us/?$ /o-hotel/ [L,R=301]
+  RewriteRule ^home-3/?$ / [L,R=301]
+  RewriteRule ^galeria(-de-fotos)?/?$ /galeriadefotos/ [L,R=301]
+
+  # Conteúdo de demonstração/spam do tema antigo: removido de vez (410)
+  RewriteRule ^(hotel-ft-paris|go-to-mountain-village)(/.*)?$ - [G,L]
+
+  # Endpoints do WordPress que não existem mais (corta tráfego de robôs)
+  RewriteRule ^(wp-admin|wp-includes|wp-content|wp-json)(/.*)?$ - [G,L]
+  RewriteRule ^(wp-login\.php|xmlrpc\.php|wp-config\.php|readme\.html|license\.txt)$ - [G,L]
+  RewriteRule ^(feed|comments/feed)/?$ - [G,L]
+
+  # URLs sem barra final -> com barra (evita conteúdo duplicado)
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_URI} !/$
+  RewriteCond %{REQUEST_FILENAME}/ -d
+  RewriteRule ^(.*)$ /$1/ [L,R=301]
+</IfModule>
+
+<IfModule mod_headers.c>
+  Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains"
+  Header always set X-Content-Type-Options "nosniff"
+  Header always set X-Frame-Options "DENY"
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+  Header always set Permissions-Policy "camera=(), microphone=(), geolocation=(), payment=(), usb=()"
+  Header always set Cross-Origin-Opener-Policy "same-origin"
+  Header always set Content-Security-Policy "default-src 'self'; img-src 'self' data:; style-src 'self'; script-src 'self'; font-src 'self'; frame-src https://www.google.com; connect-src 'self'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; object-src 'none'; upgrade-insecure-requests"
+  Header unset X-Powered-By
+
+  <FilesMatch "\.(webp|jpg|png|svg|woff2)$">
+    Header set Cache-Control "public, max-age=2592000"
+  </FilesMatch>
+  <FilesMatch "\.(css|js)$">
+    Header set Cache-Control "public, max-age=604800"
+  </FilesMatch>
+  <FilesMatch "\.(html|xml|txt)$">
+    Header set Cache-Control "public, max-age=0, must-revalidate"
+  </FilesMatch>
+</IfModule>
+
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/css application/javascript text/plain application/xml image/svg+xml
+</IfModule>
+
+<IfModule mod_mime.c>
+  AddType image/webp .webp
+  AddType font/woff2 .woff2
+  AddCharset utf-8 .html .css .js .txt .xml
+</IfModule>
+
+# Bloqueia arquivos sensíveis/ocultos
+<FilesMatch "^\.|\.(bak|sql|log|ini|sh|py|md)$">
+  Require all denied
+</FilesMatch>

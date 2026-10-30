@@ -3,6 +3,76 @@
 Levantamento feito em 20/10/2026 para servir de base ao redesign de
 https://hotelbougainvillebarreiras.com.br/
 
+## Site novo (`site/`)
+
+Site estático (HTML + CSS + 2 KB de JS), sem WordPress, sem plugins, sem
+banco de dados e sem PHP — não há nada para invadir nem para "quebrar" com
+atualização, que foram os problemas do site antigo.
+
+- `build.py` gera tudo em `site/` a partir da ficha `HOTEL` no topo do
+  arquivo: páginas, schema.org, `sitemap.xml`, `robots.txt` e `llms.txt`.
+  Para mudar telefone, horário ou texto: edite `build.py` e rode
+  `python3 build.py` (precisa só de Python 3 e Pillow).
+- Páginas (mesmas URLs do site antigo, para não perder posição no Google):
+  `/`, `/o-hotel/`, `/acomodacoes/`, `/servicos/`, `/galeriadefotos/`,
+  `/contato/` e a nova `/perguntas-frequentes/`.
+- Reserva: formulário que monta a mensagem com as datas e abre o WhatsApp
+  do hotel. Sem formulário de servidor, sem spam, sem dados guardados.
+
+### SEO local
+- Título, descrição, canonical e Open Graph únicos por página.
+- Schema.org `Hotel` completo (endereço, coordenadas, horários, check-in/out,
+  comodidades, CNPJ, quartos como `HotelRoom` com camas e ocupação),
+  `FAQPage`, `BreadcrumbList`, `ImageGallery`, `WebSite`.
+- Meta tags geo (BR-BA, Barreiras, coordenadas do OpenStreetMap).
+- Mesmo nome, endereço e telefone (NAP) em todas as páginas e no rodapé.
+- Imagens WebP responsivas com `alt` descritivo, fontes locais, sem CLS.
+- `sitemap.xml` e `robots.txt`.
+
+### GEO (ChatGPT, Gemini, Perplexity, Claude)
+- `robots.txt` libera explicitamente os robôs de IA.
+- `llms.txt` com a ficha do hotel em texto limpo.
+- Página de perguntas frequentes com respostas diretas e factuais — é o
+  formato que os assistentes citam.
+- Sem nota/estrelas no schema: o Google proíbe avaliações "autodeclaradas"
+  em LocalBusiness e penaliza. A nota deve vir do Perfil da Empresa no Google.
+
+### Segurança (`site/.htaccess` para Apache/cPanel, `site/vercel.json` para Vercel)
+- HTTPS forçado + HSTS, domínio sem `www`.
+- CSP rígida (só scripts e estilos do próprio site; só o mapa do Google de fora).
+- `X-Frame-Options`, `nosniff`, `Referrer-Policy`, `Permissions-Policy`.
+- Páginas de demonstração/spam antigas (`/hotel-ft-paris/`,
+  `/go-to-mountain-village/`) e caminhos do WordPress (`/wp-admin`,
+  `/wp-login.php`, `/xmlrpc.php`…) respondem **410 Gone**, para o Google
+  tirar do índice e os robôs pararem de tentar.
+- Listagem de diretórios desligada.
+
+### Publicar
+1. Subir o **conteúdo** da pasta `site/` para a raiz do site
+   (`public_html` / `www`), incluindo o `.htaccess` (arquivo oculto).
+   Na Vercel: importar a pasta `site/` como projeto estático.
+2. Apagar o WordPress antigo do servidor (fazer backup antes).
+3. Google Search Console: verificar o domínio e enviar `sitemap.xml`;
+   pedir remoção das URLs antigas de demonstração.
+4. Perfil da Empresa no Google: conferir nome, endereço, telefone, site e
+   fotos iguais aos do site.
+
+### Confirmar com o hotel antes de publicar
+- [ ] WhatsApp de reservas é mesmo **(77) 99944-3086**?
+- [ ] Check-in 12h e check-out 12h (veio de sites de reserva).
+- [ ] Café da manhã incluso na diária? (o site só diz que há café da manhã)
+- [ ] Quádruplo: 1 casal + 3 solteiro — confere? Quantas pessoas no máximo?
+- [ ] Lavanderia e serviço de quarto ainda existem?
+- [ ] Aceita pets? Formas de pagamento? (não estão no site por falta de dado)
+- [ ] Instagram do hotel (para colocar no rodapé e no schema).
+- [ ] Foto atual da fachada inteira (as 3 de fachada são antigas, da Wego).
+- [ ] Logo em vetor (o ícone do site é um desenho provisório inspirado na flor).
+
+### Fotos
+`fotos/2026/` — 51 fotos selecionadas da pasta "HOTEL BGVL" do Google Drive
+(enviadas em 30/10/2026), organizadas por área. As versões web estão em
+`site/assets/img/`.
+
 ## Situação do site atual
 
 - **O site está fora do ar.** Toda URL (home, páginas, `wp-json`, `robots.txt`,
