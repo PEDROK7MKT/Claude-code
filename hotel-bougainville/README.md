@@ -202,3 +202,28 @@ parecida com a original, mas não idêntica.
 - `logo-vertical-branca.png`, `logo-horizontal-branca.png` — para fundo escuro.
 
 Para gráfica/impressão, usar o arquivo original do designer, se o hotel tiver.
+
+## Diagnóstico atualizado (30/10/2026)
+
+**Domínio (Registro.br):** titular segue Hotel Bougainville LTDA. Em 26/10 o
+contato **técnico** passou para PEGOM273 (Pedro Gomes); o contato
+**administrativo** continua MMS875 (dev antigo). DNS ainda na Uni5. Vence em
+31/01/2027. Falta o dev passar o administrativo (e a responsabilidade pelo
+CNPJ) para PEGOM273.
+
+**Site antigo:** voltou ao ar (HTTP 200), mas com riscos:
+- WordPress 5.9.3 (2022), muito desatualizado, com falhas conhecidas.
+- `/wp-json/wp/v2/users` expõe o login do administrador (`i9designer`).
+- Sem HTTPS forçado nem cabeçalhos de segurança (HSTS, CSP, X-Frame).
+- Páginas de demonstração do tema no ar e indexáveis ("Hotel FT. Paris",
+  "Visiting Mountain village", "About Us") com endereço falso nos EUA — o
+  texto sobre "Coinbase" é lorem ipsum do tema, não invasão.
+- Título com erro de digitação ("Boungainville").
+
+**Site novo (Vercel, https://hotel-bougainville-barreiras.vercel.app):**
+TLS 1.3, HTTPS forçado, HSTS, CSP rígida, X-Frame DENY, nosniff,
+Referrer/Permissions-Policy; noindex no domínio .vercel.app; arquivos
+internos (build.py, README, fotos originais, .htaccess, vercel.json) não são
+servidos; caminhos do WordPress bloqueados; páginas de demonstração dão 404;
+URLs antigas válidas redirecionam (301/308). Únicos recursos externos: mapa do
+Google (iframe) e links para WhatsApp/Instagram/Facebook.
