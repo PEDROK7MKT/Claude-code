@@ -414,7 +414,12 @@ def footer():
     </div>
   </div>
 </footer>
-<a class="wa-float" href="{WA_LINK}" rel="noopener" target="_blank" aria-label="Falar com a recepção pelo WhatsApp">{WA_SVG}</a>"""
+<a class="wa-float" href="{WA_LINK}" rel="noopener" target="_blank" aria-label="Falar com a recepção pelo WhatsApp">{WA_SVG}</a>
+<nav class="mobile-bar" aria-label="Ações rápidas">
+  <a href="tel:{H['reception_tel']}">{icon('phone', 22)}<span>Ligar</span></a>
+  <a href="{WA_LINK}" rel="noopener" target="_blank">{WA_SVG}<span>WhatsApp</span></a>
+  <a class="mb-primary" href="/contato/#reserva">{icon('bed', 22)}<span>Reservar</span></a>
+</nav>"""
 
 
 def page(path, title, desc, body, ld=(), og_image="og-hotel-bougainville.jpg", preload=None):
@@ -482,7 +487,7 @@ def page_hero(trail, eyebrow, h1, lead):
 
 
 def booking_block():
-    opts = "".join(f"<option>{r['name']} ({r['beds']})</option>" for r in ROOMS)
+    opts = "".join(f"<option>{r['name'].replace('Apartamento ', '')} – {r['beds']}</option>" for r in ROOMS)
     return f"""<section class="section" id="reserva"><div class="wrap">
 <div class="booking">
   <div>
@@ -521,7 +526,8 @@ def room_cards():
         out.append(f"""<article class="card">{img(name, alt, "(min-width: 900px) 280px, 100vw")}
 <div class="card-body"><h3>{r['name']}</h3><p class="beds">{r['beds']}</p><p>{r['for']}.</p>
 <a class="more" href="/acomodacoes/#{r['id']}">Ver detalhes →</a></div></article>""")
-    return '<div class="cards">' + "".join(out) + "</div>"
+    return ('<div class="cards cards-rooms">' + "".join(out) + "</div>"
+            '<p class="swipe-hint" aria-hidden="true">Deslize para ver os 4 apartamentos →</p>')
 
 
 def features(items=AMENITIES):
