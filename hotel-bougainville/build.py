@@ -45,6 +45,8 @@ HOTEL = {
     "checkin_txt": "13h",
     "checkout_txt": "11h",
     "facebook": "https://www.facebook.com/hotelbougainvillebarreiras/",
+    "instagram": "https://www.instagram.com/hotelbougainville/",
+    "instagram_handle": "@hotelbougainville",
     "payment": "cartão, PIX e dinheiro",
     "payment_schema": "Cartão, PIX, Dinheiro",
 }
@@ -234,6 +236,7 @@ ICONS = {
     "phone": '<path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/>',
     "mail": '<rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/>',
     "bed": '<path d="M3 18V7M3 14h18v4M21 14v-2a3 3 0 0 0-3-3h-7v5"/><circle cx="7" cy="11" r="1.6"/>',
+    "camera": '<rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".8"/>',
     "star": '<path d="M12 3l2.6 5.6 6.1.7-4.5 4.2 1.2 6L12 16.6 6.6 19.5l1.2-6L3.3 9.3l6.1-.7z"/>',
 }
 WA_SVG = ('<svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.1l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.7.8-.8 1-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.3-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.9 11.9 0 0 0 4.6 4c1.7.7 2.3.8 3.2.7a2.7 2.7 0 0 0 1.8-1.3 2.2 2.2 0 0 0 .2-1.3c-.1-.1-.2-.2-.4-.3z"/></svg>')
@@ -322,7 +325,7 @@ def hotel_schema():
         "amenityFeature": [{"@type": "LocationFeatureSpecification", "name": a[0], "value": True} for a in AMENITIES],
         "containsPlace": [room_schema(r) for r in ROOMS],
         "areaServed": {"@type": "City", "name": "Barreiras"},
-        "sameAs": [H["facebook"]],
+        "sameAs": [H["instagram"], H["facebook"]],
         "contactPoint": [
             {"@type": "ContactPoint", "telephone": H["reception_tel"], "contactType": "reservations", "description": "Recepção 24h – ligação e WhatsApp", "areaServed": "BR", "availableLanguage": "Portuguese"},
             {"@type": "ContactPoint", "telephone": H["phone_tel"], "contactType": "reservations", "description": "Telefone fixo"},
@@ -400,7 +403,7 @@ def footer():
       <div>
         <h2>Horários</h2>
         <ul><li>Recepção 24 horas</li><li>Check-in a partir das {H['checkin_txt']}</li><li>Check-out até as {H['checkout_txt']}</li><li>Pagamento: {H['payment']}</li></ul>
-        <p><a href="{H['facebook']}" rel="noopener" target="_blank">Facebook</a></p>
+        <p><a href="{H['instagram']}" rel="noopener" target="_blank">Instagram {H['instagram_handle']}</a><br><a href="{H['facebook']}" rel="noopener" target="_blank">Facebook</a></p>
       </div>
     </div>
     <div class="footer-bottom">
@@ -751,6 +754,7 @@ def contato():
 <li>{icon('pin')}<div><strong>Endereço</strong>{H['street']}<br>{H['city']} – {H['state_name']} – CEP {H['cep']}<br><a href="{MAPS_DIR}" rel="noopener" target="_blank">Traçar rota no Google Maps</a></div></li>
 <li>{icon('clock')}<div><strong>Horários</strong>Recepção 24 horas · Check-in a partir das {H['checkin_txt']} · Check-out até as {H['checkout_txt']}</div></li>
 <li>{icon('star')}<div><strong>Pagamento</strong>Aceitamos {H['payment']}</div></li>
+<li>{icon('camera')}<div><strong>Instagram</strong><a href="{H['instagram']}" rel="noopener" target="_blank">{H['instagram_handle']}</a></div></li>
 </ul>
 <h3 class="mt">Distâncias</h3>
 {distances_html()}
@@ -817,6 +821,7 @@ Sitemap: {H['url']}/sitemap.xml
 - Check-in: a partir das {H['checkin_txt']} · Check-out: até as {H['checkout_txt']} · Recepção 24 horas
 - Café da manhã: incluso na diária
 - Pagamento: {H['payment']}
+- Instagram: {H['instagram']} · Facebook: {H['facebook']}
 - Site: {H['url']}/
 
 ## Apartamentos

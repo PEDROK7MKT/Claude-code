@@ -68,7 +68,6 @@ atualização, que foram os problemas do site antigo.
 ### Confirmar com o hotel antes de publicar
 - [ ] Aceita pets?
 - [ ] Quádruplo: 1 casal + 3 solteiro — confere? Quantas pessoas no máximo?
-- [ ] Instagram do hotel (para colocar no rodapé e no schema).
 - [ ] Foto atual da fachada inteira (as 3 de fachada são antigas, da Wego).
 - [ ] Logo em vetor (o ícone do site é um desenho provisório inspirado na flor).
 
@@ -137,7 +136,7 @@ O domínio pertence à empresa, mas quem tem o login e administra é o dev.
 | Recepção (celular / WhatsApp) | (77) 9 9944-3086 (confirmado pelo hotel) |
 | E-mail | reservas@hotelbougainvillebarreiras.com.br |
 | Facebook | https://www.facebook.com/hotelbougainvillebarreiras/ |
-| Instagram | não encontrado — pedir ao cliente |
+| Instagram | https://www.instagram.com/hotelbougainville/ |
 | Check-in / Check-out | 13h / 11h (confirmado pelo hotel) |
 | Distâncias | Centro ~1,4 km · Aeroporto de Barreiras (BRA) ~10 km · Rio de Ondas ~13 km |
 
