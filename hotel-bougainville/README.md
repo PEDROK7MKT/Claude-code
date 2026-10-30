@@ -66,10 +66,10 @@ atualização, que foram os problemas do site antigo.
 - WhatsApp: só o (77) 99944-3086 no site; o fixo 3613-2429 também tem WhatsApp, mas fica só como telefone para não dividir o contato
 
 ### Confirmar com o hotel antes de publicar
-- [ ] Aceita pets?
-- [ ] Quádruplo: 1 casal + 3 solteiro — confere? Quantas pessoas no máximo?
-- [ ] Foto atual da fachada inteira (as 3 de fachada são antigas, da Wego).
-- [ ] Logo em vetor (o ícone do site é um desenho provisório inspirado na flor).
+- [ ] Aceita pets? (ver depois)
+- [ ] Quádruplo: 1 casal + 3 solteiro — confere? Quantas pessoas no máximo? (cliente vai enviar foto)
+- [ ] Foto atual da fachada e do letreiro (cliente vai enviar; as 3 de fachada no site são antigas, da Wego).
+- [ ] Logo original (arquivo do designer). A de `logo/` foi vetorizada a partir da foto da placa da recepção.
 
 ### Fotos
 `fotos/2026/` — 51 fotos selecionadas da pasta "HOTEL BGVL" do Google Drive
@@ -191,3 +191,14 @@ Elevador · Quartos não fumantes · Acessibilidade · Espaço com computador.
   não usar no site novo
 
 Faltam fotos do quarto quádruplo e da logo em vetor — pedir ao cliente.
+
+## Logo (`logo/`)
+Vetorizada a partir da foto da placa da logo na recepção (o Instagram bloqueia
+download automático). A flor é vetor de verdade; o texto usa a fonte Fraunces,
+parecida com a original, mas não idêntica.
+
+- `flor-roxa.svg`, `flor-branca.svg`, `flor-preta.svg` — só o símbolo, em vetor.
+- `logo-vertical.png`, `logo-horizontal.png` — logo completa, fundo transparente.
+- `logo-vertical-branca.png`, `logo-horizontal-branca.png` — para fundo escuro.
+
+Para gráfica/impressão, usar o arquivo original do designer, se o hotel tiver.
