@@ -57,10 +57,12 @@ atualização, que foram os problemas do site antigo.
 4. Perfil da Empresa no Google: conferir nome, endereço, telefone, site e
    fotos iguais aos do site.
 
+### Confirmado pelo hotel (30/10/2026)
+- Recepção (ligação e WhatsApp): (77) 99944-3086
+- Check-in 13h, check-out 11h
+- Café da manhã incluso na diária
+
 ### Confirmar com o hotel antes de publicar
-- [ ] WhatsApp de reservas é mesmo **(77) 99944-3086**?
-- [ ] Check-in 12h e check-out 12h (veio de sites de reserva).
-- [ ] Café da manhã incluso na diária? (o site só diz que há café da manhã)
 - [ ] Quádruplo: 1 casal + 3 solteiro — confere? Quantas pessoas no máximo?
 - [ ] Lavanderia e serviço de quarto ainda existem?
 - [ ] Aceita pets? Formas de pagamento? (não estão no site por falta de dado)
@@ -130,11 +132,11 @@ O domínio pertence à empresa, mas quem tem o login e administra é o dev.
 | Categoria | 3 estrelas |
 | Endereço | Av. Clériston Andrade, 1521 – Vila Brasil (Saída para Salvador) – Barreiras/BA – CEP 47801-250 |
 | Telefones fixos | (77) 3613-2429 / (77) 3613-9779 |
-| Celular / WhatsApp | (77) 9 9944-3086 *(confirmar com o cliente se é WhatsApp)* |
+| Recepção (celular / WhatsApp) | (77) 9 9944-3086 (confirmado pelo hotel) |
 | E-mail | reservas@hotelbougainvillebarreiras.com.br |
 | Facebook | https://www.facebook.com/hotelbougainvillebarreiras/ |
 | Instagram | não encontrado — pedir ao cliente |
-| Check-in / Check-out | 12h / 12h |
+| Check-in / Check-out | 13h / 11h (confirmado pelo hotel) |
 | Distâncias | Centro ~1,4 km · Aeroporto de Barreiras (BRA) ~10 km · Rio de Ondas ~13 km |
 
 Telefones antigos que aparecem em cadastros de CNPJ: (77) 3611-5698 e

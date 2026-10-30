@@ -38,12 +38,16 @@ HOTEL = {
     "phone2_tel": "+557736139779",
     "whatsapp": "(77) 99944-3086",
     "whatsapp_num": "5577999443086",
+    "reception_tel": "+5577999443086",
     "email": "reservas@hotelbougainvillebarreiras.com.br",
-    "checkin": "12:00",
-    "checkout": "12:00",
+    "checkin": "13:00",
+    "checkout": "11:00",
+    "checkin_txt": "13h",
+    "checkout_txt": "11h",
     "facebook": "https://www.facebook.com/hotelbougainvillebarreiras/",
 }
 H = HOTEL
+CHECK_TXT = f"Check-in a partir das {H['checkin_txt']} e check-out até as {H['checkout_txt']}"
 ADDRESS_LINE = f"{H['street']} – {H['city']}/{H['state']} – CEP {H['cep']}"
 MAPS_QUERY = "Hotel+Bougainville,+Av.+Cl%C3%A9riston+Andrade,+1521,+Barreiras+-+BA"
 MAPS_LINK = f"https://www.google.com/maps/search/?api=1&query={MAPS_QUERY}"
@@ -112,7 +116,7 @@ ROOM_AMENITIES = ["Ar-condicionado", "TV de tela plana", "Frigobar", "Wi-Fi grá
 
 AMENITIES = [  # (schema name, icon, title, text)
     ("Recepção 24 horas", "clock", "Recepção 24 horas", "Chegou de madrugada ou vai sair cedo para a estrada? A recepção funciona o tempo todo."),
-    ("Café da manhã", "coffee", "Café da manhã", "Buffet com pães, bolos, frutas, sucos e pratos quentes regionais."),
+    ("Café da manhã incluso", "coffee", "Café da manhã incluso", "Incluso na diária: buffet com pães, bolos, frutas, sucos e pratos quentes regionais."),
     ("Estacionamento gratuito", "car", "Estacionamento grátis", "Vaga para o seu carro sem custo adicional durante a hospedagem."),
     ("Wi-Fi gratuito", "wifi", "Wi-Fi grátis", "Internet sem fio em todo o hotel, nos quartos e nas áreas comuns."),
     ("Ar-condicionado", "snow", "Ar-condicionado", "Todos os apartamentos têm ar-condicionado split."),
@@ -126,9 +130,9 @@ FAQ = [
     ("Onde fica o Hotel Bougainville em Barreiras?",
      f"O Hotel Bougainville fica na {H['street']}, em Barreiras, Bahia (CEP {H['cep']}), na saída para Salvador, a cerca de 1,5 km do centro da cidade e a cerca de 10 km do Aeroporto de Barreiras."),
     ("Qual o horário de check-in e check-out?",
-     "O check-in é a partir das 12h e o check-out até as 12h. A recepção funciona 24 horas, então dá para chegar a qualquer hora."),
-    ("O hotel tem café da manhã?",
-     "Sim. O café da manhã é servido em buffet no salão do hotel, com pães, pão de alho, bolos, frutas, salada de frutas, sucos de caju e laranja, ovos mexidos e pratos quentes regionais, como carne acebolada com mandioca."),
+     f"O check-in é a partir das {H['checkin_txt']} e o check-out até as {H['checkout_txt']}. A recepção funciona 24 horas, então dá para chegar a qualquer hora."),
+    ("O café da manhã está incluso na diária?",
+     "Sim. O café da manhã está incluso na diária e é servido em buffet no salão do hotel, com pães, pão de alho, bolos, frutas, salada de frutas, sucos de caju e laranja, ovos mexidos e pratos quentes regionais, como carne acebolada com mandioca."),
     ("O Hotel Bougainville tem estacionamento?",
      "Sim, o estacionamento é gratuito para hóspedes."),
     ("Tem Wi-Fi?",
@@ -140,7 +144,7 @@ FAQ = [
     ("O hotel recebe famílias?",
      "Sim. Os apartamentos Triplo e Quádruplo acomodam famílias e grupos no mesmo quarto."),
     ("Como faço uma reserva?",
-     f"Você pode reservar pelo WhatsApp {H['whatsapp']}, pelos telefones {H['phone']} e {H['phone2']} ou pelo e-mail {H['email']}. No site, o formulário de reserva já monta a mensagem com as suas datas."),
+     f"Você pode reservar pelo número da recepção {H['whatsapp']} (ligação ou WhatsApp), pelos telefones fixos {H['phone']} e {H['phone2']} ou pelo e-mail {H['email']}. No site, o formulário de reserva já monta a mensagem com as suas datas."),
     ("Tem elevador?",
      "Sim, o hotel tem elevador com acesso a todos os andares."),
     ("É permitido fumar nos quartos?",
@@ -282,9 +286,9 @@ def hotel_schema():
         "alternateName": ["Hotel Bougainville Barreiras", "Bougainville Barreiras"],
         "legalName": H["legal_name"],
         "taxID": H["cnpj"],
-        "description": "Hotel em Barreiras, Bahia, com recepção 24 horas, café da manhã com pratos regionais, estacionamento e Wi-Fi grátis. Apartamentos individual, duplo, triplo e quádruplo com ar-condicionado, TV e frigobar.",
+        "description": "Hotel em Barreiras, Bahia, com recepção 24 horas, café da manhã incluso com pratos regionais, estacionamento e Wi-Fi grátis. Apartamentos individual, duplo, triplo e quádruplo com ar-condicionado, TV e frigobar.",
         "url": f"{H['url']}/",
-        "telephone": H["phone_tel"],
+        "telephone": H["reception_tel"],
         "email": H["email"],
         "image": [H["url"] + biggest(n) for n in ("sala-de-estar", "salao-cafe", "individual-cama-casal", "balcao-recepcao", "entrada-totem")],
         "logo": f"{H['url']}/assets/logo.svg",
@@ -313,8 +317,9 @@ def hotel_schema():
         "areaServed": {"@type": "City", "name": "Barreiras"},
         "sameAs": [H["facebook"]],
         "contactPoint": [
-            {"@type": "ContactPoint", "telephone": H["phone_tel"], "contactType": "reservations", "areaServed": "BR", "availableLanguage": "Portuguese"},
-            {"@type": "ContactPoint", "telephone": "+" + H["whatsapp_num"], "contactType": "reservations", "description": "WhatsApp"},
+            {"@type": "ContactPoint", "telephone": H["reception_tel"], "contactType": "reservations", "description": "Recepção 24h – ligação e WhatsApp", "areaServed": "BR", "availableLanguage": "Portuguese"},
+            {"@type": "ContactPoint", "telephone": H["phone_tel"], "contactType": "reservations", "description": "Telefone fixo"},
+            {"@type": "ContactPoint", "telephone": H["phone2_tel"], "contactType": "reservations", "description": "Telefone fixo"},
         ],
     }
 
@@ -375,7 +380,7 @@ def footer():
       <div>
         <h2>Reservas</h2>
         <ul>
-          <li>WhatsApp: <a href="{WA_LINK}" rel="noopener" target="_blank">{H['whatsapp']}</a></li>
+          <li>Recepção (ligação e WhatsApp): <a href="tel:{H['reception_tel']}">{H['whatsapp']}</a></li>
           <li>Telefone: <a href="tel:{H['phone_tel']}">{H['phone']}</a></li>
           <li>Telefone: <a href="tel:{H['phone2_tel']}">{H['phone2']}</a></li>
           <li><a href="mailto:{H['email']}">{H['email']}</a></li>
@@ -387,7 +392,7 @@ def footer():
       </div>
       <div>
         <h2>Horários</h2>
-        <ul><li>Recepção 24 horas</li><li>Check-in a partir das 12h</li><li>Check-out até as 12h</li></ul>
+        <ul><li>Recepção 24 horas</li><li>Check-in a partir das {H['checkin_txt']}</li><li>Check-out até as {H['checkout_txt']}</li></ul>
         <p><a href="{H['facebook']}" rel="noopener" target="_blank">Facebook</a></p>
       </div>
     </div>
@@ -472,7 +477,7 @@ def booking_block():
     <span class="eyebrow eyebrow-light">Reserva direta</span>
     <h2>Consulte disponibilidade pelo WhatsApp</h2>
     <p>Escolha as datas e o tipo de apartamento. A mensagem já vai pronta para a recepção, que responde com valores e confirma a sua reserva.</p>
-    <p>Prefere ligar? <a class="btn btn-light" href="tel:{H['phone_tel']}">{H['phone']}</a></p>
+    <p>Prefere ligar? <a class="btn btn-light" href="tel:{H['reception_tel']}">{H['whatsapp']}</a></p>
   </div>
   <form class="form" id="reserva-form" data-whatsapp="{H['whatsapp_num']}" novalidate>
     <label>Entrada<input type="date" name="checkin" required></label>
@@ -491,9 +496,9 @@ def booking_block():
 def cta_band():
     return f"""<section class="section cta-band"><div class="wrap">
 <h2>Vai passar por Barreiras?</h2>
-<p>Fale direto com a recepção e garanta o seu apartamento com café da manhã, estacionamento e Wi-Fi grátis.</p>
+<p>Fale direto com a recepção e garanta o seu apartamento com café da manhã incluso, estacionamento e Wi-Fi grátis.</p>
 <div class="hero-actions"><a class="btn btn-light" href="{WA_LINK}" rel="noopener" target="_blank">{WA_SVG} Chamar no WhatsApp</a>
-<a class="btn btn-outline-light" href="tel:{H['phone_tel']}">Ligar {H['phone']}</a></div>
+<a class="btn btn-outline-light" href="tel:{H['reception_tel']}">Ligar {H['whatsapp']}</a></div>
 </div></section>"""
 
 
@@ -531,12 +536,12 @@ def home():
 <div class="wrap">
 <span class="eyebrow">Hotel em Barreiras · Bahia</span>
 <h1>Hotel Bougainville: descanso e praticidade em Barreiras</h1>
-<p>Apartamentos renovados com ar-condicionado, café da manhã com sabor regional, estacionamento e Wi-Fi grátis, na Av. Clériston Andrade, perto do centro.</p>
+<p>Apartamentos renovados com ar-condicionado, café da manhã incluso com sabor regional, estacionamento e Wi-Fi grátis, na Av. Clériston Andrade, perto do centro.</p>
 <div class="hero-actions"><a class="btn btn-primary" href="/contato/#reserva">Consultar disponibilidade</a><a class="btn btn-light" href="/acomodacoes/">Ver apartamentos</a></div>
 </div>
 </section>
 <section class="facts" aria-label="Destaques"><div class="wrap"><ul>
-<li>{icon('clock')} Recepção 24 horas</li><li>{icon('coffee')} Café da manhã</li><li>{icon('car')} Estacionamento grátis</li><li>{icon('wifi')} Wi-Fi grátis</li><li>{icon('snow')} Ar-condicionado</li>
+<li>{icon('clock')} Recepção 24 horas</li><li>{icon('coffee')} Café da manhã incluso</li><li>{icon('car')} Estacionamento grátis</li><li>{icon('wifi')} Wi-Fi grátis</li><li>{icon('snow')} Ar-condicionado</li>
 </ul></div></section>
 
 <section class="section"><div class="wrap split">
@@ -545,7 +550,7 @@ def home():
 <h2>Um hotel em Barreiras feito para quem chega cansado e sai cedo</h2>
 <p>O Hotel Bougainville fica na {H['street']}, na saída para Salvador, a cerca de 1,5 km do centro de Barreiras. É o endereço de quem vem ao Oeste da Bahia a trabalho, de famílias de passagem pela cidade e de quem quer conhecer as cachoeiras e os rios da região.</p>
 <p>O hotel passou por renovação: recepção nova, salas de estar confortáveis, apartamentos com mesa de trabalho e banheiros com bancada em granito. Tudo pensado para uma noite bem dormida.</p>
-<ul class="checks"><li>Check-in a partir das 12h e check-out até as 12h</li><li>Elevador para todos os andares</li><li>Apartamentos não fumantes</li></ul>
+<ul class="checks"><li>{CHECK_TXT}</li><li>Café da manhã incluso na diária</li><li>Elevador para todos os andares</li><li>Apartamentos não fumantes</li></ul>
 <a class="btn btn-ghost" href="/o-hotel/">Conheça o hotel</a>
 </div>
 {img("balcao-recepcao", "Balcão da recepção 24 horas do Hotel Bougainville em Barreiras", "(min-width: 880px) 50vw, 100vw")}
@@ -561,7 +566,7 @@ def home():
 <div>
 <span class="eyebrow">Café da manhã</span>
 <h2>Café da manhã com gosto da Bahia</h2>
-<p>O dia começa no salão com vista da cidade: pão francês quentinho, pão de alho, bolos, frutas da estação, salada de frutas e sucos de caju e laranja.</p>
+<p>Incluso na diária, o café da manhã é servido no salão com vista da cidade: pão francês quentinho, pão de alho, bolos, frutas da estação, salada de frutas e sucos de caju e laranja.</p>
 <p>Na mesa quente tem ovos mexidos, calabresa, salsicha ao molho e carne acebolada com mandioca — café de verdade para quem vai encarar a estrada ou um dia inteiro de reuniões.</p>
 <a class="btn btn-ghost" href="/servicos/#cafe-da-manha">Ver o café da manhã</a>
 </div>
@@ -590,8 +595,8 @@ def home():
 <p class="mt"><a href="/perguntas-frequentes/">Ver todas as perguntas →</a></p>
 </div></section>
 {booking_block()}"""
-    return page("/", "Hotel em Barreiras-BA com café da manhã | Hotel Bougainville",
-                "Hotel em Barreiras, Bahia, na Av. Clériston Andrade: recepção 24h, café da manhã regional, estacionamento e Wi-Fi grátis. Reserve pelo WhatsApp (77) 99944-3086.",
+    return page("/", "Hotel em Barreiras-BA com café da manhã incluso | Bougainville",
+                "Hotel em Barreiras, Bahia, na Av. Clériston Andrade: recepção 24h, café da manhã incluso, estacionamento e Wi-Fi grátis. Reserve pelo WhatsApp (77) 99944-3086.",
                 body, ld=[hotel_schema(), website_schema(), faq_schema(FAQ[:5])], preload=pre)
 
 
@@ -613,7 +618,7 @@ def o_hotel():
 <div>
 <h2>Um hotel renovado</h2>
 <p>A recepção, o hall e as áreas de estar foram renovados, com salas de estar amplas, iluminação natural e decoração nova. Os apartamentos ganharam mesa de trabalho, TV de tela plana, frigobar e ar-condicionado split, e os banheiros têm bancada em granito e box de vidro.</p>
-<ul class="checks two"><li>Recepção 24 horas</li><li>Elevador</li><li>Salas de estar</li><li>Salão de café da manhã com vista</li><li>Estacionamento grátis</li><li>Wi-Fi em todo o hotel</li></ul>
+<ul class="checks two"><li>Recepção 24 horas</li><li>Elevador</li><li>Salas de estar</li><li>Café da manhã incluso</li><li>Salão de café com vista</li><li>Estacionamento grátis</li><li>Wi-Fi em todo o hotel</li></ul>
 </div>
 {img("sala-de-estar-02", "Sala de estar ampla e iluminada do Hotel Bougainville", "(min-width: 880px) 50vw, 100vw")}
 </div></section>
@@ -651,7 +656,7 @@ def acomodacoes():
         '<section class="section section-tight"><div class="wrap">' + "".join(rooms) + "</div></section>" + f"""
 <section class="section section-alt"><div class="wrap split">
 <div><h2>Detalhes que fazem diferença</h2>
-<p>Enxoval branco com a logo do hotel bordada, toalhas macias, banheiro com bancada em granito e box de vidro. Check-in a partir das 12h e check-out até as 12h.</p></div>
+<p>Enxoval branco com a logo do hotel bordada, toalhas macias, banheiro com bancada em granito e box de vidro. {CHECK_TXT}. Café da manhã incluso na diária.</p></div>
 {img("enxoval-bordado", "Enxoval com a logo do Hotel Bougainville bordada", "(min-width: 880px) 50vw, 100vw")}
 </div></section>
 {booking_block()}"""
@@ -669,12 +674,12 @@ def servicos():
             ("pao-de-alho", "Pão de alho do café da manhã"),
             ("sucos-caju-laranja", "Sucos de caju e de laranja no café da manhã")]
     body = page_hero(trail, "Serviços", "Serviços e estrutura do hotel",
-                     "Recepção 24 horas, café da manhã, estacionamento e Wi-Fi grátis: o essencial bem feito.") + f"""
+                     "Recepção 24 horas, café da manhã incluso, estacionamento e Wi-Fi grátis: o essencial bem feito.") + f"""
 <section class="section"><div class="wrap">{features()}</div></section>
 
 <section class="section section-alt" id="cafe-da-manha"><div class="wrap">
-<div class="section-head"><span class="eyebrow">Café da manhã</span><h2>Buffet com pratos quentes e sabores regionais</h2>
-<p class="lead">Servido no salão do hotel, com janelas amplas e vista da cidade.</p></div>
+<div class="section-head"><span class="eyebrow">Café da manhã</span><h2>Café da manhã incluso, com pratos quentes e sabores regionais</h2>
+<p class="lead">Incluso na diária e servido no salão do hotel, com janelas amplas e vista da cidade.</p></div>
 <div class="split">
 <div>
 <h3>O que você encontra no buffet</h3>
@@ -733,11 +738,11 @@ def contato():
 <div>
 <h2>Fale com a gente</h2>
 <ul class="contact-list">
-<li>{WA_SVG}<div><strong>WhatsApp</strong><a href="{WA_LINK}" rel="noopener" target="_blank">{H['whatsapp']}</a></div></li>
-<li>{icon('phone')}<div><strong>Telefones</strong><a href="tel:{H['phone_tel']}">{H['phone']}</a> · <a href="tel:{H['phone2_tel']}">{H['phone2']}</a></div></li>
+<li>{WA_SVG}<div><strong>Recepção (ligação e WhatsApp)</strong><a href="tel:{H['reception_tel']}">{H['whatsapp']}</a> · <a href="{WA_LINK}" rel="noopener" target="_blank">abrir WhatsApp</a></div></li>
+<li>{icon('phone')}<div><strong>Telefones fixos</strong><a href="tel:{H['phone_tel']}">{H['phone']}</a> · <a href="tel:{H['phone2_tel']}">{H['phone2']}</a></div></li>
 <li>{icon('mail')}<div><strong>E-mail</strong><a href="mailto:{H['email']}">{H['email']}</a></div></li>
 <li>{icon('pin')}<div><strong>Endereço</strong>{H['street']}<br>{H['city']} – {H['state_name']} – CEP {H['cep']}<br><a href="{MAPS_DIR}" rel="noopener" target="_blank">Traçar rota no Google Maps</a></div></li>
-<li>{icon('clock')}<div><strong>Horários</strong>Recepção 24 horas · Check-in a partir das 12h · Check-out até as 12h</div></li>
+<li>{icon('clock')}<div><strong>Horários</strong>Recepção 24 horas · Check-in a partir das {H['checkin_txt']} · Check-out até as {H['checkout_txt']}</div></li>
 </ul>
 <h3 class="mt">Distâncias</h3>
 {distances_html()}
@@ -794,14 +799,15 @@ Sitemap: {H['url']}/sitemap.xml
     dist = "\n".join(f"- {a}: {b}" for a, b in DISTANCES)
     (OUT / "llms.txt").write_text(f"""# Hotel Bougainville – Barreiras, Bahia
 
-> Hotel em Barreiras (BA), no Oeste da Bahia, na {H['street']} (saída para Salvador). Recepção 24 horas, café da manhã com pratos regionais, estacionamento grátis e Wi-Fi grátis. Apartamentos individual, duplo, triplo e quádruplo com ar-condicionado, TV, frigobar e banheiro privativo.
+> Hotel em Barreiras (BA), no Oeste da Bahia, na {H['street']} (saída para Salvador). Recepção 24 horas, café da manhã incluso na diária com pratos regionais, estacionamento grátis e Wi-Fi grátis. Apartamentos individual, duplo, triplo e quádruplo com ar-condicionado, TV, frigobar e banheiro privativo.
 
 ## Dados principais
 - Nome: {H['name']} (razão social {H['legal_name']}, CNPJ {H['cnpj']})
 - Endereço: {ADDRESS_LINE}, Brasil
 - Coordenadas: {H['lat']}, {H['lng']}
-- Reservas: WhatsApp {H['whatsapp']} · Telefones {H['phone']} e {H['phone2']} · {H['email']}
-- Check-in: a partir das 12h · Check-out: até as 12h · Recepção 24 horas
+- Reservas: recepção (ligação e WhatsApp) {H['whatsapp']} · Telefones fixos {H['phone']} e {H['phone2']} · {H['email']}
+- Check-in: a partir das {H['checkin_txt']} · Check-out: até as {H['checkout_txt']} · Recepção 24 horas
+- Café da manhã: incluso na diária
 - Site: {H['url']}/
 
 ## Apartamentos
