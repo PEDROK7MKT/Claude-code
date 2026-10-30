@@ -10,6 +10,7 @@
 - Check-in: a partir das 13h · Check-out: até as 11h · Recepção 24 horas
 - Café da manhã: incluso na diária
 - Pagamento: cartão, PIX e dinheiro
+- Pets: não aceita animais de estimação
 - Instagram: https://www.instagram.com/hotelbougainville/ · Facebook: https://www.facebook.com/hotelbougainvillebarreiras/
 - Site: https://hotelbougainvillebarreiras.com.br/
 
@@ -69,6 +70,9 @@ O Hotel Bougainville aceita cartão, PIX e dinheiro.
 
 ### O hotel tem lavanderia?
 Sim, o hotel oferece serviço de lavanderia para os hóspedes.
+
+### O hotel aceita pets?
+Não. O Hotel Bougainville não aceita animais de estimação.
 
 ### Tem elevador?
 Sim, o hotel tem elevador com acesso a todos os andares.

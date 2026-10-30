@@ -62,11 +62,11 @@ atualização, que foram os problemas do site antigo.
 - Check-in 13h, check-out 11h
 - Café da manhã incluso na diária
 - Pagamento: cartão, PIX e dinheiro
+- Não aceita pets
 - Lavanderia: sim. "Serviço de quarto" é só limpeza/arrumação (sem entrega de comida)
 - WhatsApp: só o (77) 99944-3086 no site; o fixo 3613-2429 também tem WhatsApp, mas fica só como telefone para não dividir o contato
 
 ### Confirmar com o hotel antes de publicar
-- [ ] Aceita pets? (ver depois)
 - [ ] Quádruplo: 1 casal + 3 solteiro — confere? Quantas pessoas no máximo? (cliente vai enviar foto)
 - [ ] Foto atual da fachada e do letreiro (cliente vai enviar; as 3 de fachada no site são antigas, da Wego).
 - [ ] Logo original (arquivo do designer). A de `logo/` foi vetorizada a partir da foto da placa da recepção.

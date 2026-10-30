@@ -153,6 +153,8 @@ FAQ = [
      f"O Hotel Bougainville aceita {H['payment']}."),
     ("O hotel tem lavanderia?",
      "Sim, o hotel oferece serviço de lavanderia para os hóspedes."),
+    ("O hotel aceita pets?",
+     "Não. O Hotel Bougainville não aceita animais de estimação."),
     ("Tem elevador?",
      "Sim, o hotel tem elevador com acesso a todos os andares."),
     ("É permitido fumar nos quartos?",
@@ -318,6 +320,7 @@ def hotel_schema():
             "opens": "00:00", "closes": "23:59",
         },
         "smokingAllowed": False,
+        "petsAllowed": False,
         "availableLanguage": ["pt-BR"],
         "currenciesAccepted": "BRL",
         "paymentAccepted": H["payment_schema"],
@@ -401,7 +404,7 @@ def footer():
       </div>
       <div>
         <h2>Horários</h2>
-        <ul><li>Recepção 24 horas</li><li>Check-in a partir das {H['checkin_txt']}</li><li>Check-out até as {H['checkout_txt']}</li><li>Pagamento: {H['payment']}</li></ul>
+        <ul><li>Recepção 24 horas</li><li>Check-in a partir das {H['checkin_txt']}</li><li>Check-out até as {H['checkout_txt']}</li><li>Pagamento: {H['payment']}</li><li>Não aceitamos pets</li></ul>
         <p><a href="{H['instagram']}" rel="noopener" target="_blank">Instagram {H['instagram_handle']}</a><br><a href="{H['facebook']}" rel="noopener" target="_blank">Facebook</a></p>
       </div>
     </div>
@@ -820,6 +823,7 @@ Sitemap: {H['url']}/sitemap.xml
 - Check-in: a partir das {H['checkin_txt']} · Check-out: até as {H['checkout_txt']} · Recepção 24 horas
 - Café da manhã: incluso na diária
 - Pagamento: {H['payment']}
+- Pets: não aceita animais de estimação
 - Instagram: {H['instagram']} · Facebook: {H['facebook']}
 - Site: {H['url']}/
 
