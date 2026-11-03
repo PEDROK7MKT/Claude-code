@@ -227,3 +227,32 @@ internos (build.py, README, fotos originais, .htaccess, vercel.json) não são
 servidos; caminhos do WordPress bloqueados; páginas de demonstração dão 404;
 URLs antigas válidas redirecionam (301/308). Únicos recursos externos: mapa do
 Google (iframe) e links para WhatsApp/Instagram/Facebook.
+
+## Migração do domínio para a Vercel (03/11/2026)
+
+Projeto Vercel `hotel-bougainville` já tem `hotelbougainvillebarreiras.com.br`
+e `www` (redireciona para o domínio sem www). Falta trocar os servidores DNS
+no Registro.br para:
+
+- `ns1.vercel-dns.com`
+- `ns2.vercel-dns.com`
+
+Logo após a troca, recriar na Vercel os registros de e-mail que hoje estão na
+Uni5 (o e-mail `reservas@` continua hospedado na Uni5, na conta do dev):
+
+| Nome | Tipo | Valor |
+|---|---|---|
+| @ | MX 5 | mx-vip-01.uni5.net. |
+| @ | MX 5 | mx-vip-02.uni5.net. |
+| @ | TXT | v=spf1 include:_spf.uni5.net -all |
+| mail | CNAME | smtp-vip.uni5.net. |
+| smtp | CNAME | smtp-vip.uni5.net. |
+| imap | CNAME | imap-vip.uni5.net. |
+| pop | CNAME | imap-vip.uni5.net. |
+| webmail | CNAME | webmail-vip.uni5.net. |
+| autodiscover | CNAME | autoconfig.uni5.net. |
+| autoconfig | CNAME | autoconfig.uni5.net. |
+| ftp | CNAME | web220.uni5.net. (hospedagem antiga, para backup) |
+
+Site (@ e www) a Vercel cria sozinha. Atenção: o e-mail depende da conta Uni5
+do dev continuar ativa — planejar migração para Zoho/Google Workspace.
