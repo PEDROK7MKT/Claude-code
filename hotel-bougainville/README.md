@@ -231,14 +231,17 @@ Google (iframe) e links para WhatsApp/Instagram/Facebook.
 ## Migração do domínio para a Vercel (03/11/2026)
 
 Projeto Vercel `hotel-bougainville` já tem `hotelbougainvillebarreiras.com.br`
-e `www` (redireciona para o domínio sem www). Falta trocar os servidores DNS
-no Registro.br para:
+e `www` (redireciona para o domínio sem www).
 
-- `ns1.vercel-dns.com`
-- `ns2.vercel-dns.com`
+Os servidores da Vercel foram recusados pelo Registro.br ("Pesquisa recusada":
+a Vercel só ativa a zona depois da delegação). Caminho adotado: **DNS do
+Registro.br** ("Utilizar DNS do Registro.br") com a zona abaixo — site na
+Vercel, e-mail `reservas@` continua na Uni5 (conta do dev):
 
-Logo após a troca, recriar na Vercel os registros de e-mail que hoje estão na
-Uni5 (o e-mail `reservas@` continua hospedado na Uni5, na conta do dev):
+| Nome | Tipo | Valor |
+|---|---|---|
+| @ | A | 216.198.79.1 |
+| www | CNAME | 15fdddece3e1c9d0.vercel-dns-017.com |
 
 | Nome | Tipo | Valor |
 |---|---|---|
@@ -254,5 +257,5 @@ Uni5 (o e-mail `reservas@` continua hospedado na Uni5, na conta do dev):
 | autoconfig | CNAME | autoconfig.uni5.net. |
 | ftp | CNAME | web220.uni5.net. (hospedagem antiga, para backup) |
 
-Site (@ e www) a Vercel cria sozinha. Atenção: o e-mail depende da conta Uni5
+Atenção: o e-mail depende da conta Uni5
 do dev continuar ativa — planejar migração para Zoho/Google Workspace.
