@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Hotel Bougainville — Plataformas de reserva</title>
+<style>
+@font-face { font-family: "Fraunces"; src: url("../site/assets/fonts/fraunces-latin.woff2") format("woff2"); font-weight: 400 700; }
+@font-face { font-family: "Inter"; src: url("../site/assets/fonts/inter-latin.woff2") format("woff2"); font-weight: 400 700; }
+@page { size: A4; margin: 16mm 15mm 18mm; }
+:root { --plum: #34204f; --violet: #6a3d9a; --rose: #efe7f7; --line: #e3dce6; --muted: #5f5866; --ink: #1f1a26; --green: #e5f4e4; --greenText: #1f6b33; }
+* { box-sizing: border-box; }
+body { font-family: "Inter", system-ui, sans-serif; color: var(--ink); font-size: 10.2pt; line-height: 1.5; margin: 0; }
+h1, h2 { font-family: "Fraunces", Georgia, serif; color: var(--plum); font-weight: 600; margin: 0; }
+h1 { font-size: 22pt; line-height: 1.15; }
+h2 { font-size: 13.5pt; margin: 18pt 0 6pt; }
+p { margin: 0 0 7pt; }
+.head { display: flex; align-items: center; gap: 12pt; border-bottom: 2pt solid var(--violet); padding-bottom: 10pt; margin-bottom: 12pt; }
+.head svg { width: 40pt; height: 40pt; flex: none; }
+.sub { color: var(--muted); font-size: 9.5pt; margin-top: 3pt; }
+.lead { font-size: 11pt; }
+.cards { display: flex; gap: 8pt; margin: 10pt 0 4pt; }
+.card { flex: 1; border: 1pt solid var(--line); border-radius: 8pt; padding: 8pt 10pt; }
+.card b { display: block; font-family: "Fraunces", serif; font-size: 20pt; color: var(--violet); line-height: 1.1; }
+.card span { font-size: 8.8pt; color: var(--muted); }
+table { width: 100%; border-collapse: collapse; font-size: 9pt; margin: 4pt 0 6pt; page-break-inside: auto; }
+th { background: var(--plum); color: #fff; text-align: left; font-weight: 600; padding: 5pt 6pt; }
+td { padding: 5pt 6pt; border-bottom: 1pt solid var(--line); vertical-align: top; }
+tr { page-break-inside: avoid; }
+tbody tr:nth-child(even) td { background: #faf8fc; }
+.tag { display: inline-block; font-size: 7.8pt; font-weight: 600; padding: 1pt 6pt; border-radius: 99pt; white-space: nowrap; }
+.alta { background: #fbebeb; color: #9b1c1c; }
+.media { background: #f9eeda; color: #8a5a00; }
+.baixa { background: #e7f1fb; color: #1d4f7a; }
+.note { font-size: 8.6pt; color: var(--muted); }
+ul, ol { margin: 0 0 6pt; padding-left: 14pt; }
+li { margin-bottom: 2.5pt; }
+.box { background: var(--rose); border-radius: 8pt; padding: 9pt 11pt; margin: 8pt 0; }
+.box b { color: var(--plum); }
+.two { display: flex; gap: 14pt; }
+.two > div { flex: 1; }
+.foot { margin-top: 16pt; padding-top: 8pt; border-top: 1pt solid var(--line); font-size: 8.4pt; color: var(--muted); display: flex; justify-content: space-between; }
+.pb { page-break-before: always; }
+</style>
+</head>
+<body>
+
+<div class="head">
+  <svg viewBox="13 17 269 265" aria-hidden="true"><path fill="#6a3d9a" fill-rule="evenodd" d="M91.1 275.4C86.1 271.9 73.6 250.6 67.6 235.3C60.1 216.3 57.2 192.7 60.4 175.9C63.8 158.1 63.6 157.5 54.5 148.4C42.0 136.1 39.1 128.9 35.0 100.3C31.3 74.1 25.7 49.2 21.3 39.1C16.0 26.8 17.2 25.9 39.7 25.4C49.5 25.2 59.3 24.6 61.5 24.0C74.2 20.9 97.0 24.1 111.5 31.0C122.2 36.1 131.0 47.4 135.9 62.2C137.9 68.3 140.5 67.3 152.5 55.9C157.2 51.5 161.5 48.5 171.5 42.8C178.3 38.9 193.4 39.4 202.3 43.8C210.8 48.0 220.6 55.5 233.7 67.6C251.3 84.1 256.8 87.8 269.2 91.9C279.1 95.2 279.0 96.3 268.0 104.6C260.4 110.4 246.6 124.1 236.7 136.0C219.1 156.9 209.7 165.8 198.6 171.7C191.5 175.5 191.5 175.5 177.7 175.6C169.1 175.6 163.6 176.0 162.9 176.7C162.3 177.3 161.5 182.9 161.0 189.2C160.2 202.4 159.3 204.9 154.5 208.7C152.5 210.2 149.9 213.1 148.8 215.0C144.5 222.1 136.3 231.9 122.3 246.5C114.5 254.8 105.6 264.6 102.5 268.5C96.3 276.3 94.2 277.6 91.1 275.4ZM128.8 152.3C145.6 144.3 149.0 116.8 134.4 106.7C126.2 101.0 116.2 102.4 109.5 110.2C103.2 117.7 103.1 119.5 108.2 139.7C111.1 151.5 119.6 156.6 128.8 152.3Z"/></svg>
+  <div>
+    <h1>Hotel Bougainville nas plataformas de reserva</h1>
+    <div class="sub">Levantamento de 21/11/2026 · Onde o hotel está, onde não está e os próximos cadastros</div>
+  </div>
+</div>
+
+<p class="lead">Hoje o hotel aparece em <b>13 plataformas</b> de reserva e comparadores de preço, quase todas abastecidas pelo cadastro do Booking.com e com informações desatualizadas. Ficam de fora justamente as que aparecem primeiro quando alguém procura “hotel em Barreiras”: <b>Expedia/Hoteis.com, Decolar e Trip.com</b>. Nossa equipe vai cadastrar o hotel nessas plataformas e corrigir as informações nas que já existem.</p>
+
+<div class="cards">
+  <div class="card"><b>13</b><span>plataformas onde o hotel já aparece</span></div>
+  <div class="card"><b>4</b><span>novos cadastros recomendados</span></div>
+  <div class="card"><b>11 de 13</b><span>com algum dado errado (horários, café, CEP, telefone)</span></div>
+</div>
+
+<h2>1. Onde o hotel já está</h2>
+<table>
+  <thead><tr><th>Plataforma</th><th>Tipo</th><th>Nota vista</th><th>O que vamos corrigir</th></tr></thead>
+  <tbody>
+    <tr><td><b>Booking.com</b></td><td>Reserva</td><td>7,9–8,4 (≈270)</td><td>Check-in 13h / check-out 11h, café incluso, tipos de quarto, fotos da reforma, WhatsApp e site. É a fonte de quase todas as outras</td></tr>
+    <tr><td><b>Agoda</b></td><td>Reserva</td><td>8,2 (249)</td><td>Recebe os dados do Booking; corrige junto</td></tr>
+    <tr><td><b>Google</b> (Maps e Hotéis)</td><td>Busca e mapa</td><td>4,2/5 (133)</td><td>Bairro e CEP (aparece “Centro, 47800-000”), WhatsApp, fotos novas, horários</td></tr>
+    <tr><td><b>TripAdvisor</b></td><td>Avaliações</td><td>3,5/5 (46)</td><td>Assumir o perfil, corrigir o CEP e responder às avaliações</td></tr>
+    <tr><td><b>Kayak</b></td><td>Comparador</td><td>8,4 (206)</td><td>Horários e quartos (recebe do Booking)</td></tr>
+    <tr><td><b>Trivago</b></td><td>Comparador</td><td>7,7 (236)</td><td>Horários (recebe do Booking)</td></tr>
+    <tr><td><b>Skyscanner</b></td><td>Comparador</td><td>—</td><td>CEP errado; café não informado</td></tr>
+    <tr><td><b>Hurb</b></td><td>Reserva</td><td>—</td><td>Mostra check-in às 15h</td></tr>
+    <tr><td><b>Atrápalo</b></td><td>Reserva</td><td>7,5 (2)</td><td>Diz que aceita pets e tem piscina</td></tr>
+    <tr><td><b>Wego, ZenHotels, Destinia, cozycozy</b></td><td>Comparadores</td><td>7,0–8,4</td><td>CEP, grafia do nome e número de quartos</td></tr>
+  </tbody>
+</table>
+<p class="note">Notas observadas em 21/11/2026; algumas plataformas bloqueiam consulta automática, então os números podem variar um pouco.</p>
+
+<h2 class="pb">2. Onde o hotel ainda não está — vamos cadastrar</h2>
+<table>
+  <thead><tr><th>Plataforma</th><th>Por que é importante</th><th>Prioridade</th></tr></thead>
+  <tbody>
+    <tr><td><b>Expedia + Hoteis.com</b><br><span class="note">um único cadastro (Expedia Partner Central)</span></td><td>Aparecem no topo da busca “hotel em Barreiras”. Os concorrentes Ventura, Solar das Mangueiras e Morubixaba já estão lá. O cadastro também leva o hotel a comparadores como Trivago, Kayak e Momondo com mais uma opção de preço.</td><td><span class="tag alta">Alta</span></td></tr>
+    <tr><td><b>Decolar</b></td><td>Uma das maiores agências de viagem online do Brasil, forte em pacotes com passagem aérea para Barreiras.</td><td><span class="tag alta">Alta</span></td></tr>
+    <tr><td><b>Trip.com</b></td><td>Publica a lista “melhores hotéis em Barreiras”, que aparece nas buscas e é usada por assistentes de IA (ChatGPT, Gemini) para recomendar hotéis.</td><td><span class="tag media">Média</span></td></tr>
+    <tr><td><b>Google — reserva direta</b><br><span class="note">links gratuitos de reserva</span></td><td>Coloca o botão “Reservar no site oficial” no Google, sem comissão. Depende de um motor de reservas no site.</td><td><span class="tag media">Média</span></td></tr>
+  </tbody>
+</table>
+
+<div class="box"><b>Atenção ao entrar em mais plataformas:</b> com várias plataformas vendendo os mesmos quartos, o risco de vender o mesmo quarto duas vezes aumenta. Por isso recomendamos, junto com os novos cadastros, um <b>gerenciador de canais</b> (channel manager), que atualiza a disponibilidade em todas as plataformas ao mesmo tempo.</div>
+
+<div class="two">
+  <div>
+    <h2>3. O que precisamos do hotel</h2>
+    <ul>
+      <li>Acesso ao extranet do Booking.com (usuário com permissão de edição)</li>
+      <li>CNPJ, contrato social e documento do responsável legal</li>
+      <li>Dados bancários da empresa, para os repasses das plataformas</li>
+      <li>Quantidade de quartos de cada tipo</li>
+      <li>Tarifas por tipo de quarto e época do ano; política de cancelamento e de crianças</li>
+      <li>Número do Cadastur</li>
+      <li>Quem vai receber e confirmar as reservas (nome, WhatsApp e e-mail)</li>
+    </ul>
+  </div>
+  <div>
+    <h2>4. Próximos passos</h2>
+    <ol>
+      <li><b>Semanas 1–2:</b> corrigir Booking.com e Google (a maior parte das outras se corrige em seguida)</li>
+      <li><b>Semanas 2–4:</b> cadastro na Expedia/Hoteis.com e na Decolar</li>
+      <li><b>Mês 2:</b> Trip.com e perfil do TripAdvisor</li>
+      <li><b>Meses 2–3:</b> motor de reservas no site e reserva direta no Google</li>
+    </ol>
+    <p class="note">As plataformas não cobram mensalidade no cadastro básico: cobram comissão apenas sobre reservas realizadas, conforme o contrato de cada uma.</p>
+  </div>
+</div>
+
+<div class="foot"><span>Hotel Bougainville · Av. Clériston Andrade, 1521 · Barreiras-BA</span><span>hotelbougainvillebarreiras.com.br</span></div>
+</body>
+</html>
